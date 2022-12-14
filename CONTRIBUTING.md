@@ -2,7 +2,7 @@
 
 ## Answer issues and contribute to discussions
 
-Answering [issues](https://github.com/kkostov/TootSDK/issues), participating in [discussions](https://github.com/kkostov/TootSDK/discussions) is a great way to help, get familiar with the library, and shape its direction.
+Answering [issues](https://github.com/TootSDK/TootSDK/issues), participating in [discussions](https://github.com/TootSDK/TootSDK/discussions) is a great way to help, get familiar with the library, and shape its direction.
 
 ## Contribute to the TootSDK codebase
 
@@ -27,7 +27,7 @@ You can also execute tests in Xcode by switching to the Test navigator and execu
 
 ### Read our Architecture Decision Records (ADRs))
 
-All major architectural decisions are captured in our [ADRs](https://github.com/kkostov/TootSDK/architecture/decisions). It is worth reading these to gain context of our direction and general approach to the SDK, before writing code and submitting a PR. 
+All major architectural decisions are captured in our [ADRs](https://github.com/TootSDK/TootSDK/architecture/decisions). It is worth reading these to gain context of our direction and general approach to the SDK, before writing code and submitting a PR.
 
 ### Please provide documentation for your changes
 

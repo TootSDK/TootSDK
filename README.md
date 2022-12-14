@@ -7,8 +7,8 @@
 <p>
     <a href="https://developer.apple.com/swift/"><img alt="Swift 5.7" src="https://img.shields.io/badge/swift-5.7-orange.svg?style=flat"></a>
     <a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-blueviolet"></a>
-    <a href="https://github.com/kkostov/TootSDK/blob/master/LICENSE.md"><img alt="License" src="https://img.shields.io/github/license/kkostov/TootSDK.svg?maxAge=2592000"></a>
-    <a href="https://github.com/kkostov/TootSDK/actions"><img alt="Build Status" src="https://github.com/kkostov/TootSDK/actions/workflows/build.yml/badge.svg"></a>
+    <a href="https://github.com/TootSDK/TootSDK/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/github/license/TootSDK/TootSDK.svg?maxAge=2592000"></a>
+    <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
 </p>
 
 ## What is this? 🙋‍♂️
@@ -23,7 +23,7 @@ You can use TootSDK to build a client for Apple operating systems, or on linux v
 ## Getting started 🏁
 
 You can add TootSDK to your project via Swift Package Manager:
-`https://github.com/kkostov/TootSDK`
+`https://github.com/TootSDK/TootSDK`
 
 Check out our example iOS project `TootSDK-iOS-Demo` in the Examples directory. This provides an example application using SwiftUI and TootSDK to browse a feed and create posts.
 
