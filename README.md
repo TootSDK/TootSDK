@@ -1,6 +1,6 @@
-<p><img src="./media/tootsdk_logo.png" width="100" /></p>
+<p><img src="./media/logo.svg" width="100" /></p>
 
-# TootSDK 
+# TootSDK
 
 <p><strong>Cross-platform Swift library for the Mastodon API</strong></p>
 
