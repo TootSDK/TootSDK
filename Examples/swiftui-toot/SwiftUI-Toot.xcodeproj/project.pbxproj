@@ -1,0 +1,466 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		550CF6662931E3AC00D07EA0 /* PostOperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550CF6652931E3AC00D07EA0 /* PostOperationsView.swift */; };
+		550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */; };
+		550CF66E2931F9A000D07EA0 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550CF66D2931F9A000D07EA0 /* AccountView.swift */; };
+		5523E9DD29191656006778D9 /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = 5523E9DC29191656006778D9 /* BetterSafariView */; };
+		552BFB0129409AB300FB46D3 /* ScheduledPostOperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */; };
+		55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */; };
+		55ACC1E4291761910046363F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E3291761910046363F /* Assets.xcassets */; };
+		55ACC1E7291761910046363F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E6291761910046363F /* Preview Assets.xcassets */; };
+		55ACC1EC291761910046363F /* TootSDK_Demo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1EA291761910046363F /* TootSDK_Demo.xcdatamodeld */; };
+		55B8B1722917620C00339479 /* MakePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1712917620C00339479 /* MakePostView.swift */; };
+		55B8B1742917627D00339479 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1732917627D00339479 /* FeedView.swift */; };
+		55B8B1782917673500339479 /* AuthorizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1772917673500339479 /* AuthorizeView.swift */; };
+		55B8B17B2917675700339479 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 55B8B17A2917675700339479 /* TootSDK */; };
+		55F9D91429190A9E0062CFA9 /* TootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F9D91329190A9E0062CFA9 /* TootManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		550CF6652931E3AC00D07EA0 /* PostOperationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOperationsView.swift; sourceTree = "<group>"; };
+		550CF66D2931F9A000D07EA0 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledPostOperationsView.swift; sourceTree = "<group>"; };
+		5538E1192919D2C400C88584 /* SwiftUI-Toot-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SwiftUI-Toot-Info.plist"; sourceTree = "<group>"; };
+		55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Toot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootSDK_DemoApp.swift; sourceTree = "<group>"; };
+		55ACC1E3291761910046363F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		55ACC1E6291761910046363F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		55ACC1EB291761910046363F /* TootSDK_Demo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TootSDK_Demo.xcdatamodel; sourceTree = "<group>"; };
+		55B8B170291761CF00339479 /* TootSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TootSDK; path = ../..; sourceTree = "<group>"; };
+		55B8B1712917620C00339479 /* MakePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePostView.swift; sourceTree = "<group>"; };
+		55B8B1732917627D00339479 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		55B8B1772917673500339479 /* AuthorizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeView.swift; sourceTree = "<group>"; };
+		55F9D91329190A9E0062CFA9 /* TootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		55ACC1D92917618F0046363F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55B8B17B2917675700339479 /* TootSDK in Frameworks */,
+				5523E9DD29191656006778D9 /* BetterSafariView in Frameworks */,
+				550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		55ACC1D32917618F0046363F = {
+			isa = PBXGroup;
+			children = (
+				5538E1192919D2C400C88584 /* SwiftUI-Toot-Info.plist */,
+				55B8B16F291761CF00339479 /* Packages */,
+				55ACC1DE2917618F0046363F /* TootSDK-Demo */,
+				55ACC1DD2917618F0046363F /* Products */,
+				55B8B1792917675700339479 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		55ACC1DD2917618F0046363F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55ACC1DE2917618F0046363F /* TootSDK-Demo */ = {
+			isa = PBXGroup;
+			children = (
+				55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */,
+				55F9D91329190A9E0062CFA9 /* TootManager.swift */,
+				55F9D91229190A2A0062CFA9 /* Views */,
+				55ACC1E3291761910046363F /* Assets.xcassets */,
+				55ACC1EA291761910046363F /* TootSDK_Demo.xcdatamodeld */,
+				55ACC1E5291761910046363F /* Preview Content */,
+			);
+			path = "TootSDK-Demo";
+			sourceTree = "<group>";
+		};
+		55ACC1E5291761910046363F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				55ACC1E6291761910046363F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		55B8B16F291761CF00339479 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				55B8B170291761CF00339479 /* TootSDK */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		55B8B1792917675700339479 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		55F9D91229190A2A0062CFA9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				55B8B1712917620C00339479 /* MakePostView.swift */,
+				550CF6652931E3AC00D07EA0 /* PostOperationsView.swift */,
+				552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */,
+				55B8B1772917673500339479 /* AuthorizeView.swift */,
+				55B8B1732917627D00339479 /* FeedView.swift */,
+				550CF66D2931F9A000D07EA0 /* AccountView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		55ACC1DB2917618F0046363F /* SwiftUI-Toot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55ACC1EF291761910046363F /* Build configuration list for PBXNativeTarget "SwiftUI-Toot" */;
+			buildPhases = (
+				55ACC1D82917618F0046363F /* Sources */,
+				55ACC1D92917618F0046363F /* Frameworks */,
+				55ACC1DA2917618F0046363F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftUI-Toot";
+			packageProductDependencies = (
+				55B8B17A2917675700339479 /* TootSDK */,
+				5523E9DC29191656006778D9 /* BetterSafariView */,
+				550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */,
+			);
+			productName = "TootSDK-Demo";
+			productReference = 55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		55ACC1D42917618F0046363F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					55ACC1DB2917618F0046363F = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+				};
+			};
+			buildConfigurationList = 55ACC1D72917618F0046363F /* Build configuration list for PBXProject "SwiftUI-Toot" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 55ACC1D32917618F0046363F;
+			packageReferences = (
+				5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
+				550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+			);
+			productRefGroup = 55ACC1DD2917618F0046363F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				55ACC1DB2917618F0046363F /* SwiftUI-Toot */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		55ACC1DA2917618F0046363F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ACC1E7291761910046363F /* Preview Assets.xcassets in Resources */,
+				55ACC1E4291761910046363F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		55ACC1D82917618F0046363F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55B8B1782917673500339479 /* AuthorizeView.swift in Sources */,
+				55F9D91429190A9E0062CFA9 /* TootManager.swift in Sources */,
+				550CF6662931E3AC00D07EA0 /* PostOperationsView.swift in Sources */,
+				552BFB0129409AB300FB46D3 /* ScheduledPostOperationsView.swift in Sources */,
+				55B8B1742917627D00339479 /* FeedView.swift in Sources */,
+				55ACC1EC291761910046363F /* TootSDK_Demo.xcdatamodeld in Sources */,
+				550CF66E2931F9A000D07EA0 /* AccountView.swift in Sources */,
+				55B8B1722917620C00339479 /* MakePostView.swift in Sources */,
+				55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		55ACC1ED291761910046363F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		55ACC1EE291761910046363F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		55ACC1F0291761910046363F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TootSDK-Demo/Preview Content\"";
+				DEVELOPMENT_TEAM = AY32NZUWTJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SwiftUI-Toot-Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lightbeamapps.TootSDK-Demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		55ACC1F1291761910046363F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TootSDK-Demo/Preview Content\"";
+				DEVELOPMENT_TEAM = AY32NZUWTJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SwiftUI-Toot-Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lightbeamapps.TootSDK-Demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		55ACC1D72917618F0046363F /* Build configuration list for PBXProject "SwiftUI-Toot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ACC1ED291761910046363F /* Debug */,
+				55ACC1EE291761910046363F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55ACC1EF291761910046363F /* Build configuration list for PBXNativeTarget "SwiftUI-Toot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ACC1F0291761910046363F /* Debug */,
+				55ACC1F1291761910046363F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stleamist/BetterSafariView";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
+		};
+		5523E9DC29191656006778D9 /* BetterSafariView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */;
+			productName = BetterSafariView;
+		};
+		55B8B17A2917675700339479 /* TootSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TootSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		55ACC1EA291761910046363F /* TootSDK_Demo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				55ACC1EB291761910046363F /* TootSDK_Demo.xcdatamodel */,
+			);
+			currentVersion = 55ACC1EB291761910046363F /* TootSDK_Demo.xcdatamodel */;
+			path = TootSDK_Demo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 55ACC1D42917618F0046363F /* Project object */;
+}

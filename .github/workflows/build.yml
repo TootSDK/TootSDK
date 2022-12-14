@@ -1,0 +1,19 @@
+name: Build
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        # os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-12] #GitHub currently thinks "macos-latest is macOS 11 and has no support for macOS 13 😢"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: swift build -v
+      - name: Run tests
+        run: swift test -v

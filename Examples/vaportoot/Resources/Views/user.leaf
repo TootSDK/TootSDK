@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-50">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>#(title)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/tailwindcss">
+    .emojis > img {
+        width: 22px;
+        height: 22px;
+      }
+    </style>
+</head>
+
+<body class="h-full">
+  <div class="flex w-full items-start sm:px-6 lg:px-8 space-x-2.5">
+    <article class="mt-2 sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="bg-white py-8 shadow sm:rounded-lg sm:px-6 lg:px-8">
+        <div href="#" class="group block flex-shrink-0 mt-4 mb-6">
+          <div class="flex flex-col items-center">
+            <img class="inline-block h-9 w-9 rounded-full" src="#(avatar)" alt="" />
+            <div class="ml-3">
+              <p
+                class="text-sm font-medium text-gray-700 group-hover:text-gray-900 emojis flex justify-center items-center">
+                #unsafeHTML(name)
+              </p>
+              <p class="mt-4 text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                #unsafeHTML(note)
+              </p>
+            </div>
+          </div>
+        </div>
+        <form action="/toot/logout" method="POST">
+          <button type="submit"
+            class="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Logout
+          </button>
+        </form>
+
+        <div class="min-w-0 flex-1 my-6">
+          #if(replyId):
+          <p><span class="font-bold">Replying to: </span>#unsafeHTML(replyText)</p>
+          #endif
+          <form action="/toot/toot" method="POST" class="relative">
+            #if(!replyId):
+            <div
+              class="overflow-hidden mb-4 rounded-lg px-2 border border-indigo-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+              <label for="cw" class="sr-only">Content warning</label>
+              <input type="text" name="cw" id="cw"
+                class="block w-full resize-none border-0 py-3 focus:ring-0 sm:text-sm"
+                placeholder="Content warning..." />
+            </div>
+            #else:
+            <input type="hidden" name="replyId" value="#(replyId)" />
+            #endif
+            <div
+              class="overflow-hidden rounded-lg px-2 border border-indigo-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+              <label for="comment" class="sr-only">Type your post</label>
+              <textarea rows="3" name="text" id="text"
+                class="block w-full resize-none border-0 py-3 focus:ring-0 sm:text-sm"
+                placeholder="Add your comment..."></textarea>
+
+              <!-- Spacer element to match the height of the toolbar -->
+              <div class="py-2" aria-hidden="true">
+                <!-- Matches height of button in toolbar (1px border + 36px content height) -->
+                <div class="py-px">
+                  <div class="h-9"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+              <div class="flex-shrink-0">
+                <button type="submit"
+                  class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  Post
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </article>
+
+    <article>
+      <h2 class="text-center text-xl font-bold w-full border-b-2">Timeline</h2>
+      <ul class="sm:px-6 lg:px-8 mt-2">
+        #for(post in posts):
+        <li class="flex items-start my-4">
+          <img src="#(post.avatar)" class="w-12 h-12" />
+
+          <form action="/toot/tootaction" method="POST" class="flex flex-col pl-2">
+            <input type="hidden" name="id" value="#(post.id)" <h3 class="font-bold">#unsafeHTML(post.author)</h3>
+            <div>#unsafeHTML(post.text)</div>
+            <div role="group">
+              <button type="submit" name="action" value="reply" title="Reply">
+                <span role="img" aria-label="write post">
+                  📝 
+                </span>
+              </button>
+              <button type="submit" name="action" value="repost" title="Repost">
+                <span role="img" aria-label="recycle">
+                  ♻️
+                </span>
+              </button>
+              #if(post.favourited):
+              <button type="submit" name="action" value="toggleFavourite" title="Remove favourite">
+                <span role="img" aria-label="star sparkling">
+                  🌟
+                </span>
+              </button>
+              #else:
+              <button type="submit" name="action" value="toggleFavourite" title="Favourite">
+                <span role="img" aria-label="star">
+                  ⭐️
+                </span>
+              </button>
+              #endif
+            </div>
+          </form>
+        </li>
+        #endfor
+      </ul>
+    </article>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug swiftyadmin",
+      "program": "${workspaceFolder:swiftyadmin}/.build/debug/swiftyadmin",
+      "args": [],
+      "cwd": "${workspaceFolder:swiftyadmin}",
+      "preLaunchTask": "swift: Build Debug swiftyadmin"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Release swiftyadmin",
+      "program": "${workspaceFolder:swiftyadmin}/.build/release/swiftyadmin",
+      "args": [],
+      "cwd": "${workspaceFolder:swiftyadmin}",
+      "preLaunchTask": "swift: Build Release swiftyadmin"
+    }
+  ]
+}
