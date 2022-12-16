@@ -18,7 +18,18 @@ TootSDK is a framework for Mastodon and the Fediverse, for iOS. It provides a to
 TootSDK is a community developed SDK for Mastodon and the Fediverse.
 It is designed to work with all major servers (Mastodon, Pleroma, PixelFed etc).
 
-You can use TootSDK to build a client for Apple operating systems, or on linux via Vapor.
+You can use TootSDK to build a client for Apple operating systems, or Linux with Vapor.
+
+![overview of how TootSDK integrates with fedi platforms](/media/overview.png)
+
+### Status
+
+- Mastodon - In progress
+- Pleroma - In progress
+- Pixelfed - To do
+- Writefreely - To do
+
+Please don't hesitate to open an Issue or a PR if you are missing an endpoint or would like to improve support for existing or other servers 🙏!
 
 ## Getting started 🏁
 
@@ -31,19 +42,18 @@ You can also peek at `vaportoot` - an example for a server-side implementation u
 
 To get started, you need an instance of `TootClient`.
 
-
 ### Authentication
 
 If you need to authorize the user, we provide several methods to help with the process.
 
-* Step 1, navigate to the authorization url of the user's instance.
+- Step 1, navigate to the authorization url of the user's instance.
 
 ```swift
 let client = TootClient(instanceURL: instanceURL)
 let authUrl = client.createAuthorizeURL(server: instanceURL, callbackUrl: "swiftuitoot://test")
 ```
 
-* Step 2, once authentication is complete, the server will redirect the user back to callback url including a token
+- Step 2, once authentication is complete, the server will redirect the user back to callback url including a token
 
 ```swift
 let accessToken = client.collectToken(callbackUrl: url)
@@ -60,8 +70,6 @@ for await updatedPosts in try await client.data.stream(.timeLineHome) {
     print("got a batch of posts \(updatedPosts)")
 }
 ```
-
-
 
 ## Key contributors ⚡️
 
