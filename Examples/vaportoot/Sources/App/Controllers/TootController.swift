@@ -115,7 +115,7 @@ struct TootController: RouteCollection {
 }
 
 let callbackURL = "http://localhost:8080/toot/callback"  // "urn:ietf:wg:oauth:2.0:oob"
-let scopes = ["read", "write", "follow", "push", "admin:read"]
+let scopes = ["read", "write", "follow", "push"]
 
 struct LoginRequest: Content {
     var url: String
