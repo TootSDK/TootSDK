@@ -27,6 +27,42 @@ You can add TootSDK to your project via Swift Package Manager:
 
 Check out our example iOS project `TootSDK-iOS-Demo` in the Examples directory. This provides an example application using SwiftUI and TootSDK to browse a feed and create posts.
 
+You can also peek at `vaportoot` - an example for a server-side implementation using Vapor.
+
+To get started, you need an instance of `TootClient`.
+
+
+### Authentication
+
+If you need to authorize the user, we provide several methods to help with the process.
+
+* Step 1, navigate to the authorization url of the user's instance.
+
+```swift
+let client = TootClient(instanceURL: instanceURL)
+let authUrl = client.createAuthorizeURL(server: instanceURL, callbackUrl: "swiftuitoot://test")
+```
+
+* Step 2, once authentication is complete, the server will redirect the user back to callback url including a token
+
+```swift
+let accessToken = client.collectToken(callbackUrl: url)
+```
+
+We recommend keeping the accessToken somewhere secure, for example Keychain.
+
+Once you have an access token and the url to the user's server:
+
+```swift
+let client = TootClient(instanceURL: instanceURL, accessToken: accessToken)
+...
+for await updatedPosts in try await client.data.stream(.timeLineHome) {
+    print("got a batch of posts \(updatedPosts)")
+}
+```
+
+
+
 ## Key contributors ⚡️
 
 - [Konstantin](https://m.iamkonstantin.eu/konstantin)
