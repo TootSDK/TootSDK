@@ -67,22 +67,24 @@ extension TootClient {
     internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T? {
         let (data, _) = try await fetch(req: req)
         
-        do {
-             let _ = try decoder.decode(decode, from: data)
-         } catch let DecodingError.dataCorrupted(context) {
-             print(context)
-         } catch let DecodingError.keyNotFound(key, context) {
-             print("Key '\(key)' not found:", context.debugDescription)
-             print("codingPath:", context.codingPath)
-         } catch let DecodingError.valueNotFound(value, context) {
-             print("Value '\(value)' not found:", context.debugDescription)
-             print("codingPath:", context.codingPath)
-         } catch let DecodingError.typeMismatch(type, context)  {
-             print("Type '\(type)' mismatch:", context.debugDescription)
-             print("codingPath:", context.codingPath)
-         } catch {
-             print("error: ", error)
-         }
+        if debugResponses {
+            do {
+                _ = try decoder.decode(decode, from: data)
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.typeMismatch(type, context) {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch {
+                print("error: ", error)
+            }
+        }
         
         return try decoder.decode(decode, from: data)
     }
