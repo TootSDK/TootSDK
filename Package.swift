@@ -18,7 +18,11 @@ let package = Package(
             targets: ["TootSDK"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2")
+        .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2"),
+        .package(
+            url: "https://gitlab.com/mflint/HTML2Markdown.git", from: "1.0.0"),
+        .package(
+            url: "https://github.com/johnxnguyen/Down.git", from: "0.11.0")
         //        .package(
         //            url: "https://github.com/realm/SwiftLint.git",
         //            revision: "0e6d19b4c1906e6fbf396172e9a0a22acdf6f86c")
@@ -28,7 +32,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "TootSDK",
-            dependencies: [.product(name: "MultipartKit", package: "multipart-kit")],
+            dependencies: [.product(name: "MultipartKit", package: "multipart-kit"),
+                           .product(name: "HTML2Markdown", package: "HTML2Markdown"),
+                           .product(name: "Down", package: "Down")],
             plugins: [
                 // .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
             ]),

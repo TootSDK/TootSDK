@@ -2,6 +2,8 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+import HTML2Markdown
+import Down
 
 /// Represents a status posted by an account.
 public class Status: Codable, Identifiable {
@@ -64,7 +66,7 @@ public class Status: Codable, Identifiable {
         self.bookmarked = bookmarked
         self.pinned = pinned
     }
-
+    
     /// ID of the status in the database.
     public var id: String
     /// URI of the status used for federation.
@@ -85,7 +87,7 @@ public class Status: Codable, Identifiable {
     public var mediaAttachments: [Attachment]
     /// The application used to post this status.
     public var application: TootApplication?
-
+    
     /// Mentions of users within the status content.
     public var mentions: [Mention]
     /// Hashtags used within the status content.
@@ -125,7 +127,7 @@ public class Status: Codable, Identifiable {
     public var bookmarked: Bool?
     /// Have you pinned this status? Only appears if the status is pinnable.
     public var pinned: Bool?
-
+    
     public enum Visibility: String, Codable, CaseIterable {
         /// Visible to everyone, shown in public timelines.
         case `public`
@@ -170,7 +172,7 @@ extension Status: Hashable {
         && lhs.bookmarked == rhs.bookmarked
         && lhs.pinned == rhs.pinned
     }
-
+    
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(uri)
@@ -202,4 +204,33 @@ extension Status: Hashable {
         hasher.combine(bookmarked)
         hasher.combine(pinned)
     }
+}
+
+public extension Status {
+    
+    func plainContent() throws -> String? {
+        guard let html = self.content else { return nil }
+                
+        let htmlReplaceString: String = "<[^>]*>"
+        
+        if let regex = try? NSRegularExpression(pattern: htmlReplaceString, options: .caseInsensitive) {
+            return regex.stringByReplacingMatches(in: html, options: [], range: NSRange(html.startIndex..., in: html), withTemplate: "")
+        } else {
+            return nil
+        }
+    }
+    
+    func markdownContent() throws -> String? {
+        guard let html = self.content else { return nil }
+        
+        let dom = try Status.htmlParser.parse(html: html)
+        let markdown = dom.toMarkdown()
+        
+        return markdown
+    }
+    
+    static var htmlParser: HTMLParser = {
+        HTMLParser()
+    }()
+    
 }

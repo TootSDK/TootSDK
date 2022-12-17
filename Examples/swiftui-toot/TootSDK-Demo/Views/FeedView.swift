@@ -11,18 +11,18 @@ import TootSDK
 struct FeedView: View {
     @EnvironmentObject var tootManager: TootManager
     
-    @State var posts: [Status] = []
+    @State var statuses: [Status] = []
     @State var name: String = ""
     
     @State var path: NavigationPath = NavigationPath()
     
     var body: some View {
         NavigationStack(path: $path) {
-            List(posts, id: \.self) { data in
+            List(statuses, id: \.self) { status in
                 Button {
-                    self.path.append(data.id)
+                    self.path.append(status.id)
                 } label: {
-                    self.row(data)
+                    StatusView(status: status, attributed: true)
                 }
                 .buttonStyle(.plain)
             }
@@ -47,7 +47,7 @@ struct FeedView: View {
             Task {
                 for await updatedPosts in try await currentClient.data.stream(.timeLineHome) {
                     print("got a batch of posts")
-                    posts = updatedPosts
+                    statuses = updatedPosts
                 }
             }
             
@@ -55,29 +55,6 @@ struct FeedView: View {
         }
         .refreshable {
             refresh()
-        }
-    }
-    
-    @ViewBuilder func row(_ post: Status) -> some View {
-        HStack(alignment: .top) {
-            AsyncImage(url: URL(string: post.account.avatar)) { image in
-                image.resizable()
-            } placeholder: {
-                ProgressView()
-            }
-            .frame(width: 80, height: 80)
-            
-            VStack {
-                HStack {
-                    Text(post.account.displayName ?? "?")
-                        .font(.caption.bold())
-                    Text(post.account.username)
-                        .font(.caption)
-                }
-                
-                Text(post.content ?? "?")
-                    .font(.body)
-            }
         }
     }
     

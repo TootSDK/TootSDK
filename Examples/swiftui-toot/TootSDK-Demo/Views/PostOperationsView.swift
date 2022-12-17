@@ -26,6 +26,7 @@ struct PostOperationsView: View {
                 
                 self.buttons()
             }
+            .frame(maxWidth: .infinity)
         }
         .navigationTitle("Post Operations")
     }

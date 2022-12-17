@@ -10,6 +10,24 @@
       }
     },
     {
+      "identity" : "down",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnxnguyen/Down.git",
+      "state" : {
+        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+        "version" : "0.11.0"
+      }
+    },
+    {
+      "identity" : "html2markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://gitlab.com/mflint/HTML2Markdown.git",
+      "state" : {
+        "revision" : "00d7a9744bbd1e7762c587bbd248775e16345a65",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "multipart-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/multipart-kit.git",
