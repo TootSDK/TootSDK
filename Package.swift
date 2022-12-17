@@ -18,10 +18,10 @@ let package = Package(
             targets: ["TootSDK"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2")
-        //        .package(
-        //            url: "https://github.com/realm/SwiftLint.git",
-        //            revision: "0e6d19b4c1906e6fbf396172e9a0a22acdf6f86c")
+        .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2"),
+        .package(
+            url: "https://github.com/realm/SwiftLint.git",
+            revision: "0e6d19b4c1906e6fbf396172e9a0a22acdf6f86c")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -30,7 +30,7 @@ let package = Package(
             name: "TootSDK",
             dependencies: [.product(name: "MultipartKit", package: "multipart-kit")],
             plugins: [
-                // .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
+                 .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
             ]),
         .testTarget(
             name: "TootSDKTests",
