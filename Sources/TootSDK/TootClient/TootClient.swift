@@ -152,7 +152,6 @@ extension TootClient: Equatable {
     }
 }
 
-
 extension TootClient {
 
     /// Provides the URL for authorizing

@@ -1,8 +1,6 @@
 // Created by konstantin on 30/11/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 
 /// A request to create a new poll

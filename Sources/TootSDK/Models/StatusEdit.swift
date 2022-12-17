@@ -19,7 +19,7 @@ public struct StatusEdit: Codable {
     /// The account that published this revisionå
     public var account: Account
     /// The current state of the poll options at this revision
-    public var poll: Poll? = nil
+    public var poll: Poll?
     /// The current state of the media attachments at this revision
     public var mediaAttachments: [Attachment]
     /// Any custom emoji that are used in the current revision

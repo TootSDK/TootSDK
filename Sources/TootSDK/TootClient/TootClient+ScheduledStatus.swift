@@ -90,7 +90,7 @@ public extension TootClient {
             $0.method = .delete
         }
         
-        let _ = try await fetch(req: req)
+        _ = try await fetch(req: req)
     }
     
 }
