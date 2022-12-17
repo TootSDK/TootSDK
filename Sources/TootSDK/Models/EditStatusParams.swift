@@ -1,8 +1,6 @@
 // Created by konstantin on 06/12/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 
 /// Params to edit a given status

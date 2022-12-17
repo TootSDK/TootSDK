@@ -1,8 +1,6 @@
 // Created by konstantin on 04/12/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 
 /// Represents a status that will be published at a future scheduled date.

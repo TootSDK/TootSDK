@@ -167,7 +167,6 @@ public extension TootClient {
     }
 }
 
-
 public extension TootClient {
     
     func getAccountsBoosted(id: String) async throws -> [Account] {

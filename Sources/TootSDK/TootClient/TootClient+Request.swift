@@ -1,8 +1,6 @@
 // Created by konstantin on 18/11/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
@@ -76,8 +74,7 @@ extension TootClient {
         return .init(url: url, application: app)
     }
     
-    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grandType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken?
-    {
+    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grandType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken? {
         let req = HttpRequestBuilder {
             $0.url = getURL(["oauth", "token"])
             $0.method = .post

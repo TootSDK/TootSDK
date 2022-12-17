@@ -1,8 +1,6 @@
 // Created by konstantin on 23/11/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
@@ -19,12 +17,10 @@ internal final class HttpRequestBuilder: HttpRequest {
         var this = self
         try configure(&this)
     }
-    
-    
+
     /// URLComponents of the network request.
     internal var urlComponents = URLComponents()
-    
-    
+        
     /// Set the full absolute URL for the request
     public var url: URL? {
         get {
@@ -40,7 +36,7 @@ internal final class HttpRequestBuilder: HttpRequest {
     
     public var method: HTTPMethod = .get
     
-    public var headers: [String : String] = [:]
+    public var headers: [String: String] = [:]
     
     /// Add a new query parameter to the query string's value.
     ///
@@ -71,7 +67,6 @@ internal final class HttpRequestBuilder: HttpRequest {
     
     public var body: HttpBody?
 }
-
 
 internal extension HttpRequestBuilder {
     /// Create an instance of `URLRequest` using the current configuration
