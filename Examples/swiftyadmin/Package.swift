@@ -9,7 +9,7 @@ let package = Package(
     .macOS(.v12)
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
+    .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.1.4"),  // version set to 1.2.0 as a work-around for version collision with SwiftLint from TootSDK which at this time only supports swift-argument-parser <=1.2.0
     .package(path: "../../"),
   ],
   targets: [
