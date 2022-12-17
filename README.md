@@ -91,6 +91,7 @@ This is a permissive license which allows for any type of use, provided the copy
 
 - The Mastodon API documentation https://github.com/mastodon/documentation
 - We hat-tip top Metatext's source for some guidance on what's where: https://github.com/metabolist/metatext
+- [Kris Slazinski](https://mastodon.social/@kslazinski) for our TootSDK logo 🤩
 
 ## Examples
 
@@ -109,3 +110,4 @@ The SwiftUI-Toot app showcases usage of the framework in a SwiftUI app.
 - Navigate to `localhost:8080` in your browser and fill in the url of a fedi server to connect with.
 
 - We've added examples for making a post, viewing the timeline and interacting with posts (like reply and repost).
+
