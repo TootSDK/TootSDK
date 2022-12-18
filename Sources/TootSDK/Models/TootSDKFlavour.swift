@@ -3,7 +3,7 @@
 
 import Foundation
 
-public enum TootSDKFlavour: String {
+public enum TootSDKFlavour: String, Codable {
     case mastodon
     case pleroma
 }
