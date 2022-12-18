@@ -74,18 +74,24 @@ extension TootClient {
         return .init(url: url, application: app)
     }
     
+
     internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grandType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken? {
-        let req = HttpRequestBuilder {
+
+        let queryItems: [URLQueryItem] = [
+            .init(name: "client_id", value: clientId),
+            .init(name: "client_secret", value: clientSecret),
+            .init(name: "grant_type", value: grandType),
+            .init(name: "scope", value: scopes.joined(separator: " ")),
+            .init(name: "code", value: code),
+            .init(name: "redirect_uri", value: callbackUrl)
+        ]
+
+        let req = try HttpRequestBuilder {
             $0.url = getURL(["oauth", "token"])
             $0.method = .post
-            $0.addQueryParameter(name: "client_id", value: clientId)
-            $0.addQueryParameter(name: "client_secret", value: clientSecret)
-            $0.addQueryParameter(name: "grant_type", value: grandType)
-            $0.addQueryParameter(name: "scope", value: scopes.joined(separator: " "))
-            $0.addQueryParameter(name: "code", value: code)
-            $0.addQueryParameter(name: "redirect_uri", value: callbackUrl)
+            $0.body = try .form(queryItems: queryItems)
         }
-        
+
         return try await fetch(AccessToken.self, req)
     }
 }
