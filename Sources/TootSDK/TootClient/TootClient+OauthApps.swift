@@ -10,7 +10,7 @@ public extension TootClient {
     /// * This method requires the `admin:write` scope.
     /// * This method requires the pleroma API flavour.
     func adminGetOauthApps(_ page: Int = 1, params: ListOauthAppsParams? = nil) async throws -> [PleromaOauthApp]? {
-        if ![TootSDKFlavour.pleroma].contains(flavour) {
+        guard flavour == .pleroma else {
             throw TootSDKError.unsupportedFlavour(current: flavour, required: [.pleroma])
         }
         
