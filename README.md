@@ -71,6 +71,8 @@ for await updatedPosts in try await client.data.stream(.timeLineHome) {
 }
 ```
 
+💡 For testing (even in your own apps), you can use `Examples/swiftyadmin` with the `login` command to generate an accessToken for a given instance.
+
 ## Key contributors ⚡️
 
 - [Konstantin](https://m.iamkonstantin.eu/konstantin)
@@ -110,4 +112,3 @@ The SwiftUI-Toot app showcases usage of the framework in a SwiftUI app.
 - Navigate to `localhost:8080` in your browser and fill in the url of a fedi server to connect with.
 
 - We've added examples for making a post, viewing the timeline and interacting with posts (like reply and repost).
-
