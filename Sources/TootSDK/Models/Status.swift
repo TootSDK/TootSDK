@@ -2,16 +2,16 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
-import HTML2Markdown
 import Down
 
 /// Represents a status posted by an account.
 public class Status: Codable, Identifiable {
+    
     public init(id: String,
                 uri: String,
                 createdAt: Date,
                 account: Account,
-                content: String? = nil,
+                content: HTML? = nil,
                 visibility: Status.Visibility,
                 sensitive: Bool,
                 spoilerText: String,
@@ -76,7 +76,7 @@ public class Status: Codable, Identifiable {
     /// The account that authored this status.
     public var account: Account
     /// HTML-encoded status content.
-    public var content: String?
+    public var content: HTML?
     /// Visibility of this status.
     public var visibility: Visibility
     /// Is this status marked as sensitive content?
@@ -204,33 +204,4 @@ extension Status: Hashable {
         hasher.combine(bookmarked)
         hasher.combine(pinned)
     }
-}
-
-public extension Status {
-    
-    func plainContent() throws -> String? {
-        guard let html = self.content else { return nil }
-                
-        let htmlReplaceString: String = "<[^>]*>"
-        
-        if let regex = try? NSRegularExpression(pattern: htmlReplaceString, options: .caseInsensitive) {
-            return regex.stringByReplacingMatches(in: html, options: [], range: NSRange(html.startIndex..., in: html), withTemplate: "")
-        } else {
-            return nil
-        }
-    }
-    
-    func markdownContent() throws -> String? {
-        guard let html = self.content else { return nil }
-        
-        let dom = try Status.htmlParser.parse(html: html)
-        let markdown = dom.toMarkdown()
-        
-        return markdown
-    }
-    
-    static var htmlParser: HTMLParser = {
-        HTMLParser()
-    }()
-    
 }

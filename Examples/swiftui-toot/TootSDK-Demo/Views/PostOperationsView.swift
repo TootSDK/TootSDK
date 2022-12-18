@@ -13,16 +13,18 @@ struct PostOperationsView: View {
     @Binding var postID: String?
     @Binding var path: NavigationPath
     
-    @State var textToShow: String = ""
+    @State var status: Status?
     
     var body: some View {
         ScrollView {
             VStack(spacing: 8) {
                 Text(postID ?? "-")
                 
-                Text(textToShow)
-                    .font(.body)
-                    .padding()
+                if let attributedString = status?.content?.attributedString {
+                    Text(AttributedString(attributedString))
+                        .font(.body)
+                        .padding()
+                }
                 
                 self.buttons()
             }
@@ -35,7 +37,7 @@ struct PostOperationsView: View {
         if let postID {
             Group {
                 self.createButton(text: "Get Post Details") {
-                    textToShow = try await tootManager.currentClient?.getStatus(id: postID)?.content ?? "-"
+                    self.status = try? await tootManager.currentClient?.getStatus(id: postID)
                 }
                 
                 self.createButton(text: "Delete post") {
@@ -54,7 +56,7 @@ struct PostOperationsView: View {
                         print("Unknown postID \(postID)")
                         return
                     }
-                    let editParams = EditStatusParams(status: "\(oldPost.content ?? "") 🧡", spoilerText: oldPost.spoilerText, sensitive: oldPost.sensitive, mediaIds: nil, poll: nil)
+                    let editParams = EditStatusParams(status: "\(oldPost.content?.raw ?? "") 🧡", spoilerText: oldPost.spoilerText, sensitive: oldPost.sensitive, mediaIds: nil, poll: nil)
                     if let context = try await tootManager.currentClient?.editStatus(id: postID, editParams) {
                         debugPrint(context)
                     }
@@ -110,7 +112,7 @@ struct PostOperationsView: View {
                         debugPrint(boostAccounts)
                     }
                 }
-                                
+                
                 self.createButton(text: "Who favourited") {
                     if let boostAccounts = try await tootManager.currentClient?.getAccountsFavourited(id: postID) {
                         debugPrint(boostAccounts)
@@ -130,7 +132,7 @@ struct PostOperationsView: View {
                 }
             }
             
-                        
+            
         } else {
             EmptyView()
         }

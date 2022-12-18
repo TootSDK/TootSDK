@@ -12,6 +12,7 @@ struct StatusView: View {
     var status: Status
     var attributed: Bool
     
+    
     var body: some View {
         HStack(alignment: .top) {
             AsyncImage(url: URL(string: status.account.avatar)) { image in
@@ -29,10 +30,10 @@ struct StatusView: View {
                         .font(.caption)
                 }
                 
-                if attributed {
-                    try? Text(AttributedString(markdown: status.markdownContent() ?? ""))
+                if attributed, let attributedText = status.content?.attributedString {
+                    Text(AttributedString(attributedText))
                 } else {
-                    try? Text(status.plainContent() ?? "")
+                    Text(status.content?.plainContent ?? "")
                 }
             }
         }
