@@ -33,7 +33,11 @@ struct ListOauthApps: AsyncParsableCommand {
       if let results = try await client.adminGetOauthApps(page, params: params) {
         for app in results {
           print(
-            "id: \(app.id)\n\t\(app.name ?? "-")\n\tredirectUri: \(app.redirectUri ?? "-")\n\twebsite:\(app.website ?? "-")\n\tclientId: \(app.clientId ?? "-")\n\tclientSecret: \(app.clientSecret ?? "-")"
+            "id: \(app.id)\n" + "\t\(app.name ?? "-")\n"
+              + "\tredirectUri: \(app.redirectUri ?? "-")\n"
+              + "\twebsite:\(app.website ?? "-")\n"
+              + "\tclientId: \(app.clientId ?? "-")\n"
+              + "\tclientSecret: \(app.clientSecret ?? "-")"
           )
         }
         page += 1
