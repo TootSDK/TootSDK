@@ -13,5 +13,8 @@ struct SwiftyAdmin: AsyncParsableCommand {
       UnblockDomain.self,
       ListOauthApps.self,
       DeleteOauthApp.self,
+      ListLists.self,
+      ListCreate.self,
+      ListDelete.self,
     ])
 }
