@@ -165,24 +165,28 @@ extension TootClient {
         return authInfo?.url
     }
 
-    /// Processes the response from the authorization step in exchange for an access token.
+    /// Facility method to complete authentication by processing the response from the authorization step.
     /// Exchange the callback authorization code for an accessToken
     /// - Parameters:
-    ///   - url: The full url including query parameters following the redirect after successfull authorizaiton
+    ///   - returnUrl: The full url including query parameters received by the service following the redirect after successfull authorizaiton
     ///   - callbackUrl: The callback URL  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
-    public func collectToken(callbackUrl: URL) async throws -> String? {
-        var components = URLComponents()
-        components.query = callbackUrl.query
+    public func collectToken(returnUrl: URL, callbackUrl: String) async throws -> String? {
         
         guard
-            let code = components.queryItems?.filter({ $0.name == "code" }).compactMap({ $0.value }).first,
+            let code = getCodeFrom(returnUrl: returnUrl),
             let clientId = currentApplicationInfo?.clientId,
             let clientSecret = currentApplicationInfo?.clientSecret
         else {
             throw TootSDKError.missingCodeOrClientSecrets
         }
 
-        return try await collectToken(code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackUrl.absoluteString)
+        return try await collectToken(code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackUrl)
+    }
+    
+    private func getCodeFrom(returnUrl: URL) -> String? {
+        var components = URLComponents()
+        components.query = returnUrl.query
+        return components.queryItems?.first(where: {$0.name == "code"})?.value
     }
     
     /// Exchange the callback authorization code for an accessToken

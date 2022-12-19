@@ -28,4 +28,22 @@ internal extension HttpBody {
         let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
         return HttpBody(content: data, headers: headers)
     }
+
+    /// Initialize a new body for a application/x-www-form-urlencoded request with values from the provided URLComponents
+    ///
+    /// - Returns: HTTPBody
+    static func form(components: URLComponents) throws -> HttpBody {
+        let data = components.query?.data(using: .utf8)
+        let headers = ["Content-Type": "application/x-www-form-urlencoded"]
+        return HttpBody(content: data, headers: headers)
+    }
+
+    /// Initialize a new body for a application/x-www-form-urlencoded request with values from the provided query items
+    ///
+    /// - Returns: HTTPBody
+    static func form(queryItems: [URLQueryItem]) throws -> HttpBody {
+        var components = URLComponents()
+        components.queryItems = queryItems
+        return try form(components: components)
+    }
 }
