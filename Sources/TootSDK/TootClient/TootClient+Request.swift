@@ -75,12 +75,12 @@ extension TootClient {
     }
     
 
-    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grandType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken? {
+    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grantType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken? {
 
         let queryItems: [URLQueryItem] = [
             .init(name: "client_id", value: clientId),
             .init(name: "client_secret", value: clientSecret),
-            .init(name: "grant_type", value: grandType),
+            .init(name: "grant_type", value: grantType),
             .init(name: "scope", value: scopes.joined(separator: " ")),
             .init(name: "code", value: code),
             .init(name: "redirect_uri", value: callbackUrl)
