@@ -15,6 +15,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case requiredUrlNotSet
     case missingParameter(parameterName: String)
     case invalidParameter(parameterName: String)
+    /// The requested operation is not supported by the current server flavour.
+    case unsupportedFlavour(current: TootSDKFlavour, required: [TootSDKFlavour])
     
     public var errorDescription: String? {
         switch self {
@@ -34,6 +36,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "missing parameter: \(parameterName)"
         case .invalidParameter(let parameterName):
             return "invalid parameter: \(parameterName)"
+        case .unsupportedFlavour(let current, let required):
+            return "Operation not supported for server flavour \(current), compatible flavours are: \(required.map({"\($0)"}).joined(separator: ", "))."
         }
     }
 }

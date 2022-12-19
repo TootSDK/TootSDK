@@ -17,6 +17,8 @@ public class TootClient {
     public var debugRequests: Bool = false
     /// Set this to `true` to see a `print()` of request response.
     public var debugResponses: Bool = false
+    /// The preferred fediverse server flavour to use for API calls
+    public var flavour: TootSDKFlavour = .mastodon
     
     public let scopes: [String]
     
