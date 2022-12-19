@@ -5,19 +5,28 @@ import Foundation
 
 /// Represents a list of some users that the authenticated user follows.
 public struct List: Codable, Hashable, Identifiable {
+    
     /// The internal database ID of the list.
     public var id: String
+    
     /// The user-defined title of the list.
     public var title: String
+    
     /// The user-defined title of the list.
-    public var repliesPolicy: RepliesPolicy
+    public var repliesPolicy: ListRepliesPolicy?
 
-    public enum RepliesPolicy: String, Hashable, Codable {
-        ///  Show replies to any followed user
-        case followed
-        /// Show replies to members of the list
-        case list
-        /// Show replies to no one
-        case none
+    public init(id: String, title: String, repliesPolicy: ListRepliesPolicy) {
+        self.id = id
+        self.title = title
+        self.repliesPolicy = repliesPolicy
     }
+}
+
+public enum ListRepliesPolicy: String, Hashable, Codable {
+    ///  Show replies to any followed user
+    case followed
+    /// Show replies to members of the list
+    case list
+    /// Show replies to no one
+    case none
 }
