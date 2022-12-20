@@ -51,6 +51,7 @@ public class TootManager: ObservableObject {
     @MainActor public func signOut() {
         KeychainWrapper.standard.removeAllKeys()
         authenticated = false
+        self.currentClient = nil
     }
     
 }

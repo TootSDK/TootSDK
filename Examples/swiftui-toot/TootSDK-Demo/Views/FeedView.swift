@@ -51,6 +51,14 @@ struct FeedView: View {
                 }
             }
             
+            // Reset data if the client changes (user has signed in/out etc
+            Task {
+                for await _ in tootManager.$currentClient.values {
+                    posts = []
+                    name = ""
+                }
+            }
+            
             refresh()
         }
         .refreshable {
