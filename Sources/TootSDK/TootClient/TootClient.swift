@@ -10,32 +10,38 @@ import FoundationNetworking
 public class TootClient {
     
     // MARK: - Public properties
-    public var currentApplicationInfo: TootApplication?
+    /// The URL of the instance we're connected to
     public var instanceURL: URL
-    public var accessToken: String?
+    /// The application info retreived from the instance
+    public var currentApplicationInfo: TootApplication?
     /// Set this to `true` to see a `print()` of outgoing requests.
     public var debugRequests: Bool = false
     /// Set this to `true` to see a `print()` of request response.
     public var debugResponses: Bool = false
     /// The preferred fediverse server flavour to use for API calls
     public var flavour: TootSDKFlavour = .mastodon
-    
+    /// The authorization scopes the client was initialized with
     public let scopes: [String]
-    
+    /// Data streams that the client can subscribe to
     public lazy var data = TootDataStream(client: self)
+    /// The clientName the client was initialized with
+    public let clientName: String
     
     // MARK: - Internal properties
     internal var decoder: JSONDecoder = TootDecoder()
     internal var encoder: JSONEncoder = TootEncoder()
     internal var session: URLSession
     internal let validStatusCodes = 200..<300
-    
+    /// The current accessToken in use
+    internal var accessToken: String?
+
     /// Initialization
     /// - Parameters:
     ///   - session: the URLSession being used internally, defaults to shared
     ///   - instanceURL: the instance you are connecting to
     ///   - accessToken: the existing access token; if you already have one
-    public init(session: URLSession = URLSession.shared,
+    public init(clientName: String = "TootSDK",
+                session: URLSession = URLSession.shared,
                 instanceURL: URL,
                 accessToken: String? = nil,
                 scopes: [String] = ["read", "write", "follow", "push"]) {
@@ -43,6 +49,7 @@ public class TootClient {
         self.instanceURL = instanceURL
         self.accessToken = accessToken
         self.scopes = scopes
+        self.clientName = clientName
     }
     
     /// Prints extra debug details like outgoing requests and responses
