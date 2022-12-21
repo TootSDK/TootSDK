@@ -124,6 +124,7 @@ extension TootClient {
         return try await fetch([Relationship].self, req)
     }
     
+    // swiftlint:disable todo
     // TODO: - Register an account
     // TODO: - Update account credentials
     
