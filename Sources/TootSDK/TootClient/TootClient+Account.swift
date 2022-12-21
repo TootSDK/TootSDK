@@ -107,7 +107,22 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-
+    
+    /// Find out whether a given account is followed, blocked, muted, etc.
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the relationship to the account requested, or an error if unable to retrieve
+    public func getRelationships(by ids: [String]) async throws -> [Relationship] {
+        let req = HttpRequestBuilder { request in
+            request.url = getURL(["api", "v1", "accounts", "relationships"])
+            request.method = .get
+            
+            ids.forEach { id in
+                request.addQueryParameter(name: "id[]", value: id)
+            }
+        }
+        return try await fetch([Relationship].self, req)
+    }
+    
     // TODO: - Register an account
     // TODO: - Update account credentials
     
@@ -119,7 +134,7 @@ extension TootClient {
     // TODO: - Feature account on your profile
     // TODO: - Unfeature account from profile
     // TODO: - Set private note on profile
-    // TODO: - Check relationships to other accounts
+    
     // TODO: - Find familiar followers
     // TODO: - Search for matching accounts
     // TODO: - Lookup account ID from Webfinger address

@@ -61,3 +61,9 @@ public struct Relationship: Codable, Hashable {
     /// This user's profile bio
     public var note: String?
 }
+
+extension Relationship: Equatable {
+    public static func == (lhs: Relationship, rhs: Relationship) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
