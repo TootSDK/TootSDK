@@ -98,7 +98,23 @@ extension TootClient {
         do {
             return try decoder.decode(decode, from: data)
         } catch {
-            throw TootSDKError.decodingError
+            var description: String = "Unknown decoding error"
+        
+            do {
+                _ = try decoder.decode(decode, from: data)
+            } catch let DecodingError.dataCorrupted(context) {
+                description = "context: \(context)"
+            } catch let DecodingError.keyNotFound(key, context) {
+                description = "Key '\(key)' not found:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+            } catch let DecodingError.valueNotFound(value, context) {
+                description = "Value '\(value)' not found:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+            } catch let DecodingError.typeMismatch(type, context) {
+                description = "Type '\(type)' mismatch:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+            } catch {
+                description = error.localizedDescription
+            }
+                
+            throw TootSDKError.decodingError(description)
         }
     }
     

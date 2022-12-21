@@ -7,7 +7,7 @@ import FoundationNetworking
 #endif
 
 public enum TootSDKError: Error, LocalizedError, Equatable {
-    case decodingError
+    case decodingError(_ description: String)
     case authorizationError
     case missingCodeOrClientSecrets
     case nonHTTPURLResponse(data: Data, response: URLResponse)
@@ -22,8 +22,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
         switch self {
         case .authorizationError:
             return "Authorization error"
-        case .decodingError:
-            return "error decoding data"
+        case .decodingError(let description):
+            return "error decoding data:\n" + description
         case .missingCodeOrClientSecrets:
             return "missing code or client data"
         case .nonHTTPURLResponse:
