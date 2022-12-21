@@ -87,13 +87,10 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func getRelationships(by ids: [String]) async throws -> [Relationship] {
-        let req = HttpRequestBuilder { request in
-            request.url = getURL(["api", "v1", "accounts", "relationships"])
-            request.method = .get
-            
-            ids.forEach { id in
-                request.addQueryParameter(name: "id[]", value: id)
-            }
+        let req = HttpRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", "relationships"])
+            $0.method = .get
+            $0.query = ids.map({URLQueryItem(name: "id", value: $0)})
         }
         return try await fetch([Relationship].self, req)
     }
