@@ -27,7 +27,7 @@ struct TootSDK_DemoApp: App {
                         Label("Browse Feed", systemImage: "list.bullet.rectangle")
                     }
                 
-                AccountView()
+                UserAccountView()
                     .tabItem {
                         Label("Account", systemImage: "person.fill")
                     }

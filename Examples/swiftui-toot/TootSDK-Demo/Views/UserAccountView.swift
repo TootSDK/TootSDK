@@ -8,7 +8,7 @@
 import SwiftUI
 import TootSDK
 
-struct AccountView: View {
+struct UserAccountView: View {
     @EnvironmentObject var tootManager: TootManager
     
     var body: some View {
@@ -25,8 +25,8 @@ struct AccountView: View {
     }
 }
 
-struct AccountView_Previews: PreviewProvider {
+struct UserAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView()
+        UserAccountView()
     }
 }

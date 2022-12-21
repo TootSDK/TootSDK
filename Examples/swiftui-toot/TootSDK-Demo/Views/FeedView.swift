@@ -23,12 +23,16 @@ struct FeedView: View {
                     self.path.append(data.id)
                 } label: {
                     self.row(data)
+                        .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)
             }
             .navigationTitle("Feed")
             .navigationDestination(for: String.self) { value in
                 PostOperationsView(postID: .constant(value), path: $path)
+            }
+            .navigationDestination(for: Account.self) { account in
+                AccountView(account: account)
             }
         }
         .task {
@@ -59,6 +63,7 @@ struct FeedView: View {
                 }
             }
             
+            // Refresh our data
             refresh()
         }
         .refreshable {
@@ -68,12 +73,16 @@ struct FeedView: View {
     
     @ViewBuilder func row(_ post: Status) -> some View {
         HStack(alignment: .top) {
+            
             AsyncImage(url: URL(string: post.account.avatar)) { image in
                 image.resizable()
             } placeholder: {
                 ProgressView()
             }
             .frame(width: 80, height: 80)
+            .onLongPressGesture {
+                self.path.append(post.account)
+            }
             
             VStack {
                 HStack {
