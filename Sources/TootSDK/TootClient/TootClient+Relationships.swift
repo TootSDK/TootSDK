@@ -7,11 +7,11 @@ extension TootClient {
     /// Follow the given account. Can also be used to update whether to show reblogs or enable notifications.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
-    public func followAccount(by id: String, params: FollowAccountParams = FollowAccountParams()) async throws -> Relationship {
+    public func followAccount(by id: String, params: FollowAccountParams? = nil) async throws -> Relationship {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "follow"])
             $0.method = .post
-            $0.body = try .multipart(params, boundary: UUID().uuidString)
+            $0.body = try .json(params)
         }
         return try await fetch(Relationship.self, req)
     }
@@ -63,11 +63,11 @@ extension TootClient {
     /// Mute the given account. Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
-    public func muteAccount(by id: String, params: MuteAccountParams = MuteAccountParams()) async throws -> Relationship {
+    public func muteAccount(by id: String, params: MuteAccountParams? = nil) async throws -> Relationship {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "mute"])
             $0.method = .post
-            $0.body = try .multipart(params, boundary: UUID().uuidString)
+            $0.body = try .json(params)
         }
         return try await fetch(Relationship.self, req)
     }
