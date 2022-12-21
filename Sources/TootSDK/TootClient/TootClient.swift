@@ -73,29 +73,40 @@ extension TootClient {
     }
     
     /// Fetch data asynchronously and return the decoded `Decodable` object.
-    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T? {
+    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T {
         let (data, _) = try await fetch(req: req)
         
-        if debugResponses {
-            do {
-                _ = try decoder.decode(decode, from: data)
-            } catch let DecodingError.dataCorrupted(context) {
-                print(context)
-            } catch let DecodingError.keyNotFound(key, context) {
-                print("Key '\(key)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-            } catch let DecodingError.valueNotFound(value, context) {
-                print("Value '\(value)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-            } catch let DecodingError.typeMismatch(type, context) {
-                print("Type '\(type)' mismatch:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-            } catch {
-                print("error: ", error)
+        do {
+            return try decoder.decode(decode, from: data)
+        } catch {
+            let description = fetchError(T.self, data: data)
+            
+            if debugResponses {
+                print(description)
             }
+                
+            throw TootSDKError.decodingError(description)
+        }
+    }
+    
+    private func fetchError<T: Decodable>(_ decode: T.Type, data: Data) -> String {
+        var description: String = "Unknown decoding error"
+    
+        do {
+            _ = try decoder.decode(decode, from: data)
+        } catch let DecodingError.dataCorrupted(context) {
+            description = "context: \(context)"
+        } catch let DecodingError.keyNotFound(key, context) {
+            description = "Key '\(key)' not found:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+        } catch let DecodingError.valueNotFound(value, context) {
+            description = "Value '\(value)' not found:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+        } catch let DecodingError.typeMismatch(type, context) {
+            description = "Type '\(type)' mismatch:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+        } catch {
+            description = error.localizedDescription
         }
         
-        return try decoder.decode(decode, from: data)
+        return description
     }
     
     /// Fetch data asynchronously and return the raw response.

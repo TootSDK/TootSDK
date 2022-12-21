@@ -54,7 +54,7 @@ extension TootClient {
         
         let app = try await fetch(TootApplication.self, registerAppReq)
         
-        guard let app, let clientId = app.clientId else {
+        guard let clientId = app.clientId else {
             return nil
         }
                 

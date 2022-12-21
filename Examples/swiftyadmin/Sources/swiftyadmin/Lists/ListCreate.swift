@@ -17,7 +17,7 @@ struct ListCreate: AsyncParsableCommand {
     print("Creating list")
     let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
 
-    if let list = try await client.createList(params: .init(title: self.name)) {
+    if let list = try? await client.createList(params: .init(title: self.name)) {
       print("Created " + list.id + ", " + list.title)
     } else {
       print("List not created")

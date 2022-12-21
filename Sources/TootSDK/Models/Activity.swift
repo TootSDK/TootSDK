@@ -31,22 +31,22 @@ public struct Activity: Codable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let statuses = Int(try container.decode(String.self, forKey: .statuses)) else {
-            throw TootSDKError.decodingError
+            throw TootSDKError.decodingError("statuses")
         }
         self.statuses = statuses
 
         guard let logins = Int(try container.decode(String.self, forKey: .logins)) else {
-            throw TootSDKError.decodingError
+            throw TootSDKError.decodingError("logins")
         }
         self.logins = logins
 
         guard let registrations = Int(try container.decode(String.self, forKey: .registrations)) else {
-            throw TootSDKError.decodingError
+            throw TootSDKError.decodingError("registrations")
         }
         self.registrations = registrations
 
         guard let weekUnixEpoc = Int(try container.decode(String.self, forKey: .week)) else {
-            throw TootSDKError.decodingError
+            throw TootSDKError.decodingError("weekUnixEpoc")
         }
         self.week = Date(timeIntervalSince1970: TimeInterval(weekUnixEpoc))
     }

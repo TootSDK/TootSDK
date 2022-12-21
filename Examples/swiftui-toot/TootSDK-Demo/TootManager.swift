@@ -16,7 +16,7 @@ public class TootManager: ObservableObject {
     private let callbackUrl = "swiftuitoot://test"
     
     // MARK: - Published properties
-    @Published public var currentClient: TootClient?
+    @Published public var currentClient: TootClient!
     @Published public var authenticated: Bool = false
     
     init() {
