@@ -30,8 +30,6 @@ extension TootClient {
         return try await fetch(Account.self, req)
     }
     
-    
-    
     // swiftlint:disable todo
     // TODO: - Register an account
     // TODO: - Update account credentials
