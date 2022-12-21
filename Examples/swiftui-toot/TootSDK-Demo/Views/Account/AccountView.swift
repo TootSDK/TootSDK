@@ -37,8 +37,6 @@ struct AccountView: View {
                 RelationshipView(relationship: relationship)
             }
             
-            self.buttons()
-            
             Spacer()
         }
         .padding()
@@ -46,27 +44,6 @@ struct AccountView: View {
         .onAppear {
             Task {
                 self.relationship = try await self.tootManager.currentClient.getRelationships(by: [account.id]).first
-            }
-        }
-    }
-    
-    @ViewBuilder func buttons() -> some View {
-        if relationship?.following == true {
-            ButtonView(text: "Unfollow") {
-                self.relationship = try await tootManager.currentClient?.unfollowAccount(by: account.id)
-            }
-        } else {
-            HStack {
-                ButtonView(text: "Follow") {
-                    self.relationship = try await tootManager.currentClient?.followAccount(by: account.id, params: FollowAccountParams(showingReblogs: showingReblogs,
-                                                                                                                                       notify: notify))
-                }
-                
-                Spacer()
-             
-                Toggle("ShowingReblogs", isOn:
-                        $showingReblogs)
-                Toggle("Notify", isOn: $notify)
             }
         }
     }

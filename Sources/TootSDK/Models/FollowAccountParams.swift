@@ -11,7 +11,7 @@ public struct FollowAccountParams: Codable {
     /// Receive notifications when this account posts a status? Defaults to false.
     var notify: Bool
     /// Receive this account’s reblogs in home timeline? Defaults to true.
-    var reblogs: Bool    
+    var reblogs: Bool
     /// Array of String (ISO 639-1 language two-letter code). Filter received statuses for these languages. If not provided, you will receive this account’s posts in all languages.
     var languages: [String]?
     

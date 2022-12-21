@@ -14,21 +14,79 @@ struct RelationshipView: View {
     @State var relationship: Relationship
     @State var showingReblogs: Bool = false
     @State var notifying: Bool = false
+    @State var muting: Bool = false
+    @State var blocking: Bool = false
+    
+    @State var followNotify: Bool = false
+    @State var followShowingReblogs: Bool = false
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             AccountItemView(description: "Following", value: "\(relationship.following)")
+                .frame(alignment: .leading)
             Toggle("Showing Boosts:", isOn: $showingReblogs)
             Toggle("Notifying:", isOn: $notifying)
+            Toggle("Muting:", isOn: $muting)
+            Toggle("Blocking:", isOn: $blocking)
+            
+            buttons()
+        }
+        .onAppear {
+            self.updateTogglesWith(self.relationship)
         }
         .onChange(of: relationship) { newValue in
-            showingReblogs = newValue.showingReblogs ?? false
+            self.updateTogglesWith(newValue)
         }
         .onChange(of: showingReblogs) { newValue in
             self.refreshAccount()
         }
         .onChange(of: notifying) { newValue in
             self.refreshAccount()
+        }
+        .onChange(of: muting) { newValue in
+            Task {
+                if muting {
+                    self.relationship = try await tootManager.currentClient.muteAccount(by: relationship.id)
+                } else {
+                    self.relationship = try await tootManager.currentClient.unmuteAccount(by: relationship.id)
+                }
+            }
+        }
+        .onChange(of: blocking) { newValue in
+            Task {
+                if blocking {
+                    self.relationship = try await tootManager.currentClient.blockAccount(by: relationship.id)
+                } else {
+                    self.relationship = try await tootManager.currentClient.unblockAccount(by: relationship.id)
+                }
+            }
+        }
+    }
+    
+    func updateTogglesWith(_ value: Relationship) {
+        showingReblogs = value.showingReblogs ?? false
+        notifying = value.notifying ?? false
+        muting = value.muting
+        blocking = value.blocking
+    }
+    
+    @ViewBuilder func buttons() -> some View {
+        if relationship.following == true {
+            ButtonView(text: "Unfollow") {
+                self.relationship = try await tootManager.currentClient.unfollowAccount(by: relationship.id)
+            }
+        } else {
+            HStack {
+                ButtonView(text: "Follow") {
+                    self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(showingReblogs: followShowingReblogs,
+                                                                                                                                           notify: followNotify))
+                }
+                
+                Spacer()
+                
+                Toggle("Show Boosts", isOn: $followShowingReblogs)
+                Toggle("Show Notify", isOn: $followNotify)
+            }
         }
     }
     

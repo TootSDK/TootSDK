@@ -89,10 +89,11 @@ extension TootClient {
     /// Mute the given account. Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
-    public func muteAccount(by id: String) async throws -> Relationship {
-        let req = HttpRequestBuilder {
+    public func muteAccount(by id: String, params: MuteAccountParams = MuteAccountParams()) async throws -> Relationship {
+        let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "mute"])
             $0.method = .post
+            $0.body = try .multipart(params, boundary: UUID().uuidString)
         }
         return try await fetch(Relationship.self, req)
     }
