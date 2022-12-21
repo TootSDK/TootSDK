@@ -41,7 +41,7 @@ public extension TootClient {
         }
         
         let response = try await fetch(PleromaOauthAppsResponse.self, req)
-        return response?.apps ?? []
+        return response.apps
     }
     
     /// Delete OAuth application

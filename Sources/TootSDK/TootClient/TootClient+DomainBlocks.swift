@@ -10,7 +10,7 @@ public extension TootClient {
     
     /// Show information about all blocked domains.
     /// - Returns: array of blocked domains
-    func adminGetDomainBlocks() async throws -> [DomainBlock]? {
+    func adminGetDomainBlocks() async throws -> [DomainBlock] {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .get
@@ -29,7 +29,7 @@ public extension TootClient {
             $0.method = .get
         }
         
-        return try await fetch(DomainBlock.self, req)
+        return try? await fetch(DomainBlock.self, req)
     }
     
     /// Blocks a domain on the current instance.
@@ -39,7 +39,7 @@ public extension TootClient {
     /// * prevent following new users from it (but does not remove existing follows)
     ///
     /// Note that the call will be successful even if the domain is already blocked, or if the domain does not exist, or if the domain is not a domain.
-    func adminBlockDomain(params: BlockDomainParams) async throws -> DomainBlock? {
+    func adminBlockDomain(params: BlockDomainParams) async throws -> DomainBlock {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .post

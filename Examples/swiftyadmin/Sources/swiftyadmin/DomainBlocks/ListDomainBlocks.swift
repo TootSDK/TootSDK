@@ -14,7 +14,7 @@ struct ListDomainBlocks: AsyncParsableCommand {
     print("Listing blocked domains:")
     let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
 
-    if let results = try await client.adminGetDomainBlocks() {
+    if let results = try? await client.adminGetDomainBlocks() {
       for domain in results {
         print(domain.id + ", " + domain.domain)
       }

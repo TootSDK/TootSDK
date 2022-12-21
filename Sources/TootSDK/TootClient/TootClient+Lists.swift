@@ -12,14 +12,14 @@ public extension TootClient {
             $0.method = .get
         }
         
-        return try await fetch([List].self, req) ?? []
+        return try await fetch([List].self, req)
     }
     
     /// Fetch the list with the given ID. Used for verifying the title of a list, and which replies to show within that list.
     /// - Parameters:
     ///     - id: The ID of the List in the database.
-    ///
-    func getList(id: String) async throws -> List? {
+    /// - Returns: the List, if successful, throws an error if not
+    func getList(id: String) async throws -> List {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id])
             $0.method = .get
@@ -29,7 +29,8 @@ public extension TootClient {
     }
     
     /// Create a new list.
-    func createList(params: ListParams) async throws -> List? {
+    /// - Returns: the List created, if successful, throws an error if not
+    func createList(params: ListParams) async throws -> List {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "lists"])
             $0.method = .post
@@ -40,7 +41,8 @@ public extension TootClient {
     }
     
     /// Change the title of a list, or which replies to show.
-    func createList(id: String, params: ListParams) async throws -> List? {
+    /// - Returns: the List created, if successful, throws an error if not
+    func createList(id: String, params: ListParams) async throws -> List {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id])
             $0.method = .put
@@ -61,6 +63,7 @@ public extension TootClient {
     }
     
     /// View accounts in a list
+    /// - Returns: a PagedResult with an array of accounts if successful, throws an error if not
     func getListAccounts(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id, "accounts"])

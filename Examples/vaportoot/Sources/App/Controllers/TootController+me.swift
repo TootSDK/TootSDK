@@ -12,8 +12,7 @@ extension TootController {
             return try await logout(req: req)
         }
         
-        let account = try await client.verifyCredentials()
-        guard let account = account else {
+        guard let account = try? await client.verifyCredentials() else {
             throw Abort(.notFound)
         }
         
@@ -21,9 +20,8 @@ extension TootController {
         let query = try req.query.decode(MeQuery.self)
         var replyText = ""
         if let replyPostId = query.replyTo {
-            if let replyToPost = try await client.getStatus(id: replyPostId) {
-                replyText = replyToPost.content ?? ""
-            }
+            let replyToPost = try await client.getStatus(id: replyPostId)
+            replyText = replyToPost.content ?? ""
         }
         let posts = try await client.getHomeTimeline()
         let context = MeContext(

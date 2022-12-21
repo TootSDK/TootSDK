@@ -12,7 +12,7 @@ public extension TootClient {
     /// Publishes the status based on the components provided
     /// - Parameter statusComponents: Status components to be published
     /// - Returns: the published status, if successful, throws an error if not
-    func publishStatus(_ params: StatusParams) async throws -> Status? {
+    func publishStatus(_ params: StatusParams) async throws -> Status {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses"])
             $0.method = .post
@@ -25,7 +25,7 @@ public extension TootClient {
     /// - Parameter id: the ID of the status to be changed
     /// - Parameter params: the updated content of the status to be posted
     /// - Returns: the status after the update
-    func editStatus(id: String, _ params: EditStatusParams) async throws -> Status? {
+    func editStatus(id: String, _ params: EditStatusParams) async throws -> Status {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
             $0.method = .put
@@ -37,7 +37,7 @@ public extension TootClient {
     /// Gets a single status
     /// - Parameter id: the ID of the status to be retrieved
     /// - Returns: the status retrieved, if successful, throws an error if not
-    func getStatus(id: String) async throws -> Status? {
+    func getStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
             $0.method = .get
@@ -45,7 +45,7 @@ public extension TootClient {
         return try await fetch(Status.self, req)
     }
     
-    func getContext(id: String) async throws -> Context? {
+    func getContext(id: String) async throws -> Context {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "context"])
             $0.method = .get
@@ -91,7 +91,7 @@ public extension TootClient {
 
 public extension TootClient {
     
-    func boostStatus(id: String) async throws -> Status? {
+    func boostStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "reblog"])
             $0.method = .post
@@ -99,7 +99,7 @@ public extension TootClient {
         return try await fetch(Status.self, req)
     }
     
-    func unboostStatus(id: String) async throws -> Status? {
+    func unboostStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unreblog"])
             $0.method = .post
@@ -111,7 +111,7 @@ public extension TootClient {
 
 public extension TootClient {
     
-    func bookmarkStatus(id: String) async throws -> Status? {
+    func bookmarkStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "bookmark"])
             $0.method = .post
@@ -119,7 +119,7 @@ public extension TootClient {
         return try await fetch(Status.self, req)
     }
     
-    func unbookmarkStatus(id: String) async throws -> Status? {
+    func unbookmarkStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unbookmark"])
             $0.method = .post
@@ -131,7 +131,7 @@ public extension TootClient {
 
 public extension TootClient {
     
-    func muteStatus(id: String) async throws -> Status? {
+    func muteStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "mute"])
             $0.method = .post
@@ -139,7 +139,7 @@ public extension TootClient {
         return try await fetch(Status.self, req)
     }
     
-    func unmuteStatus(id: String) async throws -> Status? {
+    func unmuteStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unmute"])
             $0.method = .post
@@ -150,7 +150,7 @@ public extension TootClient {
 
 public extension TootClient {
     
-    func pinStatus(id: String) async throws -> Status? {
+    func pinStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "pin"])
             $0.method = .post
@@ -158,7 +158,7 @@ public extension TootClient {
         return try await fetch(Status.self, req)
     }
     
-    func unpinStatus(id: String) async throws -> Status? {
+    func unpinStatus(id: String) async throws -> Status {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unpin"])
             $0.method = .post
@@ -175,7 +175,7 @@ public extension TootClient {
             $0.method = .get
         }
         
-        let accounts = try await fetch([Account].self, req) ?? []
+        let accounts = try await fetch([Account].self, req)
         return accounts.compactMap({ $0 })
     }
     
@@ -185,7 +185,7 @@ public extension TootClient {
             $0.method = .get
         }
         
-        let accounts = try await fetch([Account].self, req) ?? []
+        let accounts = try await fetch([Account].self, req)
         return accounts.compactMap({ $0 })
     }
     
@@ -199,7 +199,7 @@ public extension TootClient {
             $0.method = .get
         }
         
-        let statusEdits = try await fetch([StatusEdit].self, req) ?? []
+        let statusEdits = try await fetch([StatusEdit].self, req)
         return statusEdits.compactMap({ $0 })
     }
     
@@ -207,7 +207,7 @@ public extension TootClient {
 
 public extension TootClient {
     
-    func getStatusSource(id: String) async throws -> StatusSource? {
+    func getStatusSource(id: String) async throws -> StatusSource {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "source"])
             $0.method = .get

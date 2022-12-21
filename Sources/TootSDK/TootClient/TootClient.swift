@@ -73,7 +73,7 @@ extension TootClient {
     }
     
     /// Fetch data asynchronously and return the decoded `Decodable` object.
-    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T? {
+    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T {
         let (data, _) = try await fetch(req: req)
         
         if debugResponses {
@@ -95,7 +95,11 @@ extension TootClient {
             }
         }
         
-        return try decoder.decode(decode, from: data)
+        do {
+            return try decoder.decode(decode, from: data)
+        } catch {
+            throw TootSDKError.decodingError
+        }
     }
     
     /// Fetch data asynchronously and return the raw response.
