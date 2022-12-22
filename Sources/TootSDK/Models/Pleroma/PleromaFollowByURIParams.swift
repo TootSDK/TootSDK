@@ -7,6 +7,6 @@
 
 import Foundation
 
-internal struct PleromaFollowByURIParams: Codable {
-    var uri: String
+public struct PleromaFollowByURIParams: Codable {
+    public var uri: String
 }
