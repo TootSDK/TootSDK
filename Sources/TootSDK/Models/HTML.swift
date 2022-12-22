@@ -32,6 +32,9 @@ public struct HTML: Codable {
     }
     
     private static func createAttributedString(value: String?) -> NSAttributedString? {
+        // TODO: - make this load custom emojis, and check for other types of non-html payload (e.g markdown/bbcode)
+        //       -  https://github.com/TootSDK/TootSDK/issues/35
+        
         // Strip the paragraphs out, as otherwise we indent our text in the attributed string
         // We may want to add more to this, as payloads an vary.
         if let plain = value?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: ""),
