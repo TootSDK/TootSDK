@@ -35,6 +35,8 @@ All methods and types which the library makes public ideally have a meaningful d
 
 It is recommended to include unit tests covering your changes.
 
+We use [Jazzy](https://github.com/realm/jazzy) for our documentation page. To update the docs, execute `./Scripts/updatedocs.sh` 
+
 ### Talk to the team 🤙
 
 We'd love it if you'd talk to us over on the Fediverse! Current maintainers and admins for TootSDK are:
