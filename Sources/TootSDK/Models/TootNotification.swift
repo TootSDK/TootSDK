@@ -27,11 +27,11 @@ public struct TootNotification: Codable, Hashable {
     public enum NotificationType: String, Codable {
         /// Someone followed you
         case follow
-        /// Someone mentioned you in their status
+        /// Someone mentioned you in their post
         case mention
-        /// Someone boosted one of your statuses
-        case reblog
-        /// Someone favourited one of your statuses
+        /// Someone reposted one of your posts
+        case repost = "reblog"
+        /// Someone favourited one of your posts
         case favourite
         /// A poll you have voted in or created has ended
         case poll

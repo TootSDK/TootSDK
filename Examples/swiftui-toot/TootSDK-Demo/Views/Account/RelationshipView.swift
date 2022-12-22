@@ -64,7 +64,7 @@ struct RelationshipView: View {
     }
     
     func updateTogglesWith(_ value: Relationship) {
-        showingReblogs = value.showingReblogs ?? false
+        showingReblogs = value.showingReposts ?? false
         notifying = value.notifying ?? false
         muting = value.muting
         blocking = value.blocking
@@ -78,7 +78,7 @@ struct RelationshipView: View {
         } else {
             HStack {
                 ButtonView(text: "Follow") {
-                    self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(showingReblogs: followShowingReblogs,
+                    self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(reposts: followShowingReblogs,
                                                                                                                                            notify: followNotify))
                 }
                 
@@ -92,7 +92,7 @@ struct RelationshipView: View {
     
     func refreshAccount() {
         Task {
-            self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(showingReblogs: showingReblogs, notify: notifying))
+            self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(reposts: showingReblogs, notify: notifying))
         }
     }
 }

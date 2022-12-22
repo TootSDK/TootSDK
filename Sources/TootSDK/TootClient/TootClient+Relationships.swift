@@ -4,7 +4,7 @@
 import Foundation
 
 extension TootClient {
-    /// Follow the given account. Can also be used to update whether to show reblogs or enable notifications.
+    /// Follow the given account. Can also be used to update whether to show reposts or enable notifications.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func followAccount(by id: String, params: FollowAccountParams? = nil) async throws -> Relationship {
