@@ -32,6 +32,7 @@ public struct HTML: Codable {
     }
     
     private static func createAttributedString(value: String?) -> NSAttributedString? {
+        // swiftlint:disable todo
         // TODO: - make this load custom emojis, and check for other types of non-html payload (e.g markdown/bbcode)
         //       -  https://github.com/TootSDK/TootSDK/issues/35
         
