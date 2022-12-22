@@ -30,9 +30,10 @@ struct StatusView: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
-                    .frame(width: 80, height: 80)
+                    .frame(width: 80)
                     
                     Text((status.account.displayName ?? "") + " boosted")
+                        .font(.caption.italic())
                 }
             }
             
@@ -44,12 +45,14 @@ struct StatusView: View {
                 }
                 .frame(width: 80, height: 80)
                 
-                VStack {
+                VStack(spacing: 8) {
                     HStack {
                         Text(displayStatus.account.displayName ?? "?")
                             .font(.caption.bold())
                         Text(displayStatus.account.username)
                             .font(.caption)
+                        
+                        Spacer()
                     }
                     
                     if attributed, let attributedText = displayStatus.content?.attributedString {
