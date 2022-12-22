@@ -92,7 +92,7 @@ struct FeedView: View {
                         .font(.caption)
                 }
                 
-                Text(post.text ?? "?")
+                Text(post.content ?? "?")
                     .font(.body)
             }
         }
