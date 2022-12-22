@@ -14,7 +14,7 @@ public protocol TootStream {
 /// A list of stream types which return `[Status]`
 public enum StatusTootStreams: Hashable {
     
-    /// Provides your
+    /// A stream of the user's home timeline
     case timeLineHome
 }
 
