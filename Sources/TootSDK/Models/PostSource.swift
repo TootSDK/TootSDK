@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StatusSource: Codable {
+public struct PostSource: Codable {
     var id: String
     var text: String
     var spoilerText: String

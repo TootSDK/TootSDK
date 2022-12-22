@@ -12,13 +12,13 @@ public struct FollowAccountParams: Codable {
     var notify: Bool
     /// Receive this account’s reposts in home timeline? Defaults to true.
     var reposts: Bool
-    /// Array of String (ISO 639-1 language two-letter code). Filter received statuses for these languages. If not provided, you will receive this account’s posts in all languages.
+    /// Array of String (ISO 639-1 language two-letter code). Filter received posts for these languages. If not provided, you will receive this account’s posts in all languages.
     var languages: [String]?
     
     /// - Parameters:
     ///   - reposts: Receive this account’s reposts in home timeline? Defaults to true.
     ///   - notify: Receive notifications when this account posts a status? Defaults to false.
-    ///   - languages: Array of String (ISO 639-1 language two-letter code). Filter received statuses for these languages. If not provided, you will receive this account’s posts in all languages.
+    ///   - languages: Array of String (ISO 639-1 language two-letter code). Filter received posts for these languages. If not provided, you will receive this account’s posts in all languages.
     public init(reposts: Bool = true,
                 notify: Bool = false,
                 languages: [String]? = nil) {

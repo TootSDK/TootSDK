@@ -20,13 +20,13 @@ public extension TootClient {
         return try await fetch(ScheduledStatus.self, req)
     }
     
-    /// Gets scheduled statuses
+    /// Gets scheduled posts
     /// - Parameters:
     ///   - minId: Return results immediately newer than ID.
     ///   - maxId: Return results older than ID
     ///   - sinceId: Return results newer than ID
     ///   - limit: Maximum number of results to return. Defaults to 20. Max 40
-    /// - Returns: array of scheduled statuses (empty if none), an error if any issue
+    /// - Returns: array of scheduled posts (empty if none), an error if any issue
     func getScheduledStatus(minId: String?, maxId: String?, sinceId: String?, limit: Int?) async throws -> [ScheduledStatus] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses"])

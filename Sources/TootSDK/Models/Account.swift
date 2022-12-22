@@ -81,7 +81,9 @@ public class Account: Codable, Identifiable {
     public var bot: Bool?
     /// An extra entity to be used with API methods to verify credentials and update credentials
     public var source: TootSource?
-    
+}
+
+public extension Account {
     enum CodingKeys: String, CodingKey {
         case id
         case username
@@ -97,8 +99,8 @@ public class Account: Codable, Identifiable {
         case emojis
         case discoverable
         case createdAt
-        case lastPostAt = "last_status_at"
-        case postsCount = "statuses_count"
+        case lastPostAt = "lastStatusAt"
+        case postsCount = "statusesCount"
         case followersCount
         case followingCount
         case moved

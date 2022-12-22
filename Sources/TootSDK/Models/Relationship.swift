@@ -69,7 +69,7 @@ public struct Relationship: Codable, Hashable {
         case followedBy
         case muting
         case mutingNotifications
-        case showingReposts = "showing_reblogs"
+        case showingReposts = "showingReblogs"
         case notifying
         case blocking
         case domainBlocking

@@ -71,7 +71,7 @@ public struct Instance: Codable, Hashable {
     public struct Stats: Codable, Hashable {
         /// Users registered on this instance. Number.
         public var userCount: Int?
-        /// Statuses authored by users on instance. Number.
+        /// Posts authored by users on instance. Number.
         public var statusCount: Int?
         /// Domains federated with this instance. Number.
         public var domainCount: Int?

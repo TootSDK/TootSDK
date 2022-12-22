@@ -19,7 +19,7 @@ public enum StatusTootStreams: Hashable {
 }
 
 extension StatusTootStreams: TootStream {
-    public typealias ResponseType = [Status]
+    public typealias ResponseType = [Post]
 }
 
 /// A list of stream types which return `Account`
@@ -102,7 +102,7 @@ extension TootDataStream {
     /// Provides an async stream of updates for the given stream
     /// - Parameter stream: the stream type to update
     /// - Returns: async stream of values
-    public func stream(_ stream: StatusTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Status]> {
+    public func stream(_ stream: StatusTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
         if let streamHolder = cachedStreams[stream] as? TootEndpointStream<StatusTootStreams> {
             return streamHolder.stream
         }

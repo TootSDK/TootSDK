@@ -8,29 +8,29 @@ extension TootController {
     guard let client = try await getAuthenticatedClient(req: req) else {
       return try await logout(req: req)
     }
-
+    client.debugOn()
     let actionData = try req.content.decode(TootActionData.self)
 
-    guard let status = try? await client.getStatus(id: actionData.id) else {
-      req.logger.error("The specified status with id \(actionData.id) was not found.")
+    guard let post = try? await client.getPost(id: actionData.id) else {
+      req.logger.error("The specified post with id \(actionData.id) was not found.")
       throw Abort(.notFound)
     }
 
     switch actionData.action {
     case .toggleFavourite:
       let _ =
-        status.favourited != true
-        ? try await client.favouriteStatus(id: actionData.id)
-        : try await client.unfavouriteStatus(id: actionData.id)
+        post.favourited != true
+        ? try await client.favouritePost(id: actionData.id)
+        : try await client.unfavouritePost(id: actionData.id)
     case .toggleBookmark:
       let _ =
-        status.bookmarked != true
-        ? try await client.bookmarkStatus(id: actionData.id)
-        : try await client.unbookmarkStatus(id: actionData.id)
+        post.bookmarked != true
+        ? try await client.bookmarkPost(id: actionData.id)
+        : try await client.unbookmarkPost(id: actionData.id)
     case .reply:
       return req.redirect(to: "/toot/me?replyTo=\(actionData.id)")
     case .repost:
-      _ = try await client.boostStatus(id: actionData.id)
+      _ = try await client.boostPost(id: actionData.id)
     }
 
     return req.redirect(to: "/toot/me")

@@ -7,9 +7,9 @@ public struct Conversation: Codable, Hashable {
     public var id: String
     public var accounts: [Account]
     public var unread: Bool
-    public var lastPost: Status?
+    public var lastPost: Post?
     
-    public init(id: String, accounts: [Account], unread: Bool, lastPost: Status?) {
+    public init(id: String, accounts: [Account], unread: Bool, lastPost: Post?) {
         self.id = id
         self.accounts = accounts
         self.unread = unread
@@ -20,6 +20,6 @@ public struct Conversation: Codable, Hashable {
         case id
         case accounts
         case unread
-        case lastPost = "last_status"
+        case lastPost = "lastStatus"
     }
 }

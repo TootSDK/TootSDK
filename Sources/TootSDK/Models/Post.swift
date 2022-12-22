@@ -4,13 +4,13 @@
 import Foundation
 
 /// Represents a post posted by an account.
-public class Status: Codable, Identifiable {
+public class Post: Codable, Identifiable {
     public init(id: String,
                 uri: String,
                 createdAt: Date,
                 account: Account,
                 content: String? = nil,
-                visibility: Status.Visibility,
+                visibility: Post.Visibility,
                 sensitive: Bool,
                 spoilerText: String,
                 mediaAttachments: [Attachment],
@@ -24,7 +24,7 @@ public class Status: Codable, Identifiable {
                 url: String? = nil,
                 inReplyToId: String? = nil,
                 inReplyToAccountId: String? = nil,
-                repost: Status? = nil,
+                repost: Post? = nil,
                 poll: Poll? = nil,
                 card: Card? = nil,
                 language: String? = nil,
@@ -105,7 +105,7 @@ public class Status: Codable, Identifiable {
     /// ID of the account being replied to.
     public var inReplyToAccountId: String?
     /// The post being reposted.
-    public var repost: Status?
+    public var repost: Post?
     /// The poll attached to the post.
     public var poll: Poll?
     /// Preview card for links included within post content.
@@ -151,7 +151,7 @@ public class Status: Codable, Identifiable {
         case mentions
         case tags
         case emojis
-        case repostsCount = "reblogs_count"
+        case repostsCount = "reblogsCount"
         case favouritesCount
         case repliesCount
         case url
@@ -170,8 +170,8 @@ public class Status: Codable, Identifiable {
     }
 }
 
-extension Status: Hashable {
-    public static func == (lhs: Status, rhs: Status) -> Bool {
+extension Post: Hashable {
+    public static func == (lhs: Post, rhs: Post) -> Bool {
         lhs.id == rhs.id
         && lhs.uri == rhs.uri
         && lhs.createdAt == rhs.createdAt

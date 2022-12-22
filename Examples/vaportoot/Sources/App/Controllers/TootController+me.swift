@@ -12,6 +12,7 @@ extension TootController {
       return try await logout(req: req)
     }
 
+    client.debugOn()
     guard let account = try? await client.verifyCredentials() else {
       throw Abort(.notFound)
     }
@@ -20,7 +21,7 @@ extension TootController {
     let query = try req.query.decode(MeQuery.self)
     var replyText = ""
     if let replyPostId = query.replyTo {
-      let replyToPost = try await client.getStatus(id: replyPostId)
+      let replyToPost = try await client.getPost(id: replyPostId)
       replyText = replyToPost.content ?? ""
     }
     let posts = try await client.getHomeTimeline()
@@ -28,7 +29,7 @@ extension TootController {
       note: account.note,
       name: account.tootRichDisplayName ?? "",
       avatar: account.avatar,
-      posts: posts.result.map({ Post(status: $0) }),
+      posts: posts.result.map({ PostItem(post: $0) }),
       replyText: replyText,
       replyId: query.replyTo)
     return try await req.view.render(
@@ -42,7 +43,7 @@ struct MeContext: Encodable {
   var note: String
   var name: String
   var avatar: String
-  var posts: [Post]
+  var posts: [PostItem]
   var replyText: String?
   var replyId: String?
 }

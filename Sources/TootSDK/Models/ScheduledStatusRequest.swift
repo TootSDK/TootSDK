@@ -14,7 +14,7 @@ internal struct ScheduledStatusRequest: Codable {
     /// Mark status and attached media as sensitive? Defaults to false.
     public var spoilerText: String?
     /// Sets the visibility of the posted status to public, unlisted, private, direct.
-    public var visibility: Status.Visibility
+    public var visibility: Post.Visibility
     /// ISO 639 language code for this status.
     public var language: String?
     /// UTC Datetime at which to schedule a status in ISO 8601 format

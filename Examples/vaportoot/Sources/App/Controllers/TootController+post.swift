@@ -13,13 +13,13 @@ extension TootController {
 
     if let replyId = postRequest.replyId {
       // replying
-      let _ = try await client.publishStatus(
+      let _ = try await client.publishPost(
         .init(
-          status: postRequest.text, inReplyToId: replyId, visibility: .unlisted))
+          post: postRequest.text, inReplyToId: replyId, visibility: .unlisted))
     } else {
       // posting new
-      let _ = try await client.publishStatus(
-        .init(status: postRequest.text, visibility: .unlisted, spoilerText: postRequest.cw))
+      let _ = try await client.publishPost(
+        .init(post: postRequest.text, visibility: .unlisted, spoilerText: postRequest.cw))
 
     }
 

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Reports filed against users and/or statuses, to be taken action on by moderators.
+/// Reports filed against users and/or posts, to be taken action on by moderators.
 public struct Report: Codable, Hashable {
     public var id: String
     public var actionTaken: Bool?

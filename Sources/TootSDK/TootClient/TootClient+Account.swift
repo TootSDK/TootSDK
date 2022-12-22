@@ -34,7 +34,7 @@ extension TootClient {
     // TODO: - Register an account
     // TODO: - Update account credentials
     
-    // TODO: - Get account’s statuses
+    // TODO: - Get account’s posts
     // TODO: - Get account’s followers
     // TODO: - Get account’s following
     // TODO: - Get account’s featured tags

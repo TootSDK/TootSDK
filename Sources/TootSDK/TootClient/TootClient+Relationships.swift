@@ -94,7 +94,7 @@ extension TootClient {
         return try await fetch(Relationship.self, req)
     }
     
-    /// Block the given account. Clients should filter statuses from this account if received (e.g. due to a boost in the Home timeline)
+    /// Block the given account. Clients should filter posts from this account if received (e.g. due to a boost in the Home timeline)
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func blockAccount(by id: String) async throws -> Relationship {
@@ -116,7 +116,7 @@ extension TootClient {
         return try await fetch(Relationship.self, req)
     }
     
-    /// Mute the given account. Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
+    /// Mute the given account. Clients should filter posts and notifications from this account, if received (e.g. due to a boost in the Home timeline).
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func muteAccount(by id: String, params: MuteAccountParams? = nil) async throws -> Relationship {

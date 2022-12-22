@@ -23,7 +23,7 @@ public struct ScheduledStatusParams: Codable {
     ///   - scheduledAt: UTC Datetime at which to schedule a status. Must be at least 5 minutes in the future.
     ///   - contentType: (Pleroma) The MIME type of the status, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
-    public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Status.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: String? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
+    public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Post.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: String? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
         
         self.text = text
         self.mediaIds = mediaIds
@@ -48,7 +48,7 @@ public struct ScheduledStatusParams: Codable {
     /// Mark status and attached media as sensitive? Defaults to false.
     public var spoilerText: String?
     /// Sets the visibility of the posted status to public, unlisted, private, direct.
-    public var visibility: Status.Visibility
+    public var visibility: Post.Visibility
     /// ISO 639 language code for this status.
     public var language: String?
     /// UTC Datetime at which to schedule a status.

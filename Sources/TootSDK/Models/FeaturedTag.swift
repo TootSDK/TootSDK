@@ -22,7 +22,7 @@ public struct FeaturedTag: Codable, Hashable {
         case id
         case name
         case url
-        case postsCount = "statuses_count"
-        case lastPostAt = "last_status_at"
+        case postsCount = "statusesCount"
+        case lastPostAt = "lastStatusAt"
     }
 }

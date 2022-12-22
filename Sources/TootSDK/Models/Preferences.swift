@@ -6,7 +6,7 @@ import Foundation
 /// Represents a user's preferences.
 public struct Preferences: Codable, Hashable {
     /// Default visibility for new posts. Equivalent to Source#privacy.
-    public var postingDefaultVisibility: Status.Visibility
+    public var postingDefaultVisibility: Post.Visibility
     /// Default sensitivity flag for new posts. Equivalent to Source#sensitive.
     public var postingDefaultSensitive: Bool
     /// Default language for new posts. Equivalent to Source#language

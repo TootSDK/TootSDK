@@ -24,7 +24,7 @@ struct MakePostView: View {
     
     @State private var path = NavigationPath()
         
-    @State var visibility: Status.Visibility = .public {
+    @State var visibility: Post.Visibility = .public {
         didSet {
             print(visibility)
         }
@@ -36,7 +36,7 @@ struct MakePostView: View {
         NavigationStack(path: $path) {
             Form {
                 Picker(selection: $visibility, label: Text("Position")) {
-                    ForEach(Status.Visibility.allCases, id: \.self) { visibility in
+                    ForEach(Post.Visibility.allCases, id: \.self) { visibility in
                         Text(visibility.rawValue)
                     }
                 }
@@ -117,8 +117,8 @@ struct MakePostView: View {
     }
     
     func makeRegularPost() async throws -> String? {
-        let params = StatusParams.init(status: post, mediaIds: [], visibility: visibility)
-        return try await tootManager.currentClient?.publishStatus(params).id
+        let params = PostParams.init(status: post, mediaIds: [], visibility: visibility)
+        return try await tootManager.currentClient?.publishPost(params).id
     }
     
     func makePostScheduled() async throws -> String? {

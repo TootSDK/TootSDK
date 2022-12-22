@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Represents an application that interfaces with the REST API to access accounts or post statuses.
+/// Represents an application that interfaces with the REST API to access accounts or posts.
 public struct TootApplication: Codable, Hashable {
     public init(name: String,
                 website: String? = nil,
