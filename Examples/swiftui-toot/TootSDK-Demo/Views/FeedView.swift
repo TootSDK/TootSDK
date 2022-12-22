@@ -88,11 +88,11 @@ struct FeedView: View {
                 HStack {
                     Text(post.account.displayName ?? "?")
                         .font(.caption.bold())
-                    Text(post.account.username)
+                    Text(post.account.username ?? "")
                         .font(.caption)
                 }
                 
-                Text(post.content ?? "?")
+                Text(post.text ?? "?")
                     .font(.body)
             }
         }
