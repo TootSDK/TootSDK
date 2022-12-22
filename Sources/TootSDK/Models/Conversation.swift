@@ -7,12 +7,19 @@ public struct Conversation: Codable, Hashable {
     public var id: String
     public var accounts: [Account]
     public var unread: Bool
-    public var lastStatus: Status?
-
-    public init(id: String, accounts: [Account], unread: Bool, lastStatus: Status?) {
+    public var lastPost: Status?
+    
+    public init(id: String, accounts: [Account], unread: Bool, lastPost: Status?) {
         self.id = id
         self.accounts = accounts
         self.unread = unread
-        self.lastStatus = lastStatus
+        self.lastPost = lastPost
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case accounts
+        case unread
+        case lastPost = "last_status"
     }
 }

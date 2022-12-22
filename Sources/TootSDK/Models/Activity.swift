@@ -5,17 +5,17 @@ import Foundation
 
 /// Represents a weekly bucket of instance activity.
 public struct Activity: Codable, Hashable {
-    public init(week: Date, statuses: Int, logins: Int, registrations: Int) {
+    public init(week: Date, posts: Int, logins: Int, registrations: Int) {
         self.week = week
-        self.statuses = statuses
+        self.posts = posts
         self.logins = logins
         self.registrations = registrations
     }
 
     /// Midnight at the first day of the week.
     var week: Date
-    /// Statuses created since the week began.
-    var statuses: Int
+    /// posts created since the week began.
+    var posts: Int
     /// User logins since the week began.
     var logins: Int
     /// User registrations since the week began.
@@ -23,17 +23,17 @@ public struct Activity: Codable, Hashable {
 
     enum CodingKeys: String, CodingKey {
         case week
-        case statuses
+        case posts = "statuses"
         case logins
         case registrations
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard let statuses = Int(try container.decode(String.self, forKey: .statuses)) else {
-            throw TootSDKError.decodingError("statuses")
+        guard let posts = Int(try container.decode(String.self, forKey: .posts)) else {
+            throw TootSDKError.decodingError("posts")
         }
-        self.statuses = statuses
+        self.posts = posts
 
         guard let logins = Int(try container.decode(String.self, forKey: .logins)) else {
             throw TootSDKError.decodingError("logins")
@@ -54,7 +54,7 @@ public struct Activity: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(String(Int(week.timeIntervalSince1970)), forKey: .week)
-        try container.encode(String(statuses), forKey: .statuses)
+        try container.encode(String(posts), forKey: .posts)
         try container.encode(String(logins), forKey: .logins)
         try container.encode(String(registrations), forKey: .registrations)
     }

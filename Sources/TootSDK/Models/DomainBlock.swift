@@ -8,7 +8,7 @@
 import Foundation
 
 /// The policy to be applied by this domain block.
-///   - silence = Account statuses from this domain will be hidden by default
+///   - silence = Account posts from this domain will be hidden by default
 ///   - suspend = All incoming data from this domain will be rejected
 ///   - noop = Do nothing. Allows for rejecting media or reports
 public enum DomainBlockSeverity: String, Codable, Hashable {

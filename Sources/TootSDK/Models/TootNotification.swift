@@ -21,7 +21,7 @@ public struct TootNotification: Codable, Hashable {
     public var account: Account
     /// The timestamp of the notification.
     public var createdAt: Date
-    /// Status that was the object of the notification, e.g. in mentions, reblogs, favourites, or polls.
+    /// Status that was the object of the notification, e.g. in mentions, reposts, favourites, or polls.
     public var status: Status?
 
     public enum NotificationType: String, Codable {

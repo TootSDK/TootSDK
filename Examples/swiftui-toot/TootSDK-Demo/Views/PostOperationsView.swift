@@ -59,9 +59,9 @@ struct PostOperationsView: View {
             }
             
             ButtonView(text: "Edit post (appends 🧡)") {
-                guard let oldPost = try await tootManager.currentClient?.getStatus(id: postID) else { return }
+                guard let oldPost = try await tootManager.currentClient?.getStatusSource(id: postID) else { return }
                 
-                let editParams = EditStatusParams(status: "\(oldPost.content ?? "") 🧡",
+                let editParams = EditStatusParams(post: "\(oldPost.content ?? "") 🧡",
                                                   spoilerText: oldPost.spoilerText,
                                                   sensitive: oldPost.sensitive,
                                                   mediaIds: nil,
