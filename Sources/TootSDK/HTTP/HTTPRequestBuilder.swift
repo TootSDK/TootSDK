@@ -7,13 +7,13 @@ import FoundationNetworking
 #endif
 
 /// HttpRequestBuilder is internal to TootSDK
-internal final class HttpRequestBuilder: HttpRequest {
+internal final class HTTPRequestBuilder: HTTPRequest {
     
     /// Initialize a new request.
     ///
     /// - Parameters:
     ///   - configure: configure callback.
-    public init(with configure: ((inout HttpRequestBuilder) throws -> Void)) rethrows {
+    public init(with configure: ((inout HTTPRequestBuilder) throws -> Void)) rethrows {
         var this = self
         try configure(&this)
     }
@@ -65,10 +65,10 @@ internal final class HttpRequestBuilder: HttpRequest {
         set { urlComponents.queryItems = newValue }
     }
     
-    public var body: HttpBody?
+    public var body: HTTPBody?
 }
 
-internal extension HttpRequestBuilder {
+internal extension HTTPRequestBuilder {
     /// Create an instance of `URLRequest` using the current configuration
     func build() throws -> URLRequest {
         guard let url else {

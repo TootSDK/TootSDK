@@ -11,7 +11,7 @@ public extension TootClient {
     /// - Returns: the ScheduledStatus, if successful, throws an error if not
     func scheduleStatus(_ params: ScheduledStatusParams) async throws -> ScheduledStatus {
         let requestParams = try ScheduledStatusRequest(from: params)
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses"])
             $0.method = .post
             $0.body = try .multipart(requestParams, boundary: UUID().uuidString)
@@ -28,7 +28,7 @@ public extension TootClient {
     ///   - limit: Maximum number of results to return. Defaults to 20. Max 40
     /// - Returns: array of scheduled statuses (empty if none), an error if any issue
     func getScheduledStatus(minId: String?, maxId: String?, sinceId: String?, limit: Int?) async throws -> [ScheduledStatus] {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses"])
             $0.method = .get
             
@@ -57,7 +57,7 @@ public extension TootClient {
     /// - Parameter id: the ID of the status to be retrieved
     /// - Returns: the scheduled status retrieved, if successful, throws an error if not
     func getScheduledStatus(id: String) async throws -> ScheduledStatus? {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])
             $0.method = .get
         }
@@ -71,7 +71,7 @@ public extension TootClient {
     /// - Returns: the status after the update
     func updateScheduledStatusDate(id: String, _ params: ScheduledStatusParams) async throws -> ScheduledStatus? {
         let requestParams = try ScheduledStatusRequest(from: params)
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])
             $0.method = .put
             $0.body = try .multipart(requestParams, boundary: UUID().uuidString)
@@ -84,7 +84,7 @@ public extension TootClient {
     /// - Parameter id: the ID of the status to be deleted
     /// - Returns: the status deleted (for delete and redraft), if successful, throws an error if not
     func deleteScheduledStatus(id: String) async throws {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])
             $0.method = .delete
         }

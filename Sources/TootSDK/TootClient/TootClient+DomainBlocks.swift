@@ -11,7 +11,7 @@ public extension TootClient {
     /// Show information about all blocked domains.
     /// - Returns: array of blocked domains
     func adminGetDomainBlocks() async throws -> [DomainBlock] {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .get
 
@@ -24,7 +24,7 @@ public extension TootClient {
     /// - Parameter id: The ID of the DomainBlock in the instance's database
     /// - Returns: DomainBlock (optional)
     func adminGetDomainBlock(id: String) async throws -> DomainBlock? {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", id])
             $0.method = .get
         }
@@ -40,7 +40,7 @@ public extension TootClient {
     ///
     /// Note that the call will be successful even if the domain is already blocked, or if the domain does not exist, or if the domain is not a domain.
     func adminBlockDomain(params: BlockDomainParams) async throws -> DomainBlock {
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .post
             $0.body = try .multipart(params, boundary: UUID().uuidString)
@@ -53,7 +53,7 @@ public extension TootClient {
     /// Note that the call will be successful even if the domain was not previously blocked.
     /// - Parameter domain: The ID of the DomainAllow in the database.
     func adminUnblockDomain(domain: String) async throws {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", domain])
             $0.method = .delete
         }
@@ -70,7 +70,7 @@ public extension TootClient {
     ///   - limit: Maximum number of results to return. Defaults to 40.
     /// - Returns: Paginated response with an array of sttrings
     func userGetDomainBlocks(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[String]> {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "domain_blocks"])
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
@@ -97,7 +97,7 @@ public extension TootClient {
     /// Note that the call will be successful even if the domain is already blocked, or if the domain does not exist, or if the domain is not a domain.
     /// - Parameter domain: the domain to block (e.g "somewhere.social")
     func userBlockDomain(domain: String) async throws {
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "domain_blocks"])
             $0.method = .post
             $0.body = try .multipart(BlockDomainParams(domain: domain), boundary: UUID().uuidString)
@@ -109,7 +109,7 @@ public extension TootClient {
     /// Note that the call will be successful even if the domain was not previously blocked.
     /// - Parameter domain: the instance's id of the domain being unblocked
     func userUnblockDomain(domain: String) async throws {
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "domain_blocks"])
             $0.method = .delete
             $0.body = try .multipart(BlockDomainParams(domain: domain), boundary: UUID().uuidString)

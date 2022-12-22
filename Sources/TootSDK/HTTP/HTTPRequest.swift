@@ -6,7 +6,7 @@ import Foundation
 import FoundationNetworking
 #endif
 
-internal protocol HttpRequest {
+internal protocol HTTPRequest {
     /// The destination url of the rqeuest
     var url: URL? {get set}
     
@@ -24,7 +24,7 @@ internal protocol HttpRequest {
     func addQueryParameter(name: String, value: String)
     
     /// The body of ther request
-    var body: HttpBody? {get set}
+    var body: HTTPBody? {get set}
     
     /// Create an instance of `URLRequest` using the current configuration
     func build() throws -> URLRequest

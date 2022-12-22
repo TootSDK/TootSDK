@@ -10,7 +10,7 @@ import Foundation
 public extension TootClient {
     
     func getHomeTimeline(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Status]> {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "timelines", "home"])
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
@@ -30,7 +30,7 @@ public extension TootClient {
     
     /// View statuses in the given list timeline.
     func getListTimeline(listId: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Status]> {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "timelines", "list", listId])
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)

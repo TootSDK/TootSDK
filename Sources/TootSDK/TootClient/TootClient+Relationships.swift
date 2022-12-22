@@ -8,7 +8,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func followAccount(by id: String, params: FollowAccountParams? = nil) async throws -> Relationship {
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "follow"])
             $0.method = .post
             $0.body = try .json(params)
@@ -47,7 +47,7 @@ extension TootClient {
     public func lookupAccount(uri: String) async throws -> AccountLookup {
         guard flavour == .mastodon else { throw TootSDKError.unsupportedFlavour(current: flavour, required: [.mastodon]) }
         
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "lookup"])
             $0.method = .get
             $0.addQueryParameter(name: "acct", value: uri)
@@ -64,7 +64,7 @@ extension TootClient {
 
         let params = PleromaFollowByURIParams(uri: uri)
         
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follows"])
             $0.method = .post
             $0.body = try .json(params)
@@ -76,7 +76,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func unfollowAccount(by id: String) async throws -> Relationship {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "unfollow"])
             $0.method = .post
         }
@@ -87,7 +87,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func removeAccountFromFollowers(by id: String) async throws -> Relationship {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "remove_from_followers"])
             $0.method = .post
         }
@@ -98,7 +98,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func blockAccount(by id: String) async throws -> Relationship {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "block"])
             $0.method = .post
         }
@@ -109,7 +109,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func unblockAccount(by id: String) async throws -> Relationship {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "unblock"])
             $0.method = .post
         }
@@ -120,7 +120,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func muteAccount(by id: String, params: MuteAccountParams? = nil) async throws -> Relationship {
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "mute"])
             $0.method = .post
             $0.body = try .json(params)
@@ -132,7 +132,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func unmuteAccount(by id: String) async throws -> Relationship {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "unmute"])
             $0.method = .post
         }
@@ -143,7 +143,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func getRelationships(by ids: [String]) async throws -> [Relationship] {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "relationships"])
             $0.method = .get
             $0.query = ids.map({URLQueryItem(name: "id", value: $0)})

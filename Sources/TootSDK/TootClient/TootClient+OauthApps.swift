@@ -14,7 +14,7 @@ public extension TootClient {
             throw TootSDKError.unsupportedFlavour(current: flavour, required: [.pleroma])
         }
         
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "pleroma", "admin", "oauth_app"])
             $0.method = .get
             $0.addQueryParameter(name: "page", value: "\(page)")
@@ -53,7 +53,7 @@ public extension TootClient {
             throw TootSDKError.unsupportedFlavour(current: flavour, required: [.pleroma])
         }
         
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "pleroma", "admin", "oauth_app", "\(appId)"])
             $0.method = .delete
         }
