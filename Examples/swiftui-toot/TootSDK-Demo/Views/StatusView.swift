@@ -11,7 +11,9 @@ import TootSDK
 struct StatusView: View {
     var status: Status
     var attributed: Bool
-    
+
+    @Binding var path: NavigationPath
+
     var displayStatus: Status {
         return status.reblog ?? self.status
     }
@@ -44,7 +46,10 @@ struct StatusView: View {
                     ProgressView()
                 }
                 .frame(width: 80, height: 80)
-                
+                .onLongPressGesture {
+                    self.path.append(displayStatus.account)
+                }
+
                 VStack(spacing: 8) {
                     HStack {
                         Text(displayStatus.account.displayName ?? "?")

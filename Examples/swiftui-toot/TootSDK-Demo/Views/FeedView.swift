@@ -22,7 +22,7 @@ struct FeedView: View {
                 Button {
                     self.path.append(status.id)
                 } label: {
-                    StatusView(status: status, attributed: true)
+                    StatusView(status: status, attributed: true, path: $path)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)
