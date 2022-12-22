@@ -56,7 +56,7 @@ let authUrl = client.createAuthorizeURL(server: instanceURL, callbackUrl: "swift
 - Step 2, once authentication is complete, the server will redirect the user back to callback url including a token
 
 ```swift
-let accessToken = client.collectToken(callbackUrl: url)
+let accessToken = client.collectToken(returnUrl: url, callbackUrl: "swiftuitoot://test")
 ```
 
 We recommend keeping the accessToken somewhere secure, for example Keychain.
