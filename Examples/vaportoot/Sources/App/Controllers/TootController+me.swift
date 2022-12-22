@@ -21,7 +21,7 @@ extension TootController {
         var replyText = ""
         if let replyPostId = query.replyTo {
             let replyToPost = try await client.getStatus(id: replyPostId)
-            replyText = replyToPost.content ?? ""
+            replyText = replyToPost.content?.raw ?? ""
         }
         let posts = try await client.getHomeTimeline()
         let context = MeContext(

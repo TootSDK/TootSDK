@@ -132,7 +132,7 @@ struct Post: Encodable {
 extension Post {
     init(status: Status) {
         id = status.id
-        text = status.content ?? ""
+        text = status.content?.raw ?? ""
         avatar = status.account.avatar
         author = status.account.displayName ?? ""
         favourited = status.favourited ?? false
