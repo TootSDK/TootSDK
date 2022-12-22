@@ -11,18 +11,18 @@ import TootSDK
 struct FeedView: View {
     @EnvironmentObject var tootManager: TootManager
     
-    @State var posts: [Status] = []
+    @State var statuses: [Status] = []
     @State var name: String = ""
     
     @State var path: NavigationPath = NavigationPath()
     
     var body: some View {
         NavigationStack(path: $path) {
-            List(posts, id: \.self) { data in
+            List(statuses, id: \.self) { status in
                 Button {
-                    self.path.append(data.id)
+                    self.path.append(status.id)
                 } label: {
-                    self.row(data)
+                    StatusView(status: status, attributed: true)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)
@@ -51,14 +51,14 @@ struct FeedView: View {
             Task {
                 for await updatedPosts in try await currentClient.data.stream(.timeLineHome) {
                     print("got a batch of posts")
-                    posts = updatedPosts
+                    statuses = updatedPosts
                 }
             }
             
             // Reset data if the client changes (user has signed in/out etc
             Task {
                 for await _ in tootManager.$currentClient.values {
-                    posts = []
+                    statuses = []
                     name = ""
                 }
             }

@@ -13,26 +13,37 @@ public struct HTML: Codable {
     public var raw: String? {
         return self.wrappedValue
     }
-
-    public var attributedString: NSAttributedString? {
-        if let plain = wrappedValue?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: ""),
+    
+    public var attributedString: NSAttributedString
+    
+    public var plainContent: String
+    
+    // MARK: - Initialization + decoding
+    public init(from decoder: Decoder) throws {
+        self.wrappedValue =  try decoder.singleValueContainer().decode(String.self)
+        self.attributedString = HTML.createAttributedString(value: wrappedValue) ?? NSAttributedString(string: "")
+        self.plainContent = HTML.stripHTMLFormatting(html: wrappedValue) ?? ""
+    }
+    
+    private static func createAttributedString(value: String?) -> NSAttributedString? {
+        if let plain = value?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: ""),
            let data = plain.data(using: plain.fastestEncoding),
-           let attributedString = try? NSMutableAttributedString(
-                data: data,
-                options: [.documentType: NSAttributedString.DocumentType.html],
-                documentAttributes: nil) {
-
-            attributedString.removeAttribute(.font, range: NSRange(location: 0, length: attributedString.length))
-
-            return attributedString
+           let value = try? NSMutableAttributedString(
+            data: data,
+            options: [.documentType: NSAttributedString.DocumentType.html],
+            documentAttributes: nil) {
+            
+            value.removeAttribute(.font, range: NSRange(location: 0, length: value.length))
+            
+            return value
         } else {
             return nil
         }
     }
-
-    public var plainContent: String? {
-        guard let html = self.wrappedValue else { return nil }
-                
+    
+    private static func stripHTMLFormatting(html: String?) -> String? {
+        guard let html = html else { return nil }
+        
         let htmlReplaceString: String = "<[^>]*>"
         
         if let regex = try? NSRegularExpression(pattern: htmlReplaceString, options: .caseInsensitive) {
@@ -40,12 +51,7 @@ public struct HTML: Codable {
         } else {
             return nil
         }
-    }
 
-    // MARK: - Initialization + decoding
-    
-    public init(from decoder: Decoder) throws {
-        self.wrappedValue =  try decoder.singleValueContainer().decode(String.self)
     }
     
     public enum CodingKeys: CodingKey {
@@ -56,7 +62,7 @@ public struct HTML: Codable {
         var container = encoder.singleValueContainer()
         try container.encode(self.wrappedValue)
     }
-
+    
 }
 
 extension HTML: Hashable {
