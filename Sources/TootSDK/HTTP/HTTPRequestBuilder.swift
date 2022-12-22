@@ -72,7 +72,7 @@ internal extension HTTPRequestBuilder {
     /// Create an instance of `URLRequest` using the current configuration
     func build() throws -> URLRequest {
         guard let url else {
-            throw TootSDKError.requiredUrlNotSet
+            throw TootSDKError.requiredURLNotSet
         }
         
         var urlRequest = URLRequest(url: url)

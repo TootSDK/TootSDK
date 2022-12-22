@@ -8,11 +8,10 @@ import FoundationNetworking
 
 public enum TootSDKError: Error, LocalizedError, Equatable {
     case decodingError(_ description: String)
-    case authorizationError
     case missingCodeOrClientSecrets
     case nonHTTPURLResponse(data: Data, response: URLResponse)
     case invalidStatusCode(data: Data, response: HTTPURLResponse)
-    case requiredUrlNotSet
+    case requiredURLNotSet
     case missingParameter(parameterName: String)
     case invalidParameter(parameterName: String)
     /// The requested operation is not supported by the current server flavour.
@@ -21,22 +20,20 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     
     public var errorDescription: String? {
         switch self {
-        case .authorizationError:
-            return "Authorization error"
         case .decodingError(let description):
-            return "error decoding data:\n" + description
+            return "[TootSDK bug] There was an error decoding incoming data:\n" + description + "."
         case .missingCodeOrClientSecrets:
-            return "missing code or client data"
+            return "Unable to complete authorization: the client id, client secret and authorization code must be set."
         case .nonHTTPURLResponse:
-            return "non http url"
+            return "Unexpected response."
         case .invalidStatusCode(_, let response):
-            return "invalid status code: \(response.statusCode)"
-        case .requiredUrlNotSet:
-            return "required URL not set"
+            return "Invalid HTTP status code: \(response.statusCode)."
+        case .requiredURLNotSet:
+            return "[TootSDK bug] HTTPRequestBuilder was used without setting a url."
         case .missingParameter(let parameterName):
-            return "missing parameter: \(parameterName)"
+            return "A required parameter is not provided: \(parameterName)."
         case .invalidParameter(let parameterName):
-            return "invalid parameter: \(parameterName)"
+            return "A parameter has an illegal value: \(parameterName)."
         case .unsupportedFlavour(let current, let required):
             return "Operation not supported for server flavour \(current), compatible flavours are: \(required.map({"\($0)"}).joined(separator: ", "))."
         case .unexpectedError(let description):
