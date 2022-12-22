@@ -2,7 +2,6 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
-import Down
 
 /// Represents a status posted by an account.
 public class Status: Codable, Identifiable {

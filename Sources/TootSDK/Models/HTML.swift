@@ -1,31 +1,39 @@
 //
 //  HTML.swift
-//  
-//
 //  Created by dave on 18/12/22.
 //
 
 import Foundation
+import Down
 
+/// A wrapper for HTML content, returned from the instance API
+/// This seeks to provide convenient NSAttributedString and plain text String versions of the HTML
 public struct HTML: Codable {
     private var wrappedValue: String?
     
+    /// The raw HTML
     public var raw: String? {
         return self.wrappedValue
     }
     
+    /// An attributedString generated from the raw HTML
     public var attributedString: NSAttributedString
     
+    /// A plain text string, generated from the HTML
     public var plainContent: String
     
     // MARK: - Initialization + decoding
     public init(from decoder: Decoder) throws {
+        // We decode only the wrapped value, and then generate our other properties basd on it
         self.wrappedValue =  try decoder.singleValueContainer().decode(String.self)
+                
         self.attributedString = HTML.createAttributedString(value: wrappedValue) ?? NSAttributedString(string: "")
         self.plainContent = HTML.stripHTMLFormatting(html: wrappedValue) ?? ""
     }
     
     private static func createAttributedString(value: String?) -> NSAttributedString? {
+        // Strip the paragraphs out, as otherwise we indent our text in the attributed string
+        // We may want to add more to this, as payloads an vary.
         if let plain = value?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: ""),
            let data = plain.data(using: plain.fastestEncoding),
            let value = try? NSMutableAttributedString(
@@ -41,6 +49,9 @@ public struct HTML: Codable {
         }
     }
     
+    /// Remove all HTML tags, quick and dirty.
+    /// - Parameter html: a string of html content
+    /// - Returns: the processed string, free of HTML tags
     private static func stripHTMLFormatting(html: String?) -> String? {
         guard let html = html else { return nil }
         
@@ -54,10 +65,12 @@ public struct HTML: Codable {
 
     }
     
+    /// The value we're initialized with
     public enum CodingKeys: CodingKey {
         case wrappedValue
     }
     
+    /// Encodes  the wrapped value only when being encoded
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.wrappedValue)
