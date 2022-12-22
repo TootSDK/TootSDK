@@ -16,5 +16,9 @@ struct SwiftyAdmin: AsyncParsableCommand {
       ListLists.self,
       ListCreate.self,
       ListDelete.self,
+      ListRelationships.self,
+      Follow.self,
+      FollowByURI.self,
+      Unfollow.self,
     ])
 }

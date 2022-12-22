@@ -29,18 +29,18 @@ struct ScheduledPostOperationsView: View {
     @ViewBuilder func buttons() -> some View {
         if let postID {
             Group {
-                self.createButton(text: "Get Scheduled Post Details") {
+                ButtonView(text: "Get Scheduled Post Details") {
                     textToShow = try await tootManager.currentClient?.getScheduledStatus(id: postID)?.params.text ?? "-"
                 }
                 
-                self.createButton(text: "Delete scheduled post") {
+                ButtonView(text: "Delete scheduled post") {
                     if let _ = try await tootManager.currentClient?.deleteScheduledStatus(id: postID) {
                         self.postID = nil
                         self.path.removeLast()
                     }
                 }
                 
-                self.createButton(text: "Update post date (to now + 10 mins)") {
+                ButtonView(text: "Update post date (to now + 10 mins)") {
                     if let oldStatus = try await tootManager.currentClient?.getScheduledStatus(id: postID) {
                         var params = oldStatus.params
                         params.scheduledAt = Date().addingTimeInterval(TimeInterval(10.0 * 60.0))
@@ -55,19 +55,6 @@ struct ScheduledPostOperationsView: View {
             EmptyView()
         }
     }
-    
-    @ViewBuilder func createButton(text: String, action: @escaping () async throws -> Void) -> some View {
-        Button {
-            Task {
-                try await action()
-            }
-        } label: {
-            Text(text)
-                .frame(height: 44)
-        }
-        
-    }
-    
 }
 
 struct ScheduledPostOperationsView_Previews: PreviewProvider {
