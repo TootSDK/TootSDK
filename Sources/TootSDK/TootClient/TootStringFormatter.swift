@@ -26,7 +26,7 @@ internal actor TootStringFormatter {
     func trimHTMLTags(value: String?) async throws -> String? {
         if let htmlStringData = value?.data(using: String.Encoding.utf8) {
             
-            let options: [NSAttributedString.DocumentReadingOptionKey : Any] = [
+            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
                 .documentType: NSAttributedString.DocumentType.html,
                 .characterEncoding: String.Encoding.utf8.rawValue
             ]

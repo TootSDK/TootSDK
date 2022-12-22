@@ -74,4 +74,3 @@ extension HTML: Hashable {
         return lhs.hashValue == rhs.hashValue
     }
 }
-
