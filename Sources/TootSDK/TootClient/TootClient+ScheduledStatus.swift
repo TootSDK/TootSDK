@@ -9,7 +9,7 @@ public extension TootClient {
     /// - Parameters:
     ///   - statusComponents: Status components to be published
     /// - Returns: the ScheduledStatus, if successful, throws an error if not
-    func scheduleStatus(_ params: ScheduledStatusParams) async throws -> ScheduledStatus? {
+    func scheduleStatus(_ params: ScheduledStatusParams) async throws -> ScheduledStatus {
         let requestParams = try ScheduledStatusRequest(from: params)
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses"])
@@ -90,7 +90,7 @@ public extension TootClient {
             $0.method = .delete
         }
         
-        let _ = try await fetch(req: req)
+        _ = try await fetch(req: req)
     }
     
 }

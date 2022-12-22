@@ -1,8 +1,6 @@
 // Created by konstantin on 10/12/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
@@ -12,7 +10,7 @@ public extension TootClient {
     
     /// Show information about all blocked domains.
     /// - Returns: array of blocked domains
-    func adminGetDomainBlocks() async throws -> [DomainBlock]? {
+    func adminGetDomainBlocks() async throws -> [DomainBlock] {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .get
@@ -25,13 +23,13 @@ public extension TootClient {
     /// Show information about a single blocked domain.
     /// - Parameter id: The ID of the DomainBlock in the instance's database
     /// - Returns: DomainBlock (optional)
-    func adminGetDomainBlock(id: String) async throws -> DomainBlock?  {
+    func adminGetDomainBlock(id: String) async throws -> DomainBlock? {
         let req = HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", id])
             $0.method = .get
         }
         
-        return try await fetch(DomainBlock.self, req)
+        return try? await fetch(DomainBlock.self, req)
     }
     
     /// Blocks a domain on the current instance.
@@ -41,7 +39,7 @@ public extension TootClient {
     /// * prevent following new users from it (but does not remove existing follows)
     ///
     /// Note that the call will be successful even if the domain is already blocked, or if the domain does not exist, or if the domain is not a domain.
-    func adminBlockDomain(params: BlockDomainParams) async throws -> DomainBlock? {
+    func adminBlockDomain(params: BlockDomainParams) async throws -> DomainBlock {
         let req = try HttpRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .post
@@ -60,7 +58,7 @@ public extension TootClient {
             $0.method = .delete
         }
         
-        let _ = try await fetch(req: req)
+        _ = try await fetch(req: req)
     }
 }
 
@@ -104,7 +102,7 @@ public extension TootClient {
             $0.method = .post
             $0.body = try .multipart(BlockDomainParams(domain: domain), boundary: UUID().uuidString)
         }
-        let _ = try await fetch(req: req)
+        _ = try await fetch(req: req)
     }
     
     /// Remove a domain block, if it exists in the user’s array of blocked domains.
@@ -116,6 +114,6 @@ public extension TootClient {
             $0.method = .delete
             $0.body = try .multipart(BlockDomainParams(domain: domain), boundary: UUID().uuidString)
         }
-        let _ = try await fetch(req: req)
+        _ = try await fetch(req: req)
     }
 }

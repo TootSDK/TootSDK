@@ -1,8 +1,6 @@
 // Created by konstantin on 04/12/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 
 /// Internal representation of `ScheduledStatusParams` suitable for multipart requests

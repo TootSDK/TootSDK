@@ -13,128 +13,132 @@ struct PostOperationsView: View {
     @Binding var postID: String?
     @Binding var path: NavigationPath
     
-    @State var status: Status?
-    
+    @State var textToShow: String = ""
+        
     var body: some View {
         ScrollView {
             VStack(spacing: 8) {
                 Text(postID ?? "-")
                 
-                if let attributedString = status?.content?.attributedString {
-                    Text(AttributedString(attributedString))
-                        .font(.body)
-                        .padding()
-                }
+                Text(textToShow)
+                    .font(.body)
+                    .padding()
                 
-                self.buttons()
+                if let postID {
+                    self.buttons(postID: postID)
+                }
             }
-            .frame(maxWidth: .infinity)
         }
         .navigationTitle("Post Operations")
     }
     
-    @ViewBuilder func buttons() -> some View {
-        if let postID {
-            Group {
-                self.createButton(text: "Get Post Details") {
-                    self.status = try? await tootManager.currentClient?.getStatus(id: postID)
-                }
-                
-                self.createButton(text: "Delete post") {
-                    if let context = try await tootManager.currentClient?.deleteStatus(id: postID) {
-                        self.postID = nil
-                        debugPrint(context)
-                    }
-                    
-                    try await self.tootManager.currentClient?.data.refresh(.timeLineHome)
-                    
-                    self.path.removeLast()
-                }
-                
-                self.createButton(text: "Edit post (appends 🧡)") {
-                    guard let oldPost = try await tootManager.currentClient?.getStatus(id: postID) else {
-                        print("Unknown postID \(postID)")
-                        return
-                    }
-                    let editParams = EditStatusParams(status: "\(oldPost.content?.raw ?? "") 🧡", spoilerText: oldPost.spoilerText, sensitive: oldPost.sensitive, mediaIds: nil, poll: nil)
-                    if let context = try await tootManager.currentClient?.editStatus(id: postID, editParams) {
-                        debugPrint(context)
-                    }
-                    
-                }
-                
-                self.createButton(text: "Retrieve posts in context") {
-                    if let context = try await tootManager.currentClient?.getContext(id: postID) {
-                        debugPrint(context)
-                    }
-                }
-                
-                self.createButton(text: "Favourite") {
-                    if let status = try await tootManager.currentClient?.favouriteStatus(id: postID) {
-                        debugPrint(status)
-                    }
-                }
-                
-                self.createButton(text: "Unfavourite") {
-                    if let status = try await tootManager.currentClient?.unfavouriteStatus(id: postID) {
-                        debugPrint(status)
-                    }
-                }
-                
-                self.createButton(text: "Boost") {
-                    if let status = try await tootManager.currentClient?.boostStatus(id: postID) {
-                        debugPrint(status)
-                    }
-                }
-                
-                self.createButton(text: "Unboost") {
-                    if let status = try await tootManager.currentClient?.unboostStatus(id: postID) {
-                        debugPrint(status)
-                    }
-                }
-                
-                self.createButton(text: "Bookmark") {
-                    if let status = try await tootManager.currentClient?.bookmarkStatus(id: postID) {
-                        debugPrint(status)
-                    }
-                }
-                
-                self.createButton(text: "Unbookmark") {
-                    if let status = try await tootManager.currentClient?.unbookmarkStatus(id: postID) {
-                        debugPrint(status)
-                    }
-                }
+    @ViewBuilder func buttons(postID: String) -> some View {
+        Group {
+            self.postButtons(postID: postID)
+        }
+    }
+    
+    @ViewBuilder func postButtons(postID: String) -> some View {
+        Group {
+            self.createButton(text: "Get Post Details") {
+                textToShow = try await tootManager.currentClient?.getStatus(id: postID).content ?? "-"
             }
             
-            Group {
-                self.createButton(text: "Who boosted") {
-                    if let boostAccounts = try await tootManager.currentClient?.getAccountsBoosted(id: postID) {
-                        debugPrint(boostAccounts)
-                    }
-                }
+            self.createButton(text: "Delete post") {
+                let context = try await tootManager.currentClient?.deleteStatus(id: postID)
+                self.postID = nil
+                debugPrint(context ?? "")
                 
-                self.createButton(text: "Who favourited") {
-                    if let boostAccounts = try await tootManager.currentClient?.getAccountsFavourited(id: postID) {
-                        debugPrint(boostAccounts)
-                    }
-                }
+                try await self.tootManager.currentClient?.data.refresh(.timeLineHome)
                 
-                self.createButton(text: "Get History of post") {
-                    if let edits = try await tootManager.currentClient?.getHistory(id: postID) {
-                        debugPrint(edits)
-                    }
-                }
-                
-                self.createButton(text: "Get Status Source") {
-                    if let statusSource = try await tootManager.currentClient?.getStatusSource(id: postID) {
-                        debugPrint(statusSource)
-                    }
-                }
+                self.path.removeLast()
             }
             
+            self.createButton(text: "Edit post (appends 🧡)") {
+                guard let oldPost = try await tootManager.currentClient?.getStatus(id: postID) else { return }
+                
+                let editParams = EditStatusParams(status: "\(oldPost.content ?? "") 🧡",
+                                                  spoilerText: oldPost.spoilerText,
+                                                  sensitive: oldPost.sensitive,
+                                                  mediaIds: nil,
+                                                  poll: nil)
+                
+                let context = try await tootManager.currentClient?.editStatus(id: postID, editParams)
+                debugPrint(context ?? "")
+            }
             
-        } else {
-            EmptyView()
+            self.createButton(text: "Retrieve posts in context") {
+                let context = try await tootManager.currentClient?.getContext(id: postID)
+                debugPrint(context ?? "")
+            }
+        }
+    }
+    
+    @ViewBuilder func favouriteButtons(postID: String) -> some View {
+        Group {
+            self.createButton(text: "Favourite") {
+                let status = try await tootManager.currentClient?.favouriteStatus(id: postID)
+                debugPrint(status ?? "")
+            }
+            
+            self.createButton(text: "Unfavourite") {
+                let status = try await tootManager.currentClient?.unfavouriteStatus(id: postID)
+                debugPrint(status ?? "")
+            }
+            
+            self.createButton(text: "Who favourited") {
+                let boostAccounts = try await tootManager.currentClient.getAccountsFavourited(id: postID)
+                debugPrint(boostAccounts)
+            }
+        }
+    }
+    
+    @ViewBuilder func boostButtons(postID: String) -> some View {
+        Group {
+            self.createButton(text: "Boost") {
+                let status = try await tootManager.currentClient.boostStatus(id: postID)
+                debugPrint(status)
+            }
+            
+            self.createButton(text: "Unboost") {
+                let status = try await tootManager.currentClient.unboostStatus(id: postID)
+                debugPrint(status)
+            }
+            
+            self.createButton(text: "Who boosted") {
+                let boostAccounts = try await tootManager.currentClient.getAccountsBoosted(id: postID)
+                debugPrint(boostAccounts)
+            }
+        }
+    }
+    
+    @ViewBuilder func bookmarkButtons(postID: String) -> some View {
+        Group {
+            self.createButton(text: "Bookmark") {
+                let status = try await tootManager.currentClient.bookmarkStatus(id: postID)
+                debugPrint(status)
+            }
+            
+            self.createButton(text: "Unbookmark") {
+                let status = try await tootManager.currentClient.unbookmarkStatus(id: postID)
+                debugPrint(status)
+            }
+        }
+    }
+    
+    @ViewBuilder func statusButtons(postID: String) -> some View {
+        Group {
+            
+            
+            self.createButton(text: "Get History of post") {
+                let edits = try await tootManager.currentClient.getHistory(id: postID)
+                debugPrint(edits)
+            }
+            
+            self.createButton(text: "Get Status Source") {
+                let statusSource = try await tootManager.currentClient.getStatusSource(id: postID)
+                debugPrint(statusSource)
+            }
         }
     }
     
@@ -147,10 +151,9 @@ struct PostOperationsView: View {
             Text(text)
                 .frame(height: 44)
         }
-        
     }
-    
 }
+
 
 struct PostOperationsView_Previews: PreviewProvider {
     static var previews: some View {

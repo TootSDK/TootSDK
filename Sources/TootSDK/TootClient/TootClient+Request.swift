@@ -1,8 +1,6 @@
 // Created by konstantin on 18/11/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
@@ -42,8 +40,7 @@ extension TootClient {
     internal func getAuthorizationInfo(callbackUrl: String,
                                        scopes: [String],
                                        website: String = "",
-                                       responseType: String = "code",
-                                       clientName: String = "TootSDK") async throws -> CallbackInfo? {
+                                       responseType: String = "code") async throws -> CallbackInfo? {
         
         let createAppData = CreateAppRequest(clientName: clientName,
                                              redirectUris: callbackUrl,
@@ -57,7 +54,7 @@ extension TootClient {
         
         let app = try await fetch(TootApplication.self, registerAppReq)
         
-        guard let app, let clientId = app.clientId else {
+        guard let clientId = app.clientId else {
             return nil
         }
                 
@@ -75,20 +72,24 @@ extension TootClient {
         
         return .init(url: url, application: app)
     }
-    
-    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grandType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken?
-    {
-        let req = HttpRequestBuilder {
+
+    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grantType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken? {
+
+        let queryItems: [URLQueryItem] = [
+            .init(name: "client_id", value: clientId),
+            .init(name: "client_secret", value: clientSecret),
+            .init(name: "grant_type", value: grantType),
+            .init(name: "scope", value: scopes.joined(separator: " ")),
+            .init(name: "code", value: code),
+            .init(name: "redirect_uri", value: callbackUrl)
+        ]
+
+        let req = try HttpRequestBuilder {
             $0.url = getURL(["oauth", "token"])
             $0.method = .post
-            $0.addQueryParameter(name: "client_id", value: clientId)
-            $0.addQueryParameter(name: "client_secret", value: clientSecret)
-            $0.addQueryParameter(name: "grant_type", value: grandType)
-            $0.addQueryParameter(name: "scope", value: scopes.joined(separator: " "))
-            $0.addQueryParameter(name: "code", value: code)
-            $0.addQueryParameter(name: "redirect_uri", value: callbackUrl)
+            $0.body = try .form(queryItems: queryItems)
         }
-        
+
         return try await fetch(AccessToken.self, req)
     }
 }

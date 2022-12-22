@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         # os: [ubuntu-latest, macos-latest]
-        os: [ubuntu-latest, macos-12] #GitHub currently thinks "macos-latest is macOS 11 and has no support for macOS 13 😢"
+        os: [ubuntu-latest] #GitHub currently thinks "macos-latest is macOS 11 and has no support for macOS 13 😢"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3

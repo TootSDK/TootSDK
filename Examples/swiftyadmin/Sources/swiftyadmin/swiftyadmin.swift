@@ -6,5 +6,15 @@ struct SwiftyAdmin: AsyncParsableCommand {
     abstract:
       "An example command line utility to interact with and control a server using TootSDK.",
     version: "1.0.0",
-    subcommands: [ListDomainBlocks.self, BlockDomain.self, UnblockDomain.self])
+    subcommands: [
+      Login.self,
+      ListDomainBlocks.self,
+      BlockDomain.self,
+      UnblockDomain.self,
+      ListOauthApps.self,
+      DeleteOauthApp.self,
+      ListLists.self,
+      ListCreate.self,
+      ListDelete.self,
+    ])
 }

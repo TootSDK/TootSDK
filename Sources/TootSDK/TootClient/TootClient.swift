@@ -10,30 +10,38 @@ import FoundationNetworking
 public class TootClient {
     
     // MARK: - Public properties
-    public var currentApplicationInfo: TootApplication?
+    /// The URL of the instance we're connected to
     public var instanceURL: URL
-    public var accessToken: String?
+    /// The application info retreived from the instance
+    public var currentApplicationInfo: TootApplication?
     /// Set this to `true` to see a `print()` of outgoing requests.
     public var debugRequests: Bool = false
     /// Set this to `true` to see a `print()` of request response.
     public var debugResponses: Bool = false
-    
+    /// The preferred fediverse server flavour to use for API calls
+    public var flavour: TootSDKFlavour = .mastodon
+    /// The authorization scopes the client was initialized with
     public let scopes: [String]
-    
+    /// Data streams that the client can subscribe to
     public lazy var data = TootDataStream(client: self)
+    /// The clientName the client was initialized with
+    public let clientName: String
     
     // MARK: - Internal properties
     internal var decoder: JSONDecoder = TootDecoder()
     internal var encoder: JSONEncoder = TootEncoder()
     internal var session: URLSession
     internal let validStatusCodes = 200..<300
-    
+    /// The current accessToken in use
+    internal var accessToken: String?
+
     /// Initialization
     /// - Parameters:
     ///   - session: the URLSession being used internally, defaults to shared
     ///   - instanceURL: the instance you are connecting to
     ///   - accessToken: the existing access token; if you already have one
-    public init(session: URLSession = URLSession.shared,
+    public init(clientName: String = "TootSDK",
+                session: URLSession = URLSession.shared,
                 instanceURL: URL,
                 accessToken: String? = nil,
                 scopes: [String] = ["read", "write", "follow", "push"]) {
@@ -41,6 +49,7 @@ public class TootClient {
         self.instanceURL = instanceURL
         self.accessToken = accessToken
         self.scopes = scopes
+        self.clientName = clientName
     }
     
     /// Prints extra debug details like outgoing requests and responses
@@ -64,27 +73,40 @@ extension TootClient {
     }
     
     /// Fetch data asynchronously and return the decoded `Decodable` object.
-    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T? {
+    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T {
         let (data, _) = try await fetch(req: req)
         
         do {
-             let _ = try decoder.decode(decode, from: data)
-         } catch let DecodingError.dataCorrupted(context) {
-             print(context)
-         } catch let DecodingError.keyNotFound(key, context) {
-             print("Key '\(key)' not found:", context.debugDescription)
-             print("codingPath:", context.codingPath)
-         } catch let DecodingError.valueNotFound(value, context) {
-             print("Value '\(value)' not found:", context.debugDescription)
-             print("codingPath:", context.codingPath)
-         } catch let DecodingError.typeMismatch(type, context)  {
-             print("Type '\(type)' mismatch:", context.debugDescription)
-             print("codingPath:", context.codingPath)
-         } catch {
-             print("error: ", error)
-         }
+            return try decoder.decode(decode, from: data)
+        } catch {
+            let description = fetchError(T.self, data: data)
+            
+            if debugResponses {
+                print(description)
+            }
+                
+            throw TootSDKError.decodingError(description)
+        }
+    }
+    
+    private func fetchError<T: Decodable>(_ decode: T.Type, data: Data) -> String {
+        var description: String = "Unknown decoding error"
+    
+        do {
+            _ = try decoder.decode(decode, from: data)
+        } catch let DecodingError.dataCorrupted(context) {
+            description = "context: \(context)"
+        } catch let DecodingError.keyNotFound(key, context) {
+            description = "Key '\(key)' not found:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+        } catch let DecodingError.valueNotFound(value, context) {
+            description = "Value '\(value)' not found:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+        } catch let DecodingError.typeMismatch(type, context) {
+            description = "Type '\(type)' mismatch:\(context.debugDescription)\n codingPath:\(context.codingPath)"
+        } catch {
+            description = error.localizedDescription
+        }
         
-        return try decoder.decode(decode, from: data)
+        return description
     }
     
     /// Fetch data asynchronously and return the raw response.
@@ -152,7 +174,6 @@ extension TootClient: Equatable {
     }
 }
 
-
 extension TootClient {
 
     /// Provides the URL for authorizing
@@ -162,24 +183,28 @@ extension TootClient {
         return authInfo?.url
     }
 
-    /// Processes the response from the authorization step in exchange for an access token.
+    /// Facility method to complete authentication by processing the response from the authorization step.
     /// Exchange the callback authorization code for an accessToken
     /// - Parameters:
-    ///   - url: The full url including query parameters following the redirect after successfull authorizaiton
+    ///   - returnUrl: The full url including query parameters received by the service following the redirect after successfull authorizaiton
     ///   - callbackUrl: The callback URL  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
-    public func collectToken(callbackUrl: URL) async throws -> String? {
-        var components = URLComponents()
-        components.query = callbackUrl.query
+    public func collectToken(returnUrl: URL, callbackUrl: String) async throws -> String? {
         
         guard
-            let code = components.queryItems?.filter({ $0.name == "code" }).compactMap({ $0.value }).first,
+            let code = getCodeFrom(returnUrl: returnUrl),
             let clientId = currentApplicationInfo?.clientId,
             let clientSecret = currentApplicationInfo?.clientSecret
         else {
             throw TootSDKError.missingCodeOrClientSecrets
         }
 
-        return try await collectToken(code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackUrl.absoluteString)
+        return try await collectToken(code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackUrl)
+    }
+    
+    private func getCodeFrom(returnUrl: URL) -> String? {
+        var components = URLComponents()
+        components.query = returnUrl.query
+        return components.queryItems?.first(where: {$0.name == "code"})?.value
     }
     
     /// Exchange the callback authorization code for an accessToken

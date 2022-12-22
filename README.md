@@ -71,6 +71,8 @@ for await updatedPosts in try await client.data.stream(.timeLineHome) {
 }
 ```
 
+💡 For testing (even in your own apps), you can use `Examples/swiftyadmin` with the `login` command to generate an accessToken for a given instance.
+
 ## Key contributors ⚡️
 
 - [Konstantin](https://m.iamkonstantin.eu/konstantin)
@@ -91,6 +93,7 @@ This is a permissive license which allows for any type of use, provided the copy
 
 - The Mastodon API documentation https://github.com/mastodon/documentation
 - We hat-tip top Metatext's source for some guidance on what's where: https://github.com/metabolist/metatext
+- [Kris Slazinski](https://mastodon.social/@kslazinski) for our TootSDK logo 🤩
 
 ## Examples
 

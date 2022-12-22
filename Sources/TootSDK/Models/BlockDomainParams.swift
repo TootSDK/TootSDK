@@ -1,8 +1,6 @@
 // Created by konstantin on 10/12/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 
 /// Parameters to block a domain

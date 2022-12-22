@@ -11,7 +11,7 @@ extension TootController {
         
         let actionData = try req.content.decode(TootActionData.self)
         
-        guard let status = try await client.getStatus(id: actionData.id) else {
+        guard let status = try? await client.getStatus(id: actionData.id) else {
             req.logger.error("The specified status with id \(actionData.id) was not found.")
             throw Abort(.notFound)
         }

@@ -1,8 +1,6 @@
 // Created by konstantin on 30/11/2022.
 // Copyright (c) 2022. All rights reserved.
 
-
-
 import Foundation
 
 /// Parameters to post a new status
@@ -81,4 +79,3 @@ public struct StatusParams: Codable {
         case inReplyToConversationId = "in_reply_to_conversation_id"
     }
 }
-
