@@ -11,24 +11,28 @@ import TootSDK
 struct FeedView: View {
     @EnvironmentObject var tootManager: TootManager
     
-    @State var statuses: [Status] = []
+    @State var posts: [Status] = []
     @State var name: String = ""
     
     @State var path: NavigationPath = NavigationPath()
     
     var body: some View {
         NavigationStack(path: $path) {
-            List(statuses, id: \.self) { status in
+            List(posts, id: \.self) { data in
                 Button {
-                    self.path.append(status.id)
+                    self.path.append(data.id)
                 } label: {
-                    StatusView(status: status, attributed: true)
+                    self.row(data)
+                        .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)
             }
             .navigationTitle("Feed")
             .navigationDestination(for: String.self) { value in
                 PostOperationsView(postID: .constant(value), path: $path)
+            }
+            .navigationDestination(for: Account.self) { account in
+                AccountView(account: account)
             }
         }
         .task {
@@ -47,7 +51,7 @@ struct FeedView: View {
             Task {
                 for await updatedPosts in try await currentClient.data.stream(.timeLineHome) {
                     print("got a batch of posts")
-                    statuses = updatedPosts
+                    posts = updatedPosts
                 }
             }
             
@@ -59,10 +63,39 @@ struct FeedView: View {
                 }
             }
             
+            // Refresh our data
             refresh()
         }
         .refreshable {
             refresh()
+        }
+    }
+    
+    @ViewBuilder func row(_ post: Status) -> some View {
+        HStack(alignment: .top) {
+            
+            AsyncImage(url: URL(string: post.account.avatar)) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 80, height: 80)
+            .onLongPressGesture {
+                self.path.append(post.account)
+            }
+            
+            VStack {
+                HStack {
+                    Text(post.account.displayName ?? "?")
+                        .font(.caption.bold())
+                    Text(post.account.username)
+                        .font(.caption)
+                }
+                
+                                
+                Text(AttributedString(post.content?.attributedString ?? NSAttributedString(string: "")))
+                    .font(.body)
+            }
         }
     }
     

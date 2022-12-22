@@ -49,8 +49,7 @@ public extension TootClient {
             }
         }
         
-        let scheduledStatuses = try await fetch([ScheduledStatus].self, req)
-        return scheduledStatuses ?? []
+        return try await fetch([ScheduledStatus].self, req)
     }
     
     /// Gets a single Scheduled Status by id
