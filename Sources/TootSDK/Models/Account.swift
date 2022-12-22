@@ -5,8 +5,7 @@ import Foundation
 
 /// Represents a user  and their associated profile.
 public class Account: Codable, Identifiable {
-    
-    public init(id: String, username: String, acct: String, url: String, displayName: String? = nil, note: String, avatar: String, avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date, lastStatusAt: Date? = nil, statusesCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil, limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil) {
+    public init(id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String, avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date, lastStatusAt: Date? = nil, statusesCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil, limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil) {
         self.id = id
         self.username = username
         self.acct = acct
@@ -32,12 +31,12 @@ public class Account: Codable, Identifiable {
         self.bot = bot
         self.source = source
     }
-        
-    /// The account id `header`
+    
+    /// The account id.
     public var id: String
     /// The username of the account, not including domain.
-    public var username: String
-    /// The Webfinger account URI
+    public var username: String?
+    /// The Webfinger account URI. Equal to username for local users, or username@domain for remote users.
     public var acct: String
     /// The location of the user's profile page
     public var url: String
