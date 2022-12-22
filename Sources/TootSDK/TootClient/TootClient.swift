@@ -133,6 +133,7 @@ extension TootClient {
     
     internal func dataTask(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         if debugRequests {
+            print("➡️ flavour: \(self.flavour)")
             print("➡️ 🌏 \(request.httpMethod ?? "-") \(request.url?.absoluteString ?? "-")")
             for (k, v) in request.allHTTPHeaderFields ?? [:] {
                 print("➡️ 🏷️ '\(k)': '\(v)'")
