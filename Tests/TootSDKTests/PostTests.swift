@@ -5,8 +5,8 @@
 import XCTest
 @testable import TootSDK
 
-final class StatusTests: XCTestCase {
-    func testScheduledStatusValidatesScheduledAtRequired() throws {
+final class PostTests: XCTestCase {
+    func testScheduledPostValidatesScheduledAtRequired() throws {
         // arrange
         let params = ScheduledPostParams(mediaIds: [], visibility: .public)
         
@@ -16,7 +16,7 @@ final class StatusTests: XCTestCase {
         }
     }
     
-    func testScheduledStatusValidatesScheduledAtTooSoon() throws {
+    func testScheduledPostValidatesScheduledAtTooSoon() throws {
         // arrange
         var params = ScheduledPostParams(mediaIds: [], visibility: .public)
         params.scheduledAt = Date().addingTimeInterval(TimeInterval(4.5 * 60.0)) // date is only 5 mins in the future
@@ -27,7 +27,7 @@ final class StatusTests: XCTestCase {
         }
     }
     
-    func testScheduledStatusValidatesScheduledAtInTheFuture() throws {
+    func testScheduledPostValidatesScheduledAtInTheFuture() throws {
         // arrange
         var params = ScheduledPostParams(mediaIds: [], visibility: .public)
         params.scheduledAt = Date().addingTimeInterval(TimeInterval(6.0 * 60.0)) // date is only 5 mins in the future

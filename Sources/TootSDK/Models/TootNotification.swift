@@ -5,12 +5,12 @@ import Foundation
 
 /// Represents a notification of an event relevant to the user.
 public struct TootNotification: Codable, Hashable {
-    public init(id: String, type: TootNotification.NotificationType, account: Account, createdAt: Date, status: Post? = nil) {
+    public init(id: String, type: TootNotification.NotificationType, account: Account, createdAt: Date, post: Post? = nil) {
         self.id = id
         self.type = type
         self.account = account
         self.createdAt = createdAt
-        self.status = status
+        self.post = post
     }
 
     /// The id of the notification in the database.
@@ -21,8 +21,8 @@ public struct TootNotification: Codable, Hashable {
     public var account: Account
     /// The timestamp of the notification.
     public var createdAt: Date
-    /// Status that was the object of the notification, e.g. in mentions, reposts, favourites, or polls.
-    public var status: Post?
+    /// Post that was the object of the notification, e.g. in mentions, reposts, favourites, or polls.
+    public var post: Post?
 
     public enum NotificationType: String, Codable {
         /// Someone followed you
@@ -37,8 +37,16 @@ public struct TootNotification: Codable, Hashable {
         case poll
         /// Someone requested to follow you
         case followRequest = "follow_request"
-        /// Someone you enabled notifications for has posted a status
-        case status
+        /// Someone you enabled notifications for has posted a post
+        case  post = "status"
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case type
+        case account
+        case createdAt
+        case post = "status"
     }
 }
 

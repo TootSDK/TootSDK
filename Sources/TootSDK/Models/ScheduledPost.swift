@@ -7,10 +7,10 @@ import Foundation
 public struct ScheduledPost: Codable {
     /// ID of the scheduled post in the database.
     public var id: String
-    /// ID of the status in the database.
+    /// ID of the post in the database.
     public var scheduledAt: Date?
-    /// The parameters to be used when the status is posted
+    /// The parameters to be used when the post is posted
     public var params: ScheduledPostParams
-    /// Media that is attached to this status.
+    /// Media that is attached to this post.
     public var mediaAttachments: [Attachment]
 }

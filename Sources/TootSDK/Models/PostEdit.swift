@@ -1,5 +1,5 @@
 //
-//  StatusEdit.swift
+//  PostEdit.swift
 //  
 //
 //  Created by dave on 4/12/22.
@@ -8,11 +8,11 @@
 import Foundation
 
 public struct PostEdit: Codable {
-    ///  The content of the status at this revision.
+    ///  The content of the pos] at this revision.
     public var content: String
     ///  The content of the subject or content warning at this revision
     public var spoilerText: String
-    /// Whether the status was marked sensitive at this revision
+    /// Whether the post was marked sensitive at this revision
     public var sensitive: Bool
     /// The timestamp of when the revision was published
     public var createdAt: Date?

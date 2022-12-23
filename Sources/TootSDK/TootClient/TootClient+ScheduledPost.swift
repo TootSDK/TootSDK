@@ -7,8 +7,8 @@ public extension TootClient {
     
     /// Schedules a post based on the components provided
     /// - Parameters:
-    ///   - statusComponents: post components to be published
-    /// - Returns: the ScheduledStatus, if successful, throws an error if not
+    ///   - ScheduledPostParams: post components to be published
+    /// - Returns: the ScheduledPost, if successful, throws an error if not
     func schedulePost(_ params: ScheduledPostParams) async throws -> ScheduledPost {
         let requestParams = try ScheduledPostRequest(from: params)
         let req = try HTTPRequestBuilder {
@@ -66,7 +66,7 @@ public extension TootClient {
     }
     
     /// Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
-    /// - Parameter id: the ID of the status to be changed
+    /// - Parameter id: the ID of the post to be changed
     /// - Parameter params: the updated content of the post to be posted
     /// - Returns: the post after the update
     func updateScheduledPostDate(id: String, _ params: ScheduledPostParams) async throws -> ScheduledPost? {

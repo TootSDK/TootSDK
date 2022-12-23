@@ -8,7 +8,7 @@
 import Foundation
 
 public struct FollowAccountParams: Codable {
-    /// Receive notifications when this account posts a status? Defaults to false.
+    /// Receive notifications when this account posts a post? Defaults to false.
     var notify: Bool
     /// Receive this account’s reposts in home timeline? Defaults to true.
     var reposts: Bool
@@ -17,7 +17,7 @@ public struct FollowAccountParams: Codable {
     
     /// - Parameters:
     ///   - reposts: Receive this account’s reposts in home timeline? Defaults to true.
-    ///   - notify: Receive notifications when this account posts a status? Defaults to false.
+    ///   - notify: Receive notifications when this account posts a post?  Defaults to false.
     ///   - languages: Array of String (ISO 639-1 language two-letter code). Filter received posts for these languages. If not provided, you will receive this account’s posts in all languages.
     public init(reposts: Bool = true,
                 notify: Bool = false,

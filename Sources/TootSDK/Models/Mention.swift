@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Represents a mention of a user within the content of a status.
+/// Represents a mention of a user within the content of a post.
 public struct Mention: Codable, Hashable {
     public init(id: String, username: String, url: String, acct: String) {
         self.id = id

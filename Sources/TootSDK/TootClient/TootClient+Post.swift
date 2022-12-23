@@ -1,5 +1,5 @@
 //
-//  TootClient+Status.swift
+//  TootClient+Post.swift
 //  
 //
 //  Created by dave on 25/11/22.
@@ -10,7 +10,7 @@ import Foundation
 public extension TootClient {
     
     /// Publishes the post based on the components provided
-    /// - Parameter statusComponents:post components to be published
+    /// - Parameter PostParams:post components to be published
     /// - Returns: the published post, if successful, throws an error if not
     func publishPost(_ params: PostParams) async throws -> Post {
         let req = try HTTPRequestBuilder {
@@ -22,7 +22,7 @@ public extension TootClient {
     }
     
     /// Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
-    /// - Parameter id: the ID of the status to be changed
+    /// - Parameter id: the ID of the psot to be changed
     /// - Parameter params: the updated content of the post to be posted
     /// - Returns: the post after the update
     func editPost(id: String, _ params: EditPostParams) async throws -> Post {
@@ -199,8 +199,8 @@ public extension TootClient {
             $0.method = .get
         }
         
-        let statusEdits = try await fetch([PostEdit].self, req)
-        return statusEdits.compactMap({ $0 })
+        let postEdits = try await fetch([PostEdit].self, req)
+        return postEdits.compactMap({ $0 })
     }
     
 }

@@ -18,7 +18,7 @@ public struct Instance: Codable, Hashable {
                 stats: Instance.Stats,
                 thumbnail: String? = nil,
                 contactAccount: Account? = nil) {
-        self.uri = uri
+        self.domain = uri
         self.title = title
         self.description = description
         self.shortDescription = shortDescription
@@ -35,7 +35,7 @@ public struct Instance: Codable, Hashable {
     }
 
     /// The domain name of the instance.
-    public var uri: String
+    public var domain: String
     /// The title of the website.
     public var title: String
     /// Admin-defined description of the Fediverse site.
@@ -72,9 +72,15 @@ public struct Instance: Codable, Hashable {
         /// Users registered on this instance. Number.
         public var userCount: Int?
         /// Posts authored by users on instance. Number.
-        public var statusCount: Int?
+        public var postCount: Int?
         /// Domains federated with this instance. Number.
         public var domainCount: Int?
+        
+        enum CodingKeys: String, CodingKey {
+            case userCount
+            case postCount = "status_count"
+            case domainCount
+        }
     }
 }
 
