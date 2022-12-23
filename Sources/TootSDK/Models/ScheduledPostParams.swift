@@ -1,5 +1,5 @@
 //
-//  ScheduledStatusParams.swift
+//  ScheduledPostParams.swift
 //  
 //
 //  Created by dave on 4/12/22.
@@ -7,21 +7,21 @@
 
 import Foundation
 
-/// Parameters to post a new scheduled status
-public struct ScheduledStatusParams: Codable {
+/// Parameters to post a new scheduled post
+public struct ScheduledPostParams: Codable {
     
-    ///  Creates parameters to post a new scheduled status
+    ///  Creates parameters to create a new scheduled post
     /// - Parameters:
-    ///   - text: The text content of the status. If mediaIds is provided, this becomes optional. Attaching a poll is optional while status is provided.
-    ///   - mediaIds: Include Attachment IDs to be attached as media. If provided, status becomes optional, and poll cannot be used.
+    ///   - text: The text content of the post. If mediaIds is provided, this becomes optional. Attaching a poll is optional while post is provided.
+    ///   - mediaIds: Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
     ///   - poll: CreatePoll struct
-    ///   - inReplyToId: ID of the status being replied to, if status is a reply.
-    ///   - sensitive: Boolean. Mark status and attached media as sensitive? Defaults to false.
-    ///   - spoilerText: Text to be shown as a warning or subject before the actual content. Statuses are generally collapsed behind this field.
-    ///   - visibility: Sets the visibility of the posted status to public, unlisted, private, direct.
-    ///   - language: ISO 639 language code for this status.
-    ///   - scheduledAt: UTC Datetime at which to schedule a status. Must be at least 5 minutes in the future.
-    ///   - contentType: (Pleroma) The MIME type of the status, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
+    ///   - inReplyToId: ID of the post being replied to, if post is a reply.
+    ///   - sensitive: Boolean. Mark post and attached media as sensitive? Defaults to false.
+    ///   - spoilerText: Text to be shown as a warning or subject before the actual content. Postes are generally collapsed behind this field.
+    ///   - visibility: Sets the visibility of the posted post to public, unlisted, private, direct.
+    ///   - language: ISO 639 language code for this post.
+    ///   - scheduledAt: UTC Datetime at which to schedule a post. Must be at least 5 minutes in the future.
+    ///   - contentType: (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
     public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Post.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: String? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
         
@@ -39,27 +39,27 @@ public struct ScheduledStatusParams: Codable {
         self.inReplyToConversationId = inReplyToConversationId
     }
     
-    /// The text content of the status. If media_ids is provided, this becomes optional. Attaching a poll is optional while status is provided.
+    /// The text content of the post. If media_ids is provided, this becomes optional. Attaching a poll is optional while post is provided.
     public var text: String?
-    ///  Include Attachment IDs to be attached as media. If provided, status becomes optional, and poll cannot be used.
+    ///  Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
     public var mediaIds: [String]?
-    /// Text to be shown as a warning or subject before the actual content. Statuses are generally collapsed behind this field.
+    /// Text to be shown as a warning or subject before the actual content. Postes are generally collapsed behind this field.
     public var sensitive: Bool?
-    /// Mark status and attached media as sensitive? Defaults to false.
+    /// Mark post and attached media as sensitive? Defaults to false.
     public var spoilerText: String?
-    /// Sets the visibility of the posted status to public, unlisted, private, direct.
+    /// Sets the visibility of the posted post to public, unlisted, private, direct.
     public var visibility: Post.Visibility
-    /// ISO 639 language code for this status.
+    /// ISO 639 language code for this post.
     public var language: String?
-    /// UTC Datetime at which to schedule a status.
+    /// UTC Datetime at which to schedule a post.
     public var scheduledAt: Date?
     /// Poll options
     public var poll: CreatePoll?
-    /// Unique status to prevent double posting
+    /// Unique post to prevent double posting
     public var idempotency: String?
-    ///  ID of the status being replied to, if status is a reply.
+    ///  ID of the post being replied to, if post is a reply.
     public var inReplyToId: String?
-    /// (Pleroma) The MIME type of the status, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
+    /// (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     public var contentType: String?
     /// (Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
     public var inReplyToConversationId: String?

@@ -30,22 +30,22 @@ struct ScheduledPostOperationsView: View {
         if let postID {
             Group {
                 ButtonView(text: "Get Scheduled Post Details") {
-                    textToShow = try await tootManager.currentClient?.getScheduledStatus(id: postID)?.params.text ?? "-"
+                    textToShow = try await tootManager.currentClient?.getScheduledPost(id: postID)?.params.text ?? "-"
                 }
                 
                 ButtonView(text: "Delete scheduled post") {
-                    if let _ = try await tootManager.currentClient?.deleteScheduledStatus(id: postID) {
+                    if let _ = try await tootManager.currentClient?.deleteScheduledPost(id: postID) {
                         self.postID = nil
                         self.path.removeLast()
                     }
                 }
                 
                 ButtonView(text: "Update post date (to now + 10 mins)") {
-                    if let oldStatus = try await tootManager.currentClient?.getScheduledStatus(id: postID) {
+                    if let oldStatus = try await tootManager.currentClient?.getScheduledPost(id: postID) {
                         var params = oldStatus.params
                         params.scheduledAt = Date().addingTimeInterval(TimeInterval(10.0 * 60.0))
                         
-                        if let context = try await tootManager.currentClient?.updateScheduledStatusDate(id: postID, params) {
+                        if let context = try await tootManager.currentClient?.updateScheduledPostDate(id: postID, params) {
                             debugPrint(context)
                         }
                     }

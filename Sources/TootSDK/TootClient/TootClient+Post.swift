@@ -9,9 +9,9 @@ import Foundation
 
 public extension TootClient {
     
-    /// Publishes the status based on the components provided
-    /// - Parameter statusComponents: Status components to be published
-    /// - Returns: the published status, if successful, throws an error if not
+    /// Publishes the post based on the components provided
+    /// - Parameter statusComponents:post components to be published
+    /// - Returns: the published post, if successful, throws an error if not
     func publishPost(_ params: PostParams) async throws -> Post {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses"])
@@ -21,10 +21,10 @@ public extension TootClient {
         return try await fetch(Post.self, req)
     }
     
-    /// Edit a given status to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
+    /// Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
     /// - Parameter id: the ID of the status to be changed
-    /// - Parameter params: the updated content of the status to be posted
-    /// - Returns: the status after the update
+    /// - Parameter params: the updated content of the post to be posted
+    /// - Returns: the post after the update
     func editPost(id: String, _ params: EditPostParams) async throws -> Post {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
@@ -34,9 +34,9 @@ public extension TootClient {
         return try await fetch(Post.self, req)
     }
     
-    /// Gets a single status
-    /// - Parameter id: the ID of the status to be retrieved
-    /// - Returns: the status retrieved, if successful, throws an error if not
+    /// Gets a single post
+    /// - Parameter id: the ID of the post to be retrieved
+    /// - Returns: the post retrieved, if successful, throws an error if not
     func getPost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
@@ -56,9 +56,9 @@ public extension TootClient {
 
 public extension TootClient {
     
-    /// Deletes a single status
-    /// - Parameter id: the ID of the status to be deleted
-    /// - Returns: the status deleted (for delete and redraft), if successful, throws an error if not
+    /// Deletes a single post
+    /// - Parameter id: the ID of the post to be deleted
+    /// - Returns: the post deleted (for delete and redraft), if successful, throws an error if not
     func deletePost(id: String) async throws -> Post? {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])

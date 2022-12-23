@@ -117,14 +117,14 @@ struct MakePostView: View {
     }
     
     func makeRegularPost() async throws -> String? {
-        let params = PostParams.init(status: post, mediaIds: [], visibility: visibility)
+        let params = PostParams(post: post, visibility: visibility)
         return try await tootManager.currentClient?.publishPost(params).id
     }
     
     func makePostScheduled() async throws -> String? {
         let date = Date().addingTimeInterval(TimeInterval(10.0 * 60.0)) // Add 10 minutes to it
-        let scheduledStatusParams = ScheduledStatusParams(text: post, mediaIds: [], visibility: visibility, scheduledAt: date)
-        return try await tootManager.currentClient?.scheduleStatus(scheduledStatusParams).id
+        let scheduledStatusParams = ScheduledPostParams(text: post, mediaIds: [], visibility: visibility, scheduledAt: date)
+        return try await tootManager.currentClient?.schedulePost(scheduledStatusParams).id
     }
     
 }

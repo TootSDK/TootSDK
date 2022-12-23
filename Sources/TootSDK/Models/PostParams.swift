@@ -3,20 +3,20 @@
 
 import Foundation
 
-/// Parameters to post a new status
+/// Parameters to create a new post
 public struct PostParams: Codable {
         
-    ///  Creates an object to post a new status
+    ///  Creates an object to create a new post with
     /// - Parameters:
-    ///   - post: The text content of the status. If media_ids is provided, this becomes optional. Attaching a poll is optional while status is provided.
-    ///   - mediaIds: Include Attachment IDs to be attached as media. If provided, status becomes optional, and poll cannot be used.
+    ///   - post: The text content of the post. If media_ids is provided, this becomes optional. Attaching a poll is optional while post is provided.
+    ///   - mediaIds: Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
     ///   - poll: CreatePoll struct
-    ///   - inReplyToId: ID of the status being replied to, if status is a reply.
-    ///   - sensitive: Boolean. Mark status and attached media as sensitive? Defaults to false.
-    ///   - spoilerText: Text to be shown as a warning or subject before the actual content. Statuses are generally collapsed behind this field.
-    ///   - visibility: Sets the visibility of the posted status to public, unlisted, private, direct.
-    ///   - language: ISO 639 language code for this status.
-    ///   - contentType: (Pleroma) The MIME type of the status, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
+    ///   - inReplyToId: ID of the post being replied to, if post is a reply.
+    ///   - sensitive: Boolean. Mark post and attached media as sensitive? Defaults to false.
+    ///   - spoilerText: Text to be shown as a warning or subject before the actual content. Posts are generally collapsed behind this field.
+    ///   - visibility: Sets the visibility of the posted post to public, unlisted, private, direct.
+    ///   - language: ISO 639 language code for this post.
+    ///   - contentType: (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
     public init(post: String,
                 mediaIds: [String]? = nil,
