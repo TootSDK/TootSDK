@@ -79,7 +79,7 @@
                 <a href="../Enums/ListRepliesPolicy.html">ListRepliesPolicy</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/StatusTootStreams.html">StatusTootStreams</a>
+                <a href="../Enums/PostTootStreams.html">PostTootStreams</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TootSDKError.html">TootSDKError</a>
@@ -260,10 +260,10 @@
                 <a href="../Structs/Results.html">Results</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ScheduledStatus.html">ScheduledStatus</a>
+                <a href="../Structs/ScheduledPost.html">ScheduledPost</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ScheduledStatusParams.html">ScheduledStatusParams</a>
+                <a href="../Structs/ScheduledPostParams.html">ScheduledPostParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Tag.html">Tag</a>
@@ -387,9 +387,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7TootSDK0A10DataStreamC7refreshyyAA06StatusA7StreamsOYaKF"></a>
+                    <a name="/s:7TootSDK0A10DataStreamC7refreshyyAA04PostA7StreamsOYaKF"></a>
                     <a name="//apple_ref/swift/Method/refresh(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A10DataStreamC7refreshyyAA06StatusA7StreamsOYaKF">refresh(_:<wbr>)</a>
+                    <a class="token" href="#/s:7TootSDK0A10DataStreamC7refreshyyAA04PostA7StreamsOYaKF">refresh(_:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Asynchronous
@@ -407,7 +407,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">refresh</span><span class="p">(</span><span class="n">_</span> <span class="nv">stream</span><span class="p">:</span> <span class="kt"><a href="../Enums/StatusTootStreams.html">StatusTootStreams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">refresh</span><span class="p">(</span><span class="n">_</span> <span class="nv">stream</span><span class="p">:</span> <span class="kt"><a href="../Enums/PostTootStreams.html">PostTootStreams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -459,9 +459,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7TootSDK0A10DataStreamC6streamyScSySayAA4PostCGGAA06StatusA7StreamsO_AA9PagedInfoVSgtKF"></a>
+                    <a name="/s:7TootSDK0A10DataStreamC6streamyScSySayAA4PostCGGAA0fA7StreamsO_AA9PagedInfoVSgtKF"></a>
                     <a name="//apple_ref/swift/Method/stream(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A10DataStreamC6streamyScSySayAA4PostCGGAA06StatusA7StreamsO_AA9PagedInfoVSgtKF">stream(_:<wbr>_:<wbr>)</a>
+                    <a class="token" href="#/s:7TootSDK0A10DataStreamC6streamyScSySayAA4PostCGGAA0fA7StreamsO_AA9PagedInfoVSgtKF">stream(_:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -476,7 +476,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stream</span><span class="p">(</span><span class="n">_</span> <span class="nv">stream</span><span class="p">:</span> <span class="kt"><a href="../Enums/StatusTootStreams.html">StatusTootStreams</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">pageInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/PagedInfo.html">PagedInfo</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AsyncStream</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stream</span><span class="p">(</span><span class="n">_</span> <span class="nv">stream</span><span class="p">:</span> <span class="kt"><a href="../Enums/PostTootStreams.html">PostTootStreams</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">pageInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/PagedInfo.html">PagedInfo</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AsyncStream</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -561,7 +561,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2022-12-22)</p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2022-12-23)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

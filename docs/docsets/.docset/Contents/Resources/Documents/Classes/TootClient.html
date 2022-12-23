@@ -79,7 +79,7 @@
                 <a href="../Enums/ListRepliesPolicy.html">ListRepliesPolicy</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/StatusTootStreams.html">StatusTootStreams</a>
+                <a href="../Enums/PostTootStreams.html">PostTootStreams</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TootSDKError.html">TootSDKError</a>
@@ -260,10 +260,10 @@
                 <a href="../Structs/Results.html">Results</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ScheduledStatus.html">ScheduledStatus</a>
+                <a href="../Structs/ScheduledPost.html">ScheduledPost</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ScheduledStatusParams.html">ScheduledStatusParams</a>
+                <a href="../Structs/ScheduledPostParams.html">ScheduledPostParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Tag.html">Tag</a>
@@ -1457,6 +1457,665 @@ Note that the call will be successful even if the domain was not previously bloc
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7TootSDK0A6ClientC11publishPostyAA0E0CAA0E6ParamsVYaKF"></a>
+                    <a name="//apple_ref/swift/Method/publishPost(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC11publishPostyAA0E0CAA0E6ParamsVYaKF">publishPost(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Publishes the post based on the components provided</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">publishPost</span><span class="p">(</span><span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/PostParams.html">PostParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>PostParams</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>post components to be published</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the published post, if successful, throws an error if not</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC8editPost2id_AA0E0CSS_AA04EditE6ParamsVtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/editPost(id:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC8editPost2id_AA0E0CSS_AA04EditE6ParamsVtYaKF">editPost(id:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditPostParams.html">EditPostParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the ID of the psot to be changed</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>params</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the updated content of the post to be posted</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the post after the update</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC7getPost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC7getPost2idAA0E0CSS_tYaKF">getPost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets a single post</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the ID of the post to be retrieved</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the post retrieved, if successful, throws an error if not</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC10getContext2idAA0E0VSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getContext(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC10getContext2idAA0E0VSS_tYaKF">getContext(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getContext</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Context.html">Context</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC10deletePost2idAA0E0CSgSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/deletePost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC10deletePost2idAA0E0CSgSS_tYaKF">deletePost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deletes a single post</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deletePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the ID of the post to be deleted</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the post deleted (for delete and redraft), if successful, throws an error if not</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC13favouritePost2idAA0E0CSgSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/favouritePost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC13favouritePost2idAA0E0CSgSS_tYaKF">favouritePost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">favouritePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC15unfavouritePost2idAA0E0CSgSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/unfavouritePost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC15unfavouritePost2idAA0E0CSgSS_tYaKF">unfavouritePost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unfavouritePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC9boostPost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/boostPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC9boostPost2idAA0E0CSS_tYaKF">boostPost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">boostPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC11unboostPost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/unboostPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC11unboostPost2idAA0E0CSS_tYaKF">unboostPost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unboostPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC12bookmarkPost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/bookmarkPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC12bookmarkPost2idAA0E0CSS_tYaKF">bookmarkPost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">bookmarkPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC14unbookmarkPost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/unbookmarkPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC14unbookmarkPost2idAA0E0CSS_tYaKF">unbookmarkPost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unbookmarkPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC8mutePost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/mutePost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC8mutePost2idAA0E0CSS_tYaKF">mutePost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">mutePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC10unmutePost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/unmutePost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC10unmutePost2idAA0E0CSS_tYaKF">unmutePost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unmutePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC7pinPost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/pinPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC7pinPost2idAA0E0CSS_tYaKF">pinPost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pinPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC9unpinPost2idAA0E0CSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/unpinPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC9unpinPost2idAA0E0CSS_tYaKF">unpinPost(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unpinPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC18getAccountsBoosted2idSayAA7AccountCGSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getAccountsBoosted(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC18getAccountsBoosted2idSayAA7AccountCGSS_tYaKF">getAccountsBoosted(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getAccountsBoosted</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Account.html">Account</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC21getAccountsFavourited2idSayAA7AccountCGSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getAccountsFavourited(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC21getAccountsFavourited2idSayAA7AccountCGSS_tYaKF">getAccountsFavourited(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getAccountsFavourited</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Account.html">Account</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC10getHistory2idSayAA8PostEditVGSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getHistory(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC10getHistory2idSayAA8PostEditVGSS_tYaKF">getHistory(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getHistory</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/PostEdit.html">PostEdit</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC13getPostSource2idAA0eF0VSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getPostSource(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC13getPostSource2idAA0eF0VSS_tYaKF">getPostSource(id:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getPostSource</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PostSource.html">PostSource</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7TootSDK0A6ClientC13followAccount2by6paramsAA12RelationshipVSS_AA06FollowE6ParamsVSgtYaKF"></a>
                     <a name="//apple_ref/swift/Method/followAccount(by:params:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7TootSDK0A6ClientC13followAccount2by6paramsAA12RelationshipVSS_AA06FollowE6ParamsVSgtYaKF">followAccount(by:<wbr>params:<wbr>)</a>
@@ -1987,9 +2646,9 @@ Note that the call will be successful even if the domain was not previously bloc
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7TootSDK0A6ClientC14scheduleStatusyAA09ScheduledE0VAA0fE6ParamsVYaKF"></a>
-                    <a name="//apple_ref/swift/Method/scheduleStatus(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC14scheduleStatusyAA09ScheduledE0VAA0fE6ParamsVYaKF">scheduleStatus(_:<wbr>)</a>
+                    <a name="/s:7TootSDK0A6ClientC12schedulePostyAA09ScheduledE0VAA0fE6ParamsVYaKF"></a>
+                    <a name="//apple_ref/swift/Method/schedulePost(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC12schedulePostyAA09ScheduledE0VAA0fE6ParamsVYaKF">schedulePost(_:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Asynchronous
@@ -2000,14 +2659,14 @@ Note that the call will be successful even if the domain was not previously bloc
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Schedules a status based on the components provided</p>
+                        <p>Schedules a post based on the components provided</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">scheduleStatus</span><span class="p">(</span><span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/ScheduledStatusParams.html">ScheduledStatusParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ScheduledStatus.html">ScheduledStatus</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">schedulePost</span><span class="p">(</span><span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/ScheduledPostParams.html">ScheduledPostParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ScheduledPost.html">ScheduledPost</a></span></code></pre>
 
                         </div>
                       </div>
@@ -2018,12 +2677,12 @@ Note that the call will be successful even if the domain was not previously bloc
                             <tr>
                               <td>
                                 <code>
-                                <em>statusComponents</em>
+                                <em>ScheduledPostParams</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>Status components to be published</p>
+                                  <p>post components to be published</p>
                                 </div>
                               </td>
                             </tr>
@@ -2032,7 +2691,7 @@ Note that the call will be successful even if the domain was not previously bloc
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>the ScheduledStatus, if successful, throws an error if not</p>
+                        <p>the ScheduledPost, if successful, throws an error if not</p>
                       </div>
                     </section>
                   </div>
@@ -2040,9 +2699,9 @@ Note that the call will be successful even if the domain was not previously bloc
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7TootSDK0A6ClientC18getScheduledStatus5minId03maxH005sinceH05limitSayAA0eF0VGSSSg_A2LSiSgtYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getScheduledStatus(minId:maxId:sinceId:limit:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC18getScheduledStatus5minId03maxH005sinceH05limitSayAA0eF0VGSSSg_A2LSiSgtYaKF">getScheduledStatus(minId:<wbr>maxId:<wbr>sinceId:<wbr>limit:<wbr>)</a>
+                    <a name="/s:7TootSDK0A6ClientC16getScheduledPost5minId03maxH005sinceH05limitSayAA0eF0VGSSSg_A2LSiSgtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getScheduledPost(minId:maxId:sinceId:limit:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC16getScheduledPost5minId03maxH005sinceH05limitSayAA0eF0VGSSSg_A2LSiSgtYaKF">getScheduledPost(minId:<wbr>maxId:<wbr>sinceId:<wbr>limit:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Asynchronous
@@ -2060,7 +2719,7 @@ Note that the call will be successful even if the domain was not previously bloc
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getScheduledStatus</span><span class="p">(</span><span class="nv">minId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">maxId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">sinceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">limit</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/ScheduledStatus.html">ScheduledStatus</a></span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getScheduledPost</span><span class="p">(</span><span class="nv">minId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">maxId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">sinceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">limit</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/ScheduledPost.html">ScheduledPost</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -2129,9 +2788,9 @@ Note that the call will be successful even if the domain was not previously bloc
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7TootSDK0A6ClientC18getScheduledStatus2idAA0eF0VSgSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getScheduledStatus(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC18getScheduledStatus2idAA0eF0VSgSS_tYaKF">getScheduledStatus(id:<wbr>)</a>
+                    <a name="/s:7TootSDK0A6ClientC16getScheduledPost2idAA0eF0VSgSS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/getScheduledPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC16getScheduledPost2idAA0eF0VSgSS_tYaKF">getScheduledPost(id:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Asynchronous
@@ -2142,14 +2801,14 @@ Note that the call will be successful even if the domain was not previously bloc
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Gets a single Scheduled Status by id</p>
+                        <p>Gets a single Scheduled post by id</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getScheduledStatus</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ScheduledStatus.html">ScheduledStatus</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getScheduledPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ScheduledPost.html">ScheduledPost</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -2165,7 +2824,7 @@ Note that the call will be successful even if the domain was not previously bloc
                               </td>
                               <td>
                                 <div>
-                                  <p>the ID of the status to be retrieved</p>
+                                  <p>the ID of the post to be retrieved</p>
                                 </div>
                               </td>
                             </tr>
@@ -2174,7 +2833,7 @@ Note that the call will be successful even if the domain was not previously bloc
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>the scheduled status retrieved, if successful, throws an error if not</p>
+                        <p>the scheduled post retrieved, if successful, throws an error if not</p>
                       </div>
                     </section>
                   </div>
@@ -2182,9 +2841,9 @@ Note that the call will be successful even if the domain was not previously bloc
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7TootSDK0A6ClientC25updateScheduledStatusDate2id_AA0eF0VSgSS_AA0eF6ParamsVtYaKF"></a>
-                    <a name="//apple_ref/swift/Method/updateScheduledStatusDate(id:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC25updateScheduledStatusDate2id_AA0eF0VSgSS_AA0eF6ParamsVtYaKF">updateScheduledStatusDate(id:<wbr>_:<wbr>)</a>
+                    <a name="/s:7TootSDK0A6ClientC23updateScheduledPostDate2id_AA0eF0VSgSS_AA0eF6ParamsVtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/updateScheduledPostDate(id:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC23updateScheduledPostDate2id_AA0eF0VSgSS_AA0eF6ParamsVtYaKF">updateScheduledPostDate(id:<wbr>_:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Asynchronous
@@ -2195,14 +2854,14 @@ Note that the call will be successful even if the domain was not previously bloc
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Edit a given status to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.</p>
+                        <p>Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updateScheduledStatusDate</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/ScheduledStatusParams.html">ScheduledStatusParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ScheduledStatus.html">ScheduledStatus</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updateScheduledPostDate</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/ScheduledPostParams.html">ScheduledPostParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ScheduledPost.html">ScheduledPost</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -2218,7 +2877,7 @@ Note that the call will be successful even if the domain was not previously bloc
                               </td>
                               <td>
                                 <div>
-                                  <p>the ID of the status to be changed</p>
+                                  <p>the ID of the post to be changed</p>
                                 </div>
                               </td>
                             </tr>
@@ -2230,7 +2889,7 @@ Note that the call will be successful even if the domain was not previously bloc
                               </td>
                               <td>
                                 <div>
-                                  <p>the updated content of the status to be posted</p>
+                                  <p>the updated content of the post to be posted</p>
                                 </div>
                               </td>
                             </tr>
@@ -2239,7 +2898,7 @@ Note that the call will be successful even if the domain was not previously bloc
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>the status after the update</p>
+                        <p>the post after the update</p>
                       </div>
                     </section>
                   </div>
@@ -2247,9 +2906,9 @@ Note that the call will be successful even if the domain was not previously bloc
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7TootSDK0A6ClientC21deleteScheduledStatus2idySS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/deleteScheduledStatus(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC21deleteScheduledStatus2idySS_tYaKF">deleteScheduledStatus(id:<wbr>)</a>
+                    <a name="/s:7TootSDK0A6ClientC19deleteScheduledPost2idySS_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/deleteScheduledPost(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC19deleteScheduledPost2idySS_tYaKF">deleteScheduledPost(id:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Asynchronous
@@ -2260,14 +2919,14 @@ Note that the call will be successful even if the domain was not previously bloc
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Deletes a single scheduled status</p>
+                        <p>Deletes a single scheduled post</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deleteScheduledStatus</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deleteScheduledPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -2283,7 +2942,7 @@ Note that the call will be successful even if the domain was not previously bloc
                               </td>
                               <td>
                                 <div>
-                                  <p>the ID of the status to be deleted</p>
+                                  <p>the ID of the post to be deleted</p>
                                 </div>
                               </td>
                             </tr>
@@ -2292,666 +2951,7 @@ Note that the call will be successful even if the domain was not previously bloc
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>the status deleted (for delete and redraft), if successful, throws an error if not</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC11publishPostyAA0E0CAA0E6ParamsVYaKF"></a>
-                    <a name="//apple_ref/swift/Method/publishPost(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC11publishPostyAA0E0CAA0E6ParamsVYaKF">publishPost(_:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Publishes the status based on the components provided</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">publishPost</span><span class="p">(</span><span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/PostParams.html">PostParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>statusComponents</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Status components to be published</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>the published status, if successful, throws an error if not</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC8editPost2id_AA0E0CSS_AA04EditE6ParamsVtYaKF"></a>
-                    <a name="//apple_ref/swift/Method/editPost(id:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC8editPost2id_AA0E0CSS_AA04EditE6ParamsVtYaKF">editPost(id:<wbr>_:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Edit a given status to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditPostParams.html">EditPostParams</a></span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>id</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the ID of the status to be changed</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>params</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the updated content of the status to be posted</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>the status after the update</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC7getPost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getPost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC7getPost2idAA0E0CSS_tYaKF">getPost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Gets a single status</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>id</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the ID of the status to be retrieved</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>the status retrieved, if successful, throws an error if not</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC10getContext2idAA0E0VSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getContext(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC10getContext2idAA0E0VSS_tYaKF">getContext(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getContext</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Context.html">Context</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC10deletePost2idAA0E0CSgSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/deletePost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC10deletePost2idAA0E0CSgSS_tYaKF">deletePost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Deletes a single status</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deletePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>id</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the ID of the status to be deleted</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>the status deleted (for delete and redraft), if successful, throws an error if not</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC13favouritePost2idAA0E0CSgSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/favouritePost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC13favouritePost2idAA0E0CSgSS_tYaKF">favouritePost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">favouritePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC15unfavouritePost2idAA0E0CSgSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/unfavouritePost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC15unfavouritePost2idAA0E0CSgSS_tYaKF">unfavouritePost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unfavouritePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC9boostPost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/boostPost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC9boostPost2idAA0E0CSS_tYaKF">boostPost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">boostPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC11unboostPost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/unboostPost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC11unboostPost2idAA0E0CSS_tYaKF">unboostPost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unboostPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC12bookmarkPost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/bookmarkPost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC12bookmarkPost2idAA0E0CSS_tYaKF">bookmarkPost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">bookmarkPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC14unbookmarkPost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/unbookmarkPost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC14unbookmarkPost2idAA0E0CSS_tYaKF">unbookmarkPost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unbookmarkPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC8mutePost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/mutePost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC8mutePost2idAA0E0CSS_tYaKF">mutePost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">mutePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC10unmutePost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/unmutePost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC10unmutePost2idAA0E0CSS_tYaKF">unmutePost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unmutePost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC7pinPost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/pinPost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC7pinPost2idAA0E0CSS_tYaKF">pinPost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pinPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC9unpinPost2idAA0E0CSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/unpinPost(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC9unpinPost2idAA0E0CSS_tYaKF">unpinPost(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unpinPost</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Post.html">Post</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC18getAccountsBoosted2idSayAA7AccountCGSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getAccountsBoosted(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC18getAccountsBoosted2idSayAA7AccountCGSS_tYaKF">getAccountsBoosted(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getAccountsBoosted</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Account.html">Account</a></span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC21getAccountsFavourited2idSayAA7AccountCGSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getAccountsFavourited(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC21getAccountsFavourited2idSayAA7AccountCGSS_tYaKF">getAccountsFavourited(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getAccountsFavourited</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Account.html">Account</a></span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC10getHistory2idSayAA8PostEditVGSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getHistory(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC10getHistory2idSayAA8PostEditVGSS_tYaKF">getHistory(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getHistory</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/PostEdit.html">PostEdit</a></span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7TootSDK0A6ClientC13getPostSource2idAA0eF0VSS_tYaKF"></a>
-                    <a name="//apple_ref/swift/Method/getPostSource(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7TootSDK0A6ClientC13getPostSource2idAA0eF0VSS_tYaKF">getPostSource(id:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Asynchronous
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getPostSource</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PostSource.html">PostSource</a></span></code></pre>
-
-                        </div>
+                        <p>the post deleted (for delete and redraft), if successful, throws an error if not</p>
                       </div>
                     </section>
                   </div>
@@ -3236,7 +3236,7 @@ Exchange the callback authorization code for an accessToken</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2022-12-22)</p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2022-12-23)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
