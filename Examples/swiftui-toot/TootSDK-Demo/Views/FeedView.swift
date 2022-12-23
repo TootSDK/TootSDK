@@ -25,7 +25,7 @@ struct FeedView: View {
                     let id = post.repost?.id ?? post.id // navigate to the reposted post if it exists
                     self.path.append(id)
                 } label: {
-                    PostView(post: post, attributed: true, path: $path)
+                    PostView(post: post, attributed: false, path: $path)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)

@@ -5,6 +5,7 @@
 
 import Foundation
 import Down
+import SwiftSoup
 
 /// A wrapper for HTML content, returned from the instance API
 /// This seeks to provide convenient NSAttributedString and plain text String versions of the HTML
@@ -57,16 +58,12 @@ public struct HTML: Codable {
     /// - Parameter html: a string of html content
     /// - Returns: the processed string, free of HTML tags
     private static func stripHTMLFormatting(html: String?) -> String? {
-        guard let html = html else { return nil }
-        
-        let htmlReplaceString: String = "<[^>]*>"
-        
-        if let regex = try? NSRegularExpression(pattern: htmlReplaceString, options: .caseInsensitive) {
-            return regex.stringByReplacingMatches(in: html, options: [], range: NSRange(html.startIndex..., in: html), withTemplate: "")
+        if let html = html,
+           let doc: SwiftSoup.Document = try? SwiftSoup.parse(html) {
+            return try? doc.text()
         } else {
             return nil
         }
-
     }
     
     /// The value we're initialized with
@@ -78,8 +75,7 @@ public struct HTML: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.wrappedValue)
-    }
-    
+    }    
 }
 
 extension HTML: Hashable {
