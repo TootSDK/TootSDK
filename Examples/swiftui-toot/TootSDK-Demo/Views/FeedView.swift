@@ -16,13 +16,16 @@ struct FeedView: View {
     
     @State var path: NavigationPath = NavigationPath()
     
+    @State var loading: Bool = false
+    
     var body: some View {
         NavigationStack(path: $path) {
-            List(statuses, id: \.self) { status in
+            List(posts, id: \.self) { post in
                 Button {
-                    self.path.append(status.id)
+                    let id = post.repost?.id ?? post.id // navigate to the reposted post if it exists
+                    self.path.append(id)
                 } label: {
-                    StatusView(status: status, attributed: true, path: $path)
+                    PostView(post: post, attributed: true, path: $path)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)
@@ -51,14 +54,14 @@ struct FeedView: View {
             Task {
                 for await updatedPosts in try await currentClient.data.stream(.timeLineHome) {
                     print("got a batch of posts")
-                    statuses = updatedPosts
+                    posts = updatedPosts
                 }
             }
             
             // Reset data if the client changes (user has signed in/out etc
             Task {
                 for await _ in tootManager.$currentClient.values {
-                    statuses = []
+                    posts = []
                     name = ""
                 }
             }
@@ -69,40 +72,24 @@ struct FeedView: View {
         .refreshable {
             refresh()
         }
-    }
-    
-    @ViewBuilder func row(_ post: Post) -> some View {
-        HStack(alignment: .top) {
-            
-            AsyncImage(url: URL(string: post.account.avatar)) { image in
-                image.resizable()
-            } placeholder: {
-                ProgressView()
-            }
-            .frame(width: 80, height: 80)
-            .onLongPressGesture {
-                self.path.append(post.account)
-            }
-            
-            VStack {
-                HStack {
-                    Text(post.account.displayName ?? "?")
-                        .font(.caption.bold())
-                    Text(post.account.username ?? "")
-                        .font(.caption)
+        .overlay {
+            if loading {
+                ZStack {
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                    ProgressView()
                 }
                 
-                                
-                Text(AttributedString(post.content?.attributedString ?? NSAttributedString(string: "")))
-                    .font(.body)
             }
         }
     }
     
     func refresh() {
         Task {
+            loading = true
             try await tootManager.currentClient?.data.refresh(.timeLineHome)
             try await tootManager.currentClient?.data.refresh(.verifyCredentials)
+            loading = false
         }
     }
 }

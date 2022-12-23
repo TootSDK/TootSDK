@@ -24,7 +24,7 @@
 		55B8B1742917627D00339479 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1732917627D00339479 /* FeedView.swift */; };
 		55B8B1782917673500339479 /* AuthorizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1772917673500339479 /* AuthorizeView.swift */; };
 		55B8B17B2917675700339479 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 55B8B17A2917675700339479 /* TootSDK */; };
-		55C14EB02954367B00579342 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C14EAF2954367B00579342 /* StatusView.swift */; };
+		55C14EB02954367B00579342 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C14EAF2954367B00579342 /* PostView.swift */; };
 		55F9D91429190A9E0062CFA9 /* TootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F9D91329190A9E0062CFA9 /* TootManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +46,7 @@
 		55B8B1712917620C00339479 /* MakePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePostView.swift; sourceTree = "<group>"; };
 		55B8B1732917627D00339479 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		55B8B1772917673500339479 /* AuthorizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeView.swift; sourceTree = "<group>"; };
-		55C14EAF2954367B00579342 /* StatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		55C14EAF2954367B00579342 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		55F9D91329190A9E0062CFA9 /* TootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,7 +137,7 @@
 				550CF6652931E3AC00D07EA0 /* PostOperationsView.swift */,
 				552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */,
 				55B8B1772917673500339479 /* AuthorizeView.swift */,
-				55C14EAF2954367B00579342 /* StatusView.swift */,
+				55C14EAF2954367B00579342 /* PostView.swift */,
 				55B8B1732917627D00339479 /* FeedView.swift */,
 				550CF66D2931F9A000D07EA0 /* UserAccountView.swift */,
 				553CFB3C2952C22A00F3EB69 /* Account */,
@@ -228,7 +228,7 @@
 				55F9D91429190A9E0062CFA9 /* TootManager.swift in Sources */,
 				550CF6662931E3AC00D07EA0 /* PostOperationsView.swift in Sources */,
 				552BFB0129409AB300FB46D3 /* ScheduledPostOperationsView.swift in Sources */,
-				55C14EB02954367B00579342 /* StatusView.swift in Sources */,
+				55C14EB02954367B00579342 /* PostView.swift in Sources */,
 				553CFB392952B99700F3EB69 /* AccountView.swift in Sources */,
 				55B8B1742917627D00339479 /* FeedView.swift in Sources */,
 				553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */,

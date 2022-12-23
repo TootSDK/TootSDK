@@ -9,22 +9,22 @@ import SwiftUI
 import TootSDK
 
 struct PostView: View {
-    var status: Status
+    var post: Post
     var attributed: Bool
 
     @Binding var path: NavigationPath
 
-    var displayStatus: Status {
-        return status.reblog ?? self.status
+    var displayPost: Post {
+        return post.repost ?? self.post
     }
     
-    var reblog: Bool {
-        return status.reblog != nil
+    var repost: Bool {
+        return post.repost != nil
     }
     
     var body: some View {
         VStack {
-            if reblog {
+            if repost {
                 HStack {
                     HStack {
                         Spacer()
@@ -34,36 +34,38 @@ struct PostView: View {
                     }
                     .frame(width: 80)
                     
-                    Text((status.account.displayName ?? "") + " boosted")
+                    Text((post.account.displayName ?? "") + " boosted")
                         .font(.caption.italic())
+                    
+                    Spacer()
                 }
             }
             
             HStack(alignment: .top) {
-                AsyncImage(url: URL(string: displayStatus.account.avatar)) { image in
+                AsyncImage(url: URL(string: displayPost.account.avatar)) { image in
                     image.resizable()
                 } placeholder: {
                     ProgressView()
                 }
                 .frame(width: 80, height: 80)
                 .onLongPressGesture {
-                    self.path.append(displayStatus.account)
+                    self.path.append(displayPost.account)
                 }
 
                 VStack(spacing: 8) {
                     HStack {
-                        Text(displayStatus.account.displayName ?? "?")
+                        Text(displayPost.account.displayName ?? "?")
                             .font(.caption.bold())
-                        Text(displayStatus.account.username)
+                        Text(displayPost.account.username ?? "?")
                             .font(.caption)
                         
                         Spacer()
                     }
                     
-                    if attributed, let attributedText = displayStatus.content?.attributedString {
+                    if attributed, let attributedText = displayPost.content?.attributedString {
                         Text(AttributedString(attributedText))
                     } else {
-                        Text(displayStatus.content?.plainContent ?? "")
+                        Text(displayPost.content?.plainContent ?? "")
                     }
                 }
             }
