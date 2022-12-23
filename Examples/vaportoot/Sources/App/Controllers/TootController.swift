@@ -121,7 +121,7 @@ struct LoginRequest: Content {
   var url: String
 }
 
-struct Post: Encodable {
+struct PostItem: Encodable {
   var id: String
   var text: String
   var avatar: String
@@ -129,12 +129,12 @@ struct Post: Encodable {
   var favourited: Bool
 }
 
-extension Post {
-  init(status: Status) {
-    id = status.id
-    text = status.content ?? ""
-    avatar = status.account.avatar
-    author = status.account.displayName ?? ""
-    favourited = status.favourited ?? false
+extension PostItem {
+  init(post: Post) {
+    id = post.id
+    text = post.content ?? ""
+    avatar = post.account.avatar
+    author = post.account.displayName ?? ""
+    favourited = post.favourited ?? false
   }
 }

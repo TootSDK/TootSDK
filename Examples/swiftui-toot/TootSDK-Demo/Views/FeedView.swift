@@ -11,7 +11,7 @@ import TootSDK
 struct FeedView: View {
     @EnvironmentObject var tootManager: TootManager
     
-    @State var posts: [Status] = []
+    @State var posts: [Post] = []
     @State var name: String = ""
     
     @State var path: NavigationPath = NavigationPath()
@@ -47,7 +47,7 @@ struct FeedView: View {
                 }
             }
             
-            // opt into status updates
+            // opt into posts updates
             Task {
                 for await updatedPosts in try await currentClient.data.stream(.timeLineHome) {
                     print("got a batch of posts")
@@ -71,7 +71,7 @@ struct FeedView: View {
         }
     }
     
-    @ViewBuilder func row(_ post: Status) -> some View {
+    @ViewBuilder func row(_ post: Post) -> some View {
         HStack(alignment: .top) {
             
             AsyncImage(url: URL(string: post.account.avatar)) { image in

@@ -20,7 +20,7 @@ struct Follow: AsyncParsableCommand {
   @Option(
     name: .long,
     help:
-      "Receive notifications when this account posts a status?"
+      "Receive notifications when this account creates a post?"
   )
   var notify: String?
 

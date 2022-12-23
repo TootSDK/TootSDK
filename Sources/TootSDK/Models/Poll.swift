@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Represents a poll attached to a status.
+/// Represents a poll attached to a post.
 public struct Poll: Codable, Hashable {
     public init(id: String,
                 expiresAt: Date? = nil,

@@ -5,7 +5,7 @@ import Foundation
 
 /// Represents a user  and their associated profile.
 public class Account: Codable, Identifiable {
-    public init(id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String, avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date, lastStatusAt: Date? = nil, statusesCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil, limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil) {
+    public init(id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String, avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date, lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil, limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil) {
         self.id = id
         self.username = username
         self.acct = acct
@@ -20,8 +20,8 @@ public class Account: Codable, Identifiable {
         self.emojis = emojis
         self.discoverable = discoverable
         self.createdAt = createdAt
-        self.lastStatusAt = lastStatusAt
-        self.statusesCount = statusesCount
+        self.lastPostAt = lastPostAt
+        self.postsCount = postsCount
         self.followersCount = followersCount
         self.followingCount = followingCount
         self.moved = moved
@@ -44,7 +44,7 @@ public class Account: Codable, Identifiable {
     public var displayName: String?
     /// The profile's bio / description
     public var note: String
-    /// An image icon that is shown next to statuses and in the profile
+    /// An image icon that is shown next to posts and in the profile
     public var avatar: String
     /// A static version of the avatar.
     public var avatarStatic: String?
@@ -60,10 +60,10 @@ public class Account: Codable, Identifiable {
     public var discoverable: Bool?
     /// When the account was created
     public var createdAt: Date
-    /// When the most recent status was posted
-    public var lastStatusAt: Date?
-    /// How many statuses are attached to this account
-    public var statusesCount: Int
+    /// When the most recent post was posted
+    public var lastPostAt: Date?
+    /// How many posts are attached to this account
+    public var postsCount: Int
     /// The reported followers of this profile
     public var followersCount: Int
     /// The reported follows of this profile
@@ -83,6 +83,35 @@ public class Account: Codable, Identifiable {
     public var source: TootSource?
 }
 
+public extension Account {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case username
+        case acct
+        case url
+        case displayName
+        case note
+        case avatar
+        case avatarStatic
+        case header
+        case headerStatic
+        case locked
+        case emojis
+        case discoverable
+        case createdAt
+        case lastPostAt = "lastStatusAt"
+        case postsCount = "statusesCount"
+        case followersCount
+        case followingCount
+        case moved
+        case suspended
+        case limited
+        case fields
+        case bot
+        case source
+    }
+}
+
 extension Account: Hashable {
     
     public func hash(into hasher: inout Hasher) {
@@ -100,8 +129,8 @@ extension Account: Hashable {
         hasher.combine(emojis)
         hasher.combine(discoverable)
         hasher.combine(createdAt)
-        hasher.combine(lastStatusAt)
-        hasher.combine(statusesCount)
+        hasher.combine(lastPostAt)
+        hasher.combine(postsCount)
         hasher.combine(followersCount)
         hasher.combine(followingCount)
         hasher.combine(moved)

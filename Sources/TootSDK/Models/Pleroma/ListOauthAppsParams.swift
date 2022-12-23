@@ -7,19 +7,19 @@ import Foundation
 public struct ListOauthAppsParams: Codable {
     
     /// App name
-    var name: String?
+    public var name: String?
     
     /// Client ID
-    var clientId: String?
+    public var clientId: String?
     
     /// Trusted apps, defaults to false
-    var trusted: Bool?
+    public var trusted: Bool?
     
     /// Number of apps to return, defaults to 50.
-    var pageSize: Int?
+    public var pageSize: Int?
     
     /// Allows authorization via admin token.
-    var adminToken: String?
+    public var adminToken: String?
     
     public init(name: String? = nil, clientId: String? = nil, trusted: Bool? = nil, pageSize: Int? = nil, adminToken: String? = nil) {
         self.name = name
