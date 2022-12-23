@@ -76,7 +76,7 @@ public struct Instance: Codable, Hashable {
         /// Domains federated with this instance. Number.
         public var domainCount: Int?
         
-        enum CodingKeys: String, CodingKey {
+        enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
             case userCount
             case postCount = "status_count"
             case domainCount
