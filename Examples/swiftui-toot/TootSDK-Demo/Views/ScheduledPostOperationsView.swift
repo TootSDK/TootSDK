@@ -41,8 +41,8 @@ struct ScheduledPostOperationsView: View {
                 }
                 
                 ButtonView(text: "Update post date (to now + 10 mins)") {
-                    if let oldStatus = try await tootManager.currentClient?.getScheduledPost(id: postID) {
-                        var params = oldStatus.params
+                    if let oldPost = try await tootManager.currentClient?.getScheduledPost(id: postID) {
+                        var params = oldPost.params
                         params.scheduledAt = Date().addingTimeInterval(TimeInterval(10.0 * 60.0))
                         
                         if let context = try await tootManager.currentClient?.updateScheduledPostDate(id: postID, params) {

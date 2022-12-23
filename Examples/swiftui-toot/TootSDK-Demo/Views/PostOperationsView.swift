@@ -38,7 +38,7 @@ struct PostOperationsView: View {
             self.favouriteButtons(postID: postID)
             self.boostButtons(postID: postID)
             self.bookmarkButtons(postID: postID)
-            self.statusButtons(postID: postID)
+            self.historySourceButtons(postID: postID)
         }
     }
     
@@ -81,13 +81,13 @@ struct PostOperationsView: View {
     @ViewBuilder func favouriteButtons(postID: String) -> some View {
         Group {
             ButtonView(text: "Favourite") {
-                let status = try await tootManager.currentClient?.favouritePost(id: postID)
-                debugPrint(status ?? "")
+                let post = try await tootManager.currentClient?.favouritePost(id: postID)
+                debugPrint(post ?? "")
             }
             
             ButtonView(text: "Unfavourite") {
-                let status = try await tootManager.currentClient?.unfavouritePost(id: postID)
-                debugPrint(status ?? "")
+                let post = try await tootManager.currentClient?.unfavouritePost(id: postID)
+                debugPrint(post ?? "")
             }
             
             ButtonView(text: "Who favourited") {
@@ -100,13 +100,13 @@ struct PostOperationsView: View {
     @ViewBuilder func boostButtons(postID: String) -> some View {
         Group {
             ButtonView(text: "Boost") {
-                let status = try await tootManager.currentClient.boostPost(id: postID)
-                debugPrint(status)
+                let post = try await tootManager.currentClient.boostPost(id: postID)
+                debugPrint(post)
             }
             
             ButtonView(text: "Unboost") {
-                let status = try await tootManager.currentClient.unboostPost(id: postID)
-                debugPrint(status)
+                let post = try await tootManager.currentClient.unboostPost(id: postID)
+                debugPrint(post)
             }
             
             ButtonView(text: "Who boosted") {
@@ -119,18 +119,18 @@ struct PostOperationsView: View {
     @ViewBuilder func bookmarkButtons(postID: String) -> some View {
         Group {
             ButtonView(text: "Bookmark") {
-                let status = try await tootManager.currentClient.bookmarkPost(id: postID)
-                debugPrint(status)
+                let post = try await tootManager.currentClient.bookmarkPost(id: postID)
+                debugPrint(post)
             }
             
             ButtonView(text: "Unbookmark") {
-                let status = try await tootManager.currentClient.unbookmarkPost(id: postID)
-                debugPrint(status)
+                let post = try await tootManager.currentClient.unbookmarkPost(id: postID)
+                debugPrint(post)
             }
         }
     }
     
-    @ViewBuilder func statusButtons(postID: String) -> some View {
+    @ViewBuilder func historySourceButtons(postID: String) -> some View {
         Group {
             
             
@@ -139,9 +139,9 @@ struct PostOperationsView: View {
                 debugPrint(edits)
             }
             
-            ButtonView(text: "Get Status Source") {
-                let statusSource = try await tootManager.currentClient.getPostSource(id: postID)
-                debugPrint(statusSource)
+            ButtonView(text: "Get Post Source") {
+                let postSource = try await tootManager.currentClient.getPostSource(id: postID)
+                debugPrint(postSource)
             }
         }
     }

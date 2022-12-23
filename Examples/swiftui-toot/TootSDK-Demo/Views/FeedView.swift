@@ -47,7 +47,7 @@ struct FeedView: View {
                 }
             }
             
-            // opt into status updates
+            // opt into posts updates
             Task {
                 for await updatedPosts in try await currentClient.data.stream(.timeLineHome) {
                     print("got a batch of posts")
