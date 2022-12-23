@@ -4,10 +4,10 @@
 import Foundation
 
 public struct Context: Codable, Hashable {
-    public var ancestors: [Status]
-    public var descendants: [Status]
+    public var ancestors: [Post]
+    public var descendants: [Post]
 
-    public init(ancestors: [Status], descendants: [Status]) {
+    public init(ancestors: [Post], descendants: [Post]) {
         self.ancestors = ancestors
         self.descendants = descendants
     }

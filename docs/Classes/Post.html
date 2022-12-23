@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Post Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Post" class="dashAnchor"></a>
+    <a title="Post Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (100% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        Post Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Actors.html">Actors</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Actors/TootDataStream.html">TootDataStream</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Account.html">Account</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Account/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Post.html">Post</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Post/Visibility.html">– Visibility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TootClient.html">TootClient</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AccountTootStreams.html">AccountTootStreams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DomainBlockSeverity.html">DomainBlockSeverity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/HTTPMethod.html">HTTPMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListRepliesPolicy.html">ListRepliesPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PostTootStreams.html">PostTootStreams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TootSDKError.html">TootSDKError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TootSDKFlavour.html">TootSDKFlavour</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TootStream.html">TootStream</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AccessToken.html">AccessToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountLookup.html">AccountLookup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Activity.html">Activity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AddAccountsToListParams.html">AddAccountsToListParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Alerts.html">Alerts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Announcement.html">Announcement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnnouncementReaction.html">AnnouncementReaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Attachment.html">Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Attachment/AttachmentType.html">– AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Attachment/Meta.html">– Meta</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/BlockDomainParams.html">BlockDomainParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CallbackInfo.html">CallbackInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Card.html">Card</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Card/CardType.html">– CardType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Context.html">Context</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Conversation.html">Conversation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CreatePoll.html">CreatePoll</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DomainBlock.html">DomainBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditPostParams.html">EditPostParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Emoji.html">Emoji</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FeaturedTag.html">FeaturedTag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Filter.html">Filter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Filter/Context.html">– Context</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FollowAccountParams.html">FollowAccountParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityProof.html">IdentityProof</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Instance.html">Instance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Instance/URLs.html">– URLs</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Instance/Stats.html">– Stats</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/List.html">List</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ListOauthAppsParams.html">ListOauthAppsParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ListParams.html">ListParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Marker.html">Marker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Marker/Timeline.html">– Timeline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Mention.html">Mention</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MuteAccountParams.html">MuteAccountParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PagedInfo.html">PagedInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PagedResult.html">PagedResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Pagination.html">Pagination</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PleromaFollowByURIParams.html">PleromaFollowByURIParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PleromaOauthApp.html">PleromaOauthApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:7TootSDK24PleromaOauthAppsResponseV">PleromaOauthAppsResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Poll.html">Poll</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Poll/Option.html">– Option</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PostEdit.html">PostEdit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PostParams.html">PostParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PostSource.html">PostSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Preferences.html">Preferences</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Preferences/ExpandMedia.html">– ExpandMedia</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PushSubscription.html">PushSubscription</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Relationship.html">Relationship</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RemoveAccountsFromListParams.html">RemoveAccountsFromListParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Report.html">Report</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Results.html">Results</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ScheduledPost.html">ScheduledPost</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ScheduledPostParams.html">ScheduledPostParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Tag.html">Tag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TagHistory.html">TagHistory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootApplication.html">TootApplication</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootField.html">TootField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootNotification.html">TootNotification</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootNotification/NotificationType.html">– NotificationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootSource.html">TootSource</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Post</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Post</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">Identifiable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Post</span><span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Represents a post posted by an account.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC2id3uri9createdAt7account7content10visibility9sensitive11spoilerText16mediaAttachments11application8mentions4tags6emojis12repostsCount010favouritesU007repliesU03url11inReplyToId0yZ11ToAccountId6repost4poll4card8language4text10favourited8reposted5muted10bookmarked6pinnedACSS_SS10Foundation4DateVAA7AccountCSSSgAC10VisibilityOSbSSSayAA10AttachmentVGAA0A11ApplicationVSayAA7MentionVGSayAA3TagVGSayAA5EmojiVGS3iA10_A10_A10_ACSgAA4PollVSgAA4CardVSgA10_A10_SbSgA34_A34_A34_A34_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(id:uri:createdAt:account:content:visibility:sensitive:spoilerText:mediaAttachments:application:mentions:tags:emojis:repostsCount:favouritesCount:repliesCount:url:inReplyToId:inReplyToAccountId:repost:poll:card:language:text:favourited:reposted:muted:bookmarked:pinned:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC2id3uri9createdAt7account7content10visibility9sensitive11spoilerText16mediaAttachments11application8mentions4tags6emojis12repostsCount010favouritesU007repliesU03url11inReplyToId0yZ11ToAccountId6repost4poll4card8language4text10favourited8reposted5muted10bookmarked6pinnedACSS_SS10Foundation4DateVAA7AccountCSSSgAC10VisibilityOSbSSSayAA10AttachmentVGAA0A11ApplicationVSayAA7MentionVGSayAA3TagVGSayAA5EmojiVGS3iA10_A10_A10_ACSgAA4PollVSgAA4CardVSgA10_A10_SbSgA34_A34_A34_A34_tcfc">init(id:<wbr>uri:<wbr>createdAt:<wbr>account:<wbr>content:<wbr>visibility:<wbr>sensitive:<wbr>spoilerText:<wbr>mediaAttachments:<wbr>application:<wbr>mentions:<wbr>tags:<wbr>emojis:<wbr>repostsCount:<wbr>favouritesCount:<wbr>repliesCount:<wbr>url:<wbr>inReplyToId:<wbr>inReplyToAccountId:<wbr>repost:<wbr>poll:<wbr>card:<wbr>language:<wbr>text:<wbr>favourited:<wbr>reposted:<wbr>muted:<wbr>bookmarked:<wbr>pinned:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+            <span class="nv">uri</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+            <span class="nv">createdAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span>
+            <span class="nv">account</span><span class="p">:</span> <span class="kt"><a href="../Classes/Account.html">Account</a></span><span class="p">,</span>
+            <span class="nv">content</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">visibility</span><span class="p">:</span> <span class="kt">Post</span><span class="o">.</span><span class="kt"><a href="../Classes/Post/Visibility.html">Visibility</a></span><span class="p">,</span>
+            <span class="nv">sensitive</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+            <span class="nv">spoilerText</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+            <span class="nv">mediaAttachments</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Attachment.html">Attachment</a></span><span class="p">],</span>
+            <span class="nv">application</span><span class="p">:</span> <span class="kt"><a href="../Structs/TootApplication.html">TootApplication</a></span><span class="p">,</span>
+            <span class="nv">mentions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Mention.html">Mention</a></span><span class="p">],</span>
+            <span class="nv">tags</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Tag.html">Tag</a></span><span class="p">],</span>
+            <span class="nv">emojis</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Emoji.html">Emoji</a></span><span class="p">],</span>
+            <span class="nv">repostsCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+            <span class="nv">favouritesCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+            <span class="nv">repliesCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+            <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">inReplyToId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">inReplyToAccountId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">repost</span><span class="p">:</span> <span class="kt">Post</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">poll</span><span class="p">:</span> <span class="kt"><a href="../Structs/Poll.html">Poll</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">card</span><span class="p">:</span> <span class="kt"><a href="../Structs/Card.html">Card</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">language</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">favourited</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">reposted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">muted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">bookmarked</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">pinned</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC2idSSvp"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC2idSSvp">id</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>ID of the post in the database.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC3uriSSvp"></a>
+                    <a name="//apple_ref/swift/Property/uri" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC3uriSSvp">uri</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>URI of the post used for federation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">uri</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC9createdAt10Foundation4DateVvp"></a>
+                    <a name="//apple_ref/swift/Property/createdAt" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC9createdAt10Foundation4DateVvp">createdAt</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The date when this post was created.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">createdAt</span><span class="p">:</span> <span class="kt">Date</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC7accountAA7AccountCvp"></a>
+                    <a name="//apple_ref/swift/Property/account" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC7accountAA7AccountCvp">account</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The account that authored this post.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">account</span><span class="p">:</span> <span class="kt"><a href="../Classes/Account.html">Account</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC7contentSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/content" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC7contentSSSgvp">content</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>HTML-encoded post content.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">content</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC10visibilityAC10VisibilityOvp"></a>
+                    <a name="//apple_ref/swift/Property/visibility" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC10visibilityAC10VisibilityOvp">visibility</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Visibility of this post.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">visibility</span><span class="p">:</span> <span class="kt"><a href="../Classes/Post/Visibility.html">Visibility</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC9sensitiveSbvp"></a>
+                    <a name="//apple_ref/swift/Property/sensitive" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC9sensitiveSbvp">sensitive</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Is this post marked as sensitive content?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">sensitive</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC11spoilerTextSSvp"></a>
+                    <a name="//apple_ref/swift/Property/spoilerText" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC11spoilerTextSSvp">spoilerText</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subject or summary line, below which post content is collapsed until expanded.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">spoilerText</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC16mediaAttachmentsSayAA10AttachmentVGvp"></a>
+                    <a name="//apple_ref/swift/Property/mediaAttachments" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC16mediaAttachmentsSayAA10AttachmentVGvp">mediaAttachments</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Media that is attached to this post.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">mediaAttachments</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Attachment.html">Attachment</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC11applicationAA0A11ApplicationVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/application" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC11applicationAA0A11ApplicationVSgvp">application</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The application used to post this post.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">application</span><span class="p">:</span> <span class="kt"><a href="../Structs/TootApplication.html">TootApplication</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC8mentionsSayAA7MentionVGvp"></a>
+                    <a name="//apple_ref/swift/Property/mentions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC8mentionsSayAA7MentionVGvp">mentions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mentions of users within the post content.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">mentions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Mention.html">Mention</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC4tagsSayAA3TagVGvp"></a>
+                    <a name="//apple_ref/swift/Property/tags" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC4tagsSayAA3TagVGvp">tags</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Hashtags used within the post content.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tags</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Tag.html">Tag</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC6emojisSayAA5EmojiVGvp"></a>
+                    <a name="//apple_ref/swift/Property/emojis" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC6emojisSayAA5EmojiVGvp">emojis</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom emoji to be used when rendering post content.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">emojis</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Emoji.html">Emoji</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC12repostsCountSivp"></a>
+                    <a name="//apple_ref/swift/Property/repostsCount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC12repostsCountSivp">repostsCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>How many reposts this post has received.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">repostsCount</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC15favouritesCountSivp"></a>
+                    <a name="//apple_ref/swift/Property/favouritesCount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC15favouritesCountSivp">favouritesCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>How many favourites this post has received.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">favouritesCount</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC12repliesCountSivp"></a>
+                    <a name="//apple_ref/swift/Property/repliesCount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC12repliesCountSivp">repliesCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>How many replies this post has received.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">repliesCount</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC3urlSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC3urlSSSgvp">url</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A link to the post&rsquo;s HTML representation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC11inReplyToIdSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/inReplyToId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC11inReplyToIdSSSgvp">inReplyToId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>ID of the post being replied.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">inReplyToId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC18inReplyToAccountIdSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/inReplyToAccountId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC18inReplyToAccountIdSSSgvp">inReplyToAccountId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>ID of the account being replied to.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">inReplyToAccountId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC6repostACSgvp"></a>
+                    <a name="//apple_ref/swift/Property/repost" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC6repostACSgvp">repost</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The post being reposted.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">repost</span><span class="p">:</span> <span class="kt">Post</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC4pollAA4PollVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/poll" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC4pollAA4PollVSgvp">poll</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The poll attached to the post.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">poll</span><span class="p">:</span> <span class="kt"><a href="../Structs/Poll.html">Poll</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC4cardAA4CardVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/card" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC4cardAA4CardVSgvp">card</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Preview card for links included within post content.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">card</span><span class="p">:</span> <span class="kt"><a href="../Structs/Card.html">Card</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC8languageSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/language" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC8languageSSSgvp">language</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Primary language of this post.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">language</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC4textSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/text" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC4textSSSgvp">text</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Plain-text source of a post. Returned instead of content when post is deleted so the user
+may redraft from the source text without the client having to reverse-engineer the original text from the HTML content.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC10favouritedSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/favourited" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC10favouritedSbSgvp">favourited</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Have you favourited this post?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">favourited</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC8repostedSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/reposted" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC8repostedSbSgvp">reposted</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Have you reposted this post?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">reposted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC5mutedSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/muted" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC5mutedSbSgvp">muted</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Have you muted notifications for this post&rsquo;s conversation?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">muted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC10bookmarkedSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bookmarked" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC10bookmarkedSbSgvp">bookmarked</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Have you bookmarked this post?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">bookmarked</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC6pinnedSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/pinned" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC6pinnedSbSgvp">pinned</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Have you pinned this post? Only appears if the post is pinnable.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pinned</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK4PostC10VisibilityO"></a>
+                    <a name="//apple_ref/swift/Enum/Visibility" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK4PostC10VisibilityO">Visibility</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                        <a href="../Classes/Post/Visibility.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Visibility</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CaseIterable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Post</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Post</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SH4hash4intoys6HasherVz_tF"></a>
+                    <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SH4hash4intoys6HasherVz_tF">hash(into:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2022-12-23)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

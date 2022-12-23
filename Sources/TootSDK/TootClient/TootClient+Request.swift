@@ -46,7 +46,7 @@ extension TootClient {
                                              redirectUris: callbackUrl,
                                              scopes: scopes.joined(separator: " "), website: website)
         
-        let registerAppReq = try HttpRequestBuilder {
+        let registerAppReq = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "apps"])
             $0.method = .post
             $0.body = try .json(createAppData, encoder: self.encoder)
@@ -58,7 +58,7 @@ extension TootClient {
             return nil
         }
                 
-        let signUrlReq = HttpRequestBuilder {
+        let signUrlReq = HTTPRequestBuilder {
             $0.url = getURL(["oauth", "authorize"])
             $0.addQueryParameter(name: "client_id", value: clientId)
             $0.addQueryParameter(name: "redirect_uri", value: callbackUrl)
@@ -84,7 +84,7 @@ extension TootClient {
             .init(name: "redirect_uri", value: callbackUrl)
         ]
 
-        let req = try HttpRequestBuilder {
+        let req = try HTTPRequestBuilder {
             $0.url = getURL(["oauth", "token"])
             $0.method = .post
             $0.body = try .form(queryItems: queryItems)

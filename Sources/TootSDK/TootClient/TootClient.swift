@@ -73,7 +73,7 @@ extension TootClient {
     }
     
     /// Fetch data asynchronously and return the decoded `Decodable` object.
-    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HttpRequestBuilder) async throws -> T {
+    internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HTTPRequestBuilder) async throws -> T {
         let (data, _) = try await fetch(req: req)
         
         do {
@@ -110,7 +110,7 @@ extension TootClient {
     }
     
     /// Fetch data asynchronously and return the raw response.
-    internal func fetch(req: HttpRequestBuilder) async throws -> (Data, HTTPURLResponse) {
+    internal func fetch(req: HTTPRequestBuilder) async throws -> (Data, HTTPURLResponse) {
         if req.headers.index(forKey: "Content-Type") == nil {
             req.headers["Content-Type"] = "application/json"
         }
@@ -133,6 +133,7 @@ extension TootClient {
     
     internal func dataTask(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         if debugRequests {
+            print("➡️ flavour: \(self.flavour)")
             print("➡️ 🌏 \(request.httpMethod ?? "-") \(request.url?.absoluteString ?? "-")")
             for (k, v) in request.allHTTPHeaderFields ?? [:] {
                 print("➡️ 🏷️ '\(k)': '\(v)'")

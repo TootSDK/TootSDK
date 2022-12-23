@@ -11,15 +11,15 @@ public protocol TootStream {
     associatedtype ResponseType: Decodable
 }
 
-/// A list of stream types which return `[Status]`
-public enum StatusTootStreams: Hashable {
+/// A list of stream types which return `[Post]`
+public enum PostTootStreams: Hashable {
     
-    /// Provides your
+    /// A stream of the user's home timeline
     case timeLineHome
 }
 
-extension StatusTootStreams: TootStream {
-    public typealias ResponseType = [Status]
+extension PostTootStreams: TootStream {
+    public typealias ResponseType = [Post]
 }
 
 /// A list of stream types which return `Account`
@@ -84,7 +84,7 @@ public actor TootDataStream {
     }
     
     /// Reloads data in the selected stream
-    public func refresh(_ stream: StatusTootStreams) async throws {
+    public func refresh(_ stream: PostTootStreams) async throws {
         let streamHolder = cachedStreams[stream]
         try await streamHolder?.refresh?()
     }
@@ -102,8 +102,8 @@ extension TootDataStream {
     /// Provides an async stream of updates for the given stream
     /// - Parameter stream: the stream type to update
     /// - Returns: async stream of values
-    public func stream(_ stream: StatusTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Status]> {
-        if let streamHolder = cachedStreams[stream] as? TootEndpointStream<StatusTootStreams> {
+    public func stream(_ stream: PostTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
+        if let streamHolder = cachedStreams[stream] as? TootEndpointStream<PostTootStreams> {
             return streamHolder.stream
         }
         

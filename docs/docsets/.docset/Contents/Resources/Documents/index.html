@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Reference</title>
+    <title>  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
-    <meta charset="utf-8" />
+    <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
-
+    
     <script src="js/lunr.min.js" defer></script>
     <script src="js/typeahead.jquery.js" defer></script>
     <script src="js/jazzy.search.js" defer></script>
@@ -19,11 +19,7 @@
         <p><a href="index.html"> Docs</a> (100% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
-            <input
-              type="text"
-              placeholder="Search documentation"
-              data-typeahead
-            />
+            <input type="text" placeholder="Search documentation" data-typeahead>
           </form>
         </div>
       </div>
@@ -31,8 +27,8 @@
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="index.html"> Reference</a>
-        <img id="carat" src="img/carat.png" alt="" />
-        Reference
+        <img id="carat" src="img/carat.png" alt=""/>
+          Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -53,10 +49,13 @@
                 <a href="Classes/Account.html">Account</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/Status.html">Status</a>
+                <a href="Classes/Account/CodingKeys.html">– CodingKeys</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/Status/Visibility.html">– Visibility</a>
+                <a href="Classes/Post.html">Post</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Post/Visibility.html">– Visibility</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/TootClient.html">TootClient</a>
@@ -70,13 +69,22 @@
                 <a href="Enums/AccountTootStreams.html">AccountTootStreams</a>
               </li>
               <li class="nav-group-task">
+                <a href="Enums/DomainBlockSeverity.html">DomainBlockSeverity</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/HTTPMethod.html">HTTPMethod</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/StatusTootStreams.html">StatusTootStreams</a>
+                <a href="Enums/ListRepliesPolicy.html">ListRepliesPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/PostTootStreams.html">PostTootStreams</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/TootSDKError.html">TootSDKError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TootSDKFlavour.html">TootSDKFlavour</a>
               </li>
             </ul>
           </li>
@@ -95,26 +103,34 @@
                 <a href="Structs/AccessToken.html">AccessToken</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/AccountLookup.html">AccountLookup</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Activity.html">Activity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/AddAccountsToListParams.html">AddAccountsToListParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Alerts.html">Alerts</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Announcement.html">Announcement</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/AnnouncementReaction.html"
-                  >AnnouncementReaction</a
-                >
+                <a href="Structs/AnnouncementReaction.html">AnnouncementReaction</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Attachment.html">Attachment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/Attachment/AttachmentType.html"
-                  >– AttachmentType</a
-                >
+                <a href="Structs/Attachment/AttachmentType.html">– AttachmentType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Attachment/Meta.html">– Meta</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/BlockDomainParams.html">BlockDomainParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/CallbackInfo.html">CallbackInfo</a>
@@ -135,7 +151,10 @@
                 <a href="Structs/CreatePoll.html">CreatePoll</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/EditStatusParams.html">EditStatusParams</a>
+                <a href="Structs/DomainBlock.html">DomainBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/EditPostParams.html">EditPostParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Emoji.html">Emoji</a>
@@ -148,6 +167,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Filter/Context.html">– Context</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/FollowAccountParams.html">FollowAccountParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/IdentityProof.html">IdentityProof</a>
@@ -165,7 +187,10 @@
                 <a href="Structs/List.html">List</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/List/RepliesPolicy.html">– RepliesPolicy</a>
+                <a href="Structs/ListOauthAppsParams.html">ListOauthAppsParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ListParams.html">ListParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Marker.html">Marker</a>
@@ -177,6 +202,9 @@
                 <a href="Structs/Mention.html">Mention</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/MuteAccountParams.html">MuteAccountParams</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/PagedInfo.html">PagedInfo</a>
               </li>
               <li class="nav-group-task">
@@ -186,10 +214,28 @@
                 <a href="Structs/Pagination.html">Pagination</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/PleromaFollowByURIParams.html">PleromaFollowByURIParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PleromaOauthApp.html">PleromaOauthApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs.html#/s:7TootSDK24PleromaOauthAppsResponseV">PleromaOauthAppsResponse</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Poll.html">Poll</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Poll/Option.html">– Option</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PostEdit.html">PostEdit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PostParams.html">PostParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PostSource.html">PostSource</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Preferences.html">Preferences</a>
@@ -201,10 +247,10 @@
                 <a href="Structs/PushSubscription.html">PushSubscription</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/PushSubscription/Alerts.html">– Alerts</a>
+                <a href="Structs/Relationship.html">Relationship</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/Relationship.html">Relationship</a>
+                <a href="Structs/RemoveAccountsFromListParams.html">RemoveAccountsFromListParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Report.html">Report</a>
@@ -213,21 +259,10 @@
                 <a href="Structs/Results.html">Results</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ScheduledStatus.html">ScheduledStatus</a>
+                <a href="Structs/ScheduledPost.html">ScheduledPost</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ScheduledStatusParams.html"
-                  >ScheduledStatusParams</a
-                >
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/StatusEdit.html">StatusEdit</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/StatusParams.html">StatusParams</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/StatusSource.html">StatusSource</a>
+                <a href="Structs/ScheduledPostParams.html">ScheduledPostParams</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Tag.html">Tag</a>
@@ -245,9 +280,7 @@
                 <a href="Structs/TootNotification.html">TootNotification</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TootNotification/NotificationType.html"
-                  >– NotificationType</a
-                >
+                <a href="Structs/TootNotification/NotificationType.html">– NotificationType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/TootSource.html">TootSource</a>
@@ -259,172 +292,122 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1 id="tootsdk" class="heading">TootSDK 🚀</h1>
+            
+            <p><img src="./media/logo.svg" width="100" /></p>
+<h1 id='tootsdk' class='heading'>TootSDK</h1>
 
-            <p>
-              <strong>Cross-platform Swift library for the Mastodon API</strong>
-            </p>
+<p><strong>Cross-platform Swift library for the Mastodon API</strong></p>
 
-            <p>
-              <a href="https://developer.apple.com/swift/"
-                ><img
-                  alt="Swift 5.7"
-                  src="https://img.shields.io/badge/swift-5.7-orange.svg?style=flat"
-              /></a>
-              <a href="https://developer.apple.com/swift/"
-                ><img
-                  alt="Platforms"
-                  src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-blueviolet"
-              /></a>
-              <a href="https://github.com/TootSDK/TootSDK/blob/master/LICENSE"
-                ><img
-                  alt="License"
-                  src="https://img.shields.io/github/license/TootSDK/TootSDK.svg?maxAge=2592000"
-              /></a>
-              <a href="https://github.com/TootSDK/TootSDK/actions"
-                ><img
-                  alt="Build Status"
-                  src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"
-              /></a>
-            </p>
-            <h2 id="what-is-this-️" class="heading">What is this? 🙋‍♂️</h2>
+<p>
+    <a href="https://developer.apple.com/swift/"><img alt="Swift 5.7" src="https://img.shields.io/badge/swift-5.7-orange.svg?style=flat"></a>
+    <a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-blueviolet"></a>
+    <a href="https://github.com/TootSDK/TootSDK/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/github/license/TootSDK/TootSDK.svg?maxAge=2592000"></a>
+    <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
+</p>
+<h2 id='what-is-this-️' class='heading'>What is this? 🙋‍♂️</h2>
 
-            <p>
-              TootSDK is a framework for Mastodon and the Fediverse, for iOS. It
-              provides a toolkit for authorizing a user with an instance, and
-              interacting with their posts.
-            </p>
+<p>TootSDK is a framework for Mastodon and the Fediverse, for iOS. It provides a toolkit for authorizing a user with an instance, and interacting with their posts.</p>
 
-            <p>
-              TootSDK is a community developed SDK for Mastodon and the
-              Fediverse. It is designed to work with all major servers
-              (Mastodon, Pleroma, PixelFed etc).
-            </p>
+<p>TootSDK is a community developed SDK for Mastodon and the Fediverse.
+It is designed to work with all major servers (Mastodon, Pleroma, PixelFed etc).</p>
 
-            <p>
-              You can use TootSDK to build a client for Apple operating systems,
-              or on linux via Vapor.
-            </p>
-            <h2 id="getting-started" class="heading">Getting started 🏁</h2>
+<p>You can use TootSDK to build a client for Apple operating systems, or Linux with Vapor.</p>
 
-            <p>
-              You can add TootSDK to your project via Swift Package Manager:
-              <code>https://github.com/TootSDK/TootSDK</code>
-            </p>
+<p><img src="/media/overview.png" alt="overview of how TootSDK integrates with fedi platforms"></p>
+<h3 id='status' class='heading'>Status</h3>
 
-            <p>
-              Check out our example iOS project <code>TootSDK-iOS-Demo</code> in
-              the Examples directory. This provides an example application using
-              SwiftUI and TootSDK to browse a feed and create posts.
-            </p>
-            <h2 id="key-contributors-️" class="heading">
-              Key contributors ⚡️
-            </h2>
+<ul>
+<li>Mastodon - In progress</li>
+<li>Pleroma - In progress</li>
+<li>Pixelfed - To do</li>
+<li>Writefreely - To do</li>
+</ul>
 
-            <ul>
-              <li>
-                Konstantin (<a href="https://m.iamkonstantin.eu/konstantin"
-                  >https://m.iamkonstantin.eu/konstantin</a
-                >)
-              </li>
-              <li>
-                David Gary Wood (<a
-                  href="https://social.davidgarywood.com/davidgarywood"
-                  >https://social.davidgarywood.com/davidgarywood</a
-                >)
-              </li>
-            </ul>
-            <h2 id="code-of-conduct-and-contributing-rules-️" class="heading">
-              Code of Conduct and Contributing rules 🧑‍⚖️
-            </h2>
+<p>Please don&rsquo;t hesitate to open an Issue or a PR if you are missing an endpoint or would like to improve support for existing or other servers 🙏!</p>
+<h2 id='getting-started' class='heading'>Getting started 🏁</h2>
 
-            <ul>
-              <li>
-                Our guide to contributing is available here:
-                <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>.
-              </li>
-              <li>
-                All contributions, pull requests, and issues are expected to
-                adhere to our community code of conduct:
-                <a href="CODE_OF_CONDUCT.md">CODE_OF_CONDUCT.md</a>.
-              </li>
-            </ul>
-            <h2 id="license" class="heading">License 📃</h2>
+<p>You can add TootSDK to your project via Swift Package Manager:
+<code>https://github.com/TootSDK/TootSDK</code></p>
 
-            <p>
-              TootSDK is licensed with the BSD-3-Clause license, more
-              information here: <a href="LICENSE.md">LICENSE.MD</a>
-            </p>
+<p>Check out our example iOS project <code>TootSDK-iOS-Demo</code> in the Examples directory. This provides an example application using SwiftUI and TootSDK to browse a feed and create posts.</p>
 
-            <p>
-              This is a permissive license which allows for any type of use,
-              provided the copyright notice is included.
-            </p>
-            <h2 id="acknowledgements" class="heading">Acknowledgements 🙏</h2>
+<p>You can also peek at <code>vaportoot</code> - an example for a server-side implementation using Vapor.</p>
 
-            <ul>
-              <li>
-                The Mastodon API documentation
-                <a href="https://github.com/mastodon/documentation"
-                  >https://github.com/mastodon/documentation</a
-                >
-              </li>
-              <li>
-                We hat-tip top Metatext&rsquo;s source for some guidance on
-                what&rsquo;s where:
-                <a href="https://github.com/metabolist/metatext"
-                  >https://github.com/metabolist/metatext</a
-                >
-              </li>
-            </ul>
-            <h2 id="examples" class="heading">Examples</h2>
+<p>To get started, you need an instance of <code><a href="Classes/TootClient.html">TootClient</a></code>.</p>
+<h3 id='authentication' class='heading'>Authentication</h3>
 
-            <p>
-              We have prepared several examples that demonstrate how to use
-              TootSDK in your projects. They are all located in the
-              <code>Examples</code> folder of the repository.
-            </p>
-            <h3 id="using-tootsdk-with-vapor" class="heading">
-              Using TootSDK with Vapor
-            </h3>
+<p>If you need to authorize the user, we provide several methods to help with the process.</p>
 
-            <p><code>$ cd ./Examples/vaportoot</code> <code>vapor run</code></p>
+<ul>
+<li>Step 1, navigate to the authorization url of the user&rsquo;s instance.</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">authUrl</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="nf">createAuthorizeURL</span><span class="p">(</span><span class="nv">server</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">,</span> <span class="nv">callbackUrl</span><span class="p">:</span> <span class="s">"swiftuitoot://test"</span><span class="p">)</span>
+</code></pre>
 
-            <ul>
-              <li>
-                <p>
-                  Navigate to <code>localhost:8080</code> in your browser and
-                  fill in the url of a fedi server to connect with.
-                </p>
-              </li>
-              <li><p>While logged in, you can submit a post</p></li>
-            </ul>
+<ul>
+<li>Step 2, once authentication is complete, the server will redirect the user back to callback url including a token</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">accessToken</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="nf">collectToken</span><span class="p">(</span><span class="nv">returnUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">callbackUrl</span><span class="p">:</span> <span class="s">"swiftuitoot://test"</span><span class="p">)</span>
+</code></pre>
+
+<p>We recommend keeping the accessToken somewhere secure, for example Keychain.</p>
+
+<p>Once you have an access token and the url to the user&rsquo;s server:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">,</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="n">accessToken</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="k">for</span> <span class="k">await</span> <span class="n">updatedPosts</span> <span class="k">in</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="nf">stream</span><span class="p">(</span><span class="o">.</span><span class="n">timeLineHome</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"got a batch of posts </span><span class="se">\(</span><span class="n">updatedPosts</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>💡 For testing (even in your own apps), you can use <code>Examples/swiftyadmin</code> with the <code>login</code> command to generate an accessToken for a given instance.</p>
+<h2 id='key-contributors-️' class='heading'>Key contributors ⚡️</h2>
+
+<ul>
+<li><a href="https://m.iamkonstantin.eu/konstantin">Konstantin</a></li>
+<li><a href="https://social.davidgarywood.com/@davidgarywood">David Gary Wood</a></li>
+</ul>
+<h2 id='code-of-conduct-and-contributing-rules-️' class='heading'>Code of Conduct and Contributing rules 🧑‍⚖️</h2>
+
+<ul>
+<li>Our guide to contributing is available here: <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>.</li>
+<li>All contributions, pull requests, and issues are expected to adhere to our community code of conduct: <a href="CODE_OF_CONDUCT.md">CODE_OF_CONDUCT.md</a>.</li>
+</ul>
+<h2 id='license' class='heading'>License 📃</h2>
+
+<p>TootSDK is licensed with the BSD-3-Clause license, more information here: <a href="LICENSE.md">LICENSE.MD</a></p>
+
+<p>This is a permissive license which allows for any type of use, provided the copyright notice is included.</p>
+<h2 id='acknowledgements' class='heading'>Acknowledgements 🙏</h2>
+
+<ul>
+<li>The Mastodon API documentation <a href="https://github.com/mastodon/documentation">https://github.com/mastodon/documentation</a></li>
+<li>We hat-tip top Metatext&rsquo;s source for some guidance on what&rsquo;s where: <a href="https://github.com/metabolist/metatext">https://github.com/metabolist/metatext</a></li>
+<li><a href="https://mastodon.social/@kslazinski">Kris Slazinski</a> for our TootSDK logo 🤩</li>
+</ul>
+<h2 id='examples' class='heading'>Examples</h2>
+
+<p>We have prepared several examples that demonstrate how to use TootSDK in your projects.
+They are all located in the <code>Examples</code> folder of the repository.</p>
+<h3 id='using-tootsdk-with-swiftui' class='heading'>Using TootSDK with SwiftUI</h3>
+
+<p>The SwiftUI-Toot app showcases usage of the framework in a SwiftUI app.</p>
+<h3 id='using-tootsdk-with-vapor' class='heading'>Using TootSDK with Vapor</h3>
+
+<p><code>$ cd ./Examples/vaportoot</code>
+<code>vapor run</code></p>
+
+<ul>
+<li><p>Navigate to <code>localhost:8080</code> in your browser and fill in the url of a fedi server to connect with.</p></li>
+<li><p>We&rsquo;ve added examples for making a post, viewing the timeline and interacting with posts (like reply and repost).</p></li>
+</ul>
+
           </section>
         </section>
         <section id="footer">
-          <p>
-            &copy; 2022
-            <a class="link" href="" target="_blank" rel="external noopener"></a
-            >. All rights reserved. (Last updated: 2022-12-10)
-          </p>
-          <p>
-            Generated by
-            <a
-              class="link"
-              href="https://github.com/realm/jazzy"
-              target="_blank"
-              rel="external noopener"
-              >jazzy ♪♫ v0.14.3</a
-            >, a
-            <a
-              class="link"
-              href="https://realm.io"
-              target="_blank"
-              rel="external noopener"
-              >Realm</a
-            >
-            project.
-          </p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2022-12-23)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -13,7 +13,7 @@ public struct Relationship: Codable, Hashable {
                 followedBy: Bool,
                 muting: Bool,
                 mutingNotifications: Bool? = nil,
-                showingReblogs: Bool? = nil,
+                showingReposts: Bool? = nil,
                 notifying: Bool? = nil,
                 blocking: Bool,
                 domainBlocking: Bool,
@@ -26,7 +26,7 @@ public struct Relationship: Codable, Hashable {
         self.followedBy = followedBy
         self.muting = muting
         self.mutingNotifications = mutingNotifications
-        self.showingReblogs = showingReblogs
+        self.showingReposts = showingReposts
         self.notifying = notifying
         self.blocking = blocking
         self.domainBlocking = domainBlocking
@@ -48,8 +48,8 @@ public struct Relationship: Codable, Hashable {
     public let muting: Bool
     /// Are you muting notifications from this user?
     public var mutingNotifications: Bool?
-    /// Are you receiving this user's boosts in your home timeline?
-    public var showingReblogs: Bool?
+    /// Are you receiving this user's posts in your home timeline?
+    public var showingReposts: Bool?
     /// Have you enabled notifications for this user?
     public let notifying: Bool?
     /// Are you blocking this user?
@@ -60,6 +60,22 @@ public struct Relationship: Codable, Hashable {
     public var blockedBy: Bool?
     /// This user's profile bio
     public var note: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case following
+        case requested
+        case endorsed
+        case followedBy
+        case muting
+        case mutingNotifications
+        case showingReposts = "showingReblogs"
+        case notifying
+        case blocking
+        case domainBlocking
+        case blockedBy
+        case note
+    }
 }
 
 extension Relationship: Equatable {

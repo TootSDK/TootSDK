@@ -20,14 +20,13 @@ struct Follow: AsyncParsableCommand {
   @Option(
     name: .long,
     help:
-      "Receive notifications when this account posts a status?"
+      "Receive notifications when this account creates a post?"
   )
   var notify: String?
 
   mutating func run() async throws {
     print("Following \(id)")
     let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
-    client.debugOn()
     if let notifystr = notify, let notify = Bool(notifystr) {
       let relationship = try await client.followAccount(by: id, params: .init(notify: notify))
       print(relationship)

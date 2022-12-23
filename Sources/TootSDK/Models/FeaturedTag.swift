@@ -7,14 +7,22 @@ public struct FeaturedTag: Codable, Hashable {
     public var id: String
     public var name: String
     public var url: String
-    public var statusesCount: Int
-    public var lastStatusAt: Date
+    public var postsCount: Int
+    public var lastPostAt: Date
 
-    public init(id: String, name: String, url: String, statusesCount: Int, lastStatusAt: Date) {
+    public init(id: String, name: String, url: String, postsCount: Int, lastPostAt: Date) {
         self.id = id
         self.name = name
         self.url = url
-        self.statusesCount = statusesCount
-        self.lastStatusAt = lastStatusAt
+        self.postsCount = postsCount
+        self.lastPostAt = lastPostAt
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case url
+        case postsCount = "statusesCount"
+        case lastPostAt = "lastStatusAt"
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Represents a hashtag used within the content of a status.
+/// Represents a hashtag used within the content of a post.
 public struct Tag: Codable, Hashable {
     public init(name: String, url: String, history: [TagHistory]? = nil) {
         self.name = name

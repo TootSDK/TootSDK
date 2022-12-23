@@ -5,16 +5,22 @@ import Foundation
 
 /// Represents the results of a search.
 public struct Results: Codable {
-    public init(accounts: [Account], statuses: [Status], hashtags: [Tag]) {
+    public init(accounts: [Account], posts: [Post], hashtags: [Tag]) {
         self.accounts = accounts
-        self.statuses = statuses
+        self.posts = posts
         self.hashtags = hashtags
     }
 
     /// Accounts which match the given query
     public var accounts: [Account]
-    /// Statuses which match the given query
-    public var statuses: [Status]
+    /// Posts which match the given query
+    public var posts: [Post]
     /// Hashtags which match the given query
     public var hashtags: [Tag]
+    
+    enum CodingKeys: String, CodingKey {
+        case accounts
+        case posts = "statuses"
+        case hashtags
+    }
 }

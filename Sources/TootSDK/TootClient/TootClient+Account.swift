@@ -12,7 +12,7 @@ extension TootClient {
     /// A test to make sure that the user token works, and retrieves the account information
     /// - Returns: Returns the current authenticated user's account, or throws an error if unable to retrieve
     public func verifyCredentials() async throws -> Account {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "verify_credentials"])
             $0.method = .get
         }
@@ -23,7 +23,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the account requested, or an error if unable to retrieve
     public func getAccount(by id: String) async throws -> Account {
-        let req = HttpRequestBuilder {
+        let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id])
             $0.method = .get
         }
@@ -34,7 +34,7 @@ extension TootClient {
     // TODO: - Register an account
     // TODO: - Update account credentials
     
-    // TODO: - Get account’s statuses
+    // TODO: - Get account’s posts
     // TODO: - Get account’s followers
     // TODO: - Get account’s following
     // TODO: - Get account’s featured tags
