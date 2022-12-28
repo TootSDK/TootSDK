@@ -132,7 +132,7 @@ struct PostItem: Encodable {
 extension PostItem {
     init(post: Post) {
         id = post.id
-        text = post.content?.raw ?? ""
+        text = post.html?.plainContent ?? ""
         avatar = post.account.avatar
         author = post.account.displayName ?? ""
         favourited = post.favourited ?? false

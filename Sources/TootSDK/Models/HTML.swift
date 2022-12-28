@@ -20,7 +20,7 @@ public struct HTML: Codable {
     /// A plain text string, generated from the HTML
     public var plainContent: String
     
-#if !os(Linux)
+#if canImport(UIKit)
     /// An attributedString generated from the raw HTML
     public var attributedString: NSAttributedString
 #endif
@@ -41,7 +41,7 @@ public struct HTML: Codable {
         self.wrappedValue = value
         self.plainContent = HTML.stripHTMLFormatting(html: wrappedValue) ?? ""
         
-#if !os(Linux)
+#if canImport(UIKit)
         self.attributedString = HTML.attributedStringRenderer.createStringFrom(html: wrappedValue ?? "", emojis: customEmojis)
 #endif
     }
@@ -69,7 +69,7 @@ public struct HTML: Codable {
         try container.encode(self.wrappedValue)
     }
     
-#if !os(Linux)
+#if canImport(UIKit)
     static internal var attributedStringRenderer: TootAttributedStringRenderer = DefaultTootAttributedStringRenderer()
 #endif
 }

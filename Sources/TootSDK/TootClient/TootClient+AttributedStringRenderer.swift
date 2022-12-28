@@ -5,7 +5,7 @@
 //  Created by dave on 23/12/22.
 //
 
-#if !os(Linux)
+#if canImport(UIKit)
 import Foundation
 
 extension TootClient {

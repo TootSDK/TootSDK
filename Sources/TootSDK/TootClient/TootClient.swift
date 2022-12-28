@@ -51,7 +51,7 @@ public class TootClient {
         self.scopes = scopes
         self.clientName = clientName
         
-#if !os(Linux)
+#if canImport(UIKit)
         self.setAttributedStringRenderer(DefaultTootAttributedStringRenderer())
 #endif
     }

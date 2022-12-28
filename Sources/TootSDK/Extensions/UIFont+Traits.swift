@@ -3,7 +3,7 @@
 //
 //  Via https://gist.github.com/mntone/9d742a1cbe18743e21c071600990c5d0
 
-#if !os(Linux)
+#if canImport(UIKit)
 import CoreText
 import class UIKit.UIFont
 import class UIKit.UIFontDescriptor

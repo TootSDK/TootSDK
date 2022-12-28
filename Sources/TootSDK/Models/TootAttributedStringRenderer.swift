@@ -2,7 +2,7 @@
 //  TootAttributedStringRenderer.swift
 //  Created by dave on 23/12/22.
 
-#if !os(Linux)
+#if canImport(UIKit)
 import Foundation
 import SwiftSoup
 import UIKit

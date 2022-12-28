@@ -1,7 +1,7 @@
 //
 //  NSAttributedString+helpers.swift
 
-#if !os(Linux)
+#if canImport(UIKit)
 import Foundation
 
 /// Trimming functions
