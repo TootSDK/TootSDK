@@ -14,17 +14,9 @@ struct PostView: View {
 
     @Binding var path: NavigationPath
 
-    var displayPost: Post {
-        return post.repost ?? self.post
-    }
-    
-    var repost: Bool {
-        return post.repost != nil
-    }
-    
     var body: some View {
         VStack {
-            if repost {
+            if post.displayingRepost {
                 HStack {
                     HStack {
                         Spacer()
@@ -42,30 +34,30 @@ struct PostView: View {
             }
             
             HStack(alignment: .top) {
-                AsyncImage(url: URL(string: displayPost.account.avatar)) { image in
+                AsyncImage(url: URL(string: post.displayPost.account.avatar)) { image in
                     image.resizable()
                 } placeholder: {
                     ProgressView()
                 }
                 .frame(width: 80, height: 80)
                 .onLongPressGesture {
-                    self.path.append(displayPost.account)
+                    self.path.append(post.displayPost.account)
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(alignment: .top) {
-                        Text(displayPost.account.displayName ?? "?")
+                        Text(post.displayPost.account.displayName ?? "?")
                             .font(.caption.bold())
-                        Text(displayPost.account.username ?? "?")
+                        Text(post.displayPost.account.username ?? "?")
                             .font(.caption)
                         
                         Spacer()
                     }
                     
-                    if attributed, let attributedText = displayPost.html?.attributedString {
+                    if attributed, let attributedText = post.displayPost.html?.attributedString {
                         Text(AttributedString(attributedText))
                     } else {
-                        Text(displayPost.html?.plainContent ?? "")
+                        Text(post.displayPost.html?.plainContent ?? "")
                     }
                 }
             }
