@@ -34,7 +34,7 @@ public class TootClient {
     internal let validStatusCodes = 200..<300
     /// The current accessToken in use
     internal var accessToken: String?
-
+    
     /// Initialization
     /// - Parameters:
     ///   - session: the URLSession being used internally, defaults to shared
@@ -44,15 +44,16 @@ public class TootClient {
                 session: URLSession = URLSession.shared,
                 instanceURL: URL,
                 accessToken: String? = nil,
-                scopes: [String] = ["read", "write", "follow", "push"],
-                attributedStringRenderer: TootAttributedStringRenderer = DefaultTootAttributedStringRenderer()) {
+                scopes: [String] = ["read", "write", "follow", "push"]) {
         self.session = session
         self.instanceURL = instanceURL
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
         
-        self.setAttributedStringRenderer(attributedStringRenderer)
+#if !os(Linux)
+        self.setAttributedStringRenderer(DefaultTootAttributedStringRenderer())
+#endif
     }
     
     /// Prints extra debug details like outgoing requests and responses
@@ -72,7 +73,7 @@ public class TootClient {
 extension TootClient {
     
     internal func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
-       return try decoder.decode(decodable, from: data)
+        return try decoder.decode(decodable, from: data)
     }
     
     /// Fetch data asynchronously and return the decoded `Decodable` object.
@@ -87,14 +88,14 @@ extension TootClient {
             if debugResponses {
                 print(description)
             }
-                
+            
             throw TootSDKError.decodingError(description)
         }
     }
     
     private func fetchError<T: Decodable>(_ decode: T.Type, data: Data) -> String {
         var description: String = "Unknown decoding error"
-    
+        
         do {
             _ = try decoder.decode(decode, from: data)
         } catch let DecodingError.dataCorrupted(context) {
@@ -146,7 +147,7 @@ extension TootClient {
             }
         }
         let (data, response) = try await session.data(for: request)
-
+        
         guard let httpResponse = response as? HTTPURLResponse else {
             throw TootSDKError.nonHTTPURLResponse(data: data, response: response)
         }
@@ -159,11 +160,11 @@ extension TootClient {
             }
             print("⬅️ 💿", data.prettyPrintedJSONString ?? String(data: data, encoding: .utf8) ?? "Undecodable")
         }
-
+        
         guard validStatusCodes.contains(httpResponse.statusCode) else {
             throw TootSDKError.invalidStatusCode(data: data, response: httpResponse)
         }
-
+        
         return (data, httpResponse)
     }
 }
@@ -179,14 +180,14 @@ extension TootClient: Equatable {
 }
 
 extension TootClient {
-
+    
     /// Provides the URL for authorizing
     public func createAuthorizeURL(server: URL, callbackUrl: String) async throws -> URL? {
         let authInfo = try await self.getAuthorizationInfo(callbackUrl: callbackUrl, scopes: self.scopes)
         currentApplicationInfo = authInfo?.application
         return authInfo?.url
     }
-
+    
     /// Facility method to complete authentication by processing the response from the authorization step.
     /// Exchange the callback authorization code for an accessToken
     /// - Parameters:
@@ -201,7 +202,7 @@ extension TootClient {
         else {
             throw TootSDKError.missingCodeOrClientSecrets
         }
-
+        
         return try await collectToken(code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackUrl)
     }
     
@@ -220,12 +221,12 @@ extension TootClient {
     public func collectToken(code: String, clientId: String, clientSecret: String, callbackUrl: String) async throws -> String? {
         
         let info = try await getAccessToken(code: code, clientId: clientId,
-                                  clientSecret: clientSecret,
-                                  callbackUrl: callbackUrl,
-                                  scopes: scopes)
+                                            clientSecret: clientSecret,
+                                            callbackUrl: callbackUrl,
+                                            scopes: scopes)
         
         accessToken = info?.accessToken
         return accessToken
     }
-
+    
 }
