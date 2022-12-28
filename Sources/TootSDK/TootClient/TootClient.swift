@@ -52,7 +52,8 @@ public class TootClient {
         self.clientName = clientName
         
 #if canImport(UIKit)
-        self.setAttributedStringRenderer(DefaultTootAttributedStringRenderer())
+        // If we're on UIKit, lets default to the UIKitAttribStringRenderer
+        self.setAttributedStringRenderer(UIKitAttribStringRenderer())
 #endif
     }
     

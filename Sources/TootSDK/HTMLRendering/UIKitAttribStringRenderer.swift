@@ -1,77 +1,73 @@
-//
-//  TootAttributedStringRenderer.swift
-//  Created by dave on 23/12/22.
+//  UIKitAttribStringRenderer.swift
+//  Created by dave on 28/12/22.
 
 #if canImport(UIKit)
 import Foundation
-import SwiftSoup
 import UIKit
 import WebURL
 import WebURLFoundationExtras
+import SwiftSoup
 
-/// Public protocol to define an attributedStringRenderer
-/// Clients can submit their own to TootClient via 
-public protocol TootAttributedStringRenderer {
-    func createStringFrom(html: String, emojis: [Emoji]) -> NSAttributedString
-}
-
-public struct TootStringRenderConfig {
-    /// Defaults to the current body font, if initialized with ()
-    var font: UIFont
+public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     
-    /// Defaults to the current body font, rendered with monospaced if initialized with ()
-    var monospaceFont: UIFont
-    
-    /// Defaults to UIColor.label,  if initialized with ()
-    var color: UIColor
-    
-    /// Defaults to UIColor.link,  if initialized with ()
-    var linkColor = UIColor.link
-    
-    /// Defaults to 2 line spacing, if initialized with ()
-    var paragraphStyle: NSParagraphStyle
-    
-    /// Initialize with default values
-    public init() {
-        let bodyFont = UIFont.preferredFont(forTextStyle: .body)
-        font = bodyFont
+    public struct Config {
+        /// Defaults to the current body font, if initialized with ()
+        var font: UIFont
         
-        monospaceFont = UIFont.monospacedSystemFont(ofSize: bodyFont.pointSize,
-                                                    weight: .regular)
-        color = UIColor.label
+        /// Defaults to the current body font, rendered with monospaced if initialized with ()
+        var monospaceFont: UIFont
         
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 2
-        paragraphStyle = style
+        /// Defaults to UIColor.label,  if initialized with ()
+        var color: UIColor
+        
+        /// Defaults to UIColor.link,  if initialized with ()
+        var linkColor = UIColor.link
+        
+        /// Defaults to 2 line spacing, if initialized with ()
+        var paragraphStyle: NSParagraphStyle
+        
+        /// Initialize with default values
+        public init() {
+            let bodyFont = UIFont.preferredFont(forTextStyle: .body)
+            font = bodyFont
+            
+            monospaceFont = UIFont.monospacedSystemFont(ofSize: bodyFont.pointSize,
+                                                        weight: .regular)
+            color = UIColor.label
+            
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = 2
+            paragraphStyle = style
+        }
+        
+        /// Create a  rendering configuration
+        /// - Parameters:
+        ///   - font: the base font to use
+        ///   - monospaceFont: the monospace font to use
+        ///   - color:the main color of all text
+        ///   - linkColor: the color of links
+        ///   - paragraphStyle: the paragraph style for all text
+        public init(font: UIFont,
+                    monospaceFont: UIFont,
+                    color: UIColor,
+                    linkColor: UIColor,
+                    paragraphStyle: NSParagraphStyle) {
+            self.font = font
+            self.monospaceFont = monospaceFont
+            self.color = color
+            self.paragraphStyle = paragraphStyle
+            self.linkColor = linkColor
+        }
+        
     }
     
-    /// Create a  rendering configuration
-    /// - Parameters:
-    ///   - font: the base font to use
-    ///   - monospaceFont: the monospace font to use
-    ///   - color:the main color of all text
-    ///   - linkColor: the color of links
-    ///   - paragraphStyle: the paragraph style for all text
-    public init(font: UIFont,
-                monospaceFont: UIFont,
-                color: UIColor,
-                linkColor: UIColor,
-                paragraphStyle: NSParagraphStyle) {
-        self.font = font
-        self.monospaceFont = monospaceFont
-        self.color = color
-        self.paragraphStyle = paragraphStyle
-        self.linkColor = linkColor
-    }
+    // MARK: - Properties
+    private let config: Config
     
-}
-
-public class DefaultTootAttributedStringRenderer: TootAttributedStringRenderer {
-    
-    let config: TootStringRenderConfig
+    // MARK: - Initialization
     
     /// - Parameter config: the TootStringRenderConfig to use to render the text, defaults to the default values in TootStringRenderConfig unless you supply your own
-    public init(config: TootStringRenderConfig = TootStringRenderConfig()) {
+    public init(config: UIKitAttribStringRenderer.Config = UIKitAttribStringRenderer.Config()) {
         self.config = config
     }
     
