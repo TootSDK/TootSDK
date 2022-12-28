@@ -17,11 +17,13 @@ public struct HTML: Codable {
         return self.wrappedValue
     }
     
-    /// An attributedString generated from the raw HTML
-    public var attributedString: NSAttributedString
-    
     /// A plain text string, generated from the HTML
     public var plainContent: String
+    
+#if !os(Linux)
+    /// An attributedString generated from the raw HTML
+    public var attributedString: NSAttributedString
+#endif
     
     // MARK: - Initialization + decoding
     public init(value: String?, emojis: [Emoji]) {
@@ -31,14 +33,17 @@ public struct HTML: Codable {
     public init(from decoder: Decoder) throws {
         // We decode only the wrapped value, and then generate our other properties basd on it
         let wrappedValue =  try decoder.singleValueContainer().decode(String.self)
-
+        
         self.init(value: wrappedValue)
     }
     
     private init(value: String?, customEmojis: [Emoji] = []) {
         self.wrappedValue = value
-        self.attributedString = HTML.attributedStringRenderer.createStringFrom(html: wrappedValue ?? "", emojis: customEmojis)
         self.plainContent = HTML.stripHTMLFormatting(html: wrappedValue) ?? ""
+        
+#if !os(Linux)
+        self.attributedString = HTML.attributedStringRenderer.createStringFrom(html: wrappedValue ?? "", emojis: customEmojis)
+#endif
     }
     
     /// Remove all HTML tags, quick and dirty.
@@ -64,7 +69,9 @@ public struct HTML: Codable {
         try container.encode(self.wrappedValue)
     }
     
+#if !os(Linux)
     static internal var attributedStringRenderer: TootAttributedStringRenderer = DefaultTootAttributedStringRenderer()
+#endif
 }
 
 extension HTML: Hashable {

@@ -1,6 +1,7 @@
 //
 //  NSAttributedString+helpers.swift
 
+#if !os(Linux)
 import Foundation
 
 /// Trimming functions
@@ -34,3 +35,4 @@ extension NSAttributedString {
     }
     
 }
+#endif

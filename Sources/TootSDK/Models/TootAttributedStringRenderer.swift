@@ -1,10 +1,8 @@
 //
 //  TootAttributedStringRenderer.swift
-//  
-//
 //  Created by dave on 23/12/22.
-//
 
+#if !os(Linux)
 import Foundation
 import SwiftSoup
 import UIKit
@@ -178,7 +176,7 @@ public class DefaultTootAttributedStringRenderer: TootAttributedStringRenderer {
     
     private func updateAttributedTextForItalic(_ element: Element, attributed: inout NSMutableAttributedString) {
         if attributed.length > 0,
-            let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
+           let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
             try? attributed.addAttribute(.font, value: fontInAttributes.asItalic(), range: attributed.fullRange)
         } else {
             try? attributed.addAttribute(.font, value: config.font.asItalic(), range: attributed.fullRange)
@@ -188,7 +186,7 @@ public class DefaultTootAttributedStringRenderer: TootAttributedStringRenderer {
     private func updateAttributedTextForBold(_ element: Element, attributed: inout NSMutableAttributedString) {
         if attributed.length > 0,
            let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
-           try? attributed.addAttribute(.font, value: fontInAttributes.asBold(), range: attributed.fullRange)
+            try? attributed.addAttribute(.font, value: fontInAttributes.asBold(), range: attributed.fullRange)
         } else {
             try? attributed.addAttribute(.font, value: config.font.asBold(), range: attributed.fullRange)
         }
@@ -215,3 +213,5 @@ public class DefaultTootAttributedStringRenderer: TootAttributedStringRenderer {
         }
     }
 }
+
+#endif

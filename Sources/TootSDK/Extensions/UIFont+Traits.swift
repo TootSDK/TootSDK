@@ -3,6 +3,7 @@
 //
 //  Via https://gist.github.com/mntone/9d742a1cbe18743e21c071600990c5d0
 
+#if !os(Linux)
 import CoreText
 import class UIKit.UIFont
 import class UIKit.UIFontDescriptor
@@ -37,3 +38,5 @@ extension UIFont {
         return UIFont(descriptor: fontDesc, size: 0)
     }
 }
+
+#endif
