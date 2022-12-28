@@ -26,8 +26,7 @@ extension TootClient {
             let accountLookup = try await lookupAccount(uri: uri)
             return try await followAccount(by: accountLookup.id)
         case .pleroma:
-            // swiftlint:disable todo
-            // TODO: - resolve this issue: https://github.com/TootSDK/TootSDK/issues/34
+            // TODO: - resolve this issue: https://github.com/TootSDK/TootSDK/issues/34 // swiftlint:disable:this todo
             
             // On Pleroma, we get to follow by URI, but it doesn't return a relationship, it returns an account
             // So we use that to then retrieve the relationship

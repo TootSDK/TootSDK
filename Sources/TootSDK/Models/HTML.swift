@@ -24,34 +24,21 @@ public struct HTML: Codable {
     public var plainContent: String
     
     // MARK: - Initialization + decoding
-    public init(from decoder: Decoder) throws {
-        // We decode only the wrapped value, and then generate our other properties basd on it
-        self.wrappedValue =  try decoder.singleValueContainer().decode(String.self)
-                
-        self.attributedString = HTML.createAttributedString(value: wrappedValue) ?? NSAttributedString(string: "")
-        self.plainContent = HTML.stripHTMLFormatting(html: wrappedValue) ?? ""
+    public init(value: String?, emojis: [Emoji]) {
+        self.init(value: value, customEmojis: emojis)
     }
     
-    private static func createAttributedString(value: String?) -> NSAttributedString? {
-        // swiftlint:disable todo
-        // TODO: - make this load custom emojis, and check for other types of non-html payload (e.g markdown/bbcode)
-        //       -  https://github.com/TootSDK/TootSDK/issues/35
-        
-        // Strip the paragraphs out, as otherwise we indent our text in the attributed string
-        // We may want to add more to this, as payloads an vary.
-        if let plain = value?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: ""),
-           let data = plain.data(using: plain.fastestEncoding),
-           let value = try? NSMutableAttributedString(
-            data: data,
-            options: [.documentType: NSAttributedString.DocumentType.html],
-            documentAttributes: nil) {
-            
-            value.removeAttribute(.font, range: NSRange(location: 0, length: value.length))
-            
-            return value
-        } else {
-            return nil
-        }
+    public init(from decoder: Decoder) throws {
+        // We decode only the wrapped value, and then generate our other properties basd on it
+        let wrappedValue =  try decoder.singleValueContainer().decode(String.self)
+
+        self.init(value: wrappedValue)
+    }
+    
+    private init(value: String?, customEmojis: [Emoji] = []) {
+        self.wrappedValue = value
+        self.attributedString = HTML.attributedStringRenderer.createStringFrom(html: wrappedValue ?? "", emojis: customEmojis)
+        self.plainContent = HTML.stripHTMLFormatting(html: wrappedValue) ?? ""
     }
     
     /// Remove all HTML tags, quick and dirty.
@@ -75,7 +62,9 @@ public struct HTML: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.wrappedValue)
-    }    
+    }
+    
+    static internal var attributedStringRenderer: TootAttributedStringRenderer = DefaultTootAttributedStringRenderer()
 }
 
 extension HTML: Hashable {

@@ -9,7 +9,7 @@ public class Post: Codable, Identifiable {
                 uri: String,
                 createdAt: Date,
                 account: Account,
-                content: HTML? = nil,
+                content: String? = nil,
                 visibility: Post.Visibility,
                 sensitive: Bool,
                 spoilerText: String,
@@ -74,7 +74,7 @@ public class Post: Codable, Identifiable {
     /// The account that authored this post.
     public var account: Account
     /// HTML-encoded post content.
-    public var content: HTML?
+    public var content: String?
     /// Visibility of this post.
     public var visibility: Visibility
     /// Is this post marked as sensitive content?
@@ -125,6 +125,10 @@ public class Post: Codable, Identifiable {
     public var bookmarked: Bool?
     /// Have you pinned this post? Only appears if the post is pinnable.
     public var pinned: Bool?
+    
+    public lazy var html: HTML? = {
+        return HTML(value: self.content, emojis: self.emojis)        
+    }()
     
     public enum Visibility: String, Codable, CaseIterable {
         /// Visible to everyone, shown in public timelines.

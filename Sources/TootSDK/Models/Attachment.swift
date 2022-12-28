@@ -1,6 +1,8 @@
 // Created by konstantin on 02/11/2022
 // Copyright (c) 2022. All rights reserved.
 
+// swiftlint:disable nesting
+
 import Foundation
 
 public struct Attachment: Codable, Hashable {
@@ -10,7 +12,6 @@ public struct Attachment: Codable, Hashable {
 
     public struct Meta: Codable, Hashable {
 
-        // swiftlint:disable nesting
         public struct Info: Codable, Hashable {
             public var width: Int?
             public var height: Int?
@@ -30,7 +31,6 @@ public struct Attachment: Codable, Hashable {
         public var small: Info?
         public var focus: Focus?
     }
-    // swiftlint:enable nesting
 
     public var id: String
     public var type: AttachmentType

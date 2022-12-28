@@ -52,8 +52,8 @@ struct PostView: View {
                     self.path.append(displayPost.account)
                 }
 
-                VStack(spacing: 8) {
-                    HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(alignment: .top) {
                         Text(displayPost.account.displayName ?? "?")
                             .font(.caption.bold())
                         Text(displayPost.account.username ?? "?")
@@ -62,10 +62,10 @@ struct PostView: View {
                         Spacer()
                     }
                     
-                    if attributed, let attributedText = displayPost.content?.attributedString {
+                    if attributed, let attributedText = displayPost.html?.attributedString {
                         Text(AttributedString(attributedText))
                     } else {
-                        Text(displayPost.content?.plainContent ?? "")
+                        Text(displayPost.html?.plainContent ?? "")
                     }
                 }
             }

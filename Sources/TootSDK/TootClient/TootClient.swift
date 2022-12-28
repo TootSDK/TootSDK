@@ -44,12 +44,15 @@ public class TootClient {
                 session: URLSession = URLSession.shared,
                 instanceURL: URL,
                 accessToken: String? = nil,
-                scopes: [String] = ["read", "write", "follow", "push"]) {
+                scopes: [String] = ["read", "write", "follow", "push"],
+                attributedStringRenderer: TootAttributedStringRenderer = DefaultTootAttributedStringRenderer()) {
         self.session = session
         self.instanceURL = instanceURL
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
+        
+        self.setAttributedStringRenderer(attributedStringRenderer)
     }
     
     /// Prints extra debug details like outgoing requests and responses
