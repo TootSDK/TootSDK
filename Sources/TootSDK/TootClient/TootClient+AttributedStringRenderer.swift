@@ -5,6 +5,7 @@
 //  Created by dave on 23/12/22.
 //
 
+#if !os(Linux)
 import Foundation
 
 extension TootClient {
@@ -13,3 +14,4 @@ extension TootClient {
         HTML.attributedStringRenderer = renderer
     }
 }
+#endif
