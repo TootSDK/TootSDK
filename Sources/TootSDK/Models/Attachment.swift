@@ -4,42 +4,69 @@
 import Foundation
 
 public struct Attachment: Codable, Hashable {
-    public enum AttachmentType: String, Codable, Hashable {
-        case image, video, gifv, audio, unknown
+    public init(id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
+        self.id = id
+        self.type = type
+        self.url = url
+        self.remoteUrl = remoteUrl
+        self.previewUrl = previewUrl
+        self.meta = meta
+        self.description = description
+        self.blurhash = blurhash
     }
 
-    public struct Meta: Codable, Hashable {
-
-        // swiftlint:disable nesting
-        public struct Info: Codable, Hashable {
-            public var width: Int?
-            public var height: Int?
-            public var size: String?
-            public var aspect: Double?
-            public var frameRate: String?
-            public var duration: Double?
-            public var bitrate: Int?
-        }
-
-        public struct Focus: Codable, Hashable {
-            public var x: Double
-            public var y: Double
-        }
-
-        public var original: Info?
-        public var small: Info?
-        public var focus: Focus?
-    }
-    // swiftlint:enable nesting
-
+    /// The ID of the attachment in the database.
     public var id: String
+
+    /// The type of the attachment.
     public var type: AttachmentType
+    /// The location of the original full-size attachment.
     public var url: String
+    /// The location of the full-size original attachment on the remote website.
     public var remoteUrl: String?
+    /// The location of a scaled-down preview of the attachment.
     public var previewUrl: String?
-    public var meta: Meta?
+    /// Metadata returned by Paperclip, only `original`, `small` and `focus` are serialized.
+    public var meta: AttachmentMeta?
+    /// Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.
     public var description: String?
+    /// A hash computed by the BlurHash algorithm, for generating colorful preview thumbnails when media has not been downloaded yet.
     public var blurhash: String?
+}
+
+public enum AttachmentType: String, Codable, Hashable {
+    ///  Static image
+    case image
+    /// Video clip
+    case video
+    /// Looping, soundless animation
+    case gifv
+    /// Audio track
+    case audio
+    /// unsupported or unrecognized file type
+    case unknown
+}
+
+public struct AttachmentMeta: Codable, Hashable {
+
+    public var original: AttachmentMetaInfo?
+    public var small: AttachmentMetaInfo?
+    public var focus: AttachmentMetaFocus?
+}
+
+public struct AttachmentMetaFocus: Codable, Hashable {
+    public var x: Double
+    public var y: Double
+}
+
+public struct AttachmentMetaInfo: Codable, Hashable {
+    public var width: Int?
+    public var height: Int?
+    public var size: String?
+    public var aspect: Double?
+    public var frameRate: String?
+    public var duration: Double?
+    public var bitrate: Int?
 }
 
 public extension Attachment {
@@ -59,6 +86,6 @@ public extension Attachment {
     }
 }
 
-public extension Attachment.Meta.Focus {
+public extension AttachmentMetaFocus {
     static let `default` = Self(x: 0, y: 0)
 }
