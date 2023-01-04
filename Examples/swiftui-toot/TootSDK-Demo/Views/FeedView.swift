@@ -22,8 +22,7 @@ struct FeedView: View {
         NavigationStack(path: $path) {
             List(posts, id: \.self) { post in
                 Button {
-                    let id = post.repost?.id ?? post.id // navigate to the reposted post if it exists
-                    self.path.append(id)
+                    self.path.append(post.displayPost.id)
                 } label: {
                     PostView(post: post, attributed: true, path: $path)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed
