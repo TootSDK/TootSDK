@@ -5,7 +5,7 @@ import Foundation
 
 public struct Attachment: Codable, Hashable {
     public enum AttachmentType: String, Codable, Hashable {
-        case image, video, gifv, audio
+        case image, video, gifv, audio, unknown
     }
 
     public struct Meta: Codable, Hashable {
