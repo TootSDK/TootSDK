@@ -20,5 +20,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
       Follow.self,
       FollowByURI.self,
       Unfollow.self,
+      GetPost.self
     ])
 }

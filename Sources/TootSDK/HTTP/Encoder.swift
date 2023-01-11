@@ -3,8 +3,8 @@
 
 import Foundation
 
-internal final class TootEncoder: JSONEncoder {
-    internal override init() {
+public final class TootEncoder: JSONEncoder {
+    public override init() {
         super.init()
 
         keyEncodingStrategy = .convertToSnakeCase
