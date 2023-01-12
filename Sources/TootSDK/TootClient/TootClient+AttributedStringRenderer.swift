@@ -12,4 +12,9 @@ extension TootClient {
     public func setAttributedStringRenderer(_ renderer: TootAttribStringRenderer) {
         HTML.attributedStringRenderer = renderer
     }
+    
+    /// Returns the current attributed string renderer
+    public func getRenderer() -> TootAttribStringRenderer {
+        return HTML.attributedStringRenderer
+    }
 }

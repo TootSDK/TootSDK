@@ -10,65 +10,12 @@ import SwiftSoup
 
 public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     
-    public struct Config {
-        /// Defaults to the current body font, if initialized with ()
-        var font: UIFont
-        
-        /// Defaults to the current body font, rendered with monospaced if initialized with ()
-        var monospaceFont: UIFont
-        
-        /// Defaults to UIColor.label,  if initialized with ()
-        var color: UIColor
-        
-        /// Defaults to UIColor.link,  if initialized with ()
-        var linkColor = UIColor.link
-        
-        /// Defaults to 2 line spacing, if initialized with ()
-        var paragraphStyle: NSParagraphStyle
-        
-        /// Initialize with default values
-        public init() {
-            let bodyFont = UIFont.preferredFont(forTextStyle: .body)
-            font = bodyFont
-            
-            monospaceFont = UIFont.monospacedSystemFont(ofSize: bodyFont.pointSize,
-                                                        weight: .regular)
-            color = UIColor.label
-            
-            let style = NSMutableParagraphStyle()
-            style.lineSpacing = 2
-            paragraphStyle = style
-        }
-        
-        /// Create a  rendering configuration
-        /// - Parameters:
-        ///   - font: the base font to use
-        ///   - monospaceFont: the monospace font to use
-        ///   - color:the main color of all text
-        ///   - linkColor: the color of links
-        ///   - paragraphStyle: the paragraph style for all text
-        public init(font: UIFont,
-                    monospaceFont: UIFont,
-                    color: UIColor,
-                    linkColor: UIColor,
-                    paragraphStyle: NSParagraphStyle) {
-            self.font = font
-            self.monospaceFont = monospaceFont
-            self.color = color
-            self.paragraphStyle = paragraphStyle
-            self.linkColor = linkColor
-        }
-        
-    }
-    
     // MARK: - Properties
-    private let config: Config
-    
+     
     // MARK: - Initialization
     
     /// - Parameter config: the TootStringRenderConfig to use to render the text, defaults to the default values in TootStringRenderConfig unless you supply your own
-    public init(config: UIKitAttribStringRenderer.Config = UIKitAttribStringRenderer.Config()) {
-        self.config = config
+    public init() {
     }
     
     /// Renders the HTML to an NSAttributedString
@@ -82,7 +29,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
         
         // Replace the custom emojis with image refs
         emojis.forEach { emoji in
-            html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "'>")
+            html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
         
         if let doc = try? SwiftSoup.parseBodyFragment(html),
@@ -90,11 +37,6 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
            let attributedText = attributedTextForHTMLNode(body) {
             let mutAttrString = NSMutableAttributedString(attributedString: attributedText)
             mutAttrString.trimTrailingCharactersInSet(.whitespacesAndNewlines)
-            
-            mutAttrString.addAttribute(.paragraphStyle,
-                                       value: config.paragraphStyle,
-                                       range: mutAttrString.fullRange)
-            
             return mutAttrString
         } else {
             return NSAttributedString(string: html.description)
@@ -104,7 +46,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     private func attributedTextForHTMLNode(_ node: Node) -> NSAttributedString? {
         switch node {
         case let node as TextNode:
-            return  NSAttributedString(string: node.text(), attributes: [.font: config.font, .foregroundColor: config.color])
+            return  NSAttributedString(string: node.text())
         case let node as Element:
             return attributedTextForElement(node)
         default:
@@ -113,7 +55,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     }
     
     private func attributedTextForElement(_ element: Element) -> NSAttributedString? {  // swiftlint:disable:this cyclomatic_complexity
-        var attributed = NSMutableAttributedString(string: "", attributes: [.font: config.font, .foregroundColor: config.color])
+        var attributed = NSMutableAttributedString(string: "")
         
         for child in element.getChildNodes() {
             /// Recursive appending
@@ -124,9 +66,9 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
         
         switch element.tagName() {
         case "br":
-            attributed.append(NSAttributedString(string: "\n", attributes: [.font: config.font]))
+            attributed.append(NSAttributedString(string: "\n"))
         case "p":
-            attributed.append(NSAttributedString(string: "\n\n", attributes: [.font: config.font]))
+            attributed.append(NSAttributedString(string: "\n\n"))
         case "a":
             attributedTextForHref(element, attributed: &attributed)
         case "em", "i":
@@ -137,24 +79,40 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             attributed.addAttribute(.strikethroughStyle,
                                     value: NSUnderlineStyle.single.rawValue,
                                     range: attributed.fullRange)
-        case "code":
-            attributed.addAttribute(.font,
-                                    value: config.monospaceFont,
-                                    range: attributed.fullRange)
-        case "pre":
-            attributed.append(NSAttributedString(string: "\n\n"))
-            attributed.addAttribute(.font, value: config.monospaceFont,
-                                    range: attributed.fullRange)
+//        case "code":
+//            attributed.addAttribute(.font,
+//                                    value: config.monospaceFont,
+//                                    range: attributed.fullRange)
+//        case "pre":
+//            attributed.append(NSAttributedString(string: "\n\n"))
+//            attributed.addAttribute(.font, value: config.monospaceFont,
+//                                    range: attributed.fullRange)
         case "ol", "ul":
             attributed.append(NSAttributedString(string: "\n\n"))
             attributed.trimLeadingCharactersInSet(.whitespacesAndNewlines)
         case "li":
             updateAttributedTextForList(element, attributed: &attributed)
+        case "img":
+            if let imgAttr = try? attributedTextForImage(element) {
+                attributed.append(imgAttr)
+            }
         default:
             break
         }
         
         return attributed
+    }
+    
+    private func attributedTextForImage(_ element: Element) throws -> NSAttributedString? {
+        guard let _ = try? element.attr("src") else { return nil }
+        //TODO: - SUPPORT IMAGES
+        
+        if let _ = try? element.attr("data-tootsdk-emoji"), let alt = try? element.attr("alt")  {
+            // fallback to the the :short_code
+            return NSAttributedString(string: ":" + alt)
+        }
+        
+        return NSAttributedString(string: try element.html())
     }
     
     private func attributedTextForHref(_ element: Element, attributed: inout NSMutableAttributedString) {
@@ -166,8 +124,6 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
         } else if let url = URL(string: href) {
             attributed.addAttribute(.link, value: url, range: attributed.fullRange)
         }
-        
-        attributed.addAttribute(.foregroundColor, value: config.linkColor, range: attributed.fullRange)
     }
     
     private func updateAttributedTextForItalic(_ element: Element, attributed: inout NSMutableAttributedString) {
@@ -175,7 +131,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
            let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
             try? attributed.addAttribute(.font, value: fontInAttributes.asItalic(), range: attributed.fullRange)
         } else {
-            try? attributed.addAttribute(.font, value: config.font.asItalic(), range: attributed.fullRange)
+            // try? attributed.addAttribute(.font, value: config.font.asItalic(), range: attributed.fullRange)
         }
     }
     
@@ -184,7 +140,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
            let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
             try? attributed.addAttribute(.font, value: fontInAttributes.asBold(), range: attributed.fullRange)
         } else {
-            try? attributed.addAttribute(.font, value: config.font.asBold(), range: attributed.fullRange)
+            // try? attributed.addAttribute(.font, value: config.font.asBold(), range: attributed.fullRange)
         }
     }
     
@@ -195,18 +151,20 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             switch parentTag {
             case "ol":
                 let index = (try? element.elementSiblingIndex()) ?? 0
-                bullet = NSAttributedString(string: "\(index + 1).\t", attributes: [.font: config.monospaceFont,
-                                                                                    .foregroundColor: config.color])
+                bullet = NSAttributedString(string: "\(index + 1).\t")
             case "ul":
-                bullet = NSAttributedString(string: "\u{2022}\t", attributes: [.font: config.font,
-                                                                               .foregroundColor: config.color])
+                bullet = NSAttributedString(string: "\u{2022}\t")
             default:
                 bullet = NSAttributedString()
             }
             
             attributed.insert(bullet, at: 0)
-            attributed.append(NSAttributedString(string: "\n", attributes: [.font: config.font]))
+            attributed.append(NSAttributedString(string: "\n"))
         }
+    }
+    
+    public func render(_ post: Post) -> NSAttributedString {
+        return createStringFrom(html: post.content ?? "", emojis: post.emojis)
     }
 }
 

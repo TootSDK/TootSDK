@@ -21,6 +21,10 @@ public class AppKitAttribStringRenderer: TootAttribStringRenderer {
         // TODO: - Make this work for AppKit! // swiftlint:disable:this todo
         return NSAttributedString(string: html.description)
     }
+    
+    public func render(_ post: Post) -> NSAttributedString {
+        return NSAttributedString(string: post.content ?? "")
+    }
 }
 
 #endif
