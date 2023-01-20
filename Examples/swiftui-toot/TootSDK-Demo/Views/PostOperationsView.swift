@@ -59,13 +59,11 @@ struct PostOperationsView: View {
             }
             
             ButtonView(text: "Edit post (appends 🧡)") {
-                guard let oldPost = try await tootManager.currentClient?.getPost(id: postID) else { return }
+                guard let oldPost = try await tootManager.currentClient?.getPostSource(id: postID) else { return }
                 
-                let editParams = EditPostParams(post: "\(oldPost.html?.plainContent ?? "") 🧡",
-                                                  spoilerText: oldPost.spoilerText,
-                                                  sensitive: oldPost.sensitive,
-                                                  mediaIds: nil,
-                                                  poll: nil)
+                
+                let editParams = EditPostParams(post: "\(oldPost.text) 🧡",
+                                                  spoilerText: oldPost.spoilerText)
                 
                 let context = try await tootManager.currentClient?.editPost(id: postID, editParams)
                 debugPrint(context ?? "")
