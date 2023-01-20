@@ -40,9 +40,9 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
            let attributedText = attributedTextForHTMLNode(body) {
             let mutAttrString = NSMutableAttributedString(attributedString: attributedText)
             mutAttrString.trimTrailingCharactersInSet(.whitespacesAndNewlines)
-            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString)
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString, systemAttributedString: try NullAttribStringRenderer.createAttributedString(html))
         } else {
-            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html), systemAttributedString: try NullAttribStringRenderer.createAttributedString(html))
         }
     }
     
@@ -169,7 +169,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             return try render(html: post.content ?? "", emojis: post.emojis)
         } catch {
             print("TootSDK(UIKitAttribStringRenderer): Failed to render post: \(String(describing: error))")
-            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""))
+            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""), systemAttributedString: .init(string: ""))
         }
     }
 }
