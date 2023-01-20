@@ -20,6 +20,5 @@ public struct TootContent {
     /// An instance of `NSAttributedString` created by parsing the HTML string and accounting for fediverse specific content like :emojis, tags, mentiones and others. Use the `NSAttributedString.string` field to access a plain-text representation which includes emoji codes. Images are not included in this representation.
     public var attributedString: NSAttributedString
     
-    
     public var systemAttributedString: NSAttributedString
 }
