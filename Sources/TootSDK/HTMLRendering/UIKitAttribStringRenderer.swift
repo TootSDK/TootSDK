@@ -23,23 +23,27 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     ///   - html: html description
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
     /// - Returns: the NSAttributedString. Otherwise a string with no attributes if any errors are encountered rendering
-    public func createStringFrom(html: String,
-                                 emojis: [Emoji]) -> NSAttributedString {
+    public func render(html: String,
+                                 emojis: [Emoji]) throws -> TootContent {
         var html = html
         
+        // attempt to parse emojis and other special content
         // Replace the custom emojis with image refs
         emojis.forEach { emoji in
             html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
+        
+        let plainText = HTML.stripHTMLFormatting(html: html) ?? ""
+        print(plainText)
         
         if let doc = try? SwiftSoup.parseBodyFragment(html),
            let body = doc.body(),
            let attributedText = attributedTextForHTMLNode(body) {
             let mutAttrString = NSMutableAttributedString(attributedString: attributedText)
             mutAttrString.trimTrailingCharactersInSet(.whitespacesAndNewlines)
-            return mutAttrString
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString)
         } else {
-            return NSAttributedString(string: html.description)
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
         }
     }
     
@@ -163,8 +167,13 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
         }
     }
     
-    public func render(_ post: Post) -> NSAttributedString {
-        return createStringFrom(html: post.content ?? "", emojis: post.emojis)
+    public func render(_ post: Post) -> TootContent {
+        do {
+            return try render(html: post.content ?? "", emojis: post.emojis)
+        } catch {
+            print("TootSDK(UIKitAttribStringRenderer): Failed to render post: \(String(describing: error))")
+            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""))
+        }
     }
 }
 

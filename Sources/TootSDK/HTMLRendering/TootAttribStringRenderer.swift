@@ -6,17 +6,27 @@ import Foundation
 /// Public protocol to define an attributedStringRenderer
 /// Clients can submit their own to TootClient via 
 public protocol TootAttribStringRenderer {
-    func createStringFrom(html: String, emojis: [Emoji]) -> NSAttributedString
-    func render(_ post: Post) -> NSAttributedString
+    func render(html: String, emojis: [Emoji]) throws -> TootContent
+    func render(_ post: Post) -> TootContent
 }
 
 /// This is a stub and should never be used in production. In the event of a renderer not existing already for the environment you're in (AppKit, Linux) we fail over to this implementation
 public class NullAttribStringRenderer: TootAttribStringRenderer {
-    public func createStringFrom(html: String, emojis: [Emoji]) -> NSAttributedString {
-        return NSAttributedString(string: html)
+    func createAttributedString(_ html: String) throws -> NSAttributedString {
+        guard let data = html.data(using: .utf8) else { return NSAttributedString() }
+        return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
     }
     
-    public func render(_ post: Post) -> NSAttributedString {
-        return NSAttributedString(string: post.content ?? "")
+    public func render(html: String, emojis: [Emoji]) throws -> TootContent {
+        return TootContent(wrappedValue: html, plainContent: HTML.stripHTMLFormatting(html: html) ?? "", attributedString: try createAttributedString(html))
+    }
+    
+    public func render(_ post: Post) -> TootContent {
+        do {
+            return try render(html: post.content ?? "", emojis: post.emojis)
+        } catch {
+            print("TootSDK(NullAttribStringRenderer): Failed to render post: \(String(describing: error))")
+            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""))
+        }
     }
 }

@@ -126,10 +126,6 @@ public class Post: Codable, Identifiable {
     /// Have you pinned this post? Only appears if the post is pinnable.
     public var pinned: Bool?
     
-    public lazy var html: HTML? = {
-        return HTML(value: self.content, emojis: self.emojis)        
-    }()
-    
     public enum Visibility: String, Codable, CaseIterable {
         /// Visible to everyone, shown in public timelines.
         case `public`

@@ -50,11 +50,6 @@ public class TootClient {
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
-        
-#if canImport(UIKit)
-        // If we're on UIKit, lets default to the UIKitAttribStringRenderer
-        self.setAttributedStringRenderer(UIKitAttribStringRenderer())
-#endif
     }
     
     /// Prints extra debug details like outgoing requests and responses
