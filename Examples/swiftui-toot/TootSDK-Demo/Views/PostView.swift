@@ -9,6 +9,7 @@ import SwiftUI
 import TootSDK
 
 struct PostView: View {
+    var renderer: TootAttribStringRenderer
     var post: Post
     var attributed: Bool
 
@@ -54,10 +55,10 @@ struct PostView: View {
                         Spacer()
                     }
                     
-                    if attributed, let attributedText = post.displayPost.html?.attributedString {
-                        Text(AttributedString(attributedText))
+                    if attributed {
+                        Text(AttributedString(renderer.render(post.displayPost).attributedString))
                     } else {
-                        Text(post.displayPost.html?.plainContent ?? "")
+                        Text(renderer.render(post.displayPost).string)
                     }
                 }
             }
