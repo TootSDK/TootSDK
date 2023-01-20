@@ -12,6 +12,8 @@ extension TootClient {
     public func getRenderer() -> TootAttribStringRenderer {
 #if canImport(UIKit)
         return UIKitAttribStringRenderer()
+#elseif canImport(AppKit)
+        return AppKitAttribStringRenderer()
 #else
         return NullAttribStringRenderer()
 #endif

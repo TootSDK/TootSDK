@@ -8,12 +8,14 @@ import XCTest
 final class AttribStringRendererTests: XCTestCase {
     let serverUrl: String = "https://m.iamkonstantin.eu"
     
-    func testDefaultRendererOniOS() throws {
+    func testReturnsTheCorrectPlatformRenderer() throws {
         let sut = TootClient(instanceURL: URL(string: serverUrl)!)
         let renderer = sut.getRenderer()
         
 #if canImport(UIKit)
         XCTAssert(renderer is UIKitAttribStringRenderer)
+#elseif canImport(AppKit)
+        XCTAssert(renderer is AppKitAttribStringRenderer)
 #endif
     }
     

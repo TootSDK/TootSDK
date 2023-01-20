@@ -34,7 +34,6 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
         }
         
         let plainText = HTML.stripHTMLFormatting(html: html) ?? ""
-        print(plainText)
         
         if let doc = try? SwiftSoup.parseBodyFragment(html),
            let body = doc.body(),

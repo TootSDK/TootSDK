@@ -21,6 +21,8 @@ let package = Package(
         .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2"),
         .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.4.3"),
         .package(url: "https://github.com/karwa/swift-url.git", from: "0.4.1"),
+       //  .package(url: "https://github.com/eneko/MarkdownGenerator", revision: "5575590ed9ea5cb02cd54a890cb43174efde7911")
+        
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -31,6 +33,7 @@ let package = Package(
                            .product(name:"SwiftSoup", package: "SwiftSoup"),
                            .product(name: "WebURL", package: "swift-url"),
                            .product(name: "WebURLFoundationExtras", package: "swift-url")]
+                           // .product(name: "MarkdownGenerator", package: "MarkdownGenerator")
             ),
         .testTarget(
             name: "TootSDKTests",
