@@ -108,9 +108,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     
     private func attributedTextForImage(_ element: Element) throws -> NSAttributedString? {
         guard let _ = try? element.attr("src") else { return nil }
-        //TODO: - SUPPORT IMAGES
-        
-        if let _ = try? element.attr("data-tootsdk-emoji"), let alt = try? element.attr("alt")  {
+        if let _ = try? element.attr("data-tootsdk-emoji"), let alt = try? element.attr("alt") {
             // fallback to the the :short_code
             return NSAttributedString(string: ":" + alt)
         }

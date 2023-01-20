@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TootSDK
+import RichText
 
 struct PostView: View {
     var renderer: TootAttribStringRenderer
@@ -56,7 +57,8 @@ struct PostView: View {
                     }
                     
                     if attributed {
-                        Text(AttributedString(renderer.render(post.displayPost).attributedString))
+                        RichText(html: renderer.render(post.displayPost).wrappedValue)
+                            .lineHeight(170)
                     } else {
                         Text(renderer.render(post.displayPost).string)
                     }

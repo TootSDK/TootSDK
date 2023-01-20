@@ -1,8 +1,6 @@
 // Created by konstantin on 20/01/2023.
 // Copyright (c) 2023. All rights reserved.
 
-
-
 import Foundation
 
 public struct TootContent {
