@@ -88,9 +88,8 @@ public class AppKitAttribStringRenderer: TootAttribStringRenderer {
     }
     
     private func attributedTextForImage(_ element: Element) throws -> NSAttributedString? {
-        guard try? element.attr("src") != nil else { return nil }
-        
-        if try? element.attr("data-tootsdk-emoji") != nil, let alt = try? element.attr("alt") {
+        guard let _ = try? element.attr("src") else { return nil }
+        if let _ = try? element.attr("data-tootsdk-emoji"), let alt = try? element.attr("alt") {
             // fallback to the the :short_code
             return NSAttributedString(string: ":" + alt)
         }
