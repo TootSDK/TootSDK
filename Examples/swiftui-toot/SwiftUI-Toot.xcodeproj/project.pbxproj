@@ -16,6 +16,7 @@
 		553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3A2952BD0200F3EB69 /* ButtonView.swift */; };
 		553CFB3E2952C23A00F3EB69 /* RelationshipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3D2952C23A00F3EB69 /* RelationshipView.swift */; };
 		553CFB402952C26000F3EB69 /* AccountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3F2952C26000F3EB69 /* AccountItemView.swift */; };
+		557DD954297DF58E003C964C /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DD953297DF58E003C964C /* FeedViewModel.swift */; };
 		55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */; };
 		55ACC1E4291761910046363F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E3291761910046363F /* Assets.xcassets */; };
 		55ACC1E7291761910046363F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E6291761910046363F /* Preview Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		553CFB3A2952BD0200F3EB69 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		553CFB3D2952C23A00F3EB69 /* RelationshipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipView.swift; sourceTree = "<group>"; };
 		553CFB3F2952C26000F3EB69 /* AccountItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemView.swift; sourceTree = "<group>"; };
+		557DD953297DF58E003C964C /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Toot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootSDK_DemoApp.swift; sourceTree = "<group>"; };
 		55ACC1E3291761910046363F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -74,6 +76,15 @@
 				553CFB3F2952C26000F3EB69 /* AccountItemView.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		557DD955297DF591003C964C /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				55B8B1732917627D00339479 /* FeedView.swift */,
+				557DD953297DF58E003C964C /* FeedViewModel.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		55ACC1D32917618F0046363F = {
@@ -140,7 +151,7 @@
 				552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */,
 				55B8B1772917673500339479 /* AuthorizeView.swift */,
 				55C14EAF2954367B00579342 /* PostView.swift */,
-				55B8B1732917627D00339479 /* FeedView.swift */,
+				557DD955297DF591003C964C /* Feed */,
 				550CF66D2931F9A000D07EA0 /* UserAccountView.swift */,
 				553CFB3C2952C22A00F3EB69 /* Account */,
 			);
@@ -233,6 +244,7 @@
 				550CF6662931E3AC00D07EA0 /* PostOperationsView.swift in Sources */,
 				552BFB0129409AB300FB46D3 /* ScheduledPostOperationsView.swift in Sources */,
 				55C14EB02954367B00579342 /* PostView.swift in Sources */,
+				557DD954297DF58E003C964C /* FeedViewModel.swift in Sources */,
 				553CFB392952B99700F3EB69 /* AccountView.swift in Sources */,
 				55B8B1742917627D00339479 /* FeedView.swift in Sources */,
 				553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */,
