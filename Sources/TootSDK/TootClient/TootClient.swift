@@ -69,7 +69,17 @@ public class TootClient {
 extension TootClient {
     
     internal func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
-        return try decoder.decode(decodable, from: data)
+        do {
+            return try decoder.decode(decodable, from: data)
+        } catch {
+            let description = fetchError(T.self, data: data)
+            
+            if debugResponses {
+                print(description)
+            }
+            
+            throw TootSDKError.decodingError(description)
+        }
     }
     
     /// Fetch data asynchronously and return the decoded `Decodable` object.
