@@ -45,7 +45,10 @@ struct PostOperationsView: View {
     @ViewBuilder func postButtons(postID: String) -> some View {
         Group {
             ButtonView(text: "Get Post Details") {
-                textToShow = try await tootManager.currentClient?.getPost(id: postID).html?.plainContent ?? "-"
+                guard let renderer = tootManager.currentClient?.getRenderer() else { return }
+                guard let post = try await tootManager.currentClient?.getPost(id: postID) else {return}
+                let content = renderer.render(post)
+                textToShow = content.attributedString.string
             }
             
             ButtonView(text: "Delete post") {
@@ -59,13 +62,11 @@ struct PostOperationsView: View {
             }
             
             ButtonView(text: "Edit post (appends 🧡)") {
-                guard let oldPost = try await tootManager.currentClient?.getPost(id: postID) else { return }
+                guard let oldPost = try await tootManager.currentClient?.getPostSource(id: postID) else { return }
                 
-                let editParams = EditPostParams(post: "\(oldPost.html?.plainContent ?? "") 🧡",
-                                                  spoilerText: oldPost.spoilerText,
-                                                  sensitive: oldPost.sensitive,
-                                                  mediaIds: nil,
-                                                  poll: nil)
+                
+                let editParams = EditPostParams(post: "\(oldPost.text) 🧡",
+                                                  spoilerText: oldPost.spoilerText)
                 
                 let context = try await tootManager.currentClient?.editPost(id: postID, editParams)
                 debugPrint(context ?? "")

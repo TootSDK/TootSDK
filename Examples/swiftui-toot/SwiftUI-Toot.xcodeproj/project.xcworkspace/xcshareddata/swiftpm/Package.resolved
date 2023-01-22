@@ -10,21 +10,20 @@
       }
     },
     {
-      "identity" : "down",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/johnxnguyen/Down.git",
-      "state" : {
-        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
-        "version" : "0.11.0"
-      }
-    },
-    {
       "identity" : "multipart-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/multipart-kit.git",
       "state" : {
         "revision" : "0d55c35e788451ee27222783c7d363cb88092fab",
         "version" : "4.5.2"
+      }
+    },
+    {
+      "identity" : "richtext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NuPlay/RichText",
+      "state" : {
+        "revision" : "48b840c46295111390f018ef5832f1e81567e32f"
       }
     },
     {
@@ -66,7 +65,7 @@
     {
       "identity" : "swift-url",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/karwa/swift-url/",
+      "location" : "https://github.com/karwa/swift-url.git",
       "state" : {
         "revision" : "a04b0e57f148698d091c90392901ce92fd0c5623",
         "version" : "0.4.1"

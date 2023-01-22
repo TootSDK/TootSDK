@@ -8,13 +8,14 @@
 import Foundation
 
 extension TootClient {
-    /// Sets the renderer for generating attributed strings from HTML, defaults to DefaultTootAttributedStringRenderer
-    public func setAttributedStringRenderer(_ renderer: TootAttribStringRenderer) {
-        HTML.attributedStringRenderer = renderer
-    }
-    
-    /// Returns the current attributed string renderer
+    /// Creates a new instance of a renderer appropriate for the current platform. A renderer assists in presenting html toots in a native format like attributed string.
     public func getRenderer() -> TootAttribStringRenderer {
-        return HTML.attributedStringRenderer
+#if canImport(UIKit)
+        return UIKitAttribStringRenderer()
+#elseif canImport(AppKit)
+        return AppKitAttribStringRenderer()
+#else
+        return NullAttribStringRenderer()
+#endif
     }
 }

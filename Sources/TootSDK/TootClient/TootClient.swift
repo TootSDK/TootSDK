@@ -50,11 +50,6 @@ public class TootClient {
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
-        
-#if canImport(UIKit)
-        // If we're on UIKit, lets default to the UIKitAttribStringRenderer
-        self.setAttributedStringRenderer(UIKitAttribStringRenderer())
-#endif
     }
     
     /// Prints extra debug details like outgoing requests and responses
@@ -74,7 +69,17 @@ public class TootClient {
 extension TootClient {
     
     internal func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
-        return try decoder.decode(decodable, from: data)
+        do {
+            return try decoder.decode(decodable, from: data)
+        } catch {
+            let description = fetchError(T.self, data: data)
+            
+            if debugResponses {
+                print(description)
+            }
+            
+            throw TootSDKError.decodingError(description)
+        }
     }
     
     /// Fetch data asynchronously and return the decoded `Decodable` object.

@@ -24,7 +24,7 @@ struct FeedView: View {
                 Button {
                     self.path.append(post.displayPost.id)
                 } label: {
-                    PostView(post: post, attributed: true, path: $path)
+                    PostView(renderer: tootManager.currentClient!.getRenderer(), post: post, attributed: true, path: $path)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)

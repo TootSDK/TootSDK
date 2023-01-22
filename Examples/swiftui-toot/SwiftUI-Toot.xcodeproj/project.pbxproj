@@ -26,6 +26,7 @@
 		55B8B17B2917675700339479 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 55B8B17A2917675700339479 /* TootSDK */; };
 		55C14EB02954367B00579342 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C14EAF2954367B00579342 /* PostView.swift */; };
 		55F9D91429190A9E0062CFA9 /* TootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F9D91329190A9E0062CFA9 /* TootManager.swift */; };
+		B58D45FC297B41DA00BA57FF /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = B58D45FB297B41DA00BA57FF /* RichText */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 				55B8B17B2917675700339479 /* TootSDK in Frameworks */,
 				5523E9DD29191656006778D9 /* BetterSafariView in Frameworks */,
 				550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */,
+				B58D45FC297B41DA00BA57FF /* RichText in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +167,7 @@
 				55B8B17A2917675700339479 /* TootSDK */,
 				5523E9DC29191656006778D9 /* BetterSafariView */,
 				550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */,
+				B58D45FB297B41DA00BA57FF /* RichText */,
 			);
 			productName = "TootSDK-Demo";
 			productReference = 55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */;
@@ -197,6 +200,7 @@
 			packageReferences = (
 				5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				B58D45FA297B41DA00BA57FF /* XCRemoteSwiftPackageReference "RichText" */,
 			);
 			productRefGroup = 55ACC1DD2917618F0046363F /* Products */;
 			projectDirPath = "";
@@ -458,6 +462,14 @@
 				kind = branch;
 			};
 		};
+		B58D45FA297B41DA00BA57FF /* XCRemoteSwiftPackageReference "RichText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NuPlay/RichText";
+			requirement = {
+				kind = revision;
+				revision = 48b840c46295111390f018ef5832f1e81567e32f;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -474,6 +486,11 @@
 		55B8B17A2917675700339479 /* TootSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TootSDK;
+		};
+		B58D45FB297B41DA00BA57FF /* RichText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B58D45FA297B41DA00BA57FF /* XCRemoteSwiftPackageReference "RichText" */;
+			productName = RichText;
 		};
 /* End XCSwiftPackageProductDependency section */
 

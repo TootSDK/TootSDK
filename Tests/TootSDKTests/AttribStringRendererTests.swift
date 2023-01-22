@@ -8,12 +8,14 @@ import XCTest
 final class AttribStringRendererTests: XCTestCase {
     let serverUrl: String = "https://m.iamkonstantin.eu"
     
-    func testDefaultRendererOniOS() throws {
+    func testReturnsTheCorrectPlatformRenderer() throws {
         let sut = TootClient(instanceURL: URL(string: serverUrl)!)
         let renderer = sut.getRenderer()
         
 #if canImport(UIKit)
         XCTAssert(renderer is UIKitAttribStringRenderer)
+#elseif canImport(AppKit)
+        XCTAssert(renderer is AppKitAttribStringRenderer)
 #endif
     }
     
@@ -35,7 +37,7 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
         let rendered = sut.render(post)
         
         // assert
-        XCTAssertEqual(rendered.string, expected.string)
+        XCTAssertEqual(rendered.attributedString.string, expected.string)
     }
     
     func testRendersPostWithoutEmojisLinks() throws {
@@ -44,18 +46,22 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
         let sut = client.getRenderer()
         let post = try localObject(Post.self, "post no emojis")
         
-        let expected = try NSMutableAttributedString(markdown: """
+        let expectedParsedString = try NSMutableAttributedString(markdown: """
 Hey fellow [#Swift](https://iosdev.space/tags/Swift) devs 👋!
 
 As some of you may know, [@konstantin](https://m.iamkonstantin.eu/users/konstantin) and [@davidgarywood](https://social.davidgarywood.com/davidgarywood) have been working on an open-source swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨!
 
 The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.
 """, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace))
+        let expectedString =
+"""
+Hey fellow #Swift devs 👋! As some of you may know, @konstantin and @davidgarywood have been working on an open-source swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨! The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.
+"""
         
         // just a sanity check on the expected mutable string
         // we only want to see links being rendered here
         var expectedAttributes = 0
-        expected.enumerateAttributes(in: NSRange(0..<expected.length), options: .longestEffectiveRangeNotRequired, using: {(value: [NSAttributedString.Key : Any], range, stop) in
+        expectedParsedString.enumerateAttributes(in: NSRange(0..<expectedParsedString.length), options: .longestEffectiveRangeNotRequired, using: {(value: [NSAttributedString.Key : Any], range, stop) in
             
             for attr in value {
                 expectedAttributes += 1
@@ -66,7 +72,8 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
         
         
         // act
-        let rendered = sut.render(post)
+        let content = sut.render(post)
+        let rendered = content.attributedString
         
         
         // assert
@@ -79,6 +86,8 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
             }
         })
         XCTAssertEqual(renderedAttributes, 3)
+        
+        XCTAssertEqual(content.string, expectedString)
     }
     
     
@@ -87,14 +96,18 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
         let client = TootClient(instanceURL: URL(string: serverUrl)!)
         let sut = client.getRenderer()
         let post = try localObject(Post.self, "post with emojis and attachments")
-        let expected = try NSMutableAttributedString(markdown: """
+        let expectedParsedString = try NSMutableAttributedString(markdown: """
 I just #love #coffee :heart_cup There is no better way to start the day.
 """, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace))
+        let expectedString = """
+I just #love #coffee There is no better way to start the day.
+"""
         
         // act
         let rendered = sut.render(post)
         
         // assert
-        XCTAssertEqual(rendered.string, expected.string)
+        XCTAssertEqual(rendered.attributedString.string, expectedParsedString.string)
+        XCTAssertEqual(rendered.string, expectedString)
     }
 }
