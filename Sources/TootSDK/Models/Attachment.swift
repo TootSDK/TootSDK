@@ -7,11 +7,21 @@ import Foundation
 
 public struct Attachment: Codable, Hashable {
     public enum AttachmentType: String, Codable, Hashable {
-        case image, video, gifv, audio
+        case image, video, gifv, audio, unknown
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let rawString = try container.decode(String.self)
+            if let attachmentType = AttachmentType(rawValue: rawString.lowercased()) {
+                self = attachmentType
+            } else {
+                self = .unknown
+            }
+        }
     }
-
+    
     public struct Meta: Codable, Hashable {
-
+        
         public struct Info: Codable, Hashable {
             public var width: Int?
             public var height: Int?
@@ -21,17 +31,17 @@ public struct Attachment: Codable, Hashable {
             public var duration: Double?
             public var bitrate: Int?
         }
-
+        
         public struct Focus: Codable, Hashable {
             public var x: Double
             public var y: Double
         }
-
+        
         public var original: Info?
         public var small: Info?
         public var focus: Focus?
     }
-
+    
     public var id: String
     public var type: AttachmentType
     public var url: String
@@ -51,10 +61,10 @@ public extension Attachment {
             width != 0,
             height != 0 {
             let aspectRatio = Double(width) / Double(height)
-
+            
             return aspectRatio.isNaN ? nil : aspectRatio
         }
-
+        
         return nil
     }
 }
