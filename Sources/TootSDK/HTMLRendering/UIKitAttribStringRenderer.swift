@@ -11,7 +11,7 @@ import SwiftSoup
 public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     
     // MARK: - Properties
-     
+    
     // MARK: - Initialization
     
     /// - Parameter config: the TootStringRenderConfig to use to render the text, defaults to the default values in TootStringRenderConfig unless you supply your own
@@ -24,7 +24,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
     /// - Returns: the NSAttributedString. Otherwise a string with no attributes if any errors are encountered rendering
     public func render(html: String,
-                                 emojis: [Emoji]) throws -> TootContent {
+                       emojis: [Emoji]) throws -> TootContent {
         var html = html
         
         // attempt to parse emojis and other special content
@@ -82,14 +82,14 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             attributed.addAttribute(.strikethroughStyle,
                                     value: NSUnderlineStyle.single.rawValue,
                                     range: attributed.fullRange)
-//        case "code":
-//            attributed.addAttribute(.font,
-//                                    value: config.monospaceFont,
-//                                    range: attributed.fullRange)
-//        case "pre":
-//            attributed.append(NSAttributedString(string: "\n\n"))
-//            attributed.addAttribute(.font, value: config.monospaceFont,
-//                                    range: attributed.fullRange)
+            //        case "code":
+            //            attributed.addAttribute(.font,
+            //                                    value: config.monospaceFont,
+            //                                    range: attributed.fullRange)
+            //        case "pre":
+            //            attributed.append(NSAttributedString(string: "\n\n"))
+            //            attributed.addAttribute(.font, value: config.monospaceFont,
+            //                                    range: attributed.fullRange)
         case "ol", "ul":
             attributed.append(NSAttributedString(string: "\n\n"))
             attributed.trimLeadingCharactersInSet(.whitespacesAndNewlines)
@@ -107,8 +107,9 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
     }
     
     private func attributedTextForImage(_ element: Element) throws -> NSAttributedString? {
-        guard let _ = try? element.attr("src") else { return nil }
-        if let _ = try? element.attr("data-tootsdk-emoji"), let alt = try? element.attr("alt") {
+        guard try? element.attr("src") != nil else { return nil }
+        
+        if try? element.attr("data-tootsdk-emoji") != nil, let alt = try? element.attr("alt") {
             // fallback to the the :short_code
             return NSAttributedString(string: ":" + alt)
         }
