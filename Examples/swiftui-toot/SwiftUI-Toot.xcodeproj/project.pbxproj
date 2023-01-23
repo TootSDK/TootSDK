@@ -22,6 +22,7 @@
 		55ACC1E7291761910046363F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E6291761910046363F /* Preview Assets.xcassets */; };
 		55ACC1EC291761910046363F /* TootSDK_Demo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1EA291761910046363F /* TootSDK_Demo.xcdatamodeld */; };
 		55B19AE0297E00A10097B1F8 /* HTMLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B19ADF297E00A10097B1F8 /* HTMLView.swift */; };
+		55B19AE3297E14DB0097B1F8 /* EmojiText in Frameworks */ = {isa = PBXBuildFile; productRef = 55B19AE2297E14DB0097B1F8 /* EmojiText */; };
 		55B8B1722917620C00339479 /* MakePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1712917620C00339479 /* MakePostView.swift */; };
 		55B8B1742917627D00339479 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1732917627D00339479 /* FeedView.swift */; };
 		55B8B1782917673500339479 /* AuthorizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1772917673500339479 /* AuthorizeView.swift */; };
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B19AE3297E14DB0097B1F8 /* EmojiText in Frameworks */,
 				55B8B17B2917675700339479 /* TootSDK in Frameworks */,
 				5523E9DD29191656006778D9 /* BetterSafariView in Frameworks */,
 				550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */,
@@ -182,6 +184,7 @@
 				5523E9DC29191656006778D9 /* BetterSafariView */,
 				550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */,
 				B58D45FB297B41DA00BA57FF /* RichText */,
+				55B19AE2297E14DB0097B1F8 /* EmojiText */,
 			);
 			productName = "TootSDK-Demo";
 			productReference = 55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */;
@@ -215,6 +218,7 @@
 				5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 				B58D45FA297B41DA00BA57FF /* XCRemoteSwiftPackageReference "RichText" */,
+				55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */,
 			);
 			productRefGroup = 55ACC1DD2917618F0046363F /* Products */;
 			projectDirPath = "";
@@ -478,6 +482,14 @@
 				kind = branch;
 			};
 		};
+		55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/divadretlaw/EmojiText";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		B58D45FA297B41DA00BA57FF /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NuPlay/RichText";
@@ -498,6 +510,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */;
 			productName = BetterSafariView;
+		};
+		55B19AE2297E14DB0097B1F8 /* EmojiText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */;
+			productName = EmojiText;
 		};
 		55B8B17A2917675700339479 /* TootSDK */ = {
 			isa = XCSwiftPackageProductDependency;

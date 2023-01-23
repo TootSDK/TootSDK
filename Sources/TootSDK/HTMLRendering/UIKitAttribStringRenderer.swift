@@ -82,14 +82,6 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             attributed.addAttribute(.strikethroughStyle,
                                     value: NSUnderlineStyle.single.rawValue,
                                     range: attributed.fullRange)
-            //        case "code":
-            //            attributed.addAttribute(.font,
-            //                                    value: config.monospaceFont,
-            //                                    range: attributed.fullRange)
-            //        case "pre":
-            //            attributed.append(NSAttributedString(string: "\n\n"))
-            //            attributed.addAttribute(.font, value: config.monospaceFont,
-            //                                    range: attributed.fullRange)
         case "ol", "ul":
             attributed.append(NSAttributedString(string: "\n\n"))
             attributed.trimLeadingCharactersInSet(.whitespacesAndNewlines)

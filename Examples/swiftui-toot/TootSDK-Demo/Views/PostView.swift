@@ -8,6 +8,7 @@
 import SwiftUI
 import TootSDK
 import RichText
+import EmojiText
 
 struct FeedPostView: View {
     @EnvironmentObject var tootManager: TootManager
@@ -60,7 +61,21 @@ struct FeedPostView: View {
                     if attributed {
                         // Option 1: Use your own HTML renderer implementation. TootSDK has enriched the post by replacing all emoji :codes with <img> tags with an alt value equal to the :code and a data attribute  data-tootsdk-emoji hich can be used in CSS selectors
 
-                        HTMLView(html: post.html)
+//                        HTMLView(html: post.html)
+                        
+                        let remoteEmojis = post.post.emojis.compactMap { emoji -> RemoteEmoji? in
+                            if let url = URL(string: emoji.url) {
+                                return RemoteEmoji(shortcode: emoji.shortcode, url: url)
+                            } else {
+                                return nil
+                            }
+                        }
+                        
+                        let markdown = HTML.stripHTMLFormatting(html: post.post.content)
+                        
+                        EmojiText(markdown: markdown ?? "",
+                                  emojis: remoteEmojis)
+                       
                         
                         // Option 2: Simplified NSAttributedString which respects system font styles but (for the moment) does not support images.
                         // Text(AttributedString(renderer.render(post.displayPost).attributedString))

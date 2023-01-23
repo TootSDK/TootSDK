@@ -8,6 +8,7 @@ import SwiftUI
 
 struct FeedPost: Hashable {
     var html: String
+    var markdown: String
     var post: Post
 }
 
@@ -61,8 +62,9 @@ extension FeedViewModel {
                 let feedPosts = updatedPosts.map { post in
 
                     let html = renderer.render(post.displayPost).wrappedValue
+                    let markdown = renderer.render(post.displayPost).string
                     
-                    return FeedPost(html: html, post: post)
+                    return FeedPost(html: html, markdown: markdown, post: post)
                 }
                 
                 await setPosts(feedPosts)
