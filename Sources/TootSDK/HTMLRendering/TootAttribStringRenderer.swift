@@ -19,7 +19,7 @@ public class NullAttribStringRenderer: TootAttribStringRenderer {
     }
     
     public func render(html: String, emojis: [Emoji]) throws -> TootContent {
-        return TootContent(wrappedValue: html, plainContent: HTML.stripHTMLFormatting(html: html) ?? "", attributedString: try Self.createAttributedString(html), systemAttributedString: try Self.createAttributedString(html))
+        return TootContent(wrappedValue: html, plainContent: TootHTML.stripHTMLFormatting(html: html) ?? "", attributedString: try Self.createAttributedString(html), systemAttributedString: try Self.createAttributedString(html))
     }
     
     public func render(_ post: Post) -> TootContent {

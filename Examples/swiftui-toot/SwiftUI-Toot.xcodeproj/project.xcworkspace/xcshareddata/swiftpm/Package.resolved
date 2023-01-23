@@ -32,16 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kean/Nuke",
       "state" : {
-        "revision" : "2e9337168d08acccf72c039bf9324be24a1cf7d7",
-        "version" : "11.5.3"
-      }
-    },
-    {
-      "identity" : "richtext",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NuPlay/RichText",
-      "state" : {
-        "revision" : "48b840c46295111390f018ef5832f1e81567e32f"
+        "branch" : "master",
+        "revision" : "b187456fffa045e7dfc03fec1db86164ae0c0dc1"
       }
     },
     {

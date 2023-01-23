@@ -19,7 +19,7 @@ struct FeedView: View {
         NavigationStack(path: $path) {
             List(viewModel.feedPosts, id: \.self) { feedPost in
                 Button {
-                    self.path.append(feedPost.post.displayPost.id)
+                    self.path.append(feedPost.tootPost.displayPost.id)
                 } label: {
                     FeedPostView(post: feedPost, attributed: true, path: $path)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed

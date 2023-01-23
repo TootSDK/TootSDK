@@ -9,7 +9,7 @@ import SwiftUI
 struct FeedPost: Hashable {
     var html: String
     var markdown: String
-    var post: Post
+    var tootPost: Post
 }
 
 actor FeedViewModel: ObservableObject {
@@ -62,9 +62,9 @@ extension FeedViewModel {
                 let feedPosts = updatedPosts.map { post in
 
                     let html = renderer.render(post.displayPost).wrappedValue
-                    let markdown = renderer.render(post.displayPost).string
+                    let markdown = TootHTML.stripHTMLFormatting(html: post.displayPost.content) ?? ""
                     
-                    return FeedPost(html: html, markdown: markdown, post: post)
+                    return FeedPost(html: html, markdown: markdown, tootPost: post)
                 }
                 
                 await setPosts(feedPosts)
