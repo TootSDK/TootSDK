@@ -9,16 +9,17 @@ import SwiftUI
 import TootSDK
 import RichText
 
-struct PostView: View {
-    var renderer: TootAttribStringRenderer
-    var post: Post
+struct FeedPostView: View {
+    @EnvironmentObject var tootManager: TootManager
+    
+    var post: FeedPost
     var attributed: Bool
     
     @Binding var path: NavigationPath
     
     var body: some View {
         VStack {
-            if post.displayingRepost {
+            if post.post.displayingRepost {
                 HStack {
                     HStack {
                         Spacer()
@@ -28,7 +29,7 @@ struct PostView: View {
                     }
                     .frame(width: 80)
                     
-                    Text((post.account.displayName ?? "") + " boosted")
+                    Text((post.post.account.displayName ?? "") + " boosted")
                         .font(.caption.italic())
                     
                     Spacer()
@@ -36,21 +37,21 @@ struct PostView: View {
             }
             
             HStack(alignment: .top) {
-                AsyncImage(url: URL(string: post.displayPost.account.avatar)) { image in
+                AsyncImage(url: URL(string: post.post.displayPost.account.avatar)) { image in
                     image.resizable()
                 } placeholder: {
                     ProgressView()
                 }
                 .frame(width: 80, height: 80)
                 .onLongPressGesture {
-                    self.path.append(post.displayPost.account)
+                    self.path.append(post.post.displayPost.account)
                 }
                 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(alignment: .top) {
-                        Text(post.displayPost.account.displayName ?? "?")
+                        Text(post.post.displayPost.account.displayName ?? "?")
                             .font(.caption.bold())
-                        Text(post.displayPost.account.username ?? "?")
+                        Text(post.post.displayPost.account.username ?? "?")
                             .font(.caption)
                         
                         Spacer()
@@ -58,12 +59,8 @@ struct PostView: View {
                     
                     if attributed {
                         // Option 1: Use your own HTML renderer implementation. TootSDK has enriched the post by replacing all emoji :codes with <img> tags with an alt value equal to the :code and a data attribute  data-tootsdk-emoji hich can be used in CSS selectors
-                        RichText(html: renderer.render(post.displayPost).wrappedValue)
-                            .customCSS("img[data-tootsdk-emoji] { width: 28px; height: 28px; object-fit: cover; vertical-align:middle;}")
-                            .placeholder {
-                                Text("loading")
-                            }
-                            .frame(height: 170)
+
+                        HTMLView(html: post.html)
                         
                         // Option 2: Simplified NSAttributedString which respects system font styles but (for the moment) does not support images.
                         // Text(AttributedString(renderer.render(post.displayPost).attributedString))
@@ -74,7 +71,8 @@ struct PostView: View {
                         // Option 3: The HTML as an instance of NSAttributedString with default system behaviour a la NSAttributedString.DocumentType.html
                         // Text(AttributedString(renderer.render(post.displayPost).systemAttributedString))
                     } else {
-                        Text(renderer.render(post.displayPost).string)
+                        let renderer = tootManager.currentClient.getRenderer()
+                        Text(renderer.render(post.post.displayPost).string)
                     }
                 }
             }

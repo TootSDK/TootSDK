@@ -21,7 +21,7 @@ struct FeedView: View {
                 Button {
                     self.path.append(feedPost.post.displayPost.id)
                 } label: {
-                    Text(feedPost.html)
+                    FeedPostView(post: feedPost, attributed: true, path: $path)
                         .background(.background.opacity(0.001)) // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)
