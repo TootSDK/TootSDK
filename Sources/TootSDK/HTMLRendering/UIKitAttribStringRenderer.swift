@@ -33,7 +33,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
         
-        let plainText = HTML.stripHTMLFormatting(html: html) ?? ""
+        let plainText = TootHTML.stripHTMLFormatting(html: html) ?? ""
         
         if let doc = try? SwiftSoup.parseBodyFragment(html),
            let body = doc.body(),
@@ -82,14 +82,6 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             attributed.addAttribute(.strikethroughStyle,
                                     value: NSUnderlineStyle.single.rawValue,
                                     range: attributed.fullRange)
-            //        case "code":
-            //            attributed.addAttribute(.font,
-            //                                    value: config.monospaceFont,
-            //                                    range: attributed.fullRange)
-            //        case "pre":
-            //            attributed.append(NSAttributedString(string: "\n\n"))
-            //            attributed.addAttribute(.font, value: config.monospaceFont,
-            //                                    range: attributed.fullRange)
         case "ol", "ul":
             attributed.append(NSAttributedString(string: "\n\n"))
             attributed.trimLeadingCharactersInSet(.whitespacesAndNewlines)
@@ -164,9 +156,9 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
         }
     }
     
-    public func render(_ post: Post) -> TootContent {
+    public func render(_ tootPost: Post) -> TootContent {
         do {
-            return try render(html: post.content ?? "", emojis: post.emojis)
+            return try render(html: tootPost.content ?? "", emojis: tootPost.emojis)
         } catch {
             print("TootSDK(UIKitAttribStringRenderer): Failed to render post: \(String(describing: error))")
             return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""), systemAttributedString: .init(string: ""))

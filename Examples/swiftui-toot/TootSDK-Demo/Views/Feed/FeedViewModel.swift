@@ -8,7 +8,8 @@ import SwiftUI
 
 struct FeedPost: Hashable {
     var html: String
-    var post: Post
+    var markdown: String
+    var tootPost: Post
 }
 
 actor FeedViewModel: ObservableObject {
@@ -56,8 +57,14 @@ extension FeedViewModel {
         
         Task {
             for await updatedPosts in try await tootManager.currentClient.data.stream(.timeLineHome) {
+                let renderer = tootManager.currentClient.getRenderer()
+                
                 let feedPosts = updatedPosts.map { post in
-                    return FeedPost(html: (post.displayPost.content ?? ""), post: post)
+
+                    let html = renderer.render(post.displayPost).wrappedValue
+                    let markdown = TootHTML.stripHTMLFormatting(html: post.displayPost.content) ?? ""
+                    
+                    return FeedPost(html: html, markdown: markdown, tootPost: post)
                 }
                 
                 await setPosts(feedPosts)

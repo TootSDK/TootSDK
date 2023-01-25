@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "emojitext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/divadretlaw/EmojiText",
+      "state" : {
+        "branch" : "main",
+        "revision" : "510413aeccc50891cf74d6cb6b273125190cdd3c"
+      }
+    },
+    {
       "identity" : "multipart-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/multipart-kit.git",
@@ -19,11 +28,12 @@
       }
     },
     {
-      "identity" : "richtext",
+      "identity" : "nuke",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NuPlay/RichText",
+      "location" : "https://github.com/kean/Nuke",
       "state" : {
-        "revision" : "48b840c46295111390f018ef5832f1e81567e32f"
+        "branch" : "master",
+        "revision" : "b187456fffa045e7dfc03fec1db86164ae0c0dc1"
       }
     },
     {
