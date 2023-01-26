@@ -8,7 +8,7 @@ import WebURL
 import WebURLFoundationExtras
 import SwiftSoup
 
-public class UIKitAttribStringRenderer: TootAttribStringRenderer {
+public class UIKitAttribStringRenderer {
     
     // MARK: - Properties
     
@@ -40,9 +40,10 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
            let attributedText = attributedTextForHTMLNode(body) {
             let mutAttrString = NSMutableAttributedString(attributedString: attributedText)
             mutAttrString.trimTrailingCharactersInSet(.whitespacesAndNewlines)
-            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString, systemAttributedString: try NullAttribStringRenderer.createAttributedString(html))
+            
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString)
         } else {
-            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html), systemAttributedString: try NullAttribStringRenderer.createAttributedString(html))
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
         }
     }
     
@@ -161,7 +162,7 @@ public class UIKitAttribStringRenderer: TootAttribStringRenderer {
             return try render(html: tootPost.content ?? "", emojis: tootPost.emojis)
         } catch {
             print("TootSDK(UIKitAttribStringRenderer): Failed to render post: \(String(describing: error))")
-            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""), systemAttributedString: .init(string: ""))
+            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""))
         }
     }
 }

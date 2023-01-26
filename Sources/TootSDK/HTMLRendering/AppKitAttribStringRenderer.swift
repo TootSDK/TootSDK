@@ -8,7 +8,7 @@ import WebURL
 import WebURLFoundationExtras
 import SwiftSoup
 
-public class AppKitAttribStringRenderer: TootAttribStringRenderer {
+public class AppKitAttribStringRenderer {
     func createAttributedString(_ html: String) throws -> NSAttributedString {
         guard let data = html.data(using: .utf8) else { return NSAttributedString() }
         return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
@@ -29,9 +29,9 @@ public class AppKitAttribStringRenderer: TootAttribStringRenderer {
            let attributedText = attributedTextForHTMLNode(body) {
             let mutAttrString = NSMutableAttributedString(attributedString: attributedText)
             mutAttrString.trimCharactersInSet(charSet: .whitespacesAndNewlines)
-            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString, systemAttributedString: try NullAttribStringRenderer.createAttributedString(html))
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString)
         } else {
-            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html), systemAttributedString: try NullAttribStringRenderer.createAttributedString(html))
+            return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
         }
     }
     
@@ -150,7 +150,7 @@ public class AppKitAttribStringRenderer: TootAttribStringRenderer {
             return try render(html: tootPost.content ?? "", emojis: tootPost.emojis)
         } catch {
             print("TootSDK(AppKitAttribStringRenderer): Failed to render post: \(String(describing: error))")
-            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""), systemAttributedString: .init(string: ""))
+            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""))
         }
     }
 }

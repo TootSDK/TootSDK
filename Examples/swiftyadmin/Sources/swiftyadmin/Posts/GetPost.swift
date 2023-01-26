@@ -23,7 +23,7 @@ struct GetPost: AsyncParsableCommand {
     let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
 
     let post = try await client.getPost(id: id)
-    let json = try String.init(data: try TootEncoder().encode(post), encoding: .utf8)
+    let json = String.init(data: try TootEncoder().encode(post), encoding: .utf8)
     print(json ?? "")
   }
 }
