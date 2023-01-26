@@ -132,7 +132,7 @@ struct PostItem: Encodable {
 extension PostItem {
   init(post: Post) {
     id = post.id
-    text = post.html?.plainContent ?? ""
+    text = TootHTML.stripHTMLFormatting(html: post.displayPost.content) ?? ""
     avatar = post.account.avatar
     author = post.account.displayName ?? ""
     favourited = post.favourited ?? false
