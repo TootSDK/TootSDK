@@ -24,8 +24,9 @@ If you see anything in our future road map that is particularly important to you
 - Blocking/muting/privacy operations
 - Convenience function to detect application behaviours such as editing posts
 - Lists
-- Processing of the HTML provided back in statuses (so clients don't have to roll their own)
 - Integration of custom emojis in AttributedStrings
+- AppKit example
+- AppKitAttributedString renderer
 
 ### Beyond ...
 - Account operations

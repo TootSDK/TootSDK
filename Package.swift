@@ -18,22 +18,32 @@ let package = Package(
             targets: ["TootSDK"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2")
+        .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2"),
+        .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.4.3"),
+        .package(url: "https://github.com/karwa/swift-url.git", from: "0.4.1"),
+       //  .package(url: "https://github.com/eneko/MarkdownGenerator", revision: "5575590ed9ea5cb02cd54a890cb43174efde7911")
+        
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "TootSDK",
-            dependencies: [.product(name: "MultipartKit", package: "multipart-kit")]
-        ),
+            dependencies: [.product(name: "MultipartKit", package: "multipart-kit"),
+                           .product(name:"SwiftSoup", package: "SwiftSoup"),
+                           .product(name: "WebURL", package: "swift-url"),
+                           .product(name: "WebURLFoundationExtras", package: "swift-url")]
+                           // .product(name: "MarkdownGenerator", package: "MarkdownGenerator")
+            ),
         .testTarget(
             name: "TootSDKTests",
             dependencies: ["TootSDK"],
             resources: [
                 .copy("Resources/account.json"),
                 .copy("Resources/account_moved.json"),
-                .copy("Resources/activity.json")
+                .copy("Resources/activity.json"),
+                .copy("Resources/post no emojis.json"),
+                .copy("Resources/post with emojis and attachments.json")
             ]),
     ]
 )

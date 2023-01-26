@@ -78,10 +78,10 @@ public extension Attachment {
             width != 0,
             height != 0 {
             let aspectRatio = Double(width) / Double(height)
-
+            
             return aspectRatio.isNaN ? nil : aspectRatio
         }
-
+        
         return nil
     }
 }

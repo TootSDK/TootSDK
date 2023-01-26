@@ -125,7 +125,7 @@ public class Post: Codable, Identifiable {
     public var bookmarked: Bool?
     /// Have you pinned this post? Only appears if the post is pinnable.
     public var pinned: Bool?
-
+    
     public enum Visibility: String, Codable, CaseIterable {
         /// Visible to everyone, shown in public timelines.
         case `public`
@@ -202,7 +202,7 @@ extension Post: Hashable {
         && lhs.bookmarked == rhs.bookmarked
         && lhs.pinned == rhs.pinned
     }
-
+    
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(uri)
@@ -234,4 +234,18 @@ extension Post: Hashable {
         hasher.combine(bookmarked)
         hasher.combine(pinned)
     }
+}
+
+extension Post {
+    
+    /// Convenience var for which post to display. This can be used by clients instead of if/then checking the repost value itself
+    public var displayPost: Post {
+        return self.repost ?? self
+    }
+        
+    /// Indicates whether displayPost is a repost or not
+    public var displayingRepost: Bool {
+        return self.repost != nil
+    }
+    
 }
