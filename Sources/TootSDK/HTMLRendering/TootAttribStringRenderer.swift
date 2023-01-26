@@ -14,7 +14,7 @@ public protocol TootAttribStringRenderer {
 public class NullAttribStringRenderer: TootAttribStringRenderer {
     /// parses a string as an html document using the system behaviour
     internal static func createAttributedString(_ html: String) throws -> NSAttributedString {
-        guard let data = html.data(using: .utf8) else { return NSAttributedString() }
+        guard let data = html.data(using: .utf8) else { return NSAttributedString(string: "") }
         return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
     }
     
