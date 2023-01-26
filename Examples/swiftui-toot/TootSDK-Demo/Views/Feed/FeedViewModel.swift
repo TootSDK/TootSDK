@@ -57,7 +57,7 @@ extension FeedViewModel {
         
         Task {
             for await updatedPosts in try await tootManager.currentClient.data.stream(.timeLineHome) {
-                let renderer = tootManager.currentClient.getRenderer()
+                let renderer = UIKitAttribStringRenderer()
                 
                 let feedPosts = updatedPosts.map { post in
 

@@ -45,8 +45,8 @@ struct PostOperationsView: View {
     @ViewBuilder func postButtons(postID: String) -> some View {
         Group {
             ButtonView(text: "Get Post Details") {
-                guard let renderer = tootManager.currentClient?.getRenderer() else { return }
-                guard let post = try await tootManager.currentClient?.getPost(id: postID) else {return}
+                guard let post = try await tootManager.currentClient?.getPost(id: postID) else { return }
+                let renderer = UIKitAttribStringRenderer()
                 let content = renderer.render(post)
                 textToShow = content.attributedString.string
             }

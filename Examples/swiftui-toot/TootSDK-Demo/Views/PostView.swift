@@ -66,10 +66,10 @@ struct FeedPostView: View {
                             }
                         }
                         
-                        EmojiText(markdown: post.markdown ?? "",
+                        EmojiText(markdown: post.markdown,
                                   emojis: remoteEmojis)
                     } else {
-                        let renderer = tootManager.currentClient.getRenderer()
+                        let renderer = UIKitAttribStringRenderer()
                         Text(renderer.render(post.tootPost.displayPost).string)
                     }
                 }
