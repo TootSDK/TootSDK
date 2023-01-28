@@ -187,7 +187,12 @@ extension TootClient: Equatable {
 
 extension TootClient {
     
-    /// Provides the URL for authorizing
+    /// Provides the URL for authorizing with the current instanceURL
+    public func createAuthorizeURL(callbackUrl: String) async throws -> URL? {
+        return try await self.createAuthorizeURL(server: instanceURL, callbackUrl: callbackUrl)
+    }
+    
+    /// Provides the URL for authorizing, with a custom server URL
     public func createAuthorizeURL(server: URL, callbackUrl: String) async throws -> URL? {
         let authInfo = try await self.getAuthorizationInfo(callbackUrl: callbackUrl, scopes: self.scopes)
         currentApplicationInfo = authInfo?.application

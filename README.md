@@ -11,8 +11,6 @@
     <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
 </p>
 
-## What is this? 🙋‍♂️
-
 TootSDK is a framework for Mastodon and the Fediverse, for iOS. It provides a toolkit for authorizing a user with an instance, and interacting with their posts.
 
 TootSDK is a community developed SDK for Mastodon and the Fediverse.
@@ -22,66 +20,92 @@ You can use TootSDK to build a client for Apple operating systems, or Linux with
 
 ![overview of how TootSDK integrates with fedi platforms](/media/overview.png)
 
-### Status
+## Why make TootSDK?
+
+When app developers build apps for Mastodon and the Fediverse, every developer ends up having to solved the same set of problems when it comes to the API and data model.
+
+[Konstantin](https://m.iamkonstantin.eu/konstantin) and [Dave](https://social.davidgarywood.com/@davidgarywood) decided to share this effort.
+TootSDK is a shared Swift Package that any client app can be built on.
+
+## Key Principles ⚙️
+
+- Async/Await based. All asynchronous functions are defined as Async ones that you can use with Async/Await code
+- Internal consistency and standardization of model property names 
+- Standardization across all supported Fediverse APIs
+- Platform agnostic (TootSDK shouldn't care if it's on iOS, macOS or Linux!)
+
+## Project Status 📈
 
 - Mastodon - In progress
 - Pleroma - In progress
 - Pixelfed - To do
 - Writefreely - To do
 
-Please don't hesitate to open an Issue or a PR if you are missing an endpoint or would like to improve support for existing or other servers 🙏!
+Our [roadmap](ROADMAP.md) shows where we want to take TootSDK. Our [project board](https://github.com/orgs/TootSDK/projects/1) shows our current backlog of work, and what is in flight.
 
-## Getting started 🏁
+Please don't hesitate to open an issue or create a PR for features you need 🙏
 
-You can add TootSDK to your project via Swift Package Manager:
-`https://github.com/TootSDK/TootSDK`
+## Quick start 🏁
 
-Check out our example iOS project `TootSDK-iOS-Demo` in the Examples directory. This provides an example application using SwiftUI and TootSDK to browse a feed and create posts.
+It's easy to get started with TootSDK.
 
-You can also peek at `vaportoot` - an example for a server-side implementation using Vapor.
+- Add TootSDK to your project via Swift Package Manager: `https://github.com/TootSDK/TootSDK`
 
-To get started, you need an instance of `TootClient`.
+- Instantiate with an instanceURL and accessToken:
 
-### Authentication
+```
+  let instanceURL = URL(string: "social.yourinstance.com")
+  let client = TootClient(instanceURL: instanceURL, accessToken: "USERACCESSTOKEN")            
+```
 
-If you need to authorize the user, we provide several methods to help with the process.
+### Collecting an authorization token:
+- Instantiate your client without a token:
 
-- Step 1, navigate to the authorization url of the user's instance.
-
-```swift
+```
 let client = TootClient(instanceURL: instanceURL)
-let authUrl = client.createAuthorizeURL(server: instanceURL, callbackUrl: "swiftuitoot://test")
 ```
 
-- Step 2, once authentication is complete, the server will redirect the user back to callback url including a token
+- Retrieve an authorization URL to present to the user (so they can sign in)
 
-```swift
-let accessToken = client.collectToken(returnUrl: url, callbackUrl: "swiftuitoot://test")
+```
+let authURL = client.createAuthorizeURL(callbackUrl: "myapp://someurl")
 ```
 
-We recommend keeping the accessToken somewhere secure, for example Keychain.
+- Present the the authorization URL as a web page
+- Let the user sign in, and wait for the callbackUrl to be called
+- When that callbackUrl is called, give it back to the client to collect the token
 
-Once you have an access token and the url to the user's server:
-
-```swift
-let client = TootClient(instanceURL: instanceURL, accessToken: accessToken)
-...
-for await updatedPosts in try await client.data.stream(.timeLineHome) {
-    print("got a batch of posts \(updatedPosts)")
-}
+```
+let accessToken = client.collectToken(returnUrl: url, callbackUrl: callbackUrl)
 ```
 
-💡 For testing (even in your own apps), you can use `Examples/swiftyadmin` with the `login` command to generate an accessToken for a given instance.
+We recommend keeping the accessToken somewhere secure, for example the Keychain.
 
-## Key contributors ⚡️
+### Accessing a user's home feedfeed
 
-- [Konstantin](https://m.iamkonstantin.eu/konstantin)
-- [David Gary Wood](https://social.davidgarywood.com/@davidgarywood)
+```
+let posts = try await client.data.stream(.timeLineHome)
+```
 
-## Code of Conduct and Contributing rules 🧑‍⚖️
+## Further Documentation 📖
+
+* Reference documentation is available [here](https://tootsdk.github.io/tootsdk/docs)
+* Example apps:
+	* [swiftui-toot](Examples/swiftui-toot/) - a SwiftUI app that shows authorization, a user's feed, posting and account operations
+	* [swiftyadmin](Examples/swiftyadmin) - a command line utility to interact with and control a server using TootSDK
+	* [vaportoot](Examples/vaportoot) - a web app in Vapor, that shows how to sign in and view a user's feed
+
+## Contributing
+
+### Code of Conduct and Contributing rules 🧑‍⚖️
 
 - Our guide to contributing is available here: [CONTRIBUTING.md](CONTRIBUTING.md).
 - All contributions, pull requests, and issues are expected to adhere to our community code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+### Key contributors ⚡️
+
+- [Konstantin](https://m.iamkonstantin.eu/konstantin)
+- [David Gary Wood](https://social.davidgarywood.com/@davidgarywood)
 
 ## License 📃
 
@@ -94,21 +118,3 @@ This is a permissive license which allows for any type of use, provided the copy
 - The Mastodon API documentation https://github.com/mastodon/documentation
 - We hat-tip top Metatext's source for some guidance on what's where: https://github.com/metabolist/metatext
 - [Kris Slazinski](https://mastodon.social/@kslazinski) for our TootSDK logo 🤩
-
-## Examples
-
-We have prepared several examples that demonstrate how to use TootSDK in your projects.
-They are all located in the `Examples` folder of the repository.
-
-### Using TootSDK with SwiftUI
-
-The SwiftUI-Toot app showcases usage of the framework in a SwiftUI app.
-
-### Using TootSDK with Vapor
-
-`$ cd ./Examples/vaportoot`
-`vapor run`
-
-- Navigate to `localhost:8080` in your browser and fill in the url of a fedi server to connect with.
-
-- We've added examples for making a post, viewing the timeline and interacting with posts (like reply and repost).
