@@ -30,7 +30,8 @@ struct FeedPostView: View {
                     }
                     .frame(width: 80)
                     
-                    Text((post.tootPost.account.displayName ?? "") + " boosted")
+                    EmojiText(markdown: (post.tootPost.account.displayName ?? "") + " boosted",
+                              emojis: post.tootPost.account.emojis.remoteEmojis())
                         .font(.caption.italic())
                     
                     Spacer()
@@ -47,7 +48,8 @@ struct FeedPostView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(alignment: .top) {
-                        Text(post.tootPost.displayPost.account.displayName ?? "?")
+                        EmojiText(markdown: (post.tootPost.displayPost.account.displayName ?? ""),
+                                  emojis: post.tootPost.displayPost.account.emojis.remoteEmojis())
                             .font(.caption.bold())
                         Text(post.tootPost.displayPost.account.username ?? "?")
                             .font(.caption)
@@ -58,16 +60,8 @@ struct FeedPostView: View {
                     if attributed {
                         // Option 1: Use your own HTML renderer implementation. TootSDK has enriched the post by replacing all emoji :codes with <img> tags with an alt value equal to the :code and a data attribute  data-tootsdk-emoji hich can be used in CSS selectors
                         
-                        let remoteEmojis = post.tootPost.emojis.compactMap { emoji -> RemoteEmoji? in
-                            if let url = URL(string: emoji.url) {
-                                return RemoteEmoji(shortcode: emoji.shortcode, url: url)
-                            } else {
-                                return nil
-                            }
-                        }
-                        
                         EmojiText(markdown: post.markdown,
-                                  emojis: remoteEmojis)
+                                  emojis: post.tootPost.emojis.remoteEmojis())
                     } else {
                         let renderer = UIKitAttribStringRenderer()
                         Text(renderer.render(post.tootPost.displayPost).string)

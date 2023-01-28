@@ -7,6 +7,8 @@
 
 import SwiftUI
 import TootSDK
+import NukeUI
+import EmojiText
 
 struct AccountView: View {
     @EnvironmentObject var tootManager: TootManager
@@ -20,19 +22,19 @@ struct AccountView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                AsyncImage(url: URL(string: account.avatar)) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(width: 80, height: 80, alignment: .topLeading)
+                LazyImage(url: URL(string: account.avatar))
+                    .frame(width: 80, height: 80, alignment: .topLeading)
                 
                 Spacer()
             }
+                            
+            AccountItemView(description: "displayName") {
+                EmojiText(markdown: account.displayName ?? "",
+                          emojis: account.emojis.remoteEmojis())
+            }
             
-            AccountItemView(description: "displayName", value: account.displayName)
             AccountItemView(description: "username", value: account.username)
-
+            
             if let relationship {
                 RelationshipView(relationship: relationship)
             }
@@ -40,7 +42,7 @@ struct AccountView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle(account.displayName ?? "?")
+        .navigationTitle("Account")
         .onAppear {
             Task {
                 self.relationship = try await self.tootManager.currentClient.getRelationships(by: [account.id]).first
@@ -48,3 +50,4 @@ struct AccountView: View {
         }
     }
 }
+
