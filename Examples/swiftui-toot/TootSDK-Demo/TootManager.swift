@@ -13,7 +13,7 @@ import SwiftKeychainWrapper
 public class TootManager: ObservableObject {
     private var instanceKey = "tootSDK.instanceURL"
     private var accessTokenKey = "tootSDK.accessToken"
-    private let callbackUrl = "swiftuitoot://test"
+    private let callbackURI = "swiftuitoot://test"
     
     // MARK: - Published properties
     @Published public var currentClient: TootClient!
@@ -33,11 +33,11 @@ public class TootManager: ObservableObject {
     @MainActor public func createClientAndAuthorizeURL(_ url: URL) async throws -> URL? {
         self.currentClient = TootClient(instanceURL: url)
         
-        return try await self.currentClient?.createAuthorizeURL(server: url, callbackUrl: callbackUrl)
+        return try await self.currentClient?.createAuthorizeURL(server: url, callbackURI: callbackURI)
     }
     
     @MainActor public func collectAccessToken(_ url: URL) async throws {
-        if let accessToken = try await currentClient?.collectToken(returnUrl: url, callbackUrl: callbackUrl) {
+        if let accessToken = try await currentClient?.collectToken(returnUrl: url, callbackURI: callbackURI) {
             
             // Persist token and instance details for signing in
             if let instanceURL = currentClient?.instanceURL {
