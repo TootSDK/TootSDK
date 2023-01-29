@@ -7,7 +7,7 @@
 <p>
     <a href="https://developer.apple.com/swift/"><img alt="Swift 5.7" src="https://img.shields.io/badge/swift-5.7-orange.svg?style=flat"></a>
     <a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-blueviolet"></a>
-    <a href="https://github.com/TootSDK/TootSDK/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/github/license/TootSDK/TootSDK.svg?maxAge=2592000"></a>
+     <a href="https://github.com/TootSDK/TootSDK/blob/main/LICENSE.md"><img alt="BSD 3-clause" src="https://img.shields.io/badge/License-BSD_3--Clause-blue.svg"></a>
     <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
 </p>
 
@@ -30,7 +30,7 @@ TootSDK is a shared Swift Package that any client app can be built on.
 ## Key Principles ⚙️
 
 - Async/Await based. All asynchronous functions are defined as Async ones that you can use with Async/Await code
-- Internal consistency and standardization of model property names 
+- Internal consistency and standardization of model property names
 - Standardization across all supported Fediverse APIs
 - Platform agnostic (TootSDK shouldn't care if it's on iOS, macOS or Linux!)
 
@@ -55,10 +55,11 @@ It's easy to get started with TootSDK.
 
 ```
   let instanceURL = URL(string: "social.yourinstance.com")
-  let client = TootClient(instanceURL: instanceURL, accessToken: "USERACCESSTOKEN")            
+  let client = TootClient(instanceURL: instanceURL, accessToken: "USERACCESSTOKEN")
 ```
 
 ### Collecting an authorization token:
+
 - Instantiate your client without a token:
 
 ```
@@ -89,11 +90,11 @@ let posts = try await client.data.stream(.timeLineHome)
 
 ## Further Documentation 📖
 
-* Reference documentation is available [here](https://tootsdk.github.io/tootsdk/docs)
-* Example apps:
-	* [swiftui-toot](Examples/swiftui-toot/) - a SwiftUI app that shows authorization, a user's feed, posting and account operations
-	* [swiftyadmin](Examples/swiftyadmin) - a command line utility to interact with and control a server using TootSDK
-	* [vaportoot](Examples/vaportoot) - a web app in Vapor, that shows how to sign in and view a user's feed
+- Reference documentation is available [here](https://tootsdk.github.io/tootsdk/docs)
+- Example apps:
+  - [swiftui-toot](Examples/swiftui-toot/) - a SwiftUI app that shows authorization, a user's feed, posting and account operations
+  - [swiftyadmin](Examples/swiftyadmin) - a command line utility to interact with and control a server using TootSDK
+  - [vaportoot](Examples/vaportoot) - a web app in Vapor, that shows how to sign in and view a user's feed
 
 ## Contributing
 
