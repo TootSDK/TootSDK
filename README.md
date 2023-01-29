@@ -69,15 +69,15 @@ let client = TootClient(instanceURL: instanceURL)
 - Retrieve an authorization URL to present to the user (so they can sign in)
 
 ```
-let authURL = client.createAuthorizeURL(callbackUrl: "myapp://someurl")
+let authURL = client.createAuthorizeURL(callbackURI: "myapp://someurl")
 ```
 
 - Present the the authorization URL as a web page
-- Let the user sign in, and wait for the callbackUrl to be called
-- When that callbackUrl is called, give it back to the client to collect the token
+- Let the user sign in, and wait for the callbackURI to be called
+- When that callbackURI is called, give it back to the client to collect the token
 
 ```
-let accessToken = client.collectToken(returnUrl: url, callbackUrl: callbackUrl)
+let accessToken = client.collectToken(returnUrl: url, callbackURI: callbackURI)
 ```
 
 We recommend keeping the accessToken somewhere secure, for example the Keychain.

@@ -205,7 +205,7 @@ extension TootClient {
     /// Exchange the callback authorization code for an accessToken
     /// - Parameters:
     ///   - returnUrl: The full url including query parameters received by the service following the redirect after successfull authorizaiton
-    ///   - callbackURI: The callback URL  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
+    ///   - callbackURI: The callback URI  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
     public func collectToken(returnUrl: URL, callbackURI: String) async throws -> String {
         
         guard
