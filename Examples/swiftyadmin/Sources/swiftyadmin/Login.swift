@@ -28,13 +28,8 @@ struct Login: AsyncParsableCommand {
     let client = TootClient(instanceURL: serverUrl, scopes: scopes)
     // TODO: why do we need server param here, it's already set?
 
-    guard
-      let authUrl = try await client.createAuthorizeURL(
-        server: serverUrl, callbackUrl: callbackUrl)
-    else {
-      print("failed to generate auth url")
-      return
-    }
+    let authUrl = try await client.createAuthorizeURL(
+      server: serverUrl, callbackUrl: callbackUrl)
 
     guard let clientId = client.currentApplicationInfo?.clientId,
       let clientSecret = client.currentApplicationInfo?.clientSecret

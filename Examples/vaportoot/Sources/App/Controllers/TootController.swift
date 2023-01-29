@@ -36,13 +36,8 @@ struct TootController: RouteCollection {
 
     let client = TootClient(instanceURL: serverURL, scopes: scopes)
 
-    guard
-      let authorizeURL = try await client.createAuthorizeURL(
-        server: serverURL, callbackUrl: callbackURL)
-    else {
-      req.logger.error("Failed to obtain authorizeURL")
-      throw Abort(.internalServerError)
-    }
+    let authorizeURL = try await client.createAuthorizeURL(
+      server: serverURL, callbackUrl: callbackURL)
 
     // Store the client id and secret for future calls
     userSession.clientId = client.currentApplicationInfo?.clientId
