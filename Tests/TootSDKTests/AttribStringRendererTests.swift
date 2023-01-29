@@ -11,7 +11,6 @@ final class AttribStringRendererTests: XCTestCase {
 
     func testRendersPostWithoutEmojisPlainString() throws {
         // arrange
-        let client = TootClient(instanceURL: URL(string: serverUrl)!)
         let renderer = UIKitAttribStringRenderer()
         let post = try localObject(Post.self, "post no emojis")
         let expected = try NSMutableAttributedString(markdown: """
@@ -31,7 +30,6 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
     
     func testRendersPostWithoutEmojisLinks() throws {
         // arrange
-        let client = TootClient(instanceURL: URL(string: serverUrl)!)
         let renderer = UIKitAttribStringRenderer()
         let post = try localObject(Post.self, "post no emojis")
         
@@ -82,7 +80,6 @@ Hey fellow #Swift devs 👋! As some of you may know, @konstantin and @davidgary
     
     func testRendersPostWithEmojisPlainString() throws {
         // arrange
-        let client = TootClient(instanceURL: URL(string: serverUrl)!)
         let renderer = UIKitAttribStringRenderer()
         let post = try localObject(Post.self, "post with emojis and attachments")
         let expectedParsedString = try NSMutableAttributedString(markdown: """
