@@ -21,17 +21,16 @@ You can also execute tests in Xcode by switching to the Test navigator and execu
 - Get familiar with the [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/).
 - Spaces, not tabs.
 - Whitespace-only lines are not trimmed.
-- We use SwiftLint to ensure a consistent look and feel of the library code. Your changes should contain no SwiftLink errors or warnings.
-- SwiftLint is integrated as a package plugin. If you are using the command line, you can run `swift run swiftlint --fix`
+- We use SwiftLint to ensure a consistent look and feel of the library code. Your changes should contain no SwiftLint errors or warnings. Please run and check SwiftLint on any code contributions before submitting.
 - Avoid bringing in new libraries or dependencies without good justification. Any PR that brings in a new library needs to make the case for why it is necessary.
 
 ### Read our Architecture Decision Records (ADRs))
 
-All major architectural decisions are captured in our [ADRs](https://github.com/TootSDK/TootSDK/architecture/decisions). It is worth reading these to gain context of our direction and general approach to the SDK, before writing code and submitting a PR.
+All major architectural decisions are captured in our [ADRs](https://github.com/TootSDK/TootSDK/tree/main/architecture/decisions). It is worth reading these to gain context of our direction and general approach to the SDK, before writing code and submitting a PR.
 
 ### Please provide documentation for your changes
 
-All methods and types which the library makes public ideally have a meaningful description and information on usage.
+All methods and types that the library makes public, should have a meaningful description and information on how to use.
 
 It is recommended to include unit tests covering your changes.
 
