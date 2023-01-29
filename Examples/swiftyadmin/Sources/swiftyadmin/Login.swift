@@ -24,12 +24,12 @@ struct Login: AsyncParsableCommand {
     }
 
     print("Logging into (serverUrl.absoluteString) with scopes \(scopes.joined(separator: ", "))")
-    let callbackUrl: String = "urn:ietf:wg:oauth:2.0:oob"
+    let callbackURI: String = "urn:ietf:wg:oauth:2.0:oob"
     let client = TootClient(instanceURL: serverUrl, scopes: scopes)
     // TODO: why do we need server param here, it's already set?
 
     let authUrl = try await client.createAuthorizeURL(
-      server: serverUrl, callbackUrl: callbackUrl)
+      server: serverUrl, callbackURI: callbackURI)
 
     guard let clientId = client.currentApplicationInfo?.clientId,
       let clientSecret = client.currentApplicationInfo?.clientSecret
@@ -48,7 +48,7 @@ struct Login: AsyncParsableCommand {
       return
     }
     let accessToken = try await client.collectToken(
-      code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackUrl)
+      code: code, clientId: clientId, clientSecret: clientSecret, callbackURI: callbackURI)
 
     print("You can use the following access token as a bearer token: \(accessToken)")
   }
