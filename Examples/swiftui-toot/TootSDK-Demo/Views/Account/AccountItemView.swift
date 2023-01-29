@@ -7,11 +7,26 @@
 
 import SwiftUI
 
-struct AccountItemView: View {
+struct AccountItemView<Content: View>: View {
     var description: String
     var value: String?
-    
+
+    let content: Content
+
+    init(description: String,
+         value: String? = nil,
+         @ViewBuilder content: () -> Content = { EmptyView() }) {
+        self.description = description
+        self.value = value
+        self.content = content()
+    }
+
     var body: some View {
-        Text(description + ": " + (value ?? ""))
+        HStack {
+            Text(description + ": ")
+            content
+            Text(value ?? "")
+            Spacer()
+        }
     }
 }

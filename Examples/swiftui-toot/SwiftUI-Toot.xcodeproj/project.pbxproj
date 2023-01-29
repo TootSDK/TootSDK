@@ -16,6 +16,7 @@
 		553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3A2952BD0200F3EB69 /* ButtonView.swift */; };
 		553CFB3E2952C23A00F3EB69 /* RelationshipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3D2952C23A00F3EB69 /* RelationshipView.swift */; };
 		553CFB402952C26000F3EB69 /* AccountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3F2952C26000F3EB69 /* AccountItemView.swift */; };
+		55539B222984CA6F00B2029D /* Array+RemoteEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55539B212984CA6F00B2029D /* Array+RemoteEmoji.swift */; };
 		557DD954297DF58E003C964C /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DD953297DF58E003C964C /* FeedViewModel.swift */; };
 		55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */; };
 		55ACC1E4291761910046363F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E3291761910046363F /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 		553CFB3A2952BD0200F3EB69 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		553CFB3D2952C23A00F3EB69 /* RelationshipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipView.swift; sourceTree = "<group>"; };
 		553CFB3F2952C26000F3EB69 /* AccountItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemView.swift; sourceTree = "<group>"; };
+		55539B212984CA6F00B2029D /* Array+RemoteEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+RemoteEmoji.swift"; sourceTree = "<group>"; };
 		557DD953297DF58E003C964C /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Toot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootSDK_DemoApp.swift; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		55539B232984CA7500B2029D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				55539B212984CA6F00B2029D /* Array+RemoteEmoji.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		557DD955297DF591003C964C /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +123,7 @@
 		55ACC1DE2917618F0046363F /* TootSDK-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				55539B232984CA7500B2029D /* Extensions */,
 				55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */,
 				55F9D91329190A9E0062CFA9 /* TootManager.swift */,
 				55F9D91229190A2A0062CFA9 /* Views */,
@@ -258,6 +269,7 @@
 				55ACC1EC291761910046363F /* TootSDK_Demo.xcdatamodeld in Sources */,
 				550CF66E2931F9A000D07EA0 /* UserAccountView.swift in Sources */,
 				55B8B1722917620C00339479 /* MakePostView.swift in Sources */,
+				55539B222984CA6F00B2029D /* Array+RemoteEmoji.swift in Sources */,
 				553CFB402952C26000F3EB69 /* AccountItemView.swift in Sources */,
 				553CFB3E2952C23A00F3EB69 /* RelationshipView.swift in Sources */,
 				55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */,
