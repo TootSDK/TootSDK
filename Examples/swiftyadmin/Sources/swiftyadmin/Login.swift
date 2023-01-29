@@ -50,11 +50,6 @@ struct Login: AsyncParsableCommand {
     let accessToken = try await client.collectToken(
       code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackUrl)
 
-    guard let accessToken = accessToken else {
-      print("Did not receive access token as expected")
-      return
-    }
-
     print("You can use the following access token as a bearer token: \(accessToken)")
   }
 }

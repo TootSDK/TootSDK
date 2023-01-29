@@ -206,7 +206,7 @@ extension TootClient {
     /// - Parameters:
     ///   - returnUrl: The full url including query parameters received by the service following the redirect after successfull authorizaiton
     ///   - callbackUrl: The callback URL  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
-    public func collectToken(returnUrl: URL, callbackUrl: String) async throws -> String? {
+    public func collectToken(returnUrl: URL, callbackUrl: String) async throws -> String {
         
         guard
             let code = getCodeFrom(returnUrl: returnUrl),
@@ -225,20 +225,23 @@ extension TootClient {
         return components.queryItems?.first(where: {$0.name == "code"})?.value
     }
     
-    /// Exchange the callback authorization code for an accessToken
+    /// Exchange the callback authorization code for an accessToken.
     /// - Parameters:
     ///   - code: The authorization code returned by the server
     ///   - clientId: The client id of the application
     ///   - clientSecret: The client secret of the application
     ///   - callbackUrl: The callback URL (`redirect_uri`) which was used to initiate the authorization flow.  Must match one of the redirect_uris declared during app registration.
-    public func collectToken(code: String, clientId: String, clientSecret: String, callbackUrl: String) async throws -> String? {
+    public func collectToken(code: String, clientId: String, clientSecret: String, callbackUrl: String) async throws -> String {
         
         let info = try await getAccessToken(code: code, clientId: clientId,
                                             clientSecret: clientSecret,
                                             callbackUrl: callbackUrl,
                                             scopes: scopes)
         
-        accessToken = info?.accessToken
+        guard let accessToken = info.accessToken else {
+            throw TootSDKError.clientAuthorizationFailed
+        }
+        
         return accessToken
     }
     

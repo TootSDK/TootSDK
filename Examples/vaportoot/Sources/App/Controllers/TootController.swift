@@ -71,13 +71,8 @@ struct TootController: RouteCollection {
       throw Abort(.badRequest)
     }
     let client = TootClient(session: .shared, instanceURL: serverURL, scopes: scopes)
-    guard
-      let accessToken = try await client.collectToken(
-        code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackURL)
-    else {
-      req.logger.error("Did not receive any accessToken from the fedi server.")
-      throw Abort(.internalServerError)
-    }
+    let accessToken = try await client.collectToken(
+      code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackURL)
 
     userSession.accessToken = accessToken
     try await userSession.update(on: req.db)

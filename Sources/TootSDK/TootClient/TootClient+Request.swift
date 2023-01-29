@@ -73,7 +73,7 @@ extension TootClient {
         return .init(url: url, application: app)
     }
 
-    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grantType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken? {
+    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grantType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken {
 
         let queryItems: [URLQueryItem] = [
             .init(name: "client_id", value: clientId),
