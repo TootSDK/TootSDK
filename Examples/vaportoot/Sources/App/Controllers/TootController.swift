@@ -37,7 +37,7 @@ struct TootController: RouteCollection {
     let client = TootClient(instanceURL: serverURL, scopes: scopes)
 
     let authorizeURL = try await client.createAuthorizeURL(
-      server: serverURL, callbackUrl: callbackURL)
+      server: serverURL, callbackURI: callbackURI)
 
     // Store the client id and secret for future calls
     userSession.clientId = client.currentApplicationInfo?.clientId
@@ -72,7 +72,7 @@ struct TootController: RouteCollection {
     }
     let client = TootClient(session: .shared, instanceURL: serverURL, scopes: scopes)
     let accessToken = try await client.collectToken(
-      code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackURL)
+      code: code, clientId: clientId, clientSecret: clientSecret, callbackURI: callbackURI)
 
     userSession.accessToken = accessToken
     try await userSession.update(on: req.db)
@@ -104,7 +104,7 @@ struct TootController: RouteCollection {
   }
 }
 
-let callbackURL = "http://localhost:8080/toot/callback"  // "urn:ietf:wg:oauth:2.0:oob"
+let callbackURI = "http://localhost:8080/toot/callback"  // "urn:ietf:wg:oauth:2.0:oob"
 let scopes = ["read", "write", "follow", "push"]
 
 struct LoginRequest: Content {
