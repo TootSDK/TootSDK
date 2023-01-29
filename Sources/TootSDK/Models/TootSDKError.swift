@@ -17,6 +17,10 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     /// The requested operation is not supported by the current server flavour.
     case unsupportedFlavour(current: TootSDKFlavour, required: [TootSDKFlavour])
     case unexpectedError(_ description: String)
+    /// The remote instance did not respond with the expected payload during authorization
+    case clientAuthorizationFailed
+    /// A "this should never happen" asssertion has failed
+    case internalError(_ description: String)
     
     public var errorDescription: String? {
         switch self {
@@ -38,6 +42,10 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "Operation not supported for server flavour \(current), compatible flavours are: \(required.map({"\($0)"}).joined(separator: ", "))."
         case .unexpectedError(let description):
             return "Unexpected error: \(description)"
+        case .clientAuthorizationFailed:
+            return "The remote instance did not respond with the expected payload during authorization."
+        case .internalError(let description):
+            return "[TootSDK bug] " + description + "."
         }
     }
 }

@@ -188,15 +188,17 @@ extension TootClient: Equatable {
 extension TootClient {
     
     /// Provides the URL for authorizing with the current instanceURL
-    public func createAuthorizeURL(callbackUrl: String) async throws -> URL? {
+    /// - Returns: A URL which can be browsed to continue authorization
+    public func createAuthorizeURL(callbackUrl: String) async throws -> URL {
         return try await self.createAuthorizeURL(server: instanceURL, callbackUrl: callbackUrl)
     }
     
-    /// Provides the URL for authorizing, with a custom server URL
-    public func createAuthorizeURL(server: URL, callbackUrl: String) async throws -> URL? {
+    /// Provides the URL for authorizing, with a custom server URL.
+    /// - Returns: A URL which can be browsed to continue authorization
+    public func createAuthorizeURL(server: URL, callbackUrl: String) async throws -> URL {
         let authInfo = try await self.getAuthorizationInfo(callbackUrl: callbackUrl, scopes: self.scopes)
-        currentApplicationInfo = authInfo?.application
-        return authInfo?.url
+        currentApplicationInfo = authInfo.application
+        return authInfo.url
     }
     
     /// Facility method to complete authentication by processing the response from the authorization step.
@@ -204,7 +206,7 @@ extension TootClient {
     /// - Parameters:
     ///   - returnUrl: The full url including query parameters received by the service following the redirect after successfull authorizaiton
     ///   - callbackUrl: The callback URL  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
-    public func collectToken(returnUrl: URL, callbackUrl: String) async throws -> String? {
+    public func collectToken(returnUrl: URL, callbackUrl: String) async throws -> String {
         
         guard
             let code = getCodeFrom(returnUrl: returnUrl),
@@ -223,20 +225,23 @@ extension TootClient {
         return components.queryItems?.first(where: {$0.name == "code"})?.value
     }
     
-    /// Exchange the callback authorization code for an accessToken
+    /// Exchange the callback authorization code for an accessToken.
     /// - Parameters:
     ///   - code: The authorization code returned by the server
     ///   - clientId: The client id of the application
     ///   - clientSecret: The client secret of the application
     ///   - callbackUrl: The callback URL (`redirect_uri`) which was used to initiate the authorization flow.  Must match one of the redirect_uris declared during app registration.
-    public func collectToken(code: String, clientId: String, clientSecret: String, callbackUrl: String) async throws -> String? {
+    public func collectToken(code: String, clientId: String, clientSecret: String, callbackUrl: String) async throws -> String {
         
         let info = try await getAccessToken(code: code, clientId: clientId,
                                             clientSecret: clientSecret,
                                             callbackUrl: callbackUrl,
                                             scopes: scopes)
         
-        accessToken = info?.accessToken
+        guard let accessToken = info.accessToken else {
+            throw TootSDKError.clientAuthorizationFailed
+        }
+        
         return accessToken
     }
     

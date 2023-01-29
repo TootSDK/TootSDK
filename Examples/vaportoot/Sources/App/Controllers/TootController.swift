@@ -36,13 +36,8 @@ struct TootController: RouteCollection {
 
     let client = TootClient(instanceURL: serverURL, scopes: scopes)
 
-    guard
-      let authorizeURL = try await client.createAuthorizeURL(
-        server: serverURL, callbackUrl: callbackURL)
-    else {
-      req.logger.error("Failed to obtain authorizeURL")
-      throw Abort(.internalServerError)
-    }
+    let authorizeURL = try await client.createAuthorizeURL(
+      server: serverURL, callbackUrl: callbackURL)
 
     // Store the client id and secret for future calls
     userSession.clientId = client.currentApplicationInfo?.clientId
@@ -76,13 +71,8 @@ struct TootController: RouteCollection {
       throw Abort(.badRequest)
     }
     let client = TootClient(session: .shared, instanceURL: serverURL, scopes: scopes)
-    guard
-      let accessToken = try await client.collectToken(
-        code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackURL)
-    else {
-      req.logger.error("Did not receive any accessToken from the fedi server.")
-      throw Abort(.internalServerError)
-    }
+    let accessToken = try await client.collectToken(
+      code: code, clientId: clientId, clientSecret: clientSecret, callbackUrl: callbackURL)
 
     userSession.accessToken = accessToken
     try await userSession.update(on: req.db)

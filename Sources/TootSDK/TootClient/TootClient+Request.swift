@@ -40,7 +40,7 @@ extension TootClient {
     internal func getAuthorizationInfo(callbackUrl: String,
                                        scopes: [String],
                                        website: String = "",
-                                       responseType: String = "code") async throws -> CallbackInfo? {
+                                       responseType: String = "code") async throws -> CallbackInfo {
         
         let createAppData = CreateAppRequest(clientName: clientName,
                                              redirectUris: callbackUrl,
@@ -55,7 +55,7 @@ extension TootClient {
         let app = try await fetch(TootApplication.self, registerAppReq)
         
         guard let clientId = app.clientId else {
-            return nil
+            throw TootSDKError.clientAuthorizationFailed
         }
                 
         let signUrlReq = HTTPRequestBuilder {
@@ -67,13 +67,13 @@ extension TootClient {
         }
         
         guard let url = signUrlReq.url else {
-            return nil
+            throw TootSDKError.unexpectedError("Failed to create authorize url")
         }
         
         return .init(url: url, application: app)
     }
 
-    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grantType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken? {
+    internal func getAccessToken(code: String, clientId: String, clientSecret: String, callbackUrl: String, grantType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken {
 
         let queryItems: [URLQueryItem] = [
             .init(name: "client_id", value: clientId),
