@@ -4,14 +4,19 @@
 import XCTest
 @testable import TootSDK
 
-#if canImport(UIKit)
 @available(iOS 15, *)
 final class AttribStringRendererTests: XCTestCase {
     let serverUrl: String = "https://m.iamkonstantin.eu"
-
-    func testRendersPostWithoutEmojisPlainString() throws {
-        // arrange
+    
+#if canImport(UIKit)
         let renderer = UIKitAttribStringRenderer()
+#elseif canImport(AppKit)
+        let renderer = AppKitAttribStringRenderer()
+#endif
+        
+    func testRendersPostWithoutEmojisPlainString() throws {
+
+        // arrange
         let post = try localObject(Post.self, "post no emojis")
         let expected = try NSMutableAttributedString(markdown: """
 Hey fellow #Swift devs 👋!
@@ -30,7 +35,6 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
     
     func testRendersPostWithoutEmojisLinks() throws {
         // arrange
-        let renderer = UIKitAttribStringRenderer()
         let post = try localObject(Post.self, "post no emojis")
         
         let expectedParsedString = try NSMutableAttributedString(markdown: """
@@ -42,7 +46,10 @@ The main purpose of TootSDK is to take care of the “boring” and complicated 
 """, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace))
         let expectedString =
 """
-Hey fellow #Swift devs 👋! As some of you may know, @konstantin and @davidgarywood have been working on an open-source swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨! The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.
+Hey fellow #Swift devs 👋!
+As some of you may know, @konstantin and @davidgarywood have been working on an open-source swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨!
+The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.
+
 """
         
         // just a sanity check on the expected mutable string
@@ -80,7 +87,6 @@ Hey fellow #Swift devs 👋! As some of you may know, @konstantin and @davidgary
     
     func testRendersPostWithEmojisPlainString() throws {
         // arrange
-        let renderer = UIKitAttribStringRenderer()
         let post = try localObject(Post.self, "post with emojis and attachments")
         let expectedParsedString = try NSMutableAttributedString(markdown: """
 I just #love #coffee :heart_cup There is no better way to start the day.
@@ -97,4 +103,3 @@ I just #love #coffee There is no better way to start the day.
         XCTAssertEqual(rendered.string, expectedString)
     }
 }
-#endif
