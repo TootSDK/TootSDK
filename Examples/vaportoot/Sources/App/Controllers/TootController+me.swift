@@ -20,14 +20,17 @@ extension TootController {
     // if replying to a post, add the content to context
     let query = try req.query.decode(MeQuery.self)
     var replyText = ""
-      if let replyPostId = query.replyTo {
-       let replyToPost = try await client.getPost(id: replyPostId)
-      replyText = TootHTML.stripHTMLFormatting(html: replyToPost.displayPost.content) ?? ""
+    if let replyPostId = query.replyTo {
+      let replyToPost = try await client.getPost(id: replyPostId)
+      replyText = TootHTML.extractAsPlainText(html: replyToPost.displayPost.content) ?? ""
     }
     let posts = try await client.getHomeTimeline()
+    let nameWithEmojis = try UniversalRenderer().render(
+      html: account.displayName, emojis: account.emojis
+    ).wrappedValue
     let context = MeContext(
       note: account.note,
-      name: account.tootRichDisplayName ?? "",
+      name: nameWithEmojis,
       avatar: account.avatar,
       posts: posts.result.map({ PostItem(post: $0) }),
       replyText: replyText,

@@ -10,19 +10,30 @@ import SwiftSoup
 
 public class UIKitAttribStringRenderer {
     
-    // MARK: - Properties
+    public init() {}
     
-    // MARK: - Initialization
-    
-    /// - Parameter config: the TootStringRenderConfig to use to render the text, defaults to the default values in TootStringRenderConfig unless you supply your own
-    public init() {
-    }
-    
-    /// Renders the HTML to an NSAttributedString
+    /// Renders the provided HTML string
     /// - Parameters:
     ///   - html: html description
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
-    /// - Returns: the NSAttributedString. Otherwise a string with no attributes if any errors are encountered rendering
+    /// - Returns: an instance `TootContent` with various representations of the content
+    public func render(html: String?,
+                       emojis: [Emoji]) throws -> TootContent {
+        
+        guard let html = html else {
+            return TootContent(wrappedValue: "", plainContent: "", attributedString: NSAttributedString(string: ""))
+        }
+        
+        return try render(html: html, emojis: emojis)
+    }
+    
+    // MARK: - Properties
+    
+    /// Renders the provided HTML string
+    /// - Parameters:
+    ///   - html: html description
+    ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
+    /// - Returns: an instance `TootContent` with various representations of the content
     public func render(html: String,
                        emojis: [Emoji]) throws -> TootContent {
         var html = html
@@ -33,7 +44,7 @@ public class UIKitAttribStringRenderer {
             html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
         
-        let plainText = TootHTML.stripHTMLFormatting(html: html) ?? ""
+        let plainText = TootHTML.extractAsPlainText(html: html) ?? ""
         
         if let doc = try? SwiftSoup.parseBodyFragment(html),
            let body = doc.body(),
