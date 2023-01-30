@@ -62,7 +62,7 @@ extension FeedViewModel {
                 let feedPosts = updatedPosts.map { post in
 
                     let html = renderer.render(post.displayPost).wrappedValue
-                    let markdown = TootHTML.stripHTMLFormatting(html: post.displayPost.content) ?? ""
+                    let markdown = TootHTML.extractAsPlainText(html: post.displayPost.content) ?? ""
                     
                     return FeedPost(html: html, markdown: markdown, tootPost: post)
                 }

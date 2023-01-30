@@ -22,7 +22,7 @@ extension TootController {
     var replyText = ""
       if let replyPostId = query.replyTo {
        let replyToPost = try await client.getPost(id: replyPostId)
-      replyText = TootHTML.stripHTMLFormatting(html: replyToPost.displayPost.content) ?? ""
+      replyText = TootHTML.extractAsPlainText(html: replyToPost.displayPost.content) ?? ""
     }
     let posts = try await client.getHomeTimeline()
     let context = MeContext(
