@@ -1,6 +1,6 @@
 // Created by konstantin on 06/01/2023.
 // Copyright (c) 2023. All rights reserved.
-
+#if canImport(UIKit) || canImport(AppKit)
 import XCTest
 @testable import TootSDK
 
@@ -128,3 +128,4 @@ Wordle 591 X/6*
         XCTAssertEqual(rendered.string, expectedString)
     }
 }
+#endif
