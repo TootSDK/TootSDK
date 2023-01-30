@@ -33,7 +33,7 @@ public class UIKitAttribStringRenderer {
             html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
         
-        let plainText = TootHTML.stripHTMLFormatting(html: html) ?? ""
+        let plainText = TootHTML.extractAsPlainText(html: html) ?? ""
         
         if let doc = try? SwiftSoup.parseBodyFragment(html),
            let body = doc.body(),
