@@ -102,4 +102,27 @@ I just #love #coffee There is no better way to start the day.
         XCTAssertEqual(rendered.attributedString.string, expectedParsedString.string)
         XCTAssertEqual(rendered.string, expectedString)
     }
+    
+    
+    func testParagraphsToLinebreaks() throws {
+        // Arrange
+        let post = try localObject(Post.self, "post wordle linebreaks")
+        
+        let expectedString: String = """
+Wordle 591 X/6*
+🟨⬛🟩🟨⬛
+🟨⬛🟩⬛🟩
+🟩🟩🟩⬛🟩
+🟩🟩🟩⬛🟩
+🟩🟩🟩⬛🟩
+🟩🟩🟩⬛🟩
+
+"""
+        
+        // act
+        let rendered = renderer.render(post)
+        
+        // Assert
+        XCTAssertEqual(rendered.string, expectedString)
+    }
 }
