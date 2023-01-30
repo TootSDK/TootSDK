@@ -120,9 +120,15 @@ struct PostItem: Encodable {
 }
 
 extension PostItem {
+
   init(post: Post) {
+    let postWithEmojis =
+      try? UniversalRenderer().render(
+        html: post.displayPost.content, emojis: post.displayPost.emojis
+      ).wrappedValue
+
     id = post.id
-    text = post.displayPost.content ?? ""
+    text = postWithEmojis ?? ""
     avatar = post.account.avatar
     author = post.account.displayName ?? ""
     favourited = post.favourited ?? false

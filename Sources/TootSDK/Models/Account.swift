@@ -152,15 +152,3 @@ extension Account: CustomDebugStringConvertible {
         return "Account with id: \(id)"
     }
 }
-
-public extension Account {
-    /// The profile's display name including html markup for embedded emojis
-    var tootRichDisplayName: String? {
-        guard let displayName else {
-            return nil
-        }
-        return emojis.reduce(into: displayName, {markup, emoji in
-            markup = markup.replacingOccurrences(of: ":\(emoji.shortcode):", with: "<img src=\"\(emoji.url)\" alt=\"\(emoji.shortcode)\" title=\"\(emoji.shortcode)\">")
-        })
-    }
-}

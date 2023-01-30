@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style type="text/tailwindcss">
-    .emojis > img {
+    img[data-tootsdk-emoji] {
         width: 22px;
         height: 22px;
       }

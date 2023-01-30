@@ -10,6 +10,23 @@ import SwiftSoup
 
 public class UIKitAttribStringRenderer {
     
+    public init() {}
+    
+    /// Renders the provided HTML string
+    /// - Parameters:
+    ///   - html: html description
+    ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
+    /// - Returns: an instance `TootContent` with various representations of the content
+    public func render(html: String?,
+                       emojis: [Emoji]) throws -> TootContent {
+        
+        guard let html = html else {
+            return TootContent(wrappedValue: "", plainContent: "", attributedString: NSAttributedString(string: ""))
+        }
+        
+        return try render(html: html, emojis: emojis)
+    }
+    
     // MARK: - Properties
     
     /// Renders the provided HTML string

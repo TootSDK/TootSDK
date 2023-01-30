@@ -9,9 +9,22 @@ import WebURLFoundationExtras
 import SwiftSoup
 
 public class AppKitAttribStringRenderer {
-    func createAttributedString(_ html: String) throws -> NSAttributedString {
-        guard let data = html.data(using: .utf8) else { return NSAttributedString() }
-        return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+    
+    public init() {}
+    
+    /// Renders the provided HTML string
+    /// - Parameters:
+    ///   - html: html description
+    ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
+    /// - Returns: an instance `TootContent` with various representations of the content
+    public func render(html: String?,
+                       emojis: [Emoji]) throws -> TootContent {
+        
+        guard let html = html else {
+            return TootContent(wrappedValue: "", plainContent: "", attributedString: NSAttributedString(string: ""))
+        }
+        
+        return try render(html: html, emojis: emojis)
     }
     
     /// Renders the provided HTML string
@@ -20,7 +33,7 @@ public class AppKitAttribStringRenderer {
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
     /// - Returns: an instance `TootContent` with various representations of the content
     public func render(html: String, emojis: [Emoji]) throws -> TootContent {
-        var html = html 
+        var html = html
         // attempt to parse emojis and other special content
         // Replace the custom emojis with image refs
         emojis.forEach { emoji in
@@ -38,6 +51,11 @@ public class AppKitAttribStringRenderer {
         } else {
             return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
         }
+    }
+    
+    private func createAttributedString(_ html: String) throws -> NSAttributedString {
+        guard let data = html.data(using: .utf8) else { return NSAttributedString() }
+        return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
     }
     
     private func attributedTextForHTMLNode(_ node: Node) -> NSAttributedString? {
@@ -167,30 +185,30 @@ extension NSMutableAttributedString {
 }
 
 extension NSAttributedString {
-     public func attributedStringByTrimmingCharacterSet(charSet: CharacterSet) -> NSAttributedString {
-         let modifiedString = NSMutableAttributedString(attributedString: self)
+    public func attributedStringByTrimmingCharacterSet(charSet: CharacterSet) -> NSAttributedString {
+        let modifiedString = NSMutableAttributedString(attributedString: self)
         modifiedString.trimCharactersInSet(charSet: charSet)
-         return NSAttributedString(attributedString: modifiedString)
-     }
+        return NSAttributedString(attributedString: modifiedString)
+    }
 }
 
 extension NSMutableAttributedString {
-     public func trimCharactersInSet(charSet: CharacterSet) {
+    public func trimCharactersInSet(charSet: CharacterSet) {
         var range = (string as NSString).rangeOfCharacter(from: charSet as CharacterSet)
-
-         // Trim leading characters from character set.
-         while range.length != 0 && range.location == 0 {
+        
+        // Trim leading characters from character set.
+        while range.length != 0 && range.location == 0 {
             replaceCharacters(in: range, with: "")
             range = (string as NSString).rangeOfCharacter(from: charSet)
-         }
-
-         // Trim trailing characters from character set.
+        }
+        
+        // Trim trailing characters from character set.
         range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
-         while range.length != 0 && NSMaxRange(range) == length {
+        while range.length != 0 && NSMaxRange(range) == length {
             replaceCharacters(in: range, with: "")
             range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
-         }
-     }
+        }
+    }
 }
 
 #endif

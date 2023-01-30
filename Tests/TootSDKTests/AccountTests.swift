@@ -45,13 +45,4 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(encodedModel, model)
 //        XCTAssertEqual(encodedData.hashValue, model.hashValue)
     }
-    
-    func testRichDisplayName() throws {
-        // arrange
-        let decoder = TootDecoder()
-        let account = try decoder.decode(Account.self, from: localContent("account"))
-
-        // assert
-        XCTAssertEqual(account.tootRichDisplayName, "ikea shark fan account <img src=\"https://files.mastodon.social/custom_emojis/images/000/028/691/original/6de008d6281f4f59.png\" alt=\"ms_rainbow_flag\" title=\"ms_rainbow_flag\">")
-    }
 }

@@ -9,6 +9,23 @@ import SwiftSoup
 /// A simple renderer to adapt HTML content including custom emojis or render them as plain text
 public class UniversalRenderer {
     
+    public init() {}
+    
+    /// Renders the provided HTML string
+    /// - Parameters:
+    ///   - html: html description
+    ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
+    /// - Returns: an instance `TootContent` with various representations of the content
+    public func render(html: String?,
+                       emojis: [Emoji]) throws -> TootContent {
+        
+        guard let html = html else {
+            return TootContent(wrappedValue: "", plainContent: "", attributedString: NSAttributedString(string: ""))
+        }
+        
+        return try render(html: html, emojis: emojis)
+    }
+    
     /// Renders the provided HTML string
     /// - Parameters:
     ///   - html: html description
