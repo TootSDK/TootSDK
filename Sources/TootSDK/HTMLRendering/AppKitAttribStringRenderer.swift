@@ -14,6 +14,11 @@ public class AppKitAttribStringRenderer {
         return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
     }
     
+    /// Renders the provided HTML string
+    /// - Parameters:
+    ///   - html: html description
+    ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
+    /// - Returns: an instance `TootContent` with various representations of the content
     public func render(html: String, emojis: [Emoji]) throws -> TootContent {
         var html = html 
         // attempt to parse emojis and other special content

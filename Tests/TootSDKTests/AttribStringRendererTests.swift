@@ -12,6 +12,8 @@ final class AttribStringRendererTests: XCTestCase {
         let renderer = UIKitAttribStringRenderer()
 #elseif canImport(AppKit)
         let renderer = AppKitAttribStringRenderer()
+#else
+    let renderer = UniversalRenderer()
 #endif
         
     func testRendersPostWithoutEmojisPlainString() throws {

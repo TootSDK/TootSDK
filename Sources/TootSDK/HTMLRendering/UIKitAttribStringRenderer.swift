@@ -12,17 +12,11 @@ public class UIKitAttribStringRenderer {
     
     // MARK: - Properties
     
-    // MARK: - Initialization
-    
-    /// - Parameter config: the TootStringRenderConfig to use to render the text, defaults to the default values in TootStringRenderConfig unless you supply your own
-    public init() {
-    }
-    
-    /// Renders the HTML to an NSAttributedString
+    /// Renders the provided HTML string
     /// - Parameters:
     ///   - html: html description
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
-    /// - Returns: the NSAttributedString. Otherwise a string with no attributes if any errors are encountered rendering
+    /// - Returns: an instance `TootContent` with various representations of the content
     public func render(html: String,
                        emojis: [Emoji]) throws -> TootContent {
         var html = html
