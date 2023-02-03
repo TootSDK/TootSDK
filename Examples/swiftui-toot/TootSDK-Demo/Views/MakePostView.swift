@@ -21,6 +21,7 @@ struct MakePostView: View {
     @State var lastPostID: String?
     @State var lastPostScheduledPost: Bool = false
     @State var scheduledPost: Bool = false
+    @State var attachImage: Bool = false
     
     @State private var path = NavigationPath()
         
@@ -47,6 +48,8 @@ struct MakePostView: View {
                 TextField("write your post", text: $post, axis: .vertical)
                     .lineLimit(10, reservesSpace: true)
                     .focused($postIsFocused)
+                
+                Toggle("Attach image", isOn: $attachImage)
                 
                 Button {
                     Task {
@@ -117,8 +120,28 @@ struct MakePostView: View {
     }
     
     func makeRegularPost() async throws -> String? {
+        guard let tootClient = tootManager.currentClient else {
+            print("🍅 Toot client not set")
+            return nil
+        }
+        
+        if attachImage {
+            guard let imageData = UIImage(named: "dexter")?.jpegData(compressionQuality: 1.0) else {
+                print("🍅 Attachment image not found")
+                return nil
+            }
+            
+            let uploadParams = UploadMediaAttachmentParams(file: imageData, thumbnail: nil, description: "Dexter the cat helping me perfect file uploads in TootSDK", focus: nil)
+            let mediaAttachment1 = try await tootClient.uploadMedia(uploadParams, mimeType: "image/jpeg")
+            let mediaAttachment2 = try await tootClient.uploadMedia(uploadParams, mimeType: "image/jpeg")
+            
+            print("Image uploaded, posting status")
+            let params = PostParams(post: post, mediaIds: [mediaAttachment1.id, mediaAttachment2.id], visibility: visibility)
+            return try await tootClient.publishPost(params).id
+        }
+        
         let params = PostParams(post: post, visibility: visibility)
-        return try await tootManager.currentClient?.publishPost(params).id
+        return try await tootClient.publishPost(params).id
     }
     
     func makePostScheduled() async throws -> String? {
