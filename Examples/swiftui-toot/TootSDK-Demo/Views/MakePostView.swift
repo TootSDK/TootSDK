@@ -132,11 +132,10 @@ struct MakePostView: View {
             }
             
             let uploadParams = UploadMediaAttachmentParams(file: imageData, thumbnail: nil, description: "Dexter the cat helping me perfect file uploads in TootSDK", focus: nil)
-            let mediaAttachment1 = try await tootClient.uploadMedia(uploadParams, mimeType: "image/jpeg")
-            let mediaAttachment2 = try await tootClient.uploadMedia(uploadParams, mimeType: "image/jpeg")
+            let mediaAttachment = try await tootClient.uploadMedia(uploadParams, mimeType: "image/jpeg")
             
             print("Image uploaded, posting status")
-            let params = PostParams(post: post, mediaIds: [mediaAttachment1.id, mediaAttachment2.id], visibility: visibility)
+            let params = PostParams(post: post, mediaIds: [mediaAttachment.id], visibility: visibility)
             return try await tootClient.publishPost(params).id
         }
         
