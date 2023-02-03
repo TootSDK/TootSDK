@@ -2,7 +2,7 @@
 // Copyright (c) 2023. All rights reserved.
 
 import Foundation
-import MultipartKit
+import MultipartKitTootSDK
 
 public extension TootClient {
     func uploadMedia(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> MediaAttachment {
