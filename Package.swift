@@ -18,7 +18,7 @@ let package = Package(
             targets: ["TootSDK"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/multipart-kit.git", from: "4.5.2"),
+        .package(url: "https://github.com/TootSDK/multipart-kit", branch: "tootsdk"),
         .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.4.3"),
         .package(url: "https://github.com/karwa/swift-url.git", from: "0.4.1"),
        //  .package(url: "https://github.com/eneko/MarkdownGenerator", revision: "5575590ed9ea5cb02cd54a890cb43174efde7911")

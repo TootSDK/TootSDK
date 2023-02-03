@@ -19,5 +19,4 @@ public struct MuteAccountParams: Codable {
         self.notifications = notifications
         self.duration = duration
     }
-
 }

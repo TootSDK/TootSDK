@@ -3,6 +3,7 @@
 
 import Foundation
 import MultipartKit
+import NIOCore
 
 internal struct HTTPBody {
     internal var content: Data?
@@ -19,6 +20,17 @@ internal extension HTTPBody {
         return HTTPBody(content: data, headers: headers)
     }
     
+    /// Initialize a new body for a multipart/form-data request with values from the provided parts
+    ///
+    /// - Returns: HTTPBody
+    static func multipart(_ parts: [MultipartPart], boundary: String) throws -> HTTPBody {
+        var buffer = ByteBufferAllocator().buffer(capacity: 0)
+        try MultipartSerializer().serialize(parts: parts, boundary: boundary, into: &buffer)
+        let content = Data(buffer.readableBytesView)
+        let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
+        return HTTPBody(content: content, headers: headers)
+    }
+    
     /// Initialize a new body for a multipart/form-data request with values from the provided encodable object
     ///
     /// - Returns: HTTPBody
@@ -28,7 +40,7 @@ internal extension HTTPBody {
         let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
         return HTTPBody(content: data, headers: headers)
     }
-
+    
     /// Initialize a new body for a application/x-www-form-urlencoded request with values from the provided URLComponents
     ///
     /// - Returns: HTTPBody
@@ -37,7 +49,7 @@ internal extension HTTPBody {
         let headers = ["Content-Type": "application/x-www-form-urlencoded"]
         return HTTPBody(content: data, headers: headers)
     }
-
+    
     /// Initialize a new body for a application/x-www-form-urlencoded request with values from the provided query items
     ///
     /// - Returns: HTTPBody
