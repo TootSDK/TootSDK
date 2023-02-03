@@ -5,6 +5,7 @@ import Foundation
 import MultipartKitTootSDK
 
 public extension TootClient {
+    /// Uploads a media to the server so it can be used when publishing posts
     func uploadMedia(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> MediaAttachment {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "media"])
