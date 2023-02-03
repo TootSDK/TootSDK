@@ -75,10 +75,10 @@
     {
       "identity" : "multipart-kit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/multipart-kit.git",
+      "location" : "https://github.com/TootSDK/multipart-kit",
       "state" : {
-        "revision" : "0d55c35e788451ee27222783c7d363cb88092fab",
-        "version" : "4.5.2"
+        "branch" : "tootsdk",
+        "revision" : "76833197360806c521d69320beed0fcc574d1390"
       }
     },
     {
