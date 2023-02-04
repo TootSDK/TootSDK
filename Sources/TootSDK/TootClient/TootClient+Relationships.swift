@@ -145,7 +145,7 @@ extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "relationships"])
             $0.method = .get
-            $0.query = ids.map({URLQueryItem(name: "id", value: $0)})
+            $0.query = ids.map({URLQueryItem(name: "id[]", value: $0)})
         }
         return try await fetch([Relationship].self, req)
     }
