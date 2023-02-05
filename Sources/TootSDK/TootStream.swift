@@ -40,24 +40,26 @@ private protocol TootStreamHolder {
     var refresh: (() async throws -> Void)? {get}
 }
 
-private class TootEndpointStream<E: TootStream>: TootStreamHolder {
-    public typealias ReturnType = E.ResponseType
+internal class TootEndpointStream<E: TootStream>: TootStreamHolder {
+    internal typealias ReturnType = E.ResponseType
     let endpoint: E
-    init(_ endpoint: E) {
+    
+    internal init(_ endpoint: E) {
         self.endpoint = endpoint
     }
     
-    lazy public var stream: AsyncStream<ReturnType> = AsyncStream<ReturnType> { continuation in
+    lazy internal var stream: AsyncStream<ReturnType> = AsyncStream<ReturnType> { continuation in
         self.internalContinuation = continuation
     }
     
-    public var internalContinuation: AsyncStream<ReturnType>.Continuation?
-    public var pageInfo: PagedInfo?
-    public var refresh: (() async throws -> Void)?
+    internal var internalContinuation: AsyncStream<ReturnType>.Continuation?
+    internal var pageInfo: PagedInfo?
+    internal var refresh: (() async throws -> Void)?
 }
 
 // MARK: - TootDataStream
 
+/// Provides a holder that returns streams of AsyncSequence data that can be refreshed, posts, account data etc
 public actor TootDataStream {
     private var client: TootClient
     
@@ -65,6 +67,9 @@ public actor TootDataStream {
     private var cachedStreams: [AnyHashable: any TootStreamHolder] = [:]
     
     // MARK: - Initialization
+    
+    /// Initialises a TootStream with a given client, it is assumed the client is authorized already
+    /// - Parameter client:TootClient to provide data streams for
     public init(client: TootClient) {
         self.client = client
     }
@@ -83,12 +88,13 @@ public actor TootDataStream {
         }
     }
     
-    /// Reloads data in the selected stream
+    /// Reloads data in the selected stream for post toot straems
     public func refresh(_ stream: PostTootStreams) async throws {
         let streamHolder = cachedStreams[stream]
         try await streamHolder?.refresh?()
     }
     
+    /// Reloads data in the selected stream for account toot streams
     public func refresh(_ stream: AccountTootStreams) async throws {
         let streamHolder = cachedStreams[stream]
         try await streamHolder?.refresh?()

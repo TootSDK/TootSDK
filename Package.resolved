@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "multipart-kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/TootSDK/multipart-kit",
-      "state" : {
-        "branch" : "tootsdk",
-        "revision" : "76833197360806c521d69320beed0fcc574d1390"
-      }
-    },
-    {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-atomics.git",

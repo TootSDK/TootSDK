@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MediaAttachment Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/MediaAttachment" class="dashAnchor"></a>
+    <a title="MediaAttachment Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">TootSDK Docs</a> (62% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">TootSDK Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        MediaAttachment Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Actors.html">Actors</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Actors/TootDataStream.html">TootDataStream</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Account.html">Account</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Account/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AppKitAttribStringRenderer.html">AppKitAttribStringRenderer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Post.html">Post</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Post/Visibility.html">– Visibility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TootClient.html">TootClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:7TootSDK0A7DecoderC">TootDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TootEncoder.html">TootEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UIKitAttribStringRenderer.html">UIKitAttribStringRenderer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UniversalRenderer.html">UniversalRenderer</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AccountTootStreams.html">AccountTootStreams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentType.html">AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DomainBlockSeverity.html">DomainBlockSeverity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/HTTPMethod.html">HTTPMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListRepliesPolicy.html">ListRepliesPolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PostTootStreams.html">PostTootStreams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TootSDKError.html">TootSDKError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TootSDKFlavour.html">TootSDKFlavour</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSMutableAttributedString.html">NSMutableAttributedString</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TootStream.html">TootStream</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AccessToken.html">AccessToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountLookup.html">AccountLookup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Activity.html">Activity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AddAccountsToListParams.html">AddAccountsToListParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Alerts.html">Alerts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Announcement.html">Announcement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnnouncementReaction.html">AnnouncementReaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Attachment.html">Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AttachmentMeta.html">AttachmentMeta</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AttachmentMetaFocus.html">AttachmentMetaFocus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AttachmentMetaInfo.html">AttachmentMetaInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/BlockDomainParams.html">BlockDomainParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CallbackInfo.html">CallbackInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Card.html">Card</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Card/CardType.html">– CardType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Context.html">Context</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Conversation.html">Conversation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CreatePoll.html">CreatePoll</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DomainBlock.html">DomainBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditPostParams.html">EditPostParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Emoji.html">Emoji</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FeaturedTag.html">FeaturedTag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Filter.html">Filter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Filter/Context.html">– Context</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FollowAccountParams.html">FollowAccountParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityProof.html">IdentityProof</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Instance.html">Instance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Instance/URLs.html">– URLs</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Instance/Stats.html">– Stats</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/List.html">List</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ListOauthAppsParams.html">ListOauthAppsParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ListParams.html">ListParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Marker.html">Marker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Marker/Timeline.html">– Timeline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MediaAttachment.html">MediaAttachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Mention.html">Mention</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MuteAccountParams.html">MuteAccountParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PagedInfo.html">PagedInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PagedResult.html">PagedResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Pagination.html">Pagination</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PleromaFollowByURIParams.html">PleromaFollowByURIParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PleromaOauthApp.html">PleromaOauthApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:7TootSDK24PleromaOauthAppsResponseV">PleromaOauthAppsResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Poll.html">Poll</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Poll/Option.html">– Option</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PostEdit.html">PostEdit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PostParams.html">PostParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PostSource.html">PostSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Preferences.html">Preferences</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Preferences/ExpandMedia.html">– ExpandMedia</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PushSubscription.html">PushSubscription</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Relationship.html">Relationship</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RemoveAccountsFromListParams.html">RemoveAccountsFromListParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Report.html">Report</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Results.html">Results</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ScheduledPost.html">ScheduledPost</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ScheduledPostParams.html">ScheduledPostParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Tag.html">Tag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TagHistory.html">TagHistory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootApplication.html">TootApplication</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootContent.html">TootContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootField.html">TootField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootHTML.html">TootHTML</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootNotification.html">TootNotification</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootNotification/NotificationType.html">– NotificationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TootSource.html">TootSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UploadMediaAttachmentParams.html">UploadMediaAttachmentParams</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>MediaAttachment</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MediaAttachment</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">Hashable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV2id4type3url9remoteUrl07previewI04meta11description8blurhashACSS_AA0D4TypeOSSSgA2nA0D4MetaVSgA2Ntcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(id:type:url:remoteUrl:previewUrl:meta:description:blurhash:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV2id4type3url9remoteUrl07previewI04meta11description8blurhashACSS_AA0D4TypeOSSSgA2nA0D4MetaVSgA2Ntcfc">init(id:<wbr>type:<wbr>url:<wbr>remoteUrl:<wbr>previewUrl:<wbr>meta:<wbr>description:<wbr>blurhash:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentType.html">AttachmentType</a></span><span class="p">,</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">remoteUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">previewUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">meta</span><span class="p">:</span> <span class="kt"><a href="../Structs/AttachmentMeta.html">AttachmentMeta</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">blurhash</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV2idSSvp"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV2idSSvp">id</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The ID of the attachment in the database.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV4typeAA0D4TypeOvp"></a>
+                    <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV4typeAA0D4TypeOvp">type</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The type of the attachment.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentType.html">AttachmentType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV3urlSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV3urlSSSgvp">url</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The location of the original full-size attachment.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV9remoteUrlSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/remoteUrl" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV9remoteUrlSSSgvp">remoteUrl</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The location of the full-size original attachment on the remote website.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">remoteUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV10previewUrlSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/previewUrl" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV10previewUrlSSSgvp">previewUrl</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The location of a scaled-down preview of the attachment.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">previewUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV4metaAA0D4MetaVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/meta" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV4metaAA0D4MetaVSgvp">meta</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Metadata returned by Paperclip, only <code>original</code>, <code>small</code> and <code>focus</code> are serialized.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">meta</span><span class="p">:</span> <span class="kt"><a href="../Structs/AttachmentMeta.html">AttachmentMeta</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV11descriptionSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV11descriptionSSSgvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK15MediaAttachmentV8blurhashSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/blurhash" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK15MediaAttachmentV8blurhashSSSgvp">blurhash</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A hash computed by the BlurHash algorithm, for generating colorful preview thumbnails when media has not been downloaded yet.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">blurhash</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2023-02-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
