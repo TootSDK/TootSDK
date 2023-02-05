@@ -55,4 +55,24 @@ public extension TootClient {
         }
         return try await fetch(MediaAttachment.self, req)
     }
+    
+    /// Get a media attachment, before it is attached to a status and posted, but after it is accepted for processing.
+    /// Use this method to check that the full-sized media has finished processing.
+    ///
+    /// - Parameter id: The ID of the attachment.
+    /// - Returns: `Attachment` if media file was processed, and a `url` to processed media is available. `nil` otherwise.
+    func getMedia(id: Attachment.ID) async throws -> Attachment? {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "media", id])
+            $0.method = .get
+        }
+        
+        let (data, response) = try await fetch(req: req)
+        
+        if response.statusCode == 206 {
+            return nil
+        }
+        
+        return try decode(Attachment.self, from: data)
+    }
 }
