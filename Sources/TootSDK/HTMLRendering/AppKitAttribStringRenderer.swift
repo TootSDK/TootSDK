@@ -24,7 +24,7 @@ public class AppKitAttribStringRenderer {
             return TootContent(wrappedValue: "", plainContent: "", attributedString: NSAttributedString(string: ""))
         }
         
-        return try render(html: html, emojis: emojis)
+        return try renderHTML(html: html, emojis: emojis)
     }
     
     /// Renders the provided HTML string
@@ -32,7 +32,7 @@ public class AppKitAttribStringRenderer {
     ///   - html: html description
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
     /// - Returns: an instance `TootContent` with various representations of the content
-    public func render(html: String, emojis: [Emoji]) throws -> TootContent {
+    private func renderHTML(html: String, emojis: [Emoji]) throws -> TootContent {
         var html = html
         // attempt to parse emojis and other special content
         // Replace the custom emojis with image refs
@@ -168,6 +168,9 @@ public class AppKitAttribStringRenderer {
         }
     }
     
+    /// Renders a post into TootContent
+    /// - Parameter tootPost: the post to render
+    /// - Returns: the TootContent constructed
     public func render(_ tootPost: Post) -> TootContent {
         do {
             return try render(html: tootPost.content ?? "", emojis: tootPost.emojis)
