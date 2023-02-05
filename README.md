@@ -90,7 +90,7 @@ let posts = try await client.data.stream(.timeLineHome)
 
 ## Further Documentation 📖
 
-- Reference documentation is available [here](https://tootsdk.github.io/tootsdk/docs)
+- Reference documentation is available [here](https://tootsdk.github.io/TootSDK/)
 - Example apps:
   - [swiftui-toot](Examples/swiftui-toot/) - a SwiftUI app that shows authorization, a user's feed, posting and account operations
   - [swiftyadmin](Examples/swiftyadmin) - a command line utility to interact with and control a server using TootSDK
