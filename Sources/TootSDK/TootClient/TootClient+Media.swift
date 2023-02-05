@@ -55,4 +55,24 @@ public extension TootClient {
         }
         return try await fetch(MediaAttachment.self, req)
     }
+    
+    /// Retrieve the details of a media attachment that corresponds to the given identifier.
+    ///
+    /// Requests to Mastodon API flavour return `nil` until the attachment has finished processing.
+    /// - Parameter id: The local ID of the attachment.
+    /// - Returns: `Attachment` with a `url` to the media if available. `nil` otherwise.
+    func getMedia(id: Attachment.ID) async throws -> Attachment? {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "media", id])
+            $0.method = .get
+        }
+        
+        let (data, response) = try await fetch(req: req)
+        
+        if flavour == .mastodon && response.statusCode == 206 {
+            return nil
+        }
+        
+        return try decode(Attachment.self, from: data)
+    }
 }

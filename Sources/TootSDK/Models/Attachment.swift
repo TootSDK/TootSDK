@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Attachment: Codable, Hashable {
+public struct Attachment: Codable, Hashable, Identifiable {
     public init(id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
         self.id = id
         self.type = type
