@@ -9,7 +9,7 @@ import Foundation
 
 public extension TootClient {
     
-    private func getPosts(_ req: HTTPRequestBuilder, _ pageInfo: PagedInfo? = nil, _ limit: Int? = nil) async throws -> PagedResult<[Post]> {
+    internal func getPosts(_ req: HTTPRequestBuilder, _ pageInfo: PagedInfo? = nil, _ limit: Int? = nil) async throws -> PagedResult<[Post]> {
         let (data, response) = try await fetch(req: req)
         let decoded = try decode([Post].self, from: data)
         var pagination: Pagination?
