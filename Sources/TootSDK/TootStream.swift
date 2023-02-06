@@ -16,6 +16,9 @@ public enum PostTootStreams: Hashable {
     
     /// A stream of the user's home timeline
     case timeLineHome
+    
+    /// A stream of the user's favourite posts
+    case favourites
 }
 
 extension PostTootStreams: TootStream {
@@ -119,6 +122,15 @@ extension TootDataStream {
         case .timeLineHome:
             newHolder.refresh = {[weak self, weak newHolder] in
                 if let items = try await self?.client.getHomeTimeline(pageInfo) {
+                    newHolder?.internalContinuation?.yield(items.result)
+                }
+            }
+            self.cachedStreams[stream] = newHolder
+            return newHolder.stream
+
+        case .favourites:
+            newHolder.refresh = {[weak self, weak newHolder] in
+                if let items = try await self?.client.getFavorites(pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
                 }
             }
