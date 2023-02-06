@@ -19,6 +19,9 @@ public enum PostTootStreams: Hashable {
     
     /// A stream of the user's favourite posts
     case favourites
+    
+    /// A stream of the user's bookmarked posts
+    case bookmarks
 }
 
 extension PostTootStreams: TootStream {
@@ -131,6 +134,15 @@ extension TootDataStream {
         case .favourites:
             newHolder.refresh = {[weak self, weak newHolder] in
                 if let items = try await self?.client.getFavorites(pageInfo) {
+                    newHolder?.internalContinuation?.yield(items.result)
+                }
+            }
+            self.cachedStreams[stream] = newHolder
+            return newHolder.stream
+
+        case .bookmarks:
+            newHolder.refresh = {[weak self, weak newHolder] in
+                if let items = try await self?.client.getBookmarks(pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
                 }
             }
