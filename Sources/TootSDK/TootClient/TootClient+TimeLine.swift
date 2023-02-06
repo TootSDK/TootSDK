@@ -42,7 +42,7 @@ public extension TootClient {
         return try await getPosts(req, pageInfo, limit)
     }
     
-    /// View favourite posts.
+    /// View posts that the user has favourited.
     func getFavorites(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "favourites"])
