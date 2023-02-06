@@ -241,6 +241,8 @@ extension TootClient {
         guard let accessToken = info.accessToken else {
             throw TootSDKError.clientAuthorizationFailed
         }
+
+        self.accessToken = accessToken
         
         return accessToken
     }
