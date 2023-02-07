@@ -4,13 +4,15 @@
 import XCTest
 @testable import TootSDK
 
+@available(tvOS 15, *)
+@available(watchOS 8, *)
 @available(iOS 15, *)
 final class AttribStringRendererTests: XCTestCase {
     let serverUrl: String = "https://m.iamkonstantin.eu"
     
 #if canImport(UIKit)
         let renderer = UIKitAttribStringRenderer()
-#elseif canImport(AppKit)
+#elseif canImport(AppKit) && !targetEnvironment(macCatalyst)
         let renderer = AppKitAttribStringRenderer()
 #else
     let renderer = UniversalRenderer()
