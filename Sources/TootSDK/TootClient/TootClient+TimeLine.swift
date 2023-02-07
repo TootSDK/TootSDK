@@ -52,4 +52,14 @@ public extension TootClient {
         return try await getPosts(req, pageInfo, limit)
     }
     
+    /// View posts that the user has bookmarked.
+    func getBookmarks(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "bookmarks"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+        return try await getPosts(req, pageInfo, limit)
+    }
+    
 }

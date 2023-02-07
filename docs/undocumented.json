@@ -1843,28 +1843,28 @@
     },
     {
       "file": "/Users/david/dev/TootSDK/Sources/TootSDK/TootStream.swift",
-      "line": 25,
+      "line": 28,
       "symbol": "PostTootStreams.ResponseType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/david/dev/TootSDK/Sources/TootSDK/TootStream.swift",
-      "line": 30,
+      "line": 33,
       "symbol": "AccountTootStreams.verifyCredentials",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/david/dev/TootSDK/Sources/TootSDK/TootStream.swift",
-      "line": 31,
+      "line": 34,
       "symbol": "AccountTootStreams.account(id:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/david/dev/TootSDK/Sources/TootSDK/TootStream.swift",
-      "line": 35,
+      "line": 38,
       "symbol": "AccountTootStreams.ResponseType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
