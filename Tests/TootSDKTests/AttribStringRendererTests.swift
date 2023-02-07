@@ -10,7 +10,7 @@ final class AttribStringRendererTests: XCTestCase {
     
 #if canImport(UIKit)
         let renderer = UIKitAttribStringRenderer()
-#elseif canImport(AppKit)
+#elseif canImport(AppKit) && !targetEnvironment(macCatalyst)
         let renderer = AppKitAttribStringRenderer()
 #else
     let renderer = UniversalRenderer()

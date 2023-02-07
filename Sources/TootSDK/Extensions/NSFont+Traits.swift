@@ -1,7 +1,7 @@
 // Created by konstantin on 20/01/2023.
 // Copyright (c) 2023. All rights reserved.
 
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import CoreText
 import class AppKit.NSFont
 import class AppKit.NSFontDescriptor

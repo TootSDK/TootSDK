@@ -1,7 +1,7 @@
 //  AppKitAttribStringRenderer.swift
 //  Created by dave on 28/12/22.
 
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import Foundation
 import AppKit
 import WebURL
