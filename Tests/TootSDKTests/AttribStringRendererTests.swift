@@ -4,6 +4,7 @@
 import XCTest
 @testable import TootSDK
 
+@available(tvOS 15, *)
 @available(watchOS 8, *)
 @available(iOS 15, *)
 final class AttribStringRendererTests: XCTestCase {
