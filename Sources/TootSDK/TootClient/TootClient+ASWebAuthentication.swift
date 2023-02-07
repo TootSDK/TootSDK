@@ -17,7 +17,7 @@ extension TootClient {
     ///   - prefersEphemeralWebBrowserSession: A Boolean value that indicates whether the session should ask the browser for a private authentication session.
     ///   - presentationContextProvider: A delegate that provides a display context in which the system can present an authentication session to the user.
     /// - Returns: The auth token for the user if authentication succeeds.
-    @MainActor public func presentSignIn(callbackURI: String, prefersEphemeralWebBrowserSession:Bool = false, presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil) async throws -> String {
+    @MainActor public func presentSignIn(callbackURI: String, prefersEphemeralWebBrowserSession: Bool = false, presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil) async throws -> String {
         
         let authUrl = try await createAuthorizeURL(callbackURI: callbackURI)
         
