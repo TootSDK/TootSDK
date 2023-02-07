@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "bettersafariview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/stleamist/BetterSafariView",
-      "state" : {
-        "branch" : "main",
-        "revision" : "9c051d20dbb50fa61d014d87b4ab6c5504408a73"
-      }
-    },
-    {
       "identity" : "emojitext",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divadretlaw/EmojiText",

@@ -5,6 +5,7 @@
 //  Created by dave on 7/11/22.
 //
 
+import AuthenticationServices
 import Foundation
 import TootSDK
 import SwiftKeychainWrapper
@@ -27,6 +28,18 @@ public class TootManager: ObservableObject {
             self.currentClient = TootClient(instanceURL: instanceURL, accessToken: accessToken)
             self.currentClient?.debugOn()
             self.authenticated = true
+        }
+    }
+    
+    @MainActor public func createClientAndPresentSignIn(_ url: URL, prefersEphemeralWebBrowserSession:Bool = false, presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil) async throws {
+        self.currentClient = TootClient(instanceURL: url)
+        
+        if let accessToken = try await currentClient?.presentSignIn(callbackURI: callbackURI, prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession, presentationContextProvider: presentationContextProvider) {
+            if let instanceURL = currentClient?.instanceURL {
+                KeychainWrapper.standard.set(instanceURL.absoluteString, forKey: self.instanceKey)
+                KeychainWrapper.standard.set(accessToken, forKey: self.accessTokenKey)
+                authenticated = true
+            }
         }
     }
     
