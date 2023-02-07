@@ -721,6 +721,85 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7TootSDK0A6ClientC13presentSignIn11callbackURI33prefersEphemeralWebBrowserSession27presentationContextProviderS2S_SbSo031ASWebAuthenticationPresentationO9Providing_pSgtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/presentSignIn(callbackURI:prefersEphemeralWebBrowserSession:presentationContextProvider:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC13presentSignIn11callbackURI33prefersEphemeralWebBrowserSession27presentationContextProviderS2S_SbSo031ASWebAuthenticationPresentationO9Providing_pSgtYaKF">presentSignIn(callbackURI:<wbr>prefersEphemeralWebBrowserSession:<wbr>presentationContextProvider:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Presents a authentication/authorization page using ASWebAuthenticationSession.
+When signIn is initiated on supported platforms, the authorization web page will be presented in a system-dependent manner that negates the need for user&rsquo;s to implement a custom web view. Upon successful authentication (or cancellation), control will be return to this function to handle token retrieval.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">presentSignIn</span><span class="p">(</span><span class="nv">callbackURI</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">prefersEphemeralWebBrowserSession</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">presentationContextProvider</span><span class="p">:</span> <span class="kt">ASWebAuthenticationPresentationContextProviding</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callbackURI</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The callback URI  (<code>redirect_uri</code>) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>prefersEphemeralWebBrowserSession</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A Boolean value that indicates whether the session should ask the browser for a private authentication session.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>presentationContextProvider</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A delegate that provides a display context in which the system can present an authentication session to the user.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The auth token for the user if authentication succeeds.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7TootSDK0A6ClientC17verifyCredentialsAA7AccountCyYaKF"></a>
                     <a name="//apple_ref/swift/Method/verifyCredentials()" class="dashAnchor"></a>
                     <a class="token" href="#/s:7TootSDK0A6ClientC17verifyCredentialsAA7AccountCyYaKF">verifyCredentials()</a>
@@ -3480,7 +3559,7 @@ Exchange the callback authorization code for an accessToken</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2023-02-06)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2023-02-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

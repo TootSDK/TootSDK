@@ -1752,6 +1752,13 @@
     },
     {
       "file": "/Users/david/dev/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
+      "line": 10,
+      "symbol": "TootClient",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/david/dev/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
       "line": 57,
       "symbol": "TootClient",
       "symbol_kind": "source.lang.swift.decl.extension",
