@@ -4,6 +4,7 @@
 import XCTest
 @testable import TootSDK
 
+@available(watchOS 8, *)
 @available(iOS 15, *)
 final class AttribStringRendererTests: XCTestCase {
     let serverUrl: String = "https://m.iamkonstantin.eu"
