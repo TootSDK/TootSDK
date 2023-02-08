@@ -1,7 +1,7 @@
 // Created by david-hosier on 07/02/2023
 // Copyright (c) 2023. All rights reserved.
 
-#if !os(Linux)
+#if canImport(AuthenticationServices)
 
 import AuthenticationServices
 import Foundation
@@ -18,7 +18,9 @@ extension TootClient {
     /// - Returns: The auth token for the user if authentication succeeds.
     @MainActor public func presentSignIn(callbackURI: String,
                                          prefersEphemeralWebBrowserSession: Bool = true,
-                                         presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = TootPresentationAnchor()) async throws -> String {
+                                         presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil) async throws -> String {
+        
+        let presentationContextProvider = presentationContextProvider ?? self.defaultPresentationAnchor
         
         guard
             let callbackURLScheme: String = URL(string: callbackURI)?.scheme
@@ -39,9 +41,7 @@ extension TootClient {
                 return continuation.resume(throwing: TootSDKError.unexpectedError("There was a problem authenticating the user: no URL was returned from the first authentication step."))
             }
             
-            if let presentationContextProvider {
-                authSession.presentationContextProvider = presentationContextProvider
-            }
+            authSession.presentationContextProvider = presentationContextProvider
             
             authSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
             authSession.start()
@@ -54,6 +54,7 @@ extension TootClient {
 
 // via: https://www.andyibanez.com/posts/using-aswebauthenticationaession-swiftui/
 public class TootPresentationAnchor: NSObject, ASWebAuthenticationPresentationContextProviding {
+    
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return ASPresentationAnchor()
     }
