@@ -31,10 +31,10 @@ public class TootManager: ObservableObject {
         }
     }
     
-    @MainActor public func createClientAndPresentSignIn(_ url: URL, prefersEphemeralWebBrowserSession:Bool = false, presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil) async throws {
+    @MainActor public func createClientAndPresentSignIn(_ url: URL) async throws {
         self.currentClient = TootClient(instanceURL: url)
         
-        if let accessToken = try await currentClient?.presentSignIn(callbackURI: callbackURI, prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession, presentationContextProvider: presentationContextProvider) {
+        if let accessToken = try await currentClient?.presentSignIn(callbackURI: callbackURI) {
             if let instanceURL = currentClient?.instanceURL {
                 KeychainWrapper.standard.set(instanceURL.absoluteString, forKey: self.instanceKey)
                 KeychainWrapper.standard.set(accessToken, forKey: self.accessTokenKey)

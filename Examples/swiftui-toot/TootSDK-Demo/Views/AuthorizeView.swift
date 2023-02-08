@@ -47,18 +47,10 @@ struct AuthorizeView: View {
     }
 }
 
-// ht: https://www.andyibanez.com/posts/using-aswebauthenticationaession-swiftui/
-class PresentationAnchor: NSObject, ASWebAuthenticationPresentationContextProviding {
-    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return ASPresentationAnchor()
-    }
-}
-
 extension AuthorizeView {
     @MainActor func attemptSignIn() async throws {
-        guard let url = URL(string: urlString) else { return }
-        
-        try await tootManager.createClientAndPresentSignIn(url, presentationContextProvider: PresentationAnchor())
+        guard let url = URL(string: urlString) else { return }        
+        try await tootManager.createClientAndPresentSignIn(url)
     }
 }
 
