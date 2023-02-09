@@ -1,7 +1,7 @@
 // Created by david-hosier on 07/02/2023
 // Copyright (c) 2023. All rights reserved.
 
-#if canImport(AuthenticationServices)
+#if canImport(AuthenticationServices) && !os(tvOS) && !os(watchOS)
 
 import AuthenticationServices
 import Foundation
