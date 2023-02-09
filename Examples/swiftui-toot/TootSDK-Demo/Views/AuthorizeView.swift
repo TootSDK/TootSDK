@@ -6,13 +6,8 @@
 //
 
 import SwiftUI
-import BetterSafariView
 import TootSDK
-
-struct AuthorizationDetails: Identifiable {
-    var id = UUID()
-    var authURL: URL
-}
+import AuthenticationServices
 
 struct AuthorizeView: View {
     @EnvironmentObject var tootManager: TootManager
@@ -20,7 +15,6 @@ struct AuthorizeView: View {
     @State var urlString: String = ""
     @State var signInDisabled: Bool = false
     @State var test: Bool = false
-    @State var authorizationDetails: AuthorizationDetails?
     
     var body: some View {
         VStack {
@@ -50,49 +44,13 @@ struct AuthorizeView: View {
         .onChange(of: urlString) { urlString in
             signInDisabled = urlString.isEmpty
         }
-        .webAuthenticationSession(item: $authorizationDetails, content: { authorizationDetail in
-            WebAuthenticationSession(
-                url: authorizationDetail.authURL,
-                callbackURLScheme: nil
-            ) { callbackUrl, error in
-                if let callbackUrl = callbackUrl, error == nil {
-                    Task {
-                        do {
-                            try await tootManager.collectAccessToken(callbackUrl)
-                        } catch {
-                            debugPrint(error.localizedDescription)
-                            
-                            switch error as? TootSDKError {
-                            case .invalidStatusCode(_, let response):
-                                print(response.statusCode)
-                            default:
-                                print("none")
-                            }
-
-                        }
-                    }
-                } else {
-                    debugPrint(callbackUrl ?? "")
-                    debugPrint(error?.localizedDescription ?? "")
-                }
-            }
-            .prefersEphemeralWebBrowserSession(false)
-        })
     }
 }
 
 extension AuthorizeView {
-        
     @MainActor func attemptSignIn() async throws {
-        guard let url = URL(string: urlString) else { return }
-        
-        guard
-            let authURL = try await tootManager.createClientAndAuthorizeURL(url)
-        else {
-            return
-        }
-        
-        authorizationDetails = AuthorizationDetails(authURL: authURL)
+        guard let url = URL(string: urlString) else { return }        
+        try await tootManager.createClientAndPresentSignIn(url)
     }
 }
 

@@ -35,6 +35,10 @@ public class TootClient {
     /// The current accessToken in use
     internal var accessToken: String?
     
+    #if canImport(AuthenticationServices) && !os(tvOS) && !os(watchOS)
+    internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
+    #endif
+    
     /// Initialization
     /// - Parameters:
     ///   - session: the URLSession being used internally, defaults to shared

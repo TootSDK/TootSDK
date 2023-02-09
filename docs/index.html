@@ -70,6 +70,9 @@
                 <a href="Classes/TootEncoder.html">TootEncoder</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/TootPresentationAnchor.html">TootPresentationAnchor</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/UIKitAttribStringRenderer.html">UIKitAttribStringRenderer</a>
               </li>
               <li class="nav-group-task">
@@ -394,18 +397,40 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
 <pre class="highlight plaintext"><code>  let instanceURL = URL(string: "social.yourinstance.com")
   let client = TootClient(instanceURL: instanceURL, accessToken: "USERACCESSTOKEN")
 </code></pre>
-<h3 id='collecting-an-authorization-token' class='heading'>Collecting an authorization token:</h3>
+<h3 id='signing-in-for-macos-and-ios' class='heading'>Signing in (for macOS and iOS):</h3>
 
 <ul>
 <li>Instantiate your client without a token:</li>
 </ul>
-<pre class="highlight plaintext"><code>let client = TootClient(instanceURL: instanceURL)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
+</code></pre>
+
+<ul>
+<li>Use the sign in helper we&rsquo;ve created based on <a href="https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession"><code>ASWebAuthenticationSession</code></a>:</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+
+<span class="k">guard</span> <span class="k">let</span> <span class="nv">accessToken</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="nf">presentSignIn</span><span class="p">(</span><span class="nv">callbackURI</span><span class="p">:</span> <span class="n">callbackURI</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// handle failed sign in</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>That&rsquo;s it 🎉!</p>
+
+<p>We recommend keeping the accessToken somewhere secure, for example the Keychain.</p>
+<h3 id='signing-in-all-platforms' class='heading'>Signing in (all platforms):</h3>
+
+<ul>
+<li>Instantiate your client without a token:</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
 </code></pre>
 
 <ul>
 <li>Retrieve an authorization URL to present to the user (so they can sign in)</li>
 </ul>
-<pre class="highlight plaintext"><code>let authURL = client.createAuthorizeURL(callbackURI: "myapp://someurl")
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">authURL</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="nf">createAuthorizeURL</span><span class="p">(</span><span class="nv">callbackURI</span><span class="p">:</span> <span class="s">"myapp://someurl"</span><span class="p">)</span>
 </code></pre>
 
 <ul>
@@ -413,12 +438,12 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
 <li>Let the user sign in, and wait for the callbackURI to be called</li>
 <li>When that callbackURI is called, give it back to the client to collect the token</li>
 </ul>
-<pre class="highlight plaintext"><code>let accessToken = client.collectToken(returnUrl: url, callbackURI: callbackURI)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">accessToken</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="nf">collectToken</span><span class="p">(</span><span class="nv">returnUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">callbackURI</span><span class="p">:</span> <span class="n">callbackURI</span><span class="p">)</span>
 </code></pre>
 
 <p>We recommend keeping the accessToken somewhere secure, for example the Keychain.</p>
 <h3 id='accessing-a-user-39-s-home-feedfeed' class='heading'>Accessing a user&rsquo;s home feedfeed</h3>
-<pre class="highlight plaintext"><code>let posts = try await client.data.stream(.timeLineHome)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">posts</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="nf">stream</span><span class="p">(</span><span class="o">.</span><span class="n">timeLineHome</span><span class="p">)</span>
 </code></pre>
 <h2 id='further-documentation' class='heading'>Further Documentation 📖</h2>
 
@@ -461,7 +486,7 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2023-02-06)</p>
+          <p>Copyright (c) 2022, Konstantin Kostov and David Gary Wood</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

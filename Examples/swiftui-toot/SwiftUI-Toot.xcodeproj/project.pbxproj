@@ -10,7 +10,6 @@
 		550CF6662931E3AC00D07EA0 /* PostOperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550CF6652931E3AC00D07EA0 /* PostOperationsView.swift */; };
 		550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */; };
 		550CF66E2931F9A000D07EA0 /* UserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550CF66D2931F9A000D07EA0 /* UserAccountView.swift */; };
-		5523E9DD29191656006778D9 /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = 5523E9DC29191656006778D9 /* BetterSafariView */; };
 		552BFB0129409AB300FB46D3 /* ScheduledPostOperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */; };
 		553CFB392952B99700F3EB69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB382952B99700F3EB69 /* AccountView.swift */; };
 		553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3A2952BD0200F3EB69 /* ButtonView.swift */; };
@@ -64,7 +63,6 @@
 			files = (
 				55B19AE3297E14DB0097B1F8 /* EmojiText in Frameworks */,
 				55B8B17B2917675700339479 /* TootSDK in Frameworks */,
-				5523E9DD29191656006778D9 /* BetterSafariView in Frameworks */,
 				55B19AE8297E208E0097B1F8 /* NukeUI in Frameworks */,
 				550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */,
 				55B19AE6297E208E0097B1F8 /* Nuke in Frameworks */,
@@ -191,7 +189,6 @@
 			name = "SwiftUI-Toot";
 			packageProductDependencies = (
 				55B8B17A2917675700339479 /* TootSDK */,
-				5523E9DC29191656006778D9 /* BetterSafariView */,
 				550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */,
 				55B19AE2297E14DB0097B1F8 /* EmojiText */,
 				55B19AE5297E208E0097B1F8 /* Nuke */,
@@ -226,7 +223,6 @@
 			);
 			mainGroup = 55ACC1D32917618F0046363F;
 			packageReferences = (
-				5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 				55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */,
 				55B19AE4297E208E0097B1F8 /* XCRemoteSwiftPackageReference "Nuke" */,
@@ -485,14 +481,6 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stleamist/BetterSafariView";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/divadretlaw/EmojiText";
@@ -516,11 +504,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
-		};
-		5523E9DC29191656006778D9 /* BetterSafariView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5523E9DB29191656006778D9 /* XCRemoteSwiftPackageReference "BetterSafariView" */;
-			productName = BetterSafariView;
 		};
 		55B19AE2297E14DB0097B1F8 /* EmojiText */ = {
 			isa = XCSwiftPackageProductDependency;
