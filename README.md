@@ -58,17 +58,40 @@ It's easy to get started with TootSDK.
   let client = TootClient(instanceURL: instanceURL, accessToken: "USERACCESSTOKEN")
 ```
 
-### Collecting an authorization token:
+### Signing in (for macOS and iOS):
+- Instantiate your client without a token:
+
+```swift
+let client = TootClient(instanceURL: instanceURL)
+```
+
+- Use the sign in helper we've created based on [`ASWebAuthenticationSession`](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession):
+
+```swift
+let client = TootClient(instanceURL: url)
+
+guard let accessToken = try await client.presentSignIn(callbackURI: callbackURI) else {
+    // handle failed sign in
+    return
+}
+```
+
+That's it 🎉!
+
+
+We recommend keeping the accessToken somewhere secure, for example the Keychain.
+
+### Signing in (all platforms):
 
 - Instantiate your client without a token:
 
-```
+```swift
 let client = TootClient(instanceURL: instanceURL)
 ```
 
 - Retrieve an authorization URL to present to the user (so they can sign in)
 
-```
+```swift
 let authURL = client.createAuthorizeURL(callbackURI: "myapp://someurl")
 ```
 
@@ -76,7 +99,7 @@ let authURL = client.createAuthorizeURL(callbackURI: "myapp://someurl")
 - Let the user sign in, and wait for the callbackURI to be called
 - When that callbackURI is called, give it back to the client to collect the token
 
-```
+```swift
 let accessToken = client.collectToken(returnUrl: url, callbackURI: callbackURI)
 ```
 
@@ -84,7 +107,7 @@ We recommend keeping the accessToken somewhere secure, for example the Keychain.
 
 ### Accessing a user's home feedfeed
 
-```
+```swift
 let posts = try await client.data.stream(.timeLineHome)
 ```
 
