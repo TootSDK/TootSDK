@@ -1,23 +1,23 @@
 {
-    "uri": "mastodon.social",
-    "title": "Mastodon",
-    "short_description": "The original server operated by the Mastodon gGmbH non-profit",
+    "uri": "social.davidgarywood.com",
+    "title": "Dave's corner of the 'verse",
+    "short_description": "",
     "description": "",
-    "email": "staff@mastodon.social",
-    "version": "4.1.0rc3",
+    "email": "contact@social.davidgarywood.com",
+    "version": "4.0.2",
     "urls": {
-        "streaming_api": "wss://streaming.mastodon.social"
+        "streaming_api": "wss://social.davidgarywood.com"
     },
     "stats": {
-        "user_count": 929919,
-        "status_count": 50272420,
-        "domain_count": 50676
+        "user_count": 5,
+        "status_count": 3271,
+        "domain_count": 12579
     },
-    "thumbnail": "https://files.mastodon.social/site_uploads/files/000/000/001/@1x/57c12f441d083cde.png",
+    "thumbnail": "https://social.davidgarywood.com/system/site_uploads/files/000/000/001/@1x/7001247d49df085a.png",
     "languages": [
         "en"
     ],
-    "registrations": true,
+    "registrations": false,
     "approval_required": false,
     "invites_enabled": true,
     "configuration": {
@@ -74,65 +74,34 @@
         }
     },
     "contact_account": {
-        "id": "1",
-        "username": "Gargron",
-        "acct": "Gargron",
-        "display_name": "Eugen Rochko",
+        "id": "109381296094697066",
+        "username": "admin",
+        "acct": "admin",
+        "display_name": "",
         "locked": false,
         "bot": false,
-        "discoverable": true,
+        "discoverable": null,
         "group": false,
-        "created_at": "2016-03-16T00:00:00.000Z",
-        "note": "\u003cp\u003eFounder, CEO and lead developer \u003cspan class=\"h-card\"\u003e\u003ca href=\"https://mastodon.social/@Mastodon\" class=\"u-url mention\"\u003e@\u003cspan\u003eMastodon\u003c/span\u003e\u003c/a\u003e\u003c/span\u003e, Germany.\u003c/p\u003e",
-        "url": "https://mastodon.social/@Gargron",
-        "avatar": "https://files.mastodon.social/accounts/avatars/000/000/001/original/dc4286ceb8fab734.jpg",
-        "avatar_static": "https://files.mastodon.social/accounts/avatars/000/000/001/original/dc4286ceb8fab734.jpg",
-        "header": "https://files.mastodon.social/accounts/headers/000/000/001/original/3b91c9965d00888b.jpeg",
-        "header_static": "https://files.mastodon.social/accounts/headers/000/000/001/original/3b91c9965d00888b.jpeg",
-        "followers_count": 294375,
-        "following_count": 366,
-        "statuses_count": 73199,
-        "last_status_at": "2023-02-09",
+        "created_at": "2022-11-21T00:00:00.000Z",
+        "note": "",
+        "url": "https://social.davidgarywood.com/@admin",
+        "avatar": "https://social.davidgarywood.com/avatars/original/missing.png",
+        "avatar_static": "https://social.davidgarywood.com/avatars/original/missing.png",
+        "header": "https://social.davidgarywood.com/headers/original/missing.png",
+        "header_static": "https://social.davidgarywood.com/headers/original/missing.png",
+        "followers_count": 0,
+        "following_count": 0,
+        "statuses_count": 0,
+        "last_status_at": null,
         "noindex": false,
         "emojis": [
             
         ],
-        "roles": [
-            
-        ],
         "fields": [
-            {
-                "name": "Patreon",
-                "value": "\u003ca href=\"https://www.patreon.com/mastodon\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\"\u003e\u003cspan class=\"invisible\"\u003ehttps://www.\u003c/span\u003e\u003cspan class=\"\"\u003epatreon.com/mastodon\u003c/span\u003e\u003cspan class=\"invisible\"\u003e\u003c/span\u003e\u003c/a\u003e",
-                "verified_at": null
-            },
-            {
-                "name": "GitHub",
-                "value": "\u003ca href=\"https://github.com/Gargron\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\"\u003e\u003cspan class=\"invisible\"\u003ehttps://\u003c/span\u003e\u003cspan class=\"\"\u003egithub.com/Gargron\u003c/span\u003e\u003cspan class=\"invisible\"\u003e\u003c/span\u003e\u003c/a\u003e",
-                "verified_at": "2023-02-07T23:24:40.347+00:00"
-            }
+            
         ]
     },
     "rules": [
-        {
-            "id": "1",
-            "text": "Sexually explicit or violent media must be marked as sensitive when posting"
-        },
-        {
-            "id": "2",
-            "text": "No racism, sexism, homophobia, transphobia, xenophobia, or casteism"
-        },
-        {
-            "id": "3",
-            "text": "No incitement of violence or promotion of violent ideologies"
-        },
-        {
-            "id": "4",
-            "text": "No harassment, dogpiling or doxxing of other users"
-        },
-        {
-            "id": "7",
-            "text": "Do not share intentionally false or misleading information"
-        }
+        
     ]
 }
