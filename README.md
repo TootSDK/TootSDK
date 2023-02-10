@@ -86,7 +86,7 @@ We recommend keeping the accessToken somewhere secure, for example the Keychain.
 - Instantiate your client without a token:
 
 ```swift
-let client = TootClient(instanceURL: instanceURL)
+let client = try await TootClient(connect: instanceURL)
 ```
 
 - Retrieve an authorization URL to present to the user (so they can sign in)
