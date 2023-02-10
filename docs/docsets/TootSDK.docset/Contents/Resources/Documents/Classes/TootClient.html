@@ -475,6 +475,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7TootSDK0A6ClientC13debugInstanceSbvp"></a>
+                    <a name="//apple_ref/swift/Property/debugInstance" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC13debugInstanceSbvp">debugInstance</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set this to <code>true</code> to see a <code>print()</code> for instance information.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugInstance</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7TootSDK0A6ClientC7flavourAA0A10SDKFlavourOvp"></a>
                     <a name="//apple_ref/swift/Property/flavour" class="dashAnchor"></a>
                     <a class="token" href="#/s:7TootSDK0A6ClientC7flavourAA0A10SDKFlavourOvp">flavour</a>
@@ -606,7 +633,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initialization</p>
+                        <p>Initialize a new instance of <code>TootClient</code> by optionally providing an access token for authentication.</p>
+
+<p>After initializing, you need to manually call <code><a href="../Classes/TootClient.html#/s:7TootSDK0A6ClientC7connectyyYaKF">connect()</a></code> in order to obtain the correct flavour of the server.</p>
 
                       </div>
                       <div class="declaration">
@@ -625,6 +654,18 @@
                         <h4>Parameters</h4>
                         <table class="graybox">
                           <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Name of the client to be used in outgoing HTTP requests. Defaults to <code>TootSDK</code></p>
+                                </div>
+                              </td>
+                            </tr>
                             <tr>
                               <td>
                                 <code>
@@ -658,6 +699,121 @@
                               <td>
                                 <div>
                                   <p>the existing access token; if you already have one</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scopes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of authentication scopes, defaults to <code>&quot;read&quot;, &quot;write&quot;, &quot;follow&quot;, &quot;push&quot;</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC7connect10clientName7session11accessToken6scopesAC10Foundation3URLV_SSSo12NSURLSessionCSSSgSaySSGtYaKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(connect:clientName:session:accessToken:scopes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC7connect10clientName7session11accessToken6scopesAC10Foundation3URLV_SSSo12NSURLSessionCSSSgSaySSGtYaKcfc">init(connect:<wbr>clientName:<wbr>session:<wbr>accessToken:<wbr>scopes:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize and connect a new instance of <code>TootClient</code>.</p>
+
+<p>The initializer calls <code><a href="../Classes/TootClient.html#/s:7TootSDK0A6ClientC7connectyyYaKF">connect()</a></code> internally in order to detect the server flavour.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">connect</span> <span class="nv">instanceURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span>
+            <span class="nv">clientName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"TootSDK"</span><span class="p">,</span>
+            <span class="nv">session</span><span class="p">:</span> <span class="kt">URLSession</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span>
+            <span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">scopes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"read"</span><span class="p">,</span> <span class="s">"write"</span><span class="p">,</span> <span class="s">"follow"</span><span class="p">,</span> <span class="s">"push"</span><span class="p">])</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>instanceURL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the instance you are connecting to</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Name of the client to be used in outgoing HTTP requests. Defaults to <code>TootSDK</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>session</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the URLSession being used internally, defaults to shared</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>accessToken</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the existing access token; if you already have one</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scopes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of authentication scopes, defaults to <code>&quot;read&quot;, &quot;write&quot;, &quot;follow&quot;, &quot;push&quot;</code></p>
                                 </div>
                               </td>
                             </tr>
@@ -3555,6 +3711,36 @@ Exchange the callback authorization code for an accessToken</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7TootSDK0A6ClientC7connectyyYaKF"></a>
+                    <a name="//apple_ref/swift/Method/connect()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7TootSDK0A6ClientC7connectyyYaKF">connect()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">connect</span><span class="p">()</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
