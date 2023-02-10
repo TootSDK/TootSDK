@@ -20,12 +20,7 @@ extension TootClient {
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g @test@instance.test)
     /// - Returns: your relationship with that account after following
     public func followAccountURI(by uri: String) async throws -> Relationship {
-        switch self.flavour {
-        case .mastodon:
-            // Do the webfinger lookup first, then go and follow by account afterwards
-            let accountLookup = try await lookupAccount(uri: uri)
-            return try await followAccount(by: accountLookup.id)
-        case .pleroma:
+        if self.flavour == .pleroma {
             // TODO: - resolve this issue: https://github.com/TootSDK/TootSDK/issues/34 // swiftlint:disable:this todo
             
             // On Pleroma, we get to follow by URI, but it doesn't return a relationship, it returns an account
@@ -38,6 +33,10 @@ extension TootClient {
                 throw TootSDKError.unexpectedError("Unable to retrieve relationship")
             }
         }
+        
+        // Do the webfinger lookup first, then go and follow by account afterwards
+        let accountLookup = try await lookupAccount(uri: uri)
+        return try await followAccount(by: accountLookup.id)
     }
     
     /// Mastodon Specific. Looks up an account based on it's account name or URI, and returns a payload that containts the instance's account id

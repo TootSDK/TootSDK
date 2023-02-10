@@ -250,5 +250,15 @@ extension TootClient {
         
         return accessToken
     }
-    
+}
+
+extension TootClient {
+    /// Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.
+    public func connect() async throws {
+        let instance = try await getInstanceInfo()
+        if debugResponses {
+            print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
+        }
+        self.flavour = instance.flavour
+    }
 }

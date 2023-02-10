@@ -6,4 +6,5 @@ import Foundation
 public enum TootSDKFlavour: String, Codable {
     case mastodon
     case pleroma
+    case pixelfed
 }

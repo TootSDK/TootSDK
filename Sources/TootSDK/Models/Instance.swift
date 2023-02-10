@@ -3,22 +3,10 @@
 
 import Foundation
 
+/// General information about an instance
 public struct Instance: Codable, Hashable {
-    public init(uri: String,
-                title: String,
-                description: String,
-                shortDescription: String? = nil,
-                email: String,
-                version: String,
-                languages: [String]? = nil,
-                registrations: Bool? = nil,
-                approvalRequired: Bool? = nil,
-                invitesEnabled: Bool? = nil,
-                urls: Instance.URLs,
-                stats: Instance.Stats,
-                thumbnail: String? = nil,
-                contactAccount: Account? = nil) {
-        self.domain = uri
+    public init(uri: String, title: String, description: String, shortDescription: String? = nil, email: String, version: String, languages: [String]? = nil, registrations: Bool? = nil, approvalRequired: Bool? = nil, invitesEnabled: Bool? = nil, urls: Instance.URLs, stats: Instance.Stats, thumbnail: String? = nil, contactAccount: Account? = nil) {
+        self.uri = uri
         self.title = title
         self.description = description
         self.shortDescription = shortDescription
@@ -33,9 +21,9 @@ public struct Instance: Codable, Hashable {
         self.thumbnail = thumbnail
         self.contactAccount = contactAccount
     }
-
+    
     /// The domain name of the instance.
-    public var domain: String
+    public var uri: String
     /// The title of the website.
     public var title: String
     /// Admin-defined description of the Fediverse site.
@@ -111,5 +99,17 @@ public extension Instance {
         guard let majorVersion = majorVersion else { return false }
 
         return majorVersion >= 3
+    }
+}
+
+public extension Instance {
+    var flavour: TootSDKFlavour {
+        if version.lowercased().contains("pleroma") {
+            return .pleroma
+        }
+        if version.lowercased().contains("pixelfed") {
+            return .pixelfed
+        }
+        return .mastodon
     }
 }
