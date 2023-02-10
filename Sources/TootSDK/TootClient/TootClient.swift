@@ -18,6 +18,8 @@ public class TootClient {
     public var debugRequests: Bool = false
     /// Set this to `true` to see a `print()` of request response.
     public var debugResponses: Bool = false
+    /// Set this to `true` to see a `print()` for instance information.
+    public var debugInstance: Bool = false
     /// The preferred fediverse server flavour to use for API calls
     public var flavour: TootSDKFlavour = .mastodon
     /// The authorization scopes the client was initialized with
@@ -39,11 +41,15 @@ public class TootClient {
     internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
     #endif
     
-    /// Initialization
+    /// Initialize a new instance of `TootClient` by optionally providing an access token for authentication.
+    ///
+    /// After initializing, you need to manually call ``TootClient/connect()`` in order to obtain the correct flavour of the server.
     /// - Parameters:
+    ///   - clientName: Name of the client to be used in outgoing HTTP requests. Defaults to `TootSDK`
     ///   - session: the URLSession being used internally, defaults to shared
     ///   - instanceURL: the instance you are connecting to
     ///   - accessToken: the existing access token; if you already have one
+    ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
     public init(clientName: String = "TootSDK",
                 session: URLSession = URLSession.shared,
                 instanceURL: URL,
@@ -56,16 +62,40 @@ public class TootClient {
         self.clientName = clientName
     }
     
+    /// Initialize and connect a new instance of `TootClient`.
+    ///
+    /// The initializer calls ``TootClient/connect()`` internally in order to detect the server flavour.
+    /// - Parameters:
+    ///   - instanceURL: the instance you are connecting to
+    ///   - clientName: Name of the client to be used in outgoing HTTP requests. Defaults to `TootSDK`
+    ///   - session: the URLSession being used internally, defaults to shared
+    ///   - accessToken: the existing access token; if you already have one
+    ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
+    public init(connect instanceURL: URL,
+                clientName: String = "TootSDK",
+                session: URLSession = URLSession.shared,
+                accessToken: String? = nil,
+                scopes: [String] = ["read", "write", "follow", "push"]) async throws {
+        self.session = session
+        self.instanceURL = instanceURL
+        self.accessToken = accessToken
+        self.scopes = scopes
+        self.clientName = clientName
+        try await connect()
+    }
+    
     /// Prints extra debug details like outgoing requests and responses
     public func debugOn() {
         self.debugRequests = true
         self.debugResponses = true
+        self.debugInstance = true
     }
     
     /// Stops printing debug details
     public func debugOff() {
         self.debugRequests = false
         self.debugResponses = false
+        self.debugInstance = false
     }
 }
 
@@ -256,9 +286,9 @@ extension TootClient {
     /// Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.
     public func connect() async throws {
         let instance = try await getInstanceInfo()
-        if debugResponses {
+         if debugInstance {
             print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
-        }
+         }
         self.flavour = instance.flavour
     }
 }
