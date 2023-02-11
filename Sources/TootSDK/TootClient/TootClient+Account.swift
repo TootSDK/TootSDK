@@ -30,13 +30,33 @@ extension TootClient {
         return try await fetch(Account.self, req)
     }
     
+    /// Get all accounts which follow the given account, if network is not hidden by the account owner.
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the accounts requested, or an error if unable to retrieve
+    public func getFollowers(for id: String) async throws -> [Account] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "followers"])
+            $0.method = .get
+        }
+        return try await fetch([Account].self, req)
+    }
+    
+    /// Get all accounts which the given account is following, if network is not hidden by the account owner.
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the accounts requested, or an error if unable to retrieve
+    public func getFollowing(for id: String) async throws -> [Account] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "following"])
+            $0.method = .get
+        }
+        return try await fetch([Account].self, req)
+    }
+    
     // swiftlint:disable todo
     // TODO: - Register an account
     // TODO: - Update account credentials
     
     // TODO: - Get account’s posts
-    // TODO: - Get account’s followers
-    // TODO: - Get account’s following
     // TODO: - Get account’s featured tags
     // TODO: - Get lists containing this account
     // TODO: - Feature account on your profile
