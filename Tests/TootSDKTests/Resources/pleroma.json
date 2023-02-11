@@ -1,0 +1,149 @@
+{
+    "approval_required": true,
+    "avatar_upload_limit": 2000000,
+    "background_image": "https://m.iamkonstantin.eu/images/city.jpg",
+    "background_upload_limit": 4000000,
+    "banner_upload_limit": 4000000,
+    "description": "The fediverse is a big place. This is just a tiny corner from a bigger picture.",
+    "description_limit": 5000,
+    "email": "hi@iamkonstantin.eu",
+    "languages": [
+        "en"
+    ],
+    "max_media_attachments": 1000,
+    "max_toot_chars": 5000,
+    "pleroma": {
+        "metadata": {
+            "account_activation_required": false,
+            "birthday_min_age": 0,
+            "birthday_required": false,
+            "features": [
+                "pleroma_api",
+                "mastodon_api",
+                "mastodon_api_streaming",
+                "polls",
+                "v2_suggestions",
+                "pleroma_explicit_addressing",
+                "shareable_emoji_packs",
+                "multifetch",
+                "pleroma:api/v1/notifications:include_types_filter",
+                "editing",
+                "blockers_visible",
+                "media_proxy",
+                "chat",
+                "shout",
+                "relay",
+                "pleroma_emoji_reactions",
+                "pleroma_chat_messages",
+                "exposable_reactions",
+                "profile_directory",
+                "pleroma:get:main/ostatus"
+            ],
+            "federation": {
+                "enabled": true,
+                "exclusions": false,
+                "mrf_hashtag": {
+                    "federated_timeline_removal": [
+                        
+                    ],
+                    "reject": [
+                        
+                    ],
+                    "sensitive": [
+                        "nsfw"
+                    ]
+                },
+                "mrf_object_age": {
+                    "actions": [
+                        "delist",
+                        "strip_followers"
+                    ],
+                    "threshold": 604800
+                },
+                "mrf_policies": [
+                    "ObjectAgePolicy",
+                    "TagPolicy",
+                    "SimplePolicy",
+                    "HashtagPolicy"
+                ],
+                "mrf_simple": {
+                    "accept": [
+                        
+                    ],
+                    "avatar_removal": [
+                        
+                    ],
+                    "banner_removal": [
+                        
+                    ],
+                    "federated_timeline_removal": [
+                        
+                    ],
+                    "followers_only": [
+                        
+                    ],
+                    "media_nsfw": [
+                        
+                    ],
+                    "media_removal": [
+                        
+                    ],
+                    "reject": [],
+                    "reject_deletes": [],
+                    "report_removal": [
+                        
+                    ]
+                },
+                "mrf_simple_info": {
+                    
+                },
+                "quarantined_instances": [
+                    
+                ],
+                "quarantined_instances_info": {
+                    "quarantined_instances": {
+                        
+                    }
+                }
+            },
+            "fields_limits": {
+                "max_fields": 10,
+                "max_remote_fields": 20,
+                "name_length": 512,
+                "value_length": 2048
+            },
+            "post_formats": [
+                "text/plain",
+                "text/html",
+                "text/markdown",
+                "text/bbcode"
+            ]
+        },
+        "stats": {
+            "mau": 1
+        },
+        "vapid_public_key": "BNeMI0Ao6dqjOG45vdiEs2p8Of83Eqd2WSrHv9gVuK68z2pcZ2jn3vH9Tq5wuqAOadXTY2quoEDD1MrCWmUBAXY"
+    },
+    "poll_limits": {
+        "max_expiration": 31536000,
+        "max_option_chars": 200,
+        "max_options": 20,
+        "min_expiration": 0
+    },
+    "registrations": false,
+    "short_description": "",
+    "shout_limit": 5000,
+    "stats": {
+        "domain_count": 10014,
+        "status_count": 971,
+        "user_count": 1
+    },
+    "thumbnail": "https://m.iamkonstantin.eu/media/05f180b3-25cc-4c8b-90e6-5208225f9c33/wwdc-mac-no-alpha.png",
+    "title": "House of Konstantin",
+    "upload_limit": 16000000,
+    "uri": "https://m.iamkonstantin.eu",
+    "urls": {
+        "streaming_api": "wss://m.iamkonstantin.eu"
+    },
+    "version": "2.7.2 (compatible; Pleroma 2.5.0)"
+}

@@ -1059,64 +1059,57 @@
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 6,
-      "symbol": "Instance",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 7,
+      "line": 8,
       "symbol": "Instance.init(uri:title:description:shortDescription:email:version:languages:registrations:approvalRequired:invitesEnabled:urls:stats:thumbnail:contactAccount:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 66,
+      "line": 54,
       "symbol": "Instance.URLs",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 71,
+      "line": 59,
       "symbol": "Instance.Stats",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 87,
-      "symbol": "Instance",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 88,
+      "line": 76,
       "symbol": "Instance.majorVersion",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 94,
+      "line": 82,
       "symbol": "Instance.minorVersion",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 102,
+      "line": 90,
       "symbol": "Instance.patchVersion",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
-      "line": 110,
+      "line": 98,
       "symbol": "Instance.canShowProfileDirectory",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/Instance.swift",
+      "line": 106,
+      "symbol": "Instance.flavour",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1555,6 +1548,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/TootSDKFlavour.swift",
+      "line": 9,
+      "symbol": "TootSDKFlavour.pixelfed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/Models/TootSource.swift",
       "line": 8,
       "symbol": "TootSource.init(note:fields:privacy:sensitive:language:followRequestsCount:)",
@@ -1829,20 +1829,6 @@
     },
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
-      "line": 182,
-      "symbol": "TootClient",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
-      "line": 192,
-      "symbol": "TootClient",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
       "line": 194,
       "symbol": "TootClient",
       "symbol_kind": "source.lang.swift.decl.extension",
@@ -1851,6 +1837,27 @@
     {
       "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
       "line": 208,
+      "symbol": "TootClient",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
+      "line": 212,
+      "symbol": "TootClient",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
+      "line": 222,
+      "symbol": "TootClient",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/konstantin/Developer/headbright/TootSDK/Sources/TootSDK/TootClient/TootClient.swift",
+      "line": 285,
       "symbol": "TootClient",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"

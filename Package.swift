@@ -51,6 +51,9 @@ let package = Package(
                 .copy("Resources/post no emojis.json"),
                 .copy("Resources/post with emojis and attachments.json"),
                 .copy("Resources/post wordle linebreaks.json"),
+                .copy("Resources/pixelfed.json"),
+                .copy("Resources/mastodon.json"),
+                .copy("Resources/pleroma.json"),
             ]),
     ]
 )

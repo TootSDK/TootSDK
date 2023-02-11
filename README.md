@@ -53,22 +53,22 @@ It's easy to get started with TootSDK.
 
 - Instantiate with an instanceURL and accessToken:
 
-```
+```swift
   let instanceURL = URL(string: "social.yourinstance.com")
-  let client = TootClient(instanceURL: instanceURL, accessToken: "USERACCESSTOKEN")
+  let client = try await TootClient(connect: instanceURL, accessToken: "USERACCESSTOKEN")
 ```
 
 ### Signing in (for macOS and iOS):
 - Instantiate your client without a token:
 
 ```swift
-let client = TootClient(instanceURL: instanceURL)
+let client = try await TootClient(connect: url)
 ```
 
 - Use the sign in helper we've created based on [`ASWebAuthenticationSession`](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession):
 
 ```swift
-let client = TootClient(instanceURL: url)
+let client = try await TootClient(connect: url)
 
 guard let accessToken = try await client.presentSignIn(callbackURI: callbackURI) else {
     // handle failed sign in
@@ -86,7 +86,7 @@ We recommend keeping the accessToken somewhere secure, for example the Keychain.
 - Instantiate your client without a token:
 
 ```swift
-let client = TootClient(instanceURL: instanceURL)
+let client = try await TootClient(connect: instanceURL)
 ```
 
 - Retrieve an authorization URL to present to the user (so they can sign in)
