@@ -82,7 +82,7 @@ extension SearchParams {
             URLQueryItem(name: "max_id", value: maxId),
             URLQueryItem(name: "min_id", value: minId),
             URLQueryItem(name: "limit", value: limit?.description),
-            URLQueryItem(name: "offset", value: offset?.description),
+            URLQueryItem(name: "offset", value: offset?.description)
         ].filter { $0.value != nil }
     }
 }

@@ -6,7 +6,7 @@ import Foundation
 public extension TootClient {
 
     /// Search for content in accounts, posts and hashtags.
-    /// - Parameter query: The search query.
+    /// - Parameter params: The search parameters.
     func search(_ params: SearchParams) async throws -> Search {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "search"])
