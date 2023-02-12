@@ -394,21 +394,21 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
 <li><p>Add TootSDK to your project via Swift Package Manager: <code>https://github.com/TootSDK/TootSDK</code></p></li>
 <li><p>Instantiate with an instanceURL and accessToken:</p></li>
 </ul>
-<pre class="highlight plaintext"><code>  let instanceURL = URL(string: "social.yourinstance.com")
-  let client = TootClient(instanceURL: instanceURL, accessToken: "USERACCESSTOKEN")
+<pre class="highlight swift"><code>  <span class="k">let</span> <span class="nv">instanceURL</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"social.yourinstance.com"</span><span class="p">)</span>
+  <span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">,</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="s">"USERACCESSTOKEN"</span><span class="p">)</span>
 </code></pre>
 <h3 id='signing-in-for-macos-and-ios' class='heading'>Signing in (for macOS and iOS):</h3>
 
 <ul>
 <li>Instantiate your client without a token:</li>
 </ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
 </code></pre>
 
 <ul>
 <li>Use the sign in helper we&rsquo;ve created based on <a href="https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession"><code>ASWebAuthenticationSession</code></a>:</li>
 </ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
 
 <span class="k">guard</span> <span class="k">let</span> <span class="nv">accessToken</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="nf">presentSignIn</span><span class="p">(</span><span class="nv">callbackURI</span><span class="p">:</span> <span class="n">callbackURI</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
     <span class="c1">// handle failed sign in</span>
@@ -424,7 +424,7 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
 <ul>
 <li>Instantiate your client without a token:</li>
 </ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">instanceURL</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
 </code></pre>
 
 <ul>
