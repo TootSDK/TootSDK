@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00116A4629996CBF008EBC21 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00116A4529996CBF008EBC21 /* SearchView.swift */; };
 		550CF6662931E3AC00D07EA0 /* PostOperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550CF6652931E3AC00D07EA0 /* PostOperationsView.swift */; };
 		550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */; };
 		550CF66E2931F9A000D07EA0 /* UserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550CF66D2931F9A000D07EA0 /* UserAccountView.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00116A4529996CBF008EBC21 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		550CF6652931E3AC00D07EA0 /* PostOperationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOperationsView.swift; sourceTree = "<group>"; };
 		550CF66D2931F9A000D07EA0 /* UserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountView.swift; sourceTree = "<group>"; };
 		552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledPostOperationsView.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				55C14EAF2954367B00579342 /* PostView.swift */,
 				552BFB0029409AB300FB46D3 /* ScheduledPostOperationsView.swift */,
 				550CF66D2931F9A000D07EA0 /* UserAccountView.swift */,
+				00116A4529996CBF008EBC21 /* SearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				552BFB0129409AB300FB46D3 /* ScheduledPostOperationsView.swift in Sources */,
 				55C14EB02954367B00579342 /* PostView.swift in Sources */,
 				557DD954297DF58E003C964C /* FeedViewModel.swift in Sources */,
+				00116A4629996CBF008EBC21 /* SearchView.swift in Sources */,
 				553CFB392952B99700F3EB69 /* AccountView.swift in Sources */,
 				55B8B1742917627D00339479 /* FeedView.swift in Sources */,
 				553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */,
