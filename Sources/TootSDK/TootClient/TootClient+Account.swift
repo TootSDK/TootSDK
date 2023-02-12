@@ -1,6 +1,6 @@
 //
 //  TootClient+Account.swift
-//  
+//
 //
 //  Created by dave on 25/11/22.
 //
@@ -33,23 +33,47 @@ extension TootClient {
     /// Get all accounts which follow the given account, if network is not hidden by the account owner.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the accounts requested, or an error if unable to retrieve
-    public func getFollowers(for id: String) async throws -> [Account] {
+    public func getFollowers(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "followers"])
             $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
         }
-        return try await fetch([Account].self, req)
+        
+        let (data, response) = try await fetch(req: req)
+        let decoded = try decode([Account].self, from: data)
+        var pagination: Pagination?
+        
+        if let links = response.value(forHTTPHeaderField: "Link") {
+            pagination = Pagination(links: links)
+        }
+        
+        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
+        
+        return PagedResult(result: decoded, info: info)
     }
     
     /// Get all accounts which the given account is following, if network is not hidden by the account owner.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the accounts requested, or an error if unable to retrieve
-    public func getFollowing(for id: String) async throws -> [Account] {
+    public func getFollowing(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "following"])
             $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
         }
-        return try await fetch([Account].self, req)
+        
+        let (data, response) = try await fetch(req: req)
+        let decoded = try decode([Account].self, from: data)
+        var pagination: Pagination?
+        
+        if let links = response.value(forHTTPHeaderField: "Link") {
+            pagination = Pagination(links: links)
+        }
+        
+        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
+        
+        return PagedResult(result: decoded, info: info)
     }
     
     // swiftlint:disable todo
