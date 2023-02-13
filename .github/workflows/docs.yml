@@ -1,0 +1,54 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    branches:
+      - main
+
+jobs:
+  Publish:
+    strategy:
+      matrix:
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: swift build -v
+      - name: Run tests
+        run: swift test -v
+      - uses: actions/checkout@v1
+      - name: Gem version
+        run: |
+          gem -v
+          type -a gem
+      - name: Bundle version
+        run: |
+          bundle -v
+          type -a bundle
+      - name: Install jazzy
+        run: |
+          gem install jazzy
+      - name: Jazzy version
+        run: |
+          jazzy -version
+          type -a jazzy
+      - name: Print dir
+        run: |
+          pwd
+          ls
+      - name: Regenerate docs
+        run: |
+          sh ./Scripts/updatedocs.sh
+      - name: Commit changes
+        run: |
+          git config --global user.name 'Konstantin Kostov'
+          git config --global user.email 'kkostov@users.noreply.github.com'
+          git commit -am "Automated docs"
+          git push
