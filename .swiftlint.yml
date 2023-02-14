@@ -5,5 +5,3 @@ disabled_rules:
   - line_length
   - trailing_whitespace
   - unused_optional_binding
-opt_in_rules:
-  - missing_docs
