@@ -21,7 +21,6 @@
 		55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */; };
 		55ACC1E4291761910046363F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E3291761910046363F /* Assets.xcassets */; };
 		55ACC1E7291761910046363F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E6291761910046363F /* Preview Assets.xcassets */; };
-		55ACC1EC291761910046363F /* TootSDK_Demo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1EA291761910046363F /* TootSDK_Demo.xcdatamodeld */; };
 		55B19AE3297E14DB0097B1F8 /* EmojiText in Frameworks */ = {isa = PBXBuildFile; productRef = 55B19AE2297E14DB0097B1F8 /* EmojiText */; };
 		55B19AE6297E208E0097B1F8 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 55B19AE5297E208E0097B1F8 /* Nuke */; };
 		55B19AE8297E208E0097B1F8 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 55B19AE7297E208E0097B1F8 /* NukeUI */; };
@@ -49,7 +48,6 @@
 		55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootSDK_DemoApp.swift; sourceTree = "<group>"; };
 		55ACC1E3291761910046363F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55ACC1E6291761910046363F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		55ACC1EB291761910046363F /* TootSDK_Demo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TootSDK_Demo.xcdatamodel; sourceTree = "<group>"; };
 		55B8B170291761CF00339479 /* TootSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TootSDK; path = ../..; sourceTree = "<group>"; };
 		55B8B1712917620C00339479 /* MakePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePostView.swift; sourceTree = "<group>"; };
 		55B8B1732917627D00339479 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 				55F9D91329190A9E0062CFA9 /* TootManager.swift */,
 				55F9D91229190A2A0062CFA9 /* Views */,
 				55ACC1E3291761910046363F /* Assets.xcassets */,
-				55ACC1EA291761910046363F /* TootSDK_Demo.xcdatamodeld */,
 				55ACC1E5291761910046363F /* Preview Content */,
 			);
 			path = "TootSDK-Demo";
@@ -266,7 +263,6 @@
 				553CFB392952B99700F3EB69 /* AccountView.swift in Sources */,
 				55B8B1742917627D00339479 /* FeedView.swift in Sources */,
 				553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */,
-				55ACC1EC291761910046363F /* TootSDK_Demo.xcdatamodeld in Sources */,
 				550CF66E2931F9A000D07EA0 /* UserAccountView.swift in Sources */,
 				55B8B1722917620C00339479 /* MakePostView.swift in Sources */,
 				55539B222984CA6F00B2029D /* Array+RemoteEmoji.swift in Sources */,
@@ -529,19 +525,6 @@
 			productName = TootSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		55ACC1EA291761910046363F /* TootSDK_Demo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				55ACC1EB291761910046363F /* TootSDK_Demo.xcdatamodel */,
-			);
-			currentVersion = 55ACC1EB291761910046363F /* TootSDK_Demo.xcdatamodel */;
-			path = TootSDK_Demo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 55ACC1D42917618F0046363F /* Project object */;
 }
