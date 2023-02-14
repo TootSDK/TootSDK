@@ -32,6 +32,10 @@ struct TootSDK_DemoApp: App {
                         Label("Account", systemImage: "person.fill")
                     }
 
+                SearchView()
+                    .tabItem {
+                        Label("Search", systemImage: "magnifyingglass")
+                    }
             }
             .onAppear {
                 self.authIsPresented = !self.tootManager.authenticated

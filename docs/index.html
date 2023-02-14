@@ -303,6 +303,18 @@
                 <a href="Structs/ScheduledPostParams.html">ScheduledPostParams</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/Search.html">Search</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Search/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SearchParams.html">SearchParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SearchParams/SearchType.html">– SearchType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Tag.html">Tag</a>
               </li>
               <li class="nav-group-task">
@@ -395,22 +407,22 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
 <li><p>Instantiate with an instanceURL and accessToken:</p></li>
 </ul>
 <pre class="highlight swift"><code>  <span class="k">let</span> <span class="nv">instanceURL</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"social.yourinstance.com"</span><span class="p">)</span>
-  <span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">,</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="s">"USERACCESSTOKEN"</span><span class="p">)</span>
+  <span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="n">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">,</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="s">"USERACCESSTOKEN"</span><span class="p">)</span>
 </code></pre>
 <h3 id='signing-in-for-macos-and-ios' class='heading'>Signing in (for macOS and iOS):</h3>
 
 <ul>
 <li>Instantiate your client without a token:</li>
 </ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="n">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
 </code></pre>
 
 <ul>
 <li>Use the sign in helper we&rsquo;ve created based on <a href="https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession"><code>ASWebAuthenticationSession</code></a>:</li>
 </ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="n">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
 
-<span class="k">guard</span> <span class="k">let</span> <span class="nv">accessToken</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="nf">presentSignIn</span><span class="p">(</span><span class="nv">callbackURI</span><span class="p">:</span> <span class="n">callbackURI</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+<span class="k">guard</span> <span class="k">let</span> <span class="nv">accessToken</span> <span class="o">=</span> <span class="k">try</span> <span class="n">await</span> <span class="n">client</span><span class="o">.</span><span class="nf">presentSignIn</span><span class="p">(</span><span class="nv">callbackURI</span><span class="p">:</span> <span class="n">callbackURI</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
     <span class="c1">// handle failed sign in</span>
     <span class="k">return</span>
 <span class="p">}</span>
@@ -424,7 +436,7 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
 <ul>
 <li>Instantiate your client without a token:</li>
 </ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try</span> <span class="n">await</span> <span class="kt">TootClient</span><span class="p">(</span><span class="nv">connect</span><span class="p">:</span> <span class="n">instanceURL</span><span class="p">)</span>
 </code></pre>
 
 <ul>
@@ -443,7 +455,7 @@ TootSDK is a shared Swift Package that any client app can be built on.</p>
 
 <p>We recommend keeping the accessToken somewhere secure, for example the Keychain.</p>
 <h3 id='accessing-a-user-39-s-home-feedfeed' class='heading'>Accessing a user&rsquo;s home feedfeed</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">posts</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="nf">stream</span><span class="p">(</span><span class="o">.</span><span class="n">timeLineHome</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">posts</span> <span class="o">=</span> <span class="k">try</span> <span class="n">await</span> <span class="n">client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="nf">stream</span><span class="p">(</span><span class="o">.</span><span class="n">timeLineHome</span><span class="p">)</span>
 </code></pre>
 <h2 id='further-documentation' class='heading'>Further Documentation 📖</h2>
 
