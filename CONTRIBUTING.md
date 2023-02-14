@@ -34,7 +34,7 @@ All methods and types that the library makes public, should have a meaningful de
 
 It is recommended to include unit tests covering your changes.
 
-We use [Jazzy](https://github.com/realm/jazzy) for our documentation page. To update the docs, execute `./Scripts/updatedocs.sh` 
+Optionally, you may consider extending one of the examples in order to showcase the new functionality.
 
 ### Talk to the team 🤙
 
