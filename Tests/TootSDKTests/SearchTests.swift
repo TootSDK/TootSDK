@@ -13,11 +13,7 @@ final class SearchTests: XCTestCase {
             resolve: true,
             following: false,
             accountId: "id",
-            excludeUnreviewed: true,
-            maxId: "id1",
-            minId: "id2",
-            limit: 3,
-            offset: 6
+            excludeUnreviewed: true
         )
         XCTAssertEqual(allParams.queryItems, [
             URLQueryItem(name: "q", value: "value"),
@@ -25,11 +21,7 @@ final class SearchTests: XCTestCase {
             URLQueryItem(name: "resolve", value: "true"),
             URLQueryItem(name: "following", value: "false"),
             URLQueryItem(name: "account_id", value: "id"),
-            URLQueryItem(name: "exclude_unreviewed", value: "true"),
-            URLQueryItem(name: "max_id", value: "id1"),
-            URLQueryItem(name: "min_id", value: "id2"),
-            URLQueryItem(name: "limit", value: "3"),
-            URLQueryItem(name: "offset", value: "6")
+            URLQueryItem(name: "exclude_unreviewed", value: "true")
         ])
 
         let requiredParams = SearchParams(query: "value")

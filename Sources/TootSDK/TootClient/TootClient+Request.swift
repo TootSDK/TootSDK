@@ -16,7 +16,7 @@ extension TootClient {
         return url
     }
     
-    internal func getQueryParams(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) -> [URLQueryItem] {
+    internal func getQueryParams(_ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
         
         if let maxId = pageInfo?.maxId {
@@ -33,6 +33,10 @@ extension TootClient {
 
         if let limit = limit {
             queryParameters.append(.init(name: "limit", value: String(limit)))
+        }
+
+        if let offset = offset {
+            queryParameters.append(.init(name: "offset", value: String(offset)))
         }
         return queryParameters
     }

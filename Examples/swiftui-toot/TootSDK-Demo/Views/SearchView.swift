@@ -48,7 +48,7 @@ struct SearchView: View {
     private func performSearch() async {
         guard let client = tootManager.currentClient else { return }
         do {
-            searchResults = try await client.search(SearchParams(query: searchText, resolve: true))
+            searchResults = try await client.search(params: SearchParams(query: searchText, resolve: true))
         } catch {
             print(error.localizedDescription)
         }

@@ -6,12 +6,18 @@ import Foundation
 public extension TootClient {
 
     /// Search for content in accounts, posts and hashtags.
-    /// - Parameter params: The search parameters.
-    func search(_ params: SearchParams) async throws -> Search {
+    ///
+    /// - Parameters:
+    ///   - params: The search parameters.
+    ///   - pageInfo: PagedInfo object for max/min/since ids.
+    ///   - limit: Maximum number of results to return. Defaults to 40.
+    ///   - offset: Skip the first n results.
+    /// - Returns: Search results.
+    func search(params: SearchParams, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> Search {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "search"])
             $0.method = .get
-            $0.query = params.queryItems
+            $0.query = getQueryParams(pageInfo, limit: limit, offset: offset) + params.queryItems
         }
         return try await fetch(Search.self, req)
     }
