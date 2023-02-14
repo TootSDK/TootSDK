@@ -14,6 +14,9 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Search results.
     func search(params: SearchParams, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> Search {
+        if params.excludeUnreviewed != nil && flavour != .mastodon {
+            throw TootSDKError.unsupportedFlavour(current: flavour, required: [.mastodon])
+        }
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "search"])
             $0.method = .get
