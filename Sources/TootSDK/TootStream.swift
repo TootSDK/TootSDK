@@ -17,6 +17,12 @@ public enum PostTootStreams: Hashable {
     /// A stream of the user's home timeline
     case timeLineHome
     
+    /// A stream of the user's local timeline
+    case timeLineLocal
+    
+    /// A stream of the user's federated timeline
+    case timeLineFederated
+
     /// A stream of the user's favourite posts
     case favourites
     
@@ -111,10 +117,11 @@ public actor TootDataStream {
 // MARK: - Stream creation
 
 extension TootDataStream {
+    
     /// Provides an async stream of updates for the given stream
     /// - Parameter stream: the stream type to update
     /// - Returns: async stream of values
-    public func stream(_ stream: PostTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
+    public func stream(_ stream: PostTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> { // swiftlint:disable:this cyclomatic_complexity function_body_length
         if let streamHolder = cachedStreams[stream] as? TootEndpointStream<PostTootStreams> {
             return streamHolder.stream
         }
@@ -124,17 +131,48 @@ extension TootDataStream {
         switch stream {
         case .timeLineHome:
             newHolder.refresh = {[weak self, weak newHolder] in
-                if let items = try await self?.client.getHomeTimeline(pageInfo) {
+                if let items = try await self?.client.getHomeTimeline(newHolder?.pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
+                                        
+                    // Update PagedInfo
+                    let minId = items.result.first?.id
+                    newHolder?.pageInfo = PagedInfo(minId: minId)
                 }
             }
             self.cachedStreams[stream] = newHolder
             return newHolder.stream
-
+        case .timeLineLocal:
+            newHolder.refresh = {[weak self, weak newHolder] in
+                if let items = try await self?.client.getLocalTimeline(newHolder?.pageInfo) {
+                    newHolder?.internalContinuation?.yield(items.result)
+                    
+                    // Update PagedInfo
+                    let minId = items.result.first?.id
+                    newHolder?.pageInfo = PagedInfo(minId: minId)
+                }
+            }
+            self.cachedStreams[stream] = newHolder
+            return newHolder.stream
+        case .timeLineFederated:
+            newHolder.refresh = {[weak self, weak newHolder] in
+                if let items = try await self?.client.getFederatedTimeline(newHolder?.pageInfo) {
+                    newHolder?.internalContinuation?.yield(items.result)
+                    
+                    // Update PagedInfo
+                    let minId = items.result.first?.id
+                    newHolder?.pageInfo = PagedInfo(minId: minId)
+                }
+            }
+            self.cachedStreams[stream] = newHolder
+            return newHolder.stream
         case .favourites:
             newHolder.refresh = {[weak self, weak newHolder] in
                 if let items = try await self?.client.getFavorites(pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
+                    
+                    // Update PagedInfo
+                    let minId = items.result.first?.id
+                    newHolder?.pageInfo = PagedInfo(minId: minId)
                 }
             }
             self.cachedStreams[stream] = newHolder
@@ -144,6 +182,10 @@ extension TootDataStream {
             newHolder.refresh = {[weak self, weak newHolder] in
                 if let items = try await self?.client.getBookmarks(pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
+                    
+                    // Update PagedInfo
+                    let minId = items.result.first?.id
+                    newHolder?.pageInfo = PagedInfo(minId: minId)
                 }
             }
             self.cachedStreams[stream] = newHolder

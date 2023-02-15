@@ -10,11 +10,11 @@ import TootSDK
 
 struct FeedView: View {
     @EnvironmentObject var tootManager: TootManager
-    @StateObject var viewModel = FeedViewModel()
+    @ObservedObject var viewModel: FeedViewModel
     
     @State var name: String = ""
     @State var path: NavigationPath = NavigationPath()
-    
+            
     var body: some View {
         NavigationStack(path: $path) {
             List(viewModel.feedPosts, id: \.self) { feedPost in
@@ -36,7 +36,7 @@ struct FeedView: View {
         }
         .task {
             await viewModel.setManager(tootManager)
-            try? await viewModel.refresh()
+            try? await viewModel.refreshIfNoPosts()
         }
         .refreshable {
             try? await viewModel.refresh()
@@ -56,6 +56,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        FeedView(viewModel: FeedViewModel(streamType: .timeLineHome))
     }
 }

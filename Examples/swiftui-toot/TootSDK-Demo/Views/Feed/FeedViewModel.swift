@@ -18,27 +18,43 @@ actor FeedViewModel: ObservableObject {
     @MainActor @Published var name: String = ""
     
     @MainActor private var tootManager: TootManager?
+    private var lastClient: TootClient?
+    
+    private var streamType: PostTootStreams
+    
+    public init(streamType: PostTootStreams) {
+        self.streamType = streamType
+    }
     
     // MARK: - Published var updates
-    @MainActor private func setPosts(_ feedPosts: [FeedPost]) {
-        self.feedPosts = feedPosts
+    @MainActor private func updatePosts(_ newPosts: [FeedPost]) {
+        feedPosts = newPosts + feedPosts
     }
     
-    @MainActor private func setLoading(_ loading: Bool) {
-        self.loading = loading
+    @MainActor private func resetPosts() {
+        feedPosts = []
     }
     
-    @MainActor private func setName(_ name: String) {
-        self.name = name
+    @MainActor private func setLoading(_ value: Bool) {
+        loading = value
+    }
+    
+    @MainActor private func setName(_ value: String) {
+        name = value
     }
 }
 
 // MARK: - Public methods
 extension FeedViewModel {
     
+    public func refreshIfNoPosts() async throws {
+        guard await self.feedPosts.isEmpty else { return }
+        try await refresh()
+    }
+
     public func refresh() async throws {
         await setLoading(true)
-        try await tootManager?.currentClient?.data.refresh(.timeLineHome)
+        try await tootManager?.currentClient?.data.refresh(streamType)
         try await tootManager?.currentClient?.data.refresh(.verifyCredentials)
         await setLoading(false)
     }
@@ -56,10 +72,10 @@ extension FeedViewModel {
         guard let tootManager = await self.tootManager else { return }
         
         Task {
-            for await updatedPosts in try await tootManager.currentClient.data.stream(.timeLineHome) {
+            for await posts in try await tootManager.currentClient.data.stream(streamType) {
                 let renderer = UIKitAttribStringRenderer()
                 
-                let feedPosts = updatedPosts.map { post in
+                let newPosts = posts.map { post in
 
                     let html = renderer.render(post.displayPost).wrappedValue
                     let markdown = TootHTML.extractAsPlainText(html: post.displayPost.content) ?? ""
@@ -67,15 +83,18 @@ extension FeedViewModel {
                     return FeedPost(html: html, markdown: markdown, tootPost: post)
                 }
                 
-                await setPosts(feedPosts)
+                await updatePosts(newPosts)
             }
         }
         
         // Reset data if the client changes (user has signed in/out etc
         Task {
-            for await _ in tootManager.$currentClient.values {
-                await setPosts([])
+            for await client in tootManager.$currentClient.values {
+                guard client != self.lastClient else { return } // Only change if the client has changed
+                
+                await resetPosts()
                 await setName("")
+                self.lastClient = client
             }
         }
         
