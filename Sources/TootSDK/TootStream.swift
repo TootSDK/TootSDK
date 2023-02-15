@@ -117,10 +117,11 @@ public actor TootDataStream {
 // MARK: - Stream creation
 
 extension TootDataStream {
+    
     /// Provides an async stream of updates for the given stream
     /// - Parameter stream: the stream type to update
     /// - Returns: async stream of values
-    public func stream(_ stream: PostTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
+    public func stream(_ stream: PostTootStreams, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> { // swiftlint:disable:this cyclomatic_complexity function_body_length
         if let streamHolder = cachedStreams[stream] as? TootEndpointStream<PostTootStreams> {
             return streamHolder.stream
         }
@@ -132,7 +133,7 @@ extension TootDataStream {
             newHolder.refresh = {[weak self, weak newHolder] in
                 if let items = try await self?.client.getHomeTimeline(newHolder?.pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
-                    
+                                        
                     // Update PagedInfo
                     let minId = items.result.first?.id
                     newHolder?.pageInfo = PagedInfo(minId: minId)
