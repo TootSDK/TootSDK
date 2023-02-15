@@ -22,7 +22,7 @@ struct TootSDK_DemoApp: App {
                         Label("Make Post", systemImage: "plus.message")
                     }
                 
-                FeedView()
+                FeedSelectionView()
                     .tabItem {
                         Label("Browse Feed", systemImage: "list.bullet.rectangle")
                     }

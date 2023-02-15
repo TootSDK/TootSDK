@@ -18,6 +18,7 @@
 		553CFB402952C26000F3EB69 /* AccountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CFB3F2952C26000F3EB69 /* AccountItemView.swift */; };
 		55539B222984CA6F00B2029D /* Array+RemoteEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55539B212984CA6F00B2029D /* Array+RemoteEmoji.swift */; };
 		557DD954297DF58E003C964C /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DD953297DF58E003C964C /* FeedViewModel.swift */; };
+		559A90F2299CDD6300959E12 /* FeedSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559A90F1299CDD6300959E12 /* FeedSelectionView.swift */; };
 		55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */; };
 		55ACC1E4291761910046363F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E3291761910046363F /* Assets.xcassets */; };
 		55ACC1E7291761910046363F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E6291761910046363F /* Preview Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		553CFB3F2952C26000F3EB69 /* AccountItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemView.swift; sourceTree = "<group>"; };
 		55539B212984CA6F00B2029D /* Array+RemoteEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+RemoteEmoji.swift"; sourceTree = "<group>"; };
 		557DD953297DF58E003C964C /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		559A90F1299CDD6300959E12 /* FeedSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectionView.swift; sourceTree = "<group>"; };
 		55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Toot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TootSDK_DemoApp.swift; sourceTree = "<group>"; };
 		55ACC1E3291761910046363F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				55B8B1732917627D00339479 /* FeedView.swift */,
 				557DD953297DF58E003C964C /* FeedViewModel.swift */,
+				559A90F1299CDD6300959E12 /* FeedSelectionView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				55B8B1742917627D00339479 /* FeedView.swift in Sources */,
 				553CFB3B2952BD0200F3EB69 /* ButtonView.swift in Sources */,
 				550CF66E2931F9A000D07EA0 /* UserAccountView.swift in Sources */,
+				559A90F2299CDD6300959E12 /* FeedSelectionView.swift in Sources */,
 				55B8B1722917620C00339479 /* MakePostView.swift in Sources */,
 				55539B222984CA6F00B2029D /* Array+RemoteEmoji.swift in Sources */,
 				553CFB402952C26000F3EB69 /* AccountItemView.swift in Sources */,
