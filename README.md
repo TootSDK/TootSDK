@@ -1,4 +1,4 @@
-<p><img src="./media/logo.svg" width="100" /></p>
+<p><img src="https://raw.githubusercontent.com/TootSDK/TootSDK/main/media/logo.svg" width="100" /></p>
 
 # TootSDK
 
@@ -18,7 +18,7 @@ It is designed to work with all major servers (Mastodon, Pleroma, PixelFed etc).
 
 You can use TootSDK to build a client for Apple operating systems, or Linux with Vapor.
 
-![overview of how TootSDK integrates with fedi platforms](/media/overview.png)
+![overview of how TootSDK integrates with fedi platforms](https://raw.githubusercontent.com/TootSDK/TootSDK/main/media/overview.png)
 
 ## Why make TootSDK?
 
@@ -59,6 +59,7 @@ It's easy to get started with TootSDK.
 ```
 
 ### Signing in (for macOS and iOS):
+
 - Instantiate your client without a token:
 
 ```swift
@@ -77,7 +78,6 @@ guard let accessToken = try await client.presentSignIn(callbackURI: callbackURI)
 ```
 
 That's it 🎉!
-
 
 We recommend keeping the accessToken somewhere secure, for example the Keychain.
 
