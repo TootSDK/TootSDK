@@ -127,6 +127,7 @@ extension TootDataStream {
         }
         
         let newHolder = TootEndpointStream(stream)
+        newHolder.pageInfo = pageInfo
         
         switch stream {
         case .timeLineHome:
