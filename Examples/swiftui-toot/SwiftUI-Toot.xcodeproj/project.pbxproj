@@ -22,7 +22,6 @@
 		55ACC1E02917618F0046363F /* TootSDK_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ACC1DF2917618F0046363F /* TootSDK_DemoApp.swift */; };
 		55ACC1E4291761910046363F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E3291761910046363F /* Assets.xcassets */; };
 		55ACC1E7291761910046363F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55ACC1E6291761910046363F /* Preview Assets.xcassets */; };
-		55B19AE3297E14DB0097B1F8 /* EmojiText in Frameworks */ = {isa = PBXBuildFile; productRef = 55B19AE2297E14DB0097B1F8 /* EmojiText */; };
 		55B19AE6297E208E0097B1F8 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 55B19AE5297E208E0097B1F8 /* Nuke */; };
 		55B19AE8297E208E0097B1F8 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 55B19AE7297E208E0097B1F8 /* NukeUI */; };
 		55B8B1722917620C00339479 /* MakePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B1712917620C00339479 /* MakePostView.swift */; };
@@ -31,6 +30,7 @@
 		55B8B17B2917675700339479 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 55B8B17A2917675700339479 /* TootSDK */; };
 		55C14EB02954367B00579342 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C14EAF2954367B00579342 /* PostView.swift */; };
 		55F9D91429190A9E0062CFA9 /* TootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F9D91329190A9E0062CFA9 /* TootManager.swift */; };
+		B51EFA1B299FD5BA004F6FF1 /* EmojiText in Frameworks */ = {isa = PBXBuildFile; productRef = B51EFA1A299FD5BA004F6FF1 /* EmojiText */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B19AE3297E14DB0097B1F8 /* EmojiText in Frameworks */,
+				B51EFA1B299FD5BA004F6FF1 /* EmojiText in Frameworks */,
 				55B8B17B2917675700339479 /* TootSDK in Frameworks */,
 				55B19AE8297E208E0097B1F8 /* NukeUI in Frameworks */,
 				550CF66C2931F6A200D07EA0 /* SwiftKeychainWrapper in Frameworks */,
@@ -193,9 +193,9 @@
 			packageProductDependencies = (
 				55B8B17A2917675700339479 /* TootSDK */,
 				550CF66B2931F6A200D07EA0 /* SwiftKeychainWrapper */,
-				55B19AE2297E14DB0097B1F8 /* EmojiText */,
 				55B19AE5297E208E0097B1F8 /* Nuke */,
 				55B19AE7297E208E0097B1F8 /* NukeUI */,
+				B51EFA1A299FD5BA004F6FF1 /* EmojiText */,
 			);
 			productName = "TootSDK-Demo";
 			productReference = 55ACC1DC2917618F0046363F /* SwiftUI-Toot.app */;
@@ -227,8 +227,8 @@
 			mainGroup = 55ACC1D32917618F0046363F;
 			packageReferences = (
 				550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
-				55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */,
 				55B19AE4297E208E0097B1F8 /* XCRemoteSwiftPackageReference "Nuke" */,
+				B51EFA19299FD5BA004F6FF1 /* XCRemoteSwiftPackageReference "EmojiText" */,
 			);
 			productRefGroup = 55ACC1DD2917618F0046363F /* Products */;
 			projectDirPath = "";
@@ -485,20 +485,20 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/divadretlaw/EmojiText";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		55B19AE4297E208E0097B1F8 /* XCRemoteSwiftPackageReference "Nuke" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kean/Nuke";
 			requirement = {
-				kind = exactVersion;
-				version = 11.6.2;
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.2;
+			};
+		};
+		B51EFA19299FD5BA004F6FF1 /* XCRemoteSwiftPackageReference "EmojiText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/divadretlaw/EmojiText";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -508,11 +508,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 550CF66A2931F6A200D07EA0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
-		};
-		55B19AE2297E14DB0097B1F8 /* EmojiText */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 55B19AE1297E14DB0097B1F8 /* XCRemoteSwiftPackageReference "EmojiText" */;
-			productName = EmojiText;
 		};
 		55B19AE5297E208E0097B1F8 /* Nuke */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -527,6 +522,11 @@
 		55B8B17A2917675700339479 /* TootSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TootSDK;
+		};
+		B51EFA1A299FD5BA004F6FF1 /* EmojiText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B51EFA19299FD5BA004F6FF1 /* XCRemoteSwiftPackageReference "EmojiText" */;
+			productName = EmojiText;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
