@@ -497,8 +497,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kean/Nuke";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 11.6.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
