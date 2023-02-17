@@ -6,7 +6,7 @@
       "location" : "https://github.com/divadretlaw/EmojiText",
       "state" : {
         "branch" : "main",
-        "revision" : "510413aeccc50891cf74d6cb6b273125190cdd3c"
+        "revision" : "263935972835482fe655d7ce44e101cc3fb463bf"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kean/Nuke",
       "state" : {
-        "branch" : "master",
-        "revision" : "b187456fffa045e7dfc03fec1db86164ae0c0dc1"
+        "branch" : "main",
+        "revision" : "67bd45931180f652159e3342575277a7f197b3ab"
       }
     },
     {
