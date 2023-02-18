@@ -5,7 +5,8 @@ import Foundation
 
 /// Represents the relationship between accounts,
 /// such as following / blocking / muting / etc.
-public struct Relationship: Codable, Hashable {
+public struct Relationship: Codable, Hashable, Sendable {
+    
     public init(id: String,
                 following: Bool,
                 requested: Bool,

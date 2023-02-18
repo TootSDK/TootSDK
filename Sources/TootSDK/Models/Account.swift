@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a user  and their associated profile.
-public class Account: Codable, Identifiable {
+public class Account: Codable, Identifiable, @unchecked Sendable {
     public init(id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String, avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date, lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil, limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil) {
         self.id = id
         self.username = username
@@ -33,54 +33,54 @@ public class Account: Codable, Identifiable {
     }
     
     /// The account id.
-    public var id: String
+    public let id: String
     /// The username of the account, not including domain.
-    public var username: String?
+    public let username: String?
     /// The Webfinger account URI. Equal to username for local users, or username@domain for remote users.
-    public var acct: String
+    public let acct: String
     /// The location of the user's profile page
-    public var url: String
+    public let url: String
     /// The profile's display name.
-    public var displayName: String?
+    public let displayName: String?
     /// The profile's bio / description
-    public var note: String
+    public let note: String
     /// An image icon that is shown next to posts and in the profile
-    public var avatar: String
+    public let avatar: String
     /// A static version of the avatar.
-    public var avatarStatic: String?
+    public let avatarStatic: String?
     /// An image banner that is shown above the profile and in profile cards
-    public var header: String
+    public let header: String
     /// A static version of the header
-    public var headerStatic: String
+    public let headerStatic: String
     /// Whether the account manually approves follow requests
-    public var locked: Bool
+    public let locked: Bool
     /// Custom emoji entities to be used when rendering the profile. If none, an empty array will be returned
-    public var emojis: [Emoji]
+    public let emojis: [Emoji]
     /// Whether the account has opted into discovery features such as the profile directory
-    public var discoverable: Bool?
+    public let discoverable: Bool?
     /// When the account was created
-    public var createdAt: Date
+    public let createdAt: Date
     /// When the most recent post was posted
-    public var lastPostAt: Date?
+    public let lastPostAt: Date?
     /// How many posts are attached to this account
-    public var postsCount: Int
+    public let postsCount: Int
     /// The reported followers of this profile
-    public var followersCount: Int
+    public let followersCount: Int
     /// The reported follows of this profile
-    public var followingCount: Int
+    public let followingCount: Int
     /// Indicates that the profile is currently inactive and that its user has moved to a new account
-    public var moved: Account?
+    public let moved: Account?
     /// An extra attribute returned only when an account is suspended.
-    public var suspended: Bool?
+    public let suspended: Bool?
     /// An extra attribute returned only when an account is silenced. If true, indicates that the account should be hidden behing a warning screen.
-    public var limited: Bool?
+    public let limited: Bool?
     /// Additional metadata attached to a profile as name-value pairs
-    public var fields: [TootField]
+    public let fields: [TootField]
     /// A presentational flag.
     /// Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot
-    public var bot: Bool?
+    public let bot: Bool?
     /// An extra entity to be used with API methods to verify credentials and update credentials
-    public var source: TootSource?
+    public let source: TootSource?
 }
 
 public extension Account {

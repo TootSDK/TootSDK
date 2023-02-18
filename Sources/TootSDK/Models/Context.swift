@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Context: Codable, Hashable {
+public struct Context: Codable, Hashable, Sendable {
     public var ancestors: [Post]
     public var descendants: [Post]
 

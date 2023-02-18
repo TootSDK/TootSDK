@@ -4,7 +4,7 @@
 import Foundation
 
 /// A request to create a new poll
-public struct CreatePoll: Codable, Hashable {
+public struct CreatePoll: Codable, Hashable, Sendable {
     public init(expiresIn: Int, multiple: Bool? = nil, hideTotals: Bool? = nil, options: [String]) {
         self.expiresIn = expiresIn
         self.multiple = multiple

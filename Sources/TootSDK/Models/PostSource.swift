@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a status's source as plain text.
-public struct PostSource: Codable {
+public struct PostSource: Codable, Sendable {
     /// ID of the status in the database.
     public var id: String
     /// The plain text used to compose the status.

@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a poll attached to a post.
-public struct Poll: Codable, Hashable, Identifiable {
+public struct Poll: Codable, Hashable, Identifiable, Sendable {
     public init(id: String,
                 expiresAt: Date? = nil,
                 expired: Bool,
@@ -49,7 +49,7 @@ public struct Poll: Codable, Hashable, Identifiable {
     /// Custom emoji to be used for rendering poll options.
     public var emojis: [Emoji]
 
-    public struct Option: Codable, Hashable {
+    public struct Option: Codable, Hashable, Sendable {
         /// The text value of the poll option. String.
         public var title: String
         /// The number of received votes for this option. Number, or null if results are not published yet.

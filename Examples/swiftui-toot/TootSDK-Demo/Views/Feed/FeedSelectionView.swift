@@ -29,6 +29,7 @@ struct FeedSelectionView: View {
                 }
             }
             .pickerStyle(.segmented)
+            .padding(.horizontal)
             
             switch selection {
             case .home:

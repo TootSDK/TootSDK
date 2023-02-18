@@ -8,7 +8,7 @@
 import Foundation
 
 /// Parameters to post a new scheduled post
-public struct ScheduledPostParams: Codable {
+public struct ScheduledPostParams: Codable, Sendable {
     
     ///  Creates parameters to create a new scheduled post
     /// - Parameters:
@@ -54,7 +54,7 @@ public struct ScheduledPostParams: Codable {
     /// UTC Datetime at which to schedule a post.
     public var scheduledAt: Date?
     /// Poll options
-    public var poll: CreatePoll?
+    public let poll: CreatePoll?
     /// Unique post to prevent double posting
     public var idempotency: String?
     ///  ID of the post being replied to, if post is a reply.

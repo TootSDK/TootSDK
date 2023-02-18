@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents daily usage history of a hashtag.
-public struct TagHistory: Codable, Hashable {
+public struct TagHistory: Codable, Hashable, Sendable {
     public init(day: String,
                 uses: String,
                 accounts: String) {

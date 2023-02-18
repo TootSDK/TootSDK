@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a post posted by an account.
-public class Post: Codable, Identifiable {
+public class Post: Codable, Identifiable, @unchecked Sendable {
     public init(id: String,
                 uri: String,
                 createdAt: Date,
@@ -126,7 +126,7 @@ public class Post: Codable, Identifiable {
     /// Have you pinned this post? Only appears if the post is pinnable.
     public var pinned: Bool?
     
-    public enum Visibility: String, Codable, CaseIterable {
+    public enum Visibility: String, Codable, CaseIterable, Sendable {
         /// Visible to everyone, shown in public timelines.
         case `public`
         /// Visible to public, but not included in public timelines.

@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct PagedInfo: Decodable {
+public struct PagedInfo: Decodable, Sendable {
   public init(maxId: String? = nil, minId: String? = nil, sinceId: String? = nil) {
     self.maxId = maxId
     self.minId = minId

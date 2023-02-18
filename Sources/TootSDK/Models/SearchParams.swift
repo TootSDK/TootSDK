@@ -4,7 +4,7 @@
 import Foundation
 
 /// The search parameters.
-public struct SearchParams {
+public struct SearchParams: Sendable {
     /// The search query.
     public var query: String
     /// Specify whether to search for only specific type.
@@ -43,7 +43,7 @@ public struct SearchParams {
         self.excludeUnreviewed = excludeUnreviewed
     }
 
-    public enum SearchType: String {
+    public enum SearchType: String, Sendable {
         case accounts
         case hashtags
         case posts = "statuses"

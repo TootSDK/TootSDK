@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PostEdit: Codable {
+public struct PostEdit: Codable, Sendable {
     ///  The content of the pos] at this revision.
     public var content: String
     ///  The content of the subject or content warning at this revision
