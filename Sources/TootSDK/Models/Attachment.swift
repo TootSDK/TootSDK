@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Attachment: Codable, Hashable, Identifiable {
+public struct Attachment: Codable, Hashable, Identifiable, Sendable {
     public init(id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
         self.id = id
         self.type = type
@@ -34,7 +34,7 @@ public struct Attachment: Codable, Hashable, Identifiable {
     public var blurhash: String?
 }
 
-public enum AttachmentType: String, Codable, Hashable {
+public enum AttachmentType: String, Codable, Hashable, Sendable {
     ///  Static image
     case image
     /// Video clip
@@ -47,19 +47,19 @@ public enum AttachmentType: String, Codable, Hashable {
     case unknown
 }
 
-public struct AttachmentMeta: Codable, Hashable {
+public struct AttachmentMeta: Codable, Hashable, Sendable {
 
     public var original: AttachmentMetaInfo?
     public var small: AttachmentMetaInfo?
     public var focus: AttachmentMetaFocus?
 }
 
-public struct AttachmentMetaFocus: Codable, Hashable {
+public struct AttachmentMetaFocus: Codable, Hashable, Sendable {
     public var x: Double
     public var y: Double
 }
 
-public struct AttachmentMetaInfo: Codable, Hashable {
+public struct AttachmentMetaInfo: Codable, Hashable, Sendable {
     public var width: Int?
     public var height: Int?
     public var size: String?

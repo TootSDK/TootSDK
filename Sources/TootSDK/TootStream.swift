@@ -12,7 +12,7 @@ public protocol TootStream {
 }
 
 /// A list of stream types which return `[Post]`
-public enum PostTootStreams: Hashable {
+public enum PostTootStreams: Hashable, Sendable {
     
     /// A stream of the user's home timeline
     case timeLineHome
@@ -35,7 +35,7 @@ extension PostTootStreams: TootStream {
 }
 
 /// A list of stream types which return `Account`
-public enum AccountTootStreams: Hashable {
+public enum AccountTootStreams: Hashable, Sendable {
     case verifyCredentials
     case account(id: String)
 }
@@ -73,7 +73,7 @@ internal class TootEndpointStream<E: TootStream>: TootStreamHolder {
 
 /// Provides a holder that returns streams of AsyncSequence data that can be refreshed, posts, account data etc
 public actor TootDataStream {
-    private var client: TootClient
+    private nonisolated let client: TootClient
     
     /// keeps track of active streams
     private var cachedStreams: [AnyHashable: any TootStreamHolder] = [:]

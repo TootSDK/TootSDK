@@ -3,7 +3,8 @@
 
 import Foundation
 
-public struct MediaAttachment: Codable, Hashable {
+public struct MediaAttachment: Codable, Hashable, Sendable {
+    
     public init(id: String, type: AttachmentType, url: String? = nil, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
         self.id = id
         self.type = type

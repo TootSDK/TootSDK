@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a profile field as a name-value pair with optional verification.
-public struct TootField: Codable, Hashable {
+public struct TootField: Codable, Hashable, Sendable {
     public init(name: String, value: String, verifiedAt: Date? = nil) {
         self.name = name
         self.value = value

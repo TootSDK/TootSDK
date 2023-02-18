@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FollowAccountParams: Codable {
+public struct FollowAccountParams: Codable, Sendable {
     /// Receive notifications when this account posts a post? Defaults to false.
     var notify: Bool
     /// Receive this account’s reposts in home timeline? Defaults to true.

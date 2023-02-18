@@ -1,13 +1,11 @@
 //
 //  AccountLookup.swift
-//  
-//
 //  Created by dave on 22/12/22.
 //
 
 import Foundation
 
-public struct AccountLookup: Codable {
+public struct AccountLookup: Codable, Sendable {
     public init(id: String, username: String, acct: String, displayName: String, locked: Bool) {
         self.id = id
         self.username = username

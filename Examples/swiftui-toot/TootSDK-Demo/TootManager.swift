@@ -9,9 +9,10 @@ import AuthenticationServices
 import Foundation
 import TootSDK
 import SwiftKeychainWrapper
+import Combine
 
 /// Holder class for managing your currently selected client
-public class TootManager: ObservableObject {
+public class TootManager: ObservableObject, @unchecked Sendable {
     private var instanceKey = "tootSDK.instanceURL"
     private var accessTokenKey = "tootSDK.accessToken"
     private let callbackURI = "swiftuitoot://test"

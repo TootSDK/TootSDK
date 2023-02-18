@@ -4,7 +4,7 @@
 import Foundation
 
 /// Parameters to create a new post
-public struct PostParams: Codable {
+public struct PostParams: Codable, Sendable {
         
     ///  Creates an object to create a new post with
     /// - Parameters:

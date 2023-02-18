@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MuteAccountParams: Codable {
+public struct MuteAccountParams: Codable, Sendable {
     public var notifications: Bool = true
     public var duration: Int = 0
     

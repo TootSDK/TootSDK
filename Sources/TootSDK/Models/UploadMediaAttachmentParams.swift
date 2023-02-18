@@ -3,7 +3,8 @@
 
 import Foundation
 
-public struct UploadMediaAttachmentParams: Codable {
+public struct UploadMediaAttachmentParams: Codable, Sendable {
+    
     public init(file: Data, thumbnail: Data? = nil, description: String? = nil, focus: String? = nil) {
         self.file = file
         self.thumbnail = thumbnail

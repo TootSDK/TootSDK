@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a hashtag used within the content of a post.
-public struct Tag: Codable, Hashable {
+public struct Tag: Codable, Hashable, Sendable {
     public init(name: String, url: String, history: [TagHistory]? = nil) {
         self.name = name
         self.url = url
