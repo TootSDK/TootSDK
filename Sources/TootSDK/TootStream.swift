@@ -24,6 +24,8 @@ public enum PostTootStreams: Hashable, Sendable {
     case timeLineFederated(onlyMedia: Bool? = nil)
     
     /// A stream of a hashtag timeline with the given options
+    ///
+    /// For an explanation of the parameters, see ``TootClient/getHashtagTimeline(tag:anyTags:allTags:noneTags:_:limit:onlyMedia:locality:)``
     case timeLineHashtag(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, locality: TimelineLocality? = nil)
 
     /// A stream of the user's favourite posts
