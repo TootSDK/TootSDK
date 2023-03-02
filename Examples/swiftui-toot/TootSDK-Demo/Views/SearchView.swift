@@ -31,7 +31,7 @@ struct SearchView: View {
                     Section("Hashtags") {
                         ForEach(searchResults.hashtags, id: \.name) { hashtag in
                             NavigationLink {
-                                FeedView(viewModel: FeedViewModel(streamType: .timeLineHashtag(tag: hashtag.name, anyTags: nil, allTags: nil, noneTags: nil, onlyMedia: nil, locality: nil)))
+                                FeedView(viewModel: FeedViewModel(streamType: .timeLineHashtag(tag: hashtag.name)))
                             } label: {
                                 Text(hashtag.name)
                             }

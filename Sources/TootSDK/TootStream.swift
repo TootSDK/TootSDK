@@ -18,13 +18,13 @@ public enum PostTootStreams: Hashable, Sendable {
     case timeLineHome
     
     /// A stream of the user's local timeline
-    case timeLineLocal(onlyMedia: Bool?)
+    case timeLineLocal(onlyMedia: Bool? = nil)
     
     /// A stream of the user's federated timeline
-    case timeLineFederated(onlyMedia: Bool?)
+    case timeLineFederated(onlyMedia: Bool? = nil)
     
     /// A stream of a hashtag timeline with the given options
-    case timeLineHashtag(tag: String, anyTags: [String]?, allTags: [String]?, noneTags: [String]?, onlyMedia: Bool?, locality: TimelineLocality?)
+    case timeLineHashtag(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, locality: TimelineLocality? = nil)
 
     /// A stream of the user's favourite posts
     case favourites
