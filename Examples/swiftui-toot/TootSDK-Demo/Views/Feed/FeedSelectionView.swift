@@ -18,8 +18,8 @@ struct FeedSelectionView: View {
     @State private var selection: SelectionOptions = .home
     
     @StateObject var timeLineHomeViewModel = FeedViewModel(streamType: .timeLineHome)
-    @StateObject var timeLineLocalViewModel = FeedViewModel(streamType: .timeLineLocal)
-    @StateObject var timeLineFederatedViewModel = FeedViewModel(streamType: .timeLineFederated)
+    @StateObject var timeLineLocalViewModel = FeedViewModel(streamType: .timeLineLocal(onlyMedia: nil))
+    @StateObject var timeLineFederatedViewModel = FeedViewModel(streamType: .timeLineFederated(onlyMedia: nil))
     
     var body: some View {
         VStack {

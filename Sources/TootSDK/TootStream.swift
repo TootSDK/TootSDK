@@ -18,10 +18,13 @@ public enum PostTootStreams: Hashable, Sendable {
     case timeLineHome
     
     /// A stream of the user's local timeline
-    case timeLineLocal
+    case timeLineLocal(onlyMedia: Bool?)
     
     /// A stream of the user's federated timeline
-    case timeLineFederated
+    case timeLineFederated(onlyMedia: Bool?)
+    
+    /// A stream of a hashtag timeline with the given options
+    case timeLineHashtag(tag: String, anyTags: [String]?, allTags: [String]?, noneTags: [String]?, onlyMedia: Bool?, locality: TimelineLocality?)
 
     /// A stream of the user's favourite posts
     case favourites
@@ -142,9 +145,9 @@ extension TootDataStream {
             }
             self.cachedStreams[stream] = newHolder
             return newHolder.stream
-        case .timeLineLocal:
+        case .timeLineLocal(let onlyMedia):
             newHolder.refresh = {[weak self, weak newHolder] in
-                if let items = try await self?.client.getLocalTimeline(newHolder?.pageInfo) {
+                if let items = try await self?.client.getLocalTimeline(newHolder?.pageInfo, onlyMedia: onlyMedia) {
                     newHolder?.internalContinuation?.yield(items.result)
                     
                     // Update PagedInfo
@@ -154,9 +157,21 @@ extension TootDataStream {
             }
             self.cachedStreams[stream] = newHolder
             return newHolder.stream
-        case .timeLineFederated:
+        case .timeLineFederated(let onlyMedia):
             newHolder.refresh = {[weak self, weak newHolder] in
-                if let items = try await self?.client.getFederatedTimeline(newHolder?.pageInfo) {
+                if let items = try await self?.client.getFederatedTimeline(newHolder?.pageInfo, onlyMedia: onlyMedia) {
+                    newHolder?.internalContinuation?.yield(items.result)
+                    
+                    // Update PagedInfo
+                    let minId = items.result.first?.id
+                    newHolder?.pageInfo = PagedInfo(minId: minId)
+                }
+            }
+            self.cachedStreams[stream] = newHolder
+            return newHolder.stream
+        case .timeLineHashtag(let tag, let anyTags, let allTags, let noneTags, let onlyMedia, let locality):
+            newHolder.refresh = {[weak self, weak newHolder] in
+                if let items = try await self?.client.getHashtagTimeline(tag: tag, anyTags: anyTags, allTags: allTags, noneTags: noneTags, newHolder?.pageInfo, onlyMedia: onlyMedia, locality: locality) {
                     newHolder?.internalContinuation?.yield(items.result)
                     
                     // Update PagedInfo

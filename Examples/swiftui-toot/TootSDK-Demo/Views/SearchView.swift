@@ -30,7 +30,11 @@ struct SearchView: View {
                     }
                     Section("Hashtags") {
                         ForEach(searchResults.hashtags, id: \.name) { hashtag in
-                            Text(hashtag.name)
+                            NavigationLink {
+                                FeedView(viewModel: FeedViewModel(streamType: .timeLineHashtag(tag: hashtag.name, anyTags: nil, allTags: nil, noneTags: nil, onlyMedia: nil, locality: nil)))
+                            } label: {
+                                Text(hashtag.name)
+                            }
                         }
                     }
                 }
@@ -44,7 +48,7 @@ struct SearchView: View {
             }
         }
     }
-
+    
     private func performSearch() async {
         guard let client = tootManager.currentClient else { return }
         do {
