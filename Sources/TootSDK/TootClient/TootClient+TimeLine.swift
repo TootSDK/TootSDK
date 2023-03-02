@@ -81,19 +81,13 @@ public extension TootClient {
     func getHashtagTimeline(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, onlyMedia: Bool? = nil, locality: TimelineLocality? = nil) async throws -> PagedResult<[Post]> {
         var query = getQueryParams(pageInfo, limit: limit, onlyMedia: onlyMedia, locality: locality)
         if let anyTags = anyTags {
-            for tag in anyTags {
-                query.append(.init(name: "any[]", value: tag))
-            }
+            query.append(contentsOf: anyTags.map({ URLQueryItem(name: "any[]", value: $0) }))
         }
         if let allTags = allTags {
-            for tag in allTags {
-                query.append(.init(name: "all[]", value: tag))
-            }
+            query.append(contentsOf: allTags.map({ URLQueryItem(name: "all[]", value: $0) }))
         }
         if let noneTags = noneTags {
-            for tag in noneTags {
-                query.append(.init(name: "none[]", value: tag))
-            }
+            query.append(contentsOf: noneTags.map({ URLQueryItem(name: "none[]", value: $0) }))
         }
         
         let req = HTTPRequestBuilder {
