@@ -21,7 +21,7 @@ public struct MediaAttachment: Codable, Hashable, Sendable {
     public var id: String
     /// The type of the attachment.
     public var type: AttachmentType
-    /// The location of the original full-size attachment. The value is `nil` if content hasn't been uploaded yet
+    /// The location of the original full-size attachment. The value may be `nil` if the uploaded content hasn't finished processing on the server.
     public var url: String?
     /// The location of the full-size original attachment on the remote website.
     public var remoteUrl: String?
