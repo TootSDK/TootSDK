@@ -20,37 +20,12 @@ public extension TootClient {
                     ],
                     body: params.file
                 ))
-            if let description = params.description {
-                parts.append(
-                    MultipartPart(
-                        headers: [
-                            "Content-Disposition": "form-data; name=\"description\""
-                        ],
-                        body: description
-                    )
-                )
-            }
-            if let focus = params.focus {
-                parts.append(
-                    MultipartPart(
-                        headers: [
-                            "Content-Disposition": "form-data; name=\"focus\""
-                        ],
-                        body: focus
-                    )
-                )
-            }
-            if let thumbnail = params.thumbnail {
-                parts.append(
-                    MultipartPart(
-                        headers: [
-                            "Content-Disposition": "form-data; name=\"thumbnail\"; filename=\"thumbnail\"",
-                            "Content-Type": mimeType
-                        ],
-                        body: thumbnail
-                    )
-                )
-            }
+            parts.append(contentsOf: mediaParts(
+                description: params.description,
+                focus: params.focus,
+                thumbnail: params.thumbnail,
+                mimeType: mimeType
+            ))
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
         return try await fetch(MediaAttachment.self, req)
@@ -74,5 +49,66 @@ public extension TootClient {
         }
         
         return try decode(Attachment.self, from: data)
+    }
+
+    /// Update media parameters, before it is posted.
+    ///
+    /// - Parameter id: the ID of the media attachment to be changed.
+    /// - Parameter params: the updated content of the media.
+    /// - Returns: the media after the update.
+    @discardableResult
+    func updateMedia(id: Attachment.ID, _ params: UpdateMediaAttachmentParams) async throws -> Attachment {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "media", id])
+            $0.method = .put
+
+            let parts = mediaParts(
+                description: params.description,
+                focus: params.focus,
+                thumbnail: params.thumbnail,
+                mimeType: params.thumbnailMimeType
+            )
+            $0.body = try .multipart(parts, boundary: UUID().uuidString)
+        }
+        return try await fetch(Attachment.self, req)
+    }
+}
+
+extension TootClient {
+
+    private func mediaParts(description: String?, focus: String?, thumbnail: Data?, mimeType: String?) -> [MultipartPart] {
+        var parts = [MultipartPart]()
+        if let description {
+            parts.append(
+                MultipartPart(
+                    headers: [
+                        "Content-Disposition": "form-data; name=\"description\""
+                    ],
+                    body: description
+                )
+            )
+        }
+        if let focus {
+            parts.append(
+                MultipartPart(
+                    headers: [
+                        "Content-Disposition": "form-data; name=\"focus\""
+                    ],
+                    body: focus
+                )
+            )
+        }
+        if let thumbnail, let mimeType {
+            parts.append(
+                MultipartPart(
+                    headers: [
+                        "Content-Disposition": "form-data; name=\"thumbnail\"; filename=\"thumbnail\"",
+                        "Content-Type": mimeType
+                    ],
+                    body: thumbnail
+                )
+            )
+        }
+        return parts
     }
 }
