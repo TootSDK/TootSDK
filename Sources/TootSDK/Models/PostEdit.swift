@@ -21,11 +21,11 @@ public struct PostEdit: Codable, Sendable {
     /// The current state of the poll options at this revision
     public var poll: Poll?
     /// The current state of the media attachments at this revision
-    public var mediaAttachments: [Attachment]
+    public var mediaAttachments: [MediaAttachment]
     /// Any custom emoji that are used in the current revision
     public var emojis: [Emoji]
     
-    public init(content: String, spoilerText: String, sensitive: Bool, createdAt: Date? = nil, account: Account, poll: Poll? = nil, mediaAttachments: [Attachment], emojis: [Emoji]) {
+    public init(content: String, spoilerText: String, sensitive: Bool, createdAt: Date? = nil, account: Account, poll: Poll? = nil, mediaAttachments: [MediaAttachment], emojis: [Emoji]) {
         self.content = content
         self.spoilerText = spoilerText
         self.sensitive = sensitive

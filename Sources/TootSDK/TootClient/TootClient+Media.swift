@@ -36,7 +36,7 @@ public extension TootClient {
     /// Requests to Mastodon API flavour return `nil` until the attachment has finished processing.
     /// - Parameter id: The local ID of the attachment.
     /// - Returns: `Attachment` with a `url` to the media if available. `nil` otherwise.
-    func getMedia(id: Attachment.ID) async throws -> Attachment? {
+    func getMedia(id: String) async throws -> MediaAttachment? {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .get
@@ -48,7 +48,7 @@ public extension TootClient {
             return nil
         }
         
-        return try decode(Attachment.self, from: data)
+        return try decode(MediaAttachment.self, from: data)
     }
 
     /// Update media parameters, before it is posted.
@@ -57,7 +57,7 @@ public extension TootClient {
     /// - Parameter params: the updated content of the media.
     /// - Returns: the media after the update.
     @discardableResult
-    func updateMedia(id: Attachment.ID, _ params: UpdateMediaAttachmentParams) async throws -> Attachment {
+    func updateMedia(id: String, _ params: UpdateMediaAttachmentParams) async throws -> MediaAttachment {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .put
@@ -70,7 +70,7 @@ public extension TootClient {
             )
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
-        return try await fetch(Attachment.self, req)
+        return try await fetch(MediaAttachment.self, req)
     }
 }
 

@@ -12,5 +12,5 @@ public struct ScheduledPost: Codable, Sendable {
     /// The parameters to be used when the post is posted
     public var params: ScheduledPostParams
     /// Media that is attached to this post.
-    public var mediaAttachments: [Attachment]
+    public var mediaAttachments: [MediaAttachment]
 }
