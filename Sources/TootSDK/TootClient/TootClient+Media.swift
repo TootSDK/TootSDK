@@ -6,7 +6,7 @@ import MultipartKitTootSDK
 
 public extension TootClient {
     /// Uploads a media to the server so it can be used when publishing posts
-    func uploadMedia(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> MediaAttachment {
+    func uploadMedia(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> UploadedMediaAttachment {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "media"])
             $0.method = .post
@@ -28,7 +28,9 @@ public extension TootClient {
             ))
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
-        return try await fetch(MediaAttachment.self, req)
+        let uploadResponse = try await fetch(UploadMediaAttachmentResponse.self, req)
+        
+        return uploadResponse.url != nil ? UploadedMediaAttachment(id: uploadResponse.id, state: .uploaded) : UploadedMediaAttachment(id: uploadResponse.id, state: .serverProcessing)
     }
     
     /// Retrieve the details of a media attachment that corresponds to the given identifier.
