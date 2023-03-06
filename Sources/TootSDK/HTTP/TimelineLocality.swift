@@ -13,4 +13,7 @@ public enum TimelineLocality: Codable, Sendable {
     
     /// Return only remote statuses
     case remote
+    
+    /// Return local and remote statuses (do not filter by origin)
+    case all
 }

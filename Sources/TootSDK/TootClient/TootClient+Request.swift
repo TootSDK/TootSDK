@@ -39,15 +39,24 @@ extension TootClient {
             queryParameters.append(.init(name: "offset", value: String(offset)))
         }
         
-        if onlyMedia == true {
-            queryParameters.append(.init(name: "only_media", value: "true"))
+        if let onlyMedia = onlyMedia {
+            queryParameters.append(.init(name: "only_media", value: String(onlyMedia)))
         }
         
-        if locality == .local {
-            queryParameters.append(.init(name: "local", value: "true"))
-        } else if locality == .remote {
-            queryParameters.append(.init(name: "remote", value: "true"))
+        if let locality = locality {
+            switch locality {
+            case .local:
+                queryParameters.append(.init(name: "local", value: "true"))
+            case .remote:
+                queryParameters.append(.init(name: "remote", value: "true"))
+            case .all:
+                queryParameters.append(contentsOf: [
+                    .init(name: "local", value: "false"),
+                    .init(name: "remote", value: "false")
+                ])
+            }
         }
+        
         return queryParameters
     }
 
