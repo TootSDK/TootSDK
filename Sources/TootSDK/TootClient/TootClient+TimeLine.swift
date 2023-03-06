@@ -76,7 +76,7 @@ public extension TootClient {
     ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
     ///   - onlyMedia: Return only statuses with media attachments
-    ///   - locality: Whether to return only local or only remote statuses (optional, returns both if not specified)
+    ///   - locality: Whether to return only local, only remote statuses, or explicitly not filter by source (optional, if not specified, uses Mastodon default of not filtering)
     /// - Returns: a PagedResult containing the posts retrieved
     func getHashtagTimeline(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, onlyMedia: Bool? = nil, locality: TimelineLocality? = nil) async throws -> PagedResult<[Post]> {
         var query = getQueryParams(pageInfo, limit: limit, onlyMedia: onlyMedia, locality: locality)
