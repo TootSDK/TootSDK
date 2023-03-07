@@ -3,9 +3,10 @@
 
 import Foundation
 
+/// Represents a file or media attachment that can be added to a status.
 public struct MediaAttachment: Codable, Hashable, Sendable {
     
-    public init(id: String, type: AttachmentType, url: String? = nil, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
+    public init(id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
         self.id = id
         self.type = type
         self.url = url
@@ -21,7 +22,7 @@ public struct MediaAttachment: Codable, Hashable, Sendable {
     /// The type of the attachment.
     public var type: AttachmentType
     /// The location of the original full-size attachment.
-    public var url: String?
+    public var url: String
     /// The location of the full-size original attachment on the remote website.
     public var remoteUrl: String?
     /// The location of a scaled-down preview of the attachment.
@@ -32,4 +33,78 @@ public struct MediaAttachment: Codable, Hashable, Sendable {
     public var description: String?
     /// A hash computed by the BlurHash algorithm, for generating colorful preview thumbnails when media has not been downloaded yet.
     public var blurhash: String?
+}
+
+public enum AttachmentType: String, Codable, Hashable, Sendable {
+    ///  Static image
+    case image
+    /// Video clip
+    case video
+    /// Looping, soundless animation
+    case gifv
+    /// Audio track
+    case audio
+    /// unsupported or unrecognized file type
+    case unknown
+}
+
+public struct AttachmentMeta: Codable, Hashable, Sendable {
+
+    public var original: AttachmentMetaInfo?
+    public var small: AttachmentMetaInfo?
+    public var focus: AttachmentMetaFocus?
+}
+
+public struct AttachmentMetaInfo: Codable, Hashable, Sendable {
+    public var width: Int?
+    public var height: Int?
+    public var size: String?
+    public var aspect: Double?
+    public var frameRate: String?
+    public var duration: Double?
+    public var bitrate: Int?
+}
+
+public extension MediaAttachment {
+    var aspectRatio: Double? {
+        if
+            let info = meta?.original,
+            let width = info.width,
+            let height = info.height,
+            width != 0,
+            height != 0 {
+            let aspectRatio = Double(width) / Double(height)
+            
+            return aspectRatio.isNaN ? nil : aspectRatio
+        }
+        
+        return nil
+    }
+}
+
+public struct AttachmentMetaFocus: Codable, Hashable, Sendable {
+    public var x: Double
+    public var y: Double
+}
+
+public extension AttachmentMetaFocus {
+    static let `default` = Self(x: 0, y: 0)
+}
+
+public struct UploadedMediaAttachment: Identifiable, Sendable {
+    /// Identifier of the `MediaAttachment`
+    public let id: String
+    public let state: State
+
+    public enum State: Sendable {
+        /// The attachment is still being processed by the server
+        case serverProcessing
+        /// The attachment has been uploaded
+        case uploaded
+    }
+}
+
+internal struct UploadMediaAttachmentResponse: Codable {
+    public let id: String
+    public let url: String?
 }

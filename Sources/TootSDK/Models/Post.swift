@@ -13,7 +13,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
                 visibility: Post.Visibility,
                 sensitive: Bool,
                 spoilerText: String,
-                mediaAttachments: [Attachment],
+                mediaAttachments: [MediaAttachment],
                 application: TootApplication,
                 mentions: [Mention],
                 tags: [Tag],
@@ -82,7 +82,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     /// Subject or summary line, below which post content is collapsed until expanded.
     public var spoilerText: String
     /// Media that is attached to this post.
-    public var mediaAttachments: [Attachment]
+    public var mediaAttachments: [MediaAttachment]
     /// The application used to post this post.
     public var application: TootApplication?
 
