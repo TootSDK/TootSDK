@@ -69,31 +69,26 @@ public extension TootClient {
     
     /// Retrieves public statuses containing the given hashtag
     /// - Parameters:
-    ///   - tag: The name of the hashtag, not including the `#` symbol
-    ///   - anyTags: Return statuses that contain any of these additional tags
-    ///   - allTags: Return statuses that contain all of these additional tags
-    ///   - noneTags: Return statuses that contain none of these additional tags
+    ///   - query: a ``HashtagTimelineQuery`` struct defining the parameters of the request
     ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
-    ///   - onlyMedia: Return only statuses with media attachments
-    ///   - locality: Whether to return only local, only remote statuses, or explicitly not filter by source (optional, if not specified, uses Mastodon default of not filtering)
     /// - Returns: a PagedResult containing the posts retrieved
-    func getHashtagTimeline(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, onlyMedia: Bool? = nil, locality: TimelineLocality? = nil) async throws -> PagedResult<[Post]> {
-        var query = getQueryParams(pageInfo, limit: limit, onlyMedia: onlyMedia, locality: locality)
-        if let anyTags = anyTags {
-            query.append(contentsOf: anyTags.map({ URLQueryItem(name: "any[]", value: $0) }))
+    func getHashtagTimeline(query: HashtagTimelineQuery, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
+        var httpQuery = getQueryParams(pageInfo, limit: limit, onlyMedia: query.onlyMedia, locality: query.locality)
+        if let anyTags = query.anyTags {
+            httpQuery.append(contentsOf: anyTags.map({ URLQueryItem(name: "any[]", value: $0) }))
         }
-        if let allTags = allTags {
-            query.append(contentsOf: allTags.map({ URLQueryItem(name: "all[]", value: $0) }))
+        if let allTags = query.allTags {
+            httpQuery.append(contentsOf: allTags.map({ URLQueryItem(name: "all[]", value: $0) }))
         }
-        if let noneTags = noneTags {
-            query.append(contentsOf: noneTags.map({ URLQueryItem(name: "none[]", value: $0) }))
+        if let noneTags = query.noneTags {
+            httpQuery.append(contentsOf: noneTags.map({ URLQueryItem(name: "none[]", value: $0) }))
         }
         
         let req = HTTPRequestBuilder {
-            $0.url = getURL(["api", "v1", "timelines", "tag", tag])
+            $0.url = getURL(["api", "v1", "timelines", "tag", query.tag])
             $0.method = .get
-            $0.query = query
+            $0.query = httpQuery
         }
         return try await getPosts(req, pageInfo, limit)
     }
