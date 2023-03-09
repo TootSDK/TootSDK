@@ -10,7 +10,7 @@ import Foundation
 /// Specifies the parameters for a local timeline request
 public struct LocalTimelineQuery: Codable, Sendable {
     /// Return only statuses with media attachments
-    public var onlyMedia: Bool? = nil
+    public var onlyMedia: Bool?
     
     public init(onlyMedia: Bool? = nil) {
         self.onlyMedia = onlyMedia
@@ -20,7 +20,7 @@ public struct LocalTimelineQuery: Codable, Sendable {
 /// Specifies the parameters for a federated timeline request
 public struct FederatedTimelineQuery: Codable, Sendable {
     /// Return only statuses with media attachments
-    public var onlyMedia: Bool? = nil
+    public var onlyMedia: Bool?
     
     public init(onlyMedia: Bool? = nil) {
         self.onlyMedia = onlyMedia
@@ -33,22 +33,22 @@ public struct HashtagTimelineQuery: Codable, Sendable {
     public var tag: String
     
     /// Return statuses that contain any of these additional tags
-    public var anyTags: [String]? = nil
+    public var anyTags: [String]?
     
     /// Return statuses that contain all of these additional tags
-    public var allTags: [String]? = nil
+    public var allTags: [String]?
     
     /// Return statuses that contain none of these additional tags
-    public var noneTags: [String]? = nil
+    public var noneTags: [String]?
     
     /// Return only statuses with media attachments
-    public var onlyMedia: Bool? = nil
+    public var onlyMedia: Bool?
     
     /// Return only local statuses
-    public var local: Bool? = nil
+    public var local: Bool?
     
     /// Return only remote statuses
-    public var remote: Bool? = nil
+    public var remote: Bool?
     
     public init(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, local: Bool? = nil, remote: Bool? = nil) {
         self.tag = tag
