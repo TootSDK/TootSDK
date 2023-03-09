@@ -28,8 +28,8 @@ If you see anything in our future road map that is particularly important to you
 
 ## Beyond ... 🔮
 - Account operations
+- More complete API coverage
 - Extended support for other Fediverse server types and their specific operations
     e.g:
-    - PixelFed
-    - Pleroma
     - MissKey
+    - Writefreely 
