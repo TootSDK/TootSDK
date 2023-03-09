@@ -144,7 +144,7 @@ extension TootDataStream {
             return newHolder.stream
         case .timeLineLocal:
             newHolder.refresh = {[weak self, weak newHolder] in
-                if let items = try await self?.client.getLocalTimeline(newHolder?.pageInfo) {
+                if let items = try await self?.client.getLocalTimeline(nil, newHolder?.pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
                     
                     // Update PagedInfo
@@ -156,7 +156,7 @@ extension TootDataStream {
             return newHolder.stream
         case .timeLineFederated:
             newHolder.refresh = {[weak self, weak newHolder] in
-                if let items = try await self?.client.getFederatedTimeline(newHolder?.pageInfo) {
+                if let items = try await self?.client.getFederatedTimeline(nil, newHolder?.pageInfo) {
                     newHolder?.internalContinuation?.yield(items.result)
                     
                     // Update PagedInfo
