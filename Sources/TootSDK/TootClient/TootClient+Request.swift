@@ -16,7 +16,7 @@ extension TootClient {
         return url
     }
     
-    internal func getQueryParams(_ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil, onlyMedia: Bool? = nil, locality: TimelineLocality? = nil) -> [URLQueryItem] {
+    internal func getQueryParams(_ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil, onlyMedia: Bool? = nil, local: Bool? = nil, remote: Bool? = nil) -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
         
         if let maxId = pageInfo?.maxId {
@@ -43,18 +43,12 @@ extension TootClient {
             queryParameters.append(.init(name: "only_media", value: String(onlyMedia)))
         }
         
-        if let locality = locality {
-            switch locality {
-            case .local:
-                queryParameters.append(.init(name: "local", value: "true"))
-            case .remote:
-                queryParameters.append(.init(name: "remote", value: "true"))
-            case .all:
-                queryParameters.append(contentsOf: [
-                    .init(name: "local", value: "false"),
-                    .init(name: "remote", value: "false")
-                ])
-            }
+        if let local = local {
+            queryParameters.append(.init(name: "local", value: String(local)))
+        }
+        
+        if let remote = remote {
+            queryParameters.append(.init(name: "remote", value: String(remote)))
         }
         
         return queryParameters

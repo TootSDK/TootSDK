@@ -47,7 +47,7 @@ public extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "timelines", "public"])
             $0.method = .get
-            $0.query = getQueryParams(pageInfo, limit: limit, onlyMedia: query?.onlyMedia, locality: .local)
+            $0.query = getQueryParams(pageInfo, limit: limit, onlyMedia: query?.onlyMedia, local: true)
         }
         return try await getPosts(req, pageInfo, limit)
     }
@@ -74,7 +74,7 @@ public extension TootClient {
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
     /// - Returns: a PagedResult containing the posts retrieved
     func getHashtagTimeline(_ query: HashtagTimelineQuery, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
-        var httpQuery = getQueryParams(pageInfo, limit: limit, onlyMedia: query.onlyMedia, locality: query.locality)
+        var httpQuery = getQueryParams(pageInfo, limit: limit, onlyMedia: query.onlyMedia, local: query.local, remote: query.remote)
         if let anyTags = query.anyTags {
             httpQuery.append(contentsOf: anyTags.map({ URLQueryItem(name: "any[]", value: $0) }))
         }

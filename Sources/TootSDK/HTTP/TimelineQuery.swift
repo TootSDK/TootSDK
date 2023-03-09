@@ -44,16 +44,20 @@ public struct HashtagTimelineQuery: Codable, Sendable {
     /// Return only statuses with media attachments
     public var onlyMedia: Bool? = nil
     
-    /// Whether to return only local, only remote statuses, or explicitly not filter by source (optional, if not specified, uses Mastodon default of not filtering)
-    public var locality: TimelineLocality? = nil
+    /// Return only local statuses
+    public var local: Bool? = nil
     
-    public init(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, locality: TimelineLocality? = nil) {
+    /// Return only remote statuses
+    public var remote: Bool? = nil
+    
+    public init(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, local: Bool? = nil, remote: Bool? = nil) {
         self.tag = tag
         self.anyTags = anyTags
         self.allTags = allTags
         self.noneTags = noneTags
         self.onlyMedia = onlyMedia
-        self.locality = locality
+        self.local = local
+        self.remote = remote
     }
 
 }
