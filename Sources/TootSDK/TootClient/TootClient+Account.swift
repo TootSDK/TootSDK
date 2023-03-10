@@ -76,8 +76,25 @@ extension TootClient {
         return PagedResult(result: decoded, info: info)
     }
     
+    
+    public func registerAccount(params: RegisterAccountParams) async throws -> RegisterAccountErrors? {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts"])
+            $0.method = .post
+            $0.body = try .json(params, encoder: self.encoder)
+        }
+        
+        let (data, response) = try await fetch(req: req)
+        if response.statusCode != 200 {
+            let decoded = try decode(RegisterAccountErrors.self, from: data)
+            return decoded
+        }
+        
+        // registration was a success
+        return nil
+    }
+    
     // swiftlint:disable todo
-    // TODO: - Register an account
     // TODO: - Update account credentials
     
     // TODO: - Get account’s posts
