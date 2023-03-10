@@ -85,6 +85,8 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func removeAccountFromFollowers(by id: String) async throws -> Relationship {
+        guard flavour != .friendica else { throw TootSDKError.unsupportedFlavour(current: flavour, required: TootSDKFlavour.allCases.filter({$0 != .friendica})) }
+        
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "remove_from_followers"])
             $0.method = .post
