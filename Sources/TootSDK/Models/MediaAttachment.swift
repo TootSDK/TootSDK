@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a file or media attachment that can be added to a status.
-public struct MediaAttachment: Codable, Hashable, Sendable {
+public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
     
     public init(id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
         self.id = id

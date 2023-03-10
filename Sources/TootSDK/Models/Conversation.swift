@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Conversation: Codable, Hashable {
+public struct Conversation: Codable, Hashable, Identifiable {
     public var id: String
     public var accounts: [Account]
     public var unread: Bool

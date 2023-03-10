@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct AccountLookup: Codable, Sendable {
+public struct AccountLookup: Codable, Identifiable, Sendable {
     public init(id: String, username: String, acct: String, displayName: String, locked: Bool) {
         self.id = id
         self.username = username
