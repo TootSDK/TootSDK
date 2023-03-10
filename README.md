@@ -36,9 +36,11 @@ TootSDK is a shared Swift Package that any client app can be built on.
 
 ## Project Status 📈
 
-- Mastodon - In progress
-- Pleroma - In progress
-- Pixelfed - To do
+- Mastodon - Nearly there
+- Pleroma - Nearly there
+- Pixelfed - Nearly there
+- Friendica - Nearly there 
+- Akkoma - Nearly there
 - Writefreely - To do
 
 Our [roadmap](ROADMAP.md) shows where we want to take TootSDK. Our [project board](https://github.com/orgs/TootSDK/projects/1) shows our current backlog of work, and what is in flight.

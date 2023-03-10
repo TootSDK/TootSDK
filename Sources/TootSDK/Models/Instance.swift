@@ -5,7 +5,7 @@ import Foundation
 
 /// General information about an instance
 public struct Instance: Codable, Hashable {
-    public init(uri: String, title: String, description: String, shortDescription: String? = nil, email: String, version: String, languages: [String]? = nil, registrations: Bool? = nil, approvalRequired: Bool? = nil, invitesEnabled: Bool? = nil, urls: Instance.URLs, stats: Instance.Stats, thumbnail: String? = nil, contactAccount: Account? = nil) {
+    public init(uri: String, title: String, description: String, shortDescription: String? = nil, email: String, version: String, languages: [String]? = nil, registrations: Bool? = nil, approvalRequired: Bool? = nil, invitesEnabled: Bool? = nil, urls: Instance.InstanceURLs, stats: Instance.Stats, thumbnail: String? = nil, contactAccount: Account? = nil) {
         self.uri = uri
         self.title = title
         self.description = description
@@ -43,7 +43,7 @@ public struct Instance: Codable, Hashable {
     /// Whether invites are enabled.
     public var invitesEnabled: Bool?
     /// URLs of interest for clients apps.
-    public var urls: URLs
+    public var urls: InstanceURLs?
     /// Statistics about how much information the instance contains.
     public var stats: Stats
     /// Banner image for the website.
@@ -51,7 +51,7 @@ public struct Instance: Codable, Hashable {
     /// A user that can be contacted, as an alternative to email.
     public var contactAccount: Account?
 
-    public struct URLs: Codable, Hashable {
+    public struct InstanceURLs: Codable, Hashable {
         /// Websockets address for push streaming. String (URL).
         public var streamingApi: String?
     }
@@ -109,6 +109,12 @@ public extension Instance {
         }
         if version.lowercased().contains("pixelfed") {
             return .pixelfed
+        }
+        if version.lowercased().contains("friendica") {
+            return .friendica
+        }
+        if version.lowercased().contains("akkoma") {
+            return .akkoma
         }
         return .mastodon
     }
