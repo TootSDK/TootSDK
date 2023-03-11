@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a subscription to the push streaming server.
-public struct PushSubscription: Codable {
+public struct PushSubscription: Codable, Identifiable {
     public init(id: String, endpoint: String, alerts: Alerts, serverKey: String) {
         self.id = id
         self.endpoint = endpoint
