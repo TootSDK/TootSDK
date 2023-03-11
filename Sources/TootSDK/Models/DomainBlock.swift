@@ -18,7 +18,7 @@ public enum DomainBlockSeverity: String, Codable, Hashable {
 }
 
 /// Represents a domain limited from federating.
-public struct DomainBlock: Codable, Hashable, Identifiable {
+public struct DomainBlock: Codable, Hashable {
     /// The ID of the DomainBlock in the database.
     public var id: String
     
