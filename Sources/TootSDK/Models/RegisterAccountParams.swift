@@ -1,6 +1,6 @@
 //
 //  RegisterAccountParams.swift
-//  
+//
 //
 //  Created by Konstantin on 09/03/2023.
 //
@@ -8,7 +8,11 @@
 import Foundation
 
 public struct RegisterAccountParams: Codable, Sendable {
-    public init(username: String, email: String, password: String, agreement: String, locale: String, reason: String? = nil, token: String? = nil, fullname: String? = nil, captchaSolution: String? = nil, captchaToken: String? = nil, captchaAnswerData: String? = nil) {
+    public init(
+        username: String, email: String, password: String, agreement: Bool, locale: String,
+        reason: String? = nil, token: String? = nil, fullname: String? = nil,
+        captchaSolution: String? = nil, captchaToken: String? = nil, captchaAnswerData: String? = nil
+    ) {
         self.username = username
         self.email = email
         self.password = password
@@ -32,7 +36,7 @@ public struct RegisterAccountParams: Codable, Sendable {
     public var password: String
     
     /// Whether the user agrees to the local rules, terms, and policies. These should be presented to the user in order to allow them to consent before setting this parameter to `true`.
-    public var agreement: String
+    public var agreement: Bool
     
     /// The language of the confirmation email that will be sent.
     public var locale: String

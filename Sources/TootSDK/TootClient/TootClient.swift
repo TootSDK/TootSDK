@@ -270,6 +270,24 @@ extension TootClient {
         let info = try await getAccessToken(code: code, clientId: clientId,
                                             clientSecret: clientSecret,
                                             callbackURI: callbackURI,
+                                            grantType: TootGrantType.login.rawValue,
+                                            scopes: scopes)
+        
+        guard let accessToken = info.accessToken else {
+            throw TootSDKError.clientAuthorizationFailed
+        }
+
+        self.accessToken = accessToken
+        
+        return accessToken
+    }
+    
+    public func collectRegistrationToken(clientId: String, clientSecret: String, callbackURI: String) async throws -> String {
+        
+        let info = try await getAccessToken(code: nil, clientId: clientId,
+                                            clientSecret: clientSecret,
+                                            callbackURI: callbackURI,
+                                            grantType: TootGrantType.register.rawValue,
                                             scopes: scopes)
         
         guard let accessToken = info.accessToken else {

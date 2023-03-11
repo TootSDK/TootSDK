@@ -22,5 +22,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
       Unfollow.self,
       GetPost.self,
       GetFlavour.self,
+      RegisterAccount.self,
     ])
 }

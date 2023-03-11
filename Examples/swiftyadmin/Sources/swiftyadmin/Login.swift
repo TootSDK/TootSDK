@@ -26,7 +26,6 @@ struct Login: AsyncParsableCommand {
     print("Logging into (serverUrl.absoluteString) with scopes \(scopes.joined(separator: ", "))")
     let callbackURI: String = "urn:ietf:wg:oauth:2.0:oob"
     let client = TootClient(instanceURL: serverUrl, scopes: scopes)
-    // TODO: why do we need server param here, it's already set?
 
     let authUrl = try await client.createAuthorizeURL(
       server: serverUrl, callbackURI: callbackURI)

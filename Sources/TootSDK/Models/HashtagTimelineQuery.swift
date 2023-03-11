@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  HashtagTimelineQuery.swift
+//
 //
 //  Created by Konstantin on 09/03/2023.
 //
