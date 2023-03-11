@@ -52,6 +52,20 @@ public extension TootClient {
         return try await getPosts(req, pageInfo, limit)
     }
     
+    /// Retrieves the user's local timeline
+    /// - Parameters:
+    ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
+    ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    /// - Returns: a PagedResult containing the posts retrieved
+   func getLocalTimeline(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "timelines", "public"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit, local: true)
+        }
+        return try await getPosts(req, pageInfo, limit)
+    }
+    
     /// Retrieves the user's federated timeline
     /// - Parameters:
     ///   - query: a ``FederatedTimelineQuery`` struct defining the parameters of the request
@@ -63,6 +77,20 @@ public extension TootClient {
             $0.url = getURL(["api", "v1", "timelines", "public"])
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit, onlyMedia: query?.onlyMedia)
+        }
+        return try await getPosts(req, pageInfo, limit)
+    }
+    
+    /// Retrieves the user's federated timeline
+    /// - Parameters:
+    ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
+    ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    /// - Returns: a PagedResult containing the posts retrieved
+    func getFederatedTimeline(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "timelines", "public"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
         }
         return try await getPosts(req, pageInfo, limit)
     }
