@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a notification of an event relevant to the user.
-public struct TootNotification: Codable, Hashable {
+public struct TootNotification: Codable, Hashable, Identifiable {
     public init(id: String, type: TootNotification.NotificationType, account: Account, createdAt: Date, post: Post? = nil) {
         self.id = id
         self.type = type

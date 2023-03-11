@@ -114,7 +114,7 @@ public extension Instance {
             return .friendica
         }
         if version.lowercased().contains("akkoma") {
-            return .friendica
+            return .akkoma
         }
         return .mastodon
     }
