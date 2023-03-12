@@ -1,9 +1,5 @@
-//
-//  File.swift
-//  
-//
+//  LocalTimelineQuery.swift
 //  Created by Konstantin on 09/03/2023.
-//
 
 import Foundation
 

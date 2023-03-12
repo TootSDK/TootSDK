@@ -1,9 +1,5 @@
-//
-//  File.swift
-//  
-//
+//  DomainBlock.swift
 //  Created by dave on 14/12/22.
-//
 
 import Foundation
 

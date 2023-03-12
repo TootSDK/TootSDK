@@ -1,9 +1,5 @@
-//
-//  File.swift
-//  
-//
+//  FederatedTimelineQuery.swift
 //  Created by Konstantin on 09/03/2023.
-//
 
 import Foundation
 
