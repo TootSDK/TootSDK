@@ -113,6 +113,29 @@ We recommend keeping the accessToken somewhere secure, for example the Keychain.
 let posts = try await client.data.stream(.timeLineHome)
 ```
 
+### Creating an account
+
+* Register the app with the following scopes `["read", "write:accounts"]`.
+
+* Get instance information and determine the sign up requirements. Some instances may not be open for registration while others may require additional verification.
+
+```swift
+let instance = try await client.getInstanceInfo()
+if instance.registrations == false {
+  // instance not open for registration
+  return
+}
+// ...
+```
+
+* Use the `registerAccount` method to create a user account:
+
+```swift
+let params = RegisterAccountParams(
+      username: name, email: email, password: password, agreement: true, locale: "en")
+let token = try await client.registerAccount(params: params)
+```
+
 ## Further Documentation 📖
 
 - Reference documentation is available [here](https://tootsdk.github.io/TootDocs/?v=2)

@@ -1,9 +1,5 @@
-//
-//  File.swift
-//  
-//
+//  DomainBlock.swift
 //  Created by dave on 14/12/22.
-//
 
 import Foundation
 
@@ -20,22 +16,22 @@ public enum DomainBlockSeverity: String, Codable, Hashable {
 /// Represents a domain limited from federating.
 public struct DomainBlock: Codable, Hashable {
     /// The ID of the DomainBlock in the database.
-    public var id: String
+    public var id: String?
     
     /// The domain that is not allowed to federate.
     public var domain: String
     
     /// When the domain was blocked from federating.
-    public var createdAt: Date
+    public var createdAt: Date?
     
     /// The policy to be applied by this domain block.
-    public var severity: DomainBlockSeverity
+    public var severity: DomainBlockSeverity?
     
     /// Whether to reject media attachments from this domain
-    public var rejectMedia: Bool
+    public var rejectMedia: Bool?
     
     /// Whether to reject reports from this domain
-    public var rejectReports: Bool
+    public var rejectReports: Bool?
     
     /// A private note about this domain block, visible only to admins.
     public var privateComment: String?
@@ -56,12 +52,12 @@ public struct DomainBlock: Codable, Hashable {
     ///   - privateComment: A private note about this domain block, visible only to admins.
     ///   - publicComment: public note about this domain block, optionally shown on the about page.
     ///   - obfuscate: Whether to partially censor the domain when shown in public. Defaults to false
-    public init(id: String,
+    public init(id: String?,
                 domain: String,
-                createdAt: Date,
-                severity: DomainBlockSeverity,
-                rejectMedia: Bool,
-                rejectReports: Bool,
+                createdAt: Date?,
+                severity: DomainBlockSeverity?,
+                rejectMedia: Bool?,
+                rejectReports: Bool?,
                 privateComment: String? = nil,
                 publicComment: String? = nil,
                 obfuscate: Bool = false) {

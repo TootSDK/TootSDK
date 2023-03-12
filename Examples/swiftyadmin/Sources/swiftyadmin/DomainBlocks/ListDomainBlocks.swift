@@ -16,7 +16,7 @@ struct ListDomainBlocks: AsyncParsableCommand {
 
     if let results = try? await client.adminGetDomainBlocks() {
       for domain in results {
-        print(domain.id + ", " + domain.domain)
+        print(domain.id ?? "-" + ", " + domain.domain)
       }
     } else {
       print("No domains blocked")

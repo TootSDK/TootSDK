@@ -21,6 +21,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case clientAuthorizationFailed
     /// A "this should never happen" asssertion has failed
     case internalError(_ description: String)
+    /// A specific error message was returned from the server
+    case serverError(_ message: String)
     
     public var errorDescription: String? {
         switch self {
@@ -46,6 +48,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "The remote instance did not respond with the expected payload during authorization."
         case .internalError(let description):
             return "[TootSDK bug] " + description + "."
+        case .serverError(let message):
+            return message
         }
     }
 }

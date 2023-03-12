@@ -76,8 +76,30 @@ extension TootClient {
         return PagedResult(result: decoded, info: info)
     }
     
+    /// Attempts to register a user.
+    ///
+    /// Returns an account access token for the app that initiated the request. The app should save this token for later, and should wait for the user to confirm their account by clicking a link in their email inbox.
+    public func registerAccount(params: RegisterAccountParams) async throws -> AccessToken {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts"])
+            $0.method = .post
+            $0.body = try .json(params, encoder: self.encoder)
+        }
+        
+        do {
+            let (data, _) = try await fetch(req: req)
+            return try decode(AccessToken.self, from: data)
+        } catch {
+            if case let TootSDKError.invalidStatusCode(data, _) = error {
+                if let decoded = try? decode(RegisterAccountErrors.self, from: data), let message = decoded.error {
+                    throw TootSDKError.serverError(message)
+                }
+            }
+            throw error
+        }
+    }
+    
     // swiftlint:disable todo
-    // TODO: - Register an account
     // TODO: - Update account credentials
     
     // TODO: - Get account’s posts
