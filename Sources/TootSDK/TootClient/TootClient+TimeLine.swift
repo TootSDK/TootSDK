@@ -43,11 +43,11 @@ public extension TootClient {
     ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
     /// - Returns: a PagedResult containing the posts retrieved
-    func getLocalTimeline(_ query: LocalTimelineQuery? = nil, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
+    func getLocalTimeline(_ query: LocalTimelineQuery? = LocalTimelineQuery(), _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "timelines", "public"])
             $0.method = .get
-            $0.query = getQueryParams(pageInfo, limit: limit, onlyMedia: query?.onlyMedia, local: true)
+            $0.query = getQueryParams(pageInfo, limit: limit, query: query)
         }
         return try await getPosts(req, pageInfo, limit)
     }
@@ -58,7 +58,7 @@ public extension TootClient {
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
     /// - Returns: a PagedResult containing the posts retrieved
     func getLocalTimeline(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
-        return try await getLocalTimeline(nil, pageInfo, limit: limit)
+        try await getLocalTimeline(nil, pageInfo, limit: limit)
     }
     
     /// Retrieves the user's federated timeline
@@ -71,42 +71,31 @@ public extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "timelines", "public"])
             $0.method = .get
-            $0.query = getQueryParams(pageInfo, limit: limit, onlyMedia: query?.onlyMedia)
+            $0.query = getQueryParams(pageInfo, limit: limit, query: query)
         }
         return try await getPosts(req, pageInfo, limit)
     }
-    
+
     /// Retrieves the user's federated timeline
     /// - Parameters:
     ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
     /// - Returns: a PagedResult containing the posts retrieved
     func getFederatedTimeline(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
-        return try await getFederatedTimeline(nil, pageInfo, limit: limit)
+        try await getFederatedTimeline(nil, pageInfo, limit: limit)
     }
     
     /// Retrieves public statuses containing the given hashtag
     /// - Parameters:
-    ///   - query: a ``HashtagTimelineQuery`` struct defining the parameters of the request
     ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    ///   - query: a ``HashtagTimelineQuery`` struct defining the parameters of the request
     /// - Returns: a PagedResult containing the posts retrieved
     func getHashtagTimeline(_ query: HashtagTimelineQuery, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
-        var httpQuery = getQueryParams(pageInfo, limit: limit, onlyMedia: query.onlyMedia, local: query.local, remote: query.remote)
-        if let anyTags = query.anyTags {
-            httpQuery.append(contentsOf: anyTags.map({ URLQueryItem(name: "any[]", value: $0) }))
-        }
-        if let allTags = query.allTags {
-            httpQuery.append(contentsOf: allTags.map({ URLQueryItem(name: "all[]", value: $0) }))
-        }
-        if let noneTags = query.noneTags {
-            httpQuery.append(contentsOf: noneTags.map({ URLQueryItem(name: "none[]", value: $0) }))
-        }
-        
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "timelines", "tag", query.tag])
             $0.method = .get
-            $0.query = httpQuery
+            $0.query = getQueryParams(pageInfo, limit: limit, query: query)
         }
         return try await getPosts(req, pageInfo, limit)
     }
