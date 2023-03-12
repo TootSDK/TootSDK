@@ -44,7 +44,7 @@ extension TootClient {
         }
         
         if let query {
-            queryParameters = queryParameters + query.getQueryItems()
+            queryParameters += query.getQueryItems()
         }
                 
         return queryParameters
