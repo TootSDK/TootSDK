@@ -8,7 +8,7 @@
 import Foundation
 
 public struct PostEdit: Codable, Sendable {
-    ///  The content of the pos] at this revision.
+    ///  The content of the post at this revision.
     public var content: String
     ///  The content of the subject or content warning at this revision
     public var spoilerText: String
@@ -16,7 +16,7 @@ public struct PostEdit: Codable, Sendable {
     public var sensitive: Bool
     /// The timestamp of when the revision was published
     public var createdAt: Date?
-    /// The account that published this revisionå
+    /// The account that published this revision
     public var account: Account
     /// The current state of the poll options at this revision
     public var poll: Poll?
