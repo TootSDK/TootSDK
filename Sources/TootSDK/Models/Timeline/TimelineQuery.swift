@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol TimelineQuery {
+public protocol TimelineQuery: Hashable {
     func getQueryItems() -> [URLQueryItem]
 }

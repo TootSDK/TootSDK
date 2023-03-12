@@ -4,7 +4,7 @@
 import Foundation
 
 /// Specifies the parameters for a local timeline request
-public struct LocalTimelineQuery: Codable, Sendable {
+public struct LocalTimelineQuery: Hashable, Codable, Sendable {
     public init(onlyMedia: Bool? = nil) {
         self.onlyMedia = onlyMedia
     }

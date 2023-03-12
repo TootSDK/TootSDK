@@ -19,7 +19,7 @@ extension TootClient {
     internal func getQueryParams(_ pageInfo: PagedInfo? = nil,
                                  limit: Int? = nil,
                                  offset: Int? = nil,
-                                 query: TimelineQuery? = nil) -> [URLQueryItem] {
+                                 query: (any TimelineQuery)? = nil) -> [URLQueryItem] {
         
         var queryParameters = [URLQueryItem]()
         
