@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/TootSDK/TootSDK/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/TootSDK/TootSDK/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/TootSDK/TootSDK/releases.atom"/>
+  <title>Release notes from TootSDK</title>
+  <updated>2023-03-12T00:29:07Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.28.0</id>
+    <updated>2023-03-12T00:33:41Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.28.0"/>
+    <title>0.28.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Add support for Akkoma and Friendica by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/kkostov/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/kkostov&quot;&gt;@kkostov&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1618066533&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/106&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/106/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/106&quot;&gt;#106&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;implement Identifiable where id getter is defined by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/technicat/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/technicat&quot;&gt;@technicat&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1618528324&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/110&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/110/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/110&quot;&gt;#110&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Make it possible to register an account by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/kkostov/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/kkostov&quot;&gt;@kkostov&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1618494662&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/109&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/109/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/109&quot;&gt;#109&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.27.0...0.28.0&quot;&gt;&lt;tt&gt;0.27.0...0.28.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>davidgarywood</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/5118734?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.27.0</id>
+    <updated>2023-03-09T19:53:53Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.27.0"/>
+    <title>0.27.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[BREAKING] TootClient+Request support for hashtag timeline and only_media by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/daprice/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/daprice&quot;&gt;@daprice&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1614207252&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/105&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/105/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/105&quot;&gt;#105&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/daprice/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/daprice&quot;&gt;@daprice&lt;/a&gt; made their first contribution in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1614207252&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/105&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/105/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/105&quot;&gt;#105&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.26.0...0.27.0&quot;&gt;&lt;tt&gt;0.26.0...0.27.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.26.0</id>
+    <updated>2023-03-07T06:27:43Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.26.0"/>
+    <title>0.26.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[BREAKING] Remove Attachment type in favour of MediaAttachment by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/kkostov/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/kkostov&quot;&gt;@kkostov&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1610249128&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/102&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/102/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/102&quot;&gt;#102&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.25.0...0.26.0&quot;&gt;&lt;tt&gt;0.25.0...0.26.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.25.0</id>
+    <updated>2023-03-05T16:43:19Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.25.0"/>
+    <title>0.25.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;API to update media attachment by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Tunous/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Tunous&quot;&gt;@Tunous&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1610191273&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/101&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/101/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/101&quot;&gt;#101&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.24.0...0.25.0&quot;&gt;&lt;tt&gt;0.24.0...0.25.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.24.0</id>
+    <updated>2023-02-18T14:07:34Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.24.0"/>
+    <title>0.24.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[BREAKING] Fix sendable warnings for Xcode 14.3 (beta) by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/davidgarywood/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/davidgarywood&quot;&gt;@davidgarywood&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1590221077&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/98&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/98/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/98&quot;&gt;#98&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.23.0...0.24.0&quot;&gt;&lt;tt&gt;0.23.0...0.24.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.23.0</id>
+    <updated>2023-02-17T15:58:04Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.23.0"/>
+    <title>0.23.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Get poll and vote on a poll by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Tunous/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Tunous&quot;&gt;@Tunous&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1588096764&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/94&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/94/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/94&quot;&gt;#94&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;changed branch of nuke from master to main by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/technicat/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/technicat&quot;&gt;@technicat&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1588702370&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/95&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/95/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/95&quot;&gt;#95&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Improvements to docs, build pipeline and SwiftUI examples by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/kkostov/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/kkostov&quot;&gt;@kkostov&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1589556497&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/97&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/97/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/97&quot;&gt;#97&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/technicat/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/technicat&quot;&gt;@technicat&lt;/a&gt; made their first contribution in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1588702370&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/95&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/95/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/95&quot;&gt;#95&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.22.1...0.23.0&quot;&gt;&lt;tt&gt;0.22.1...0.23.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.22.1</id>
+    <updated>2023-02-16T10:00:59Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.22.1"/>
+    <title>0.22.1</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix - Use the pageInfo in TootStream when first setting up the stream by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/davidgarywood/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/davidgarywood&quot;&gt;@davidgarywood&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1587374162&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/93&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/93/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/93&quot;&gt;#93&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.22.0...0.22.1&quot;&gt;&lt;tt&gt;0.22.0...0.22.1&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.22.0</id>
+    <updated>2023-02-15T10:06:33Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.22.0"/>
+    <title>0.22.0 (shaky edition)</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds pagination to streams, adds local and federated timelines, updates to SwiftUI example by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/davidgarywood/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/davidgarywood&quot;&gt;@davidgarywood&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1585547705&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/91&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/91/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/91&quot;&gt;#91&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.21.0...0.22.0&quot;&gt;&lt;tt&gt;0.21.0...0.22.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.21.0</id>
+    <updated>2023-02-15T03:23:03Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.21.0"/>
+    <title>0.21.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Implementation of getFollowers and getFollowing by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/winsmith/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/winsmith&quot;&gt;@winsmith&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1580807189&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/84&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/84/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/84&quot;&gt;#84&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Search API by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Tunous/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Tunous&quot;&gt;@Tunous&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1581236605&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/86&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/86/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/86&quot;&gt;#86&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;SwiftUI-Toot Demo: Removed Unused XC Data Model by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/jnozzi/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/jnozzi&quot;&gt;@jnozzi&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1582360180&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/88&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/88/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/88&quot;&gt;#88&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Move docs into a separate repository by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/kkostov/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/kkostov&quot;&gt;@kkostov&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1582739111&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/89&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/89/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/89&quot;&gt;#89&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/winsmith/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/winsmith&quot;&gt;@winsmith&lt;/a&gt; made their first contribution in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1580807189&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/84&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/84/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/84&quot;&gt;#84&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/jnozzi/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/jnozzi&quot;&gt;@jnozzi&lt;/a&gt; made their first contribution in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1582360180&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/88&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/88/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/88&quot;&gt;#88&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.20.0...0.21.0&quot;&gt;&lt;tt&gt;0.20.0...0.21.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/577711416/0.20.0</id>
+    <updated>2023-02-11T12:44:57Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/TootSDK/TootSDK/releases/tag/0.20.0"/>
+    <title>0.20.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Detect instance flavour automatically by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/kkostov/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/kkostov&quot;&gt;@kkostov&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;1578867907&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/TootSDK/TootSDK/issues/82&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/TootSDK/TootSDK/pull/82/hovercard&quot; href=&quot;https://github.com/TootSDK/TootSDK/pull/82&quot;&gt;#82&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/TootSDK/TootSDK/compare/0.19.0...0.20.0&quot;&gt;&lt;tt&gt;0.19.0...0.20.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>kkostov</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4718042?s=60&amp;v=4"/>
+  </entry>
+</feed>
