@@ -22,7 +22,7 @@ You can use TootSDK to build a client for Apple operating systems, or Linux with
 
 ## Why make TootSDK?
 
-When app developers build apps for Mastodon and the Fediverse, every developer ends up having to solved the same set of problems when it comes to the API and data model.
+When app developers build apps for Mastodon and the Fediverse, every developer ends up having to solve the same set of problems when it comes to the API and data model.
 
 [Konstantin](https://m.iamkonstantin.eu/konstantin) and [Dave](https://social.davidgarywood.com/@davidgarywood) decided to share this effort.
 TootSDK is a shared Swift Package that any client app can be built on.
