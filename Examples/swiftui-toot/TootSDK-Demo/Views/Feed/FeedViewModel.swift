@@ -20,9 +20,9 @@ actor FeedViewModel: ObservableObject {
     @MainActor private var tootManager: TootManager?
     private var lastClient: TootClient?
     
-    private var streamType: PostTootStreamType
+    private var streamType: TootTimeline
     
-    public init(streamType: PostTootStreamType) {
+    public init(streamType: TootTimeline) {
         self.streamType = streamType
     }
     

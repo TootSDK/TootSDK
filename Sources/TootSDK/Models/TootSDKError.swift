@@ -23,8 +23,6 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case internalError(_ description: String)
     /// A specific error message was returned from the server
     case serverError(_ message: String)
-    /// The query type provided for a timeline call is invalid
-    case invalidQueryType(expectedQuery: String)
     
     public var errorDescription: String? {
         switch self {
@@ -52,8 +50,6 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "[TootSDK bug] " + description + "."
         case .serverError(let message):
             return message
-        case .invalidQueryType(let expectedQuery):
-            return "Invalid query type, expected: " + expectedQuery
         }
     }
 }

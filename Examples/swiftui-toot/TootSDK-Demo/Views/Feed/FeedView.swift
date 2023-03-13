@@ -56,6 +56,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(viewModel: FeedViewModel(streamType: .timeLineHome))
+        FeedView(viewModel: FeedViewModel(streamType: .home))
     }
 }
