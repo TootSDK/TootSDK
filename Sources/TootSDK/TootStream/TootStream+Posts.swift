@@ -3,7 +3,7 @@
 
 import Foundation
 
-extension TootTimeline: TootStream {
+extension Timeline: TootStream {
     public typealias ResponseType = [Post]
 }
 
@@ -16,9 +16,9 @@ extension TootDataStream {
     ///   - pageInfo: PagedInfo object for max/min/since ids
     ///   - query: the timeline query to apply to the stream
     /// - Returns: async stream of Post values
-    public func stream(_ timeline: TootTimeline, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
+    public func stream(_ timeline: Timeline, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
         
-        if let streamHolder = cachedStreams[timeline] as? TootEndpointStream<TootTimeline> {
+        if let streamHolder = cachedStreams[timeline] as? TootEndpointStream<Timeline> {
             return streamHolder.stream
         }
         
@@ -41,7 +41,7 @@ extension TootDataStream {
 
 extension TootDataStream {
     /// Reloads data in the selected stream for post toot streams
-    public func refresh(_ timeline: TootTimeline) async throws {
+    public func refresh(_ timeline: Timeline) async throws {
         let streamHolder = cachedStreams[timeline]
         try await streamHolder?.refresh?()
     }
