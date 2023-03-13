@@ -114,6 +114,7 @@ Once you have your client connected, you're going to want to use it. Our example
 <details>
 <summary>Accessing a user's timeline</summary>
 
+
 There are several different types of timeline in TootSDK that you can access, for example their home timeline, the local timeline of their instance, or the federated timeline. These are all enumerated in the `Timeline` enum.
 
 You can retrieve the latest posts (up to 40 on Mastodon) with a call like so:
@@ -127,6 +128,7 @@ TootSDK returns Posts, Accounts, Lists and DomainBblocks as `PagedResult`. In ou
 
 <details>
 <summary>Paging requests</summary>
+
 
 Some requests in TootSDK are paging. This means that we can send and receive PagedInfo structs when making these requests. The properties in this struct are:
 
@@ -160,6 +162,7 @@ func retrievePosts() async {
 
 <details>
 <summary>Streaming timelines</summary>
+
 
 In TootSDK it is possible to subscribe to some types of content with AsyncSequences, a concept we've wrapped up in our `TootStream` object.
 
