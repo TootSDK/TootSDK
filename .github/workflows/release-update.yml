@@ -16,4 +16,4 @@ jobs:
     - name: Build
       run: cd ./Examples/tootsdk-release && swift build -v
     - name: Send post
-      run: ./.build/debug/tootsdk-release make-post -u ${{ secrets.TOOT_URL }} -u ${{ secrets.TOOT_TOKEN }}
+      run: ./Examples/tootsdk-release/.build/debug/tootsdk-release make-post -u ${{ secrets.TOOT_URL }} -u ${{ secrets.TOOT_TOKEN }}
