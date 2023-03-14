@@ -1,0 +1,242 @@
+[
+  {
+    "ref": "refs/tags/0.9.0",
+    "node_id": "REF_kwDOIm8tOK9yZWZzL3RhZ3MvMC45LjA",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.9.0",
+    "object": {
+      "sha": "d8cd273e88977e72643f8359cf786e28aad6fd84",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/d8cd273e88977e72643f8359cf786e28aad6fd84"
+    }
+  },
+  {
+    "ref": "refs/tags/0.9.1",
+    "node_id": "REF_kwDOIm8tOK9yZWZzL3RhZ3MvMC45LjE",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.9.1",
+    "object": {
+      "sha": "a493eeecf6da8fb4a8bb4f5feec327357378b070",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/a493eeecf6da8fb4a8bb4f5feec327357378b070"
+    }
+  },
+  {
+    "ref": "refs/tags/0.9.2",
+    "node_id": "REF_kwDOIm8tOK9yZWZzL3RhZ3MvMC45LjI",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.9.2",
+    "object": {
+      "sha": "99b4a0390f43e02d8a86466960c56273a4db3016",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/99b4a0390f43e02d8a86466960c56273a4db3016"
+    }
+  },
+  {
+    "ref": "refs/tags/0.10.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xMC4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.10.0",
+    "object": {
+      "sha": "1dbfbe198b3cc2aef1648d126139b2829f9d624e",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/1dbfbe198b3cc2aef1648d126139b2829f9d624e"
+    }
+  },
+  {
+    "ref": "refs/tags/0.11.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xMS4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.11.0",
+    "object": {
+      "sha": "a95341d1ad7bc85f97f39170806e1536ba210f3d",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/a95341d1ad7bc85f97f39170806e1536ba210f3d"
+    }
+  },
+  {
+    "ref": "refs/tags/0.12.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xMi4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.12.0",
+    "object": {
+      "sha": "175e8e3b6027d8ea17cb75a04996d18f74dcc71a",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/175e8e3b6027d8ea17cb75a04996d18f74dcc71a"
+    }
+  },
+  {
+    "ref": "refs/tags/0.13.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xMy4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.13.0",
+    "object": {
+      "sha": "a7f19de9e7348bd9b6936ffdbb3ef46919d47e62",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/a7f19de9e7348bd9b6936ffdbb3ef46919d47e62"
+    }
+  },
+  {
+    "ref": "refs/tags/0.14.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xNC4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.14.0",
+    "object": {
+      "sha": "61636765bab441379d882115f86dcdb473e2f32a",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/61636765bab441379d882115f86dcdb473e2f32a"
+    }
+  },
+  {
+    "ref": "refs/tags/0.15.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xNS4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.15.0",
+    "object": {
+      "sha": "4af4c9b91b2517e7d4b317bb6ba4623cf363c06d",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/4af4c9b91b2517e7d4b317bb6ba4623cf363c06d"
+    }
+  },
+  {
+    "ref": "refs/tags/0.16.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xNi4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.16.0",
+    "object": {
+      "sha": "5db37b4b836fb49e4408f5affe7ed6016e117787",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/5db37b4b836fb49e4408f5affe7ed6016e117787"
+    }
+  },
+  {
+    "ref": "refs/tags/0.16.1",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xNi4x",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.16.1",
+    "object": {
+      "sha": "b9ea95a75bb699a2f8a8c97d046cf1bd9d9aae1a",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/b9ea95a75bb699a2f8a8c97d046cf1bd9d9aae1a"
+    }
+  },
+  {
+    "ref": "refs/tags/0.17.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xNy4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.17.0",
+    "object": {
+      "sha": "c2e8b368616e867222cf8a5e0ec60eadc5c46c9b",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/c2e8b368616e867222cf8a5e0ec60eadc5c46c9b"
+    }
+  },
+  {
+    "ref": "refs/tags/0.18.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xOC4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.18.0",
+    "object": {
+      "sha": "f0e914ebaaba9e32463a2f8302da3522dbd246b8",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/f0e914ebaaba9e32463a2f8302da3522dbd246b8"
+    }
+  },
+  {
+    "ref": "refs/tags/0.19.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4xOS4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.19.0",
+    "object": {
+      "sha": "0d810c2a3bca4c8d432182ea0e0bfdc7e7b2406c",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/0d810c2a3bca4c8d432182ea0e0bfdc7e7b2406c"
+    }
+  },
+  {
+    "ref": "refs/tags/0.20.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yMC4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.20.0",
+    "object": {
+      "sha": "929b5cac75d937e6c9859bc9680b3302daf69e92",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/929b5cac75d937e6c9859bc9680b3302daf69e92"
+    }
+  },
+  {
+    "ref": "refs/tags/0.21.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yMS4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.21.0",
+    "object": {
+      "sha": "153a7bc085a18749474b8f3c87d0639c6fa3bf1c",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/153a7bc085a18749474b8f3c87d0639c6fa3bf1c"
+    }
+  },
+  {
+    "ref": "refs/tags/0.22.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yMi4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.22.0",
+    "object": {
+      "sha": "a7b3477b63abd11ab11baf87c641edddca5f79af",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/a7b3477b63abd11ab11baf87c641edddca5f79af"
+    }
+  },
+  {
+    "ref": "refs/tags/0.22.1",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yMi4x",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.22.1",
+    "object": {
+      "sha": "6538de8c13c02acf241f5741eab9b96d929fa6d1",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/6538de8c13c02acf241f5741eab9b96d929fa6d1"
+    }
+  },
+  {
+    "ref": "refs/tags/0.23.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yMy4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.23.0",
+    "object": {
+      "sha": "19464b0fc06c405eb2d647f4e7c739b9495ac6a5",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/19464b0fc06c405eb2d647f4e7c739b9495ac6a5"
+    }
+  },
+  {
+    "ref": "refs/tags/0.24.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yNC4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.24.0",
+    "object": {
+      "sha": "af3d67cc3d6a7912c5251f3d71944f776b721880",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/af3d67cc3d6a7912c5251f3d71944f776b721880"
+    }
+  },
+  {
+    "ref": "refs/tags/0.25.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yNS4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.25.0",
+    "object": {
+      "sha": "5b492e6cdf414efda55f756acc7a9068c5b5ca05",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/5b492e6cdf414efda55f756acc7a9068c5b5ca05"
+    }
+  },
+  {
+    "ref": "refs/tags/0.26.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yNi4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.26.0",
+    "object": {
+      "sha": "7d840cf7add109d5cc3a985c8500506eb2d197eb",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/7d840cf7add109d5cc3a985c8500506eb2d197eb"
+    }
+  },
+  {
+    "ref": "refs/tags/0.27.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yNy4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.27.0",
+    "object": {
+      "sha": "7a85c15bacac23804c1b11ba2bf40aaa898820ed",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/7a85c15bacac23804c1b11ba2bf40aaa898820ed"
+    }
+  },
+  {
+    "ref": "refs/tags/0.28.0",
+    "node_id": "REF_kwDOIm8tOLByZWZzL3RhZ3MvMC4yOC4w",
+    "url": "https://api.github.com/repos/TootSDK/TootSDK/git/refs/tags/0.28.0",
+    "object": {
+      "sha": "420f5ffd7fe8b74788ef1cc76f0e50e84da07fc7",
+      "type": "commit",
+      "url": "https://api.github.com/repos/TootSDK/TootSDK/git/commits/420f5ffd7fe8b74788ef1cc76f0e50e84da07fc7"
+    }
+  }
+]
