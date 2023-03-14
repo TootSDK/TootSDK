@@ -4,6 +4,10 @@ import TootSDK
 import FeedKit
 import SwiftSoup
 
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
 struct SocialAccount: Codable {
     var url: String
     var provider: String
