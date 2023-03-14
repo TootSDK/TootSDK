@@ -125,7 +125,7 @@ struct MakePost: AsyncParsableCommand {
     
     private func getUserMastodon(user: String) async throws -> String? {
         let mastodonURL = "https://api.github.com/users/" + user + "/social_accounts"
-        let (data, _ ) = try await urlSession.data(from: URL(string: mastodonURL)!)
+        let (data, _ ) = try await urlSession.getData(from: URL(string: mastodonURL)!)
         
         let socialAccounts = try JSONDecoder().decode([SocialAccount].self, from: data)
         
