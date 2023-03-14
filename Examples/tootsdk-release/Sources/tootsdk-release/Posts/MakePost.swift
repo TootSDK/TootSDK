@@ -45,7 +45,7 @@ struct MakePost: AsyncParsableCommand {
     private mutating func getRelease() async throws -> PostParams? {
         guard
             let url = URL(string: feedURL),
-            let (data, _ ) = try? await urlSession.data(from: url)
+            let (data, _ ) = try? await urlSession.getData(from: url)
         else {
             print("unable to retrieve releases atom feed")
             return nil
