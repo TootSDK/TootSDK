@@ -12,3 +12,17 @@ public struct FederatedTimelineQuery: Codable, Sendable {
     /// Return only statuses with media attachments
     public var onlyMedia: Bool?
 }
+
+extension FederatedTimelineQuery: TimelineQuery {
+    
+    public func getQueryItems() -> [URLQueryItem] {
+        var queryItems: [URLQueryItem] = []
+        
+        if let onlyMedia = onlyMedia {
+            queryItems.append(.init(name: "only_media", value: String(onlyMedia)))
+        }
+        
+        return queryItems
+    }
+    
+}

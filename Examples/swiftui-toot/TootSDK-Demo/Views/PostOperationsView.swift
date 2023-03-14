@@ -56,7 +56,7 @@ struct PostOperationsView: View {
                 self.postID = nil
                 debugPrint(context ?? "")
                 
-                try await self.tootManager.currentClient?.data.refresh(.timeLineHome)
+                try await self.tootManager.currentClient?.data.refresh(.home)
                 
                 self.path.removeLast()
             }

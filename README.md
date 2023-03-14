@@ -22,7 +22,7 @@ You can use TootSDK to build a client for Apple operating systems, or Linux with
 
 ## Why make TootSDK?
 
-When app developers build apps for Mastodon and the Fediverse, every developer ends up having to solved the same set of problems when it comes to the API and data model.
+When app developers build apps for Mastodon and the Fediverse, every developer ends up having to solve the same set of problems when it comes to the API and data model.
 
 [Konstantin](https://m.iamkonstantin.eu/konstantin) and [Dave](https://social.davidgarywood.com/@davidgarywood) decided to share this effort.
 TootSDK is a shared Swift Package that any client app can be built on.
@@ -107,13 +107,96 @@ let accessToken = client.collectToken(returnUrl: url, callbackURI: callbackURI)
 
 We recommend keeping the accessToken somewhere secure, for example the Keychain.
 
-### Accessing a user's home feedfeed
+## Usage and key concepts
+
+Once you have your client connected, you're going to want to use it. Our example apps and reference docs will help you get into the nitty gritty of it all, but some key concepts are highlighted here.
+
+<details>
+<summary>Accessing a user's timeline</summary>
+
+
+There are several different types of timeline in TootSDK that you can access, for example their home timeline, the local timeline of their instance, or the federated timeline. These are all enumerated in the `Timeline` enum.
+
+You can retrieve the latest posts (up to 40 on Mastodon) with a call like so:
 
 ```swift
-let posts = try await client.data.stream(.timeLineHome)
+let items = try await client.getTimeline(.home)
+let posts = items.result
+```
+TootSDK returns Posts, Accounts, Lists and DomainBblocks as `PagedResult`. In our code, `items` is a PagedResult struct. It contains a property called `result` which will be the type of data request (in this case an array of `Post`).
+</details>
+
+<details>
+<summary>Paging requests</summary>
+
+
+Some requests in TootSDK are paging. This means that we can send and receive PagedInfo structs when making these requests. The properties in this struct are:
+
+- maxId (Return results older than ID)
+- minId (Return results immediately newer than ID)
+- sinceId (Return results newer than ID)
+
+So for example, if we want all posts from the user's home timeline that are newer than post ID 100, we could write:
+
+```swift
+let items = try await client.getTimeline(.home, PagedInfo(minId: 100))
+let posts = items.result
 ```
 
-### Creating an account
+Paged requests also deliver a PagedInfo struct as a property of the `PagedResult` returned, which means you can use that for subsequent requests of the same type.
+
+```swift
+
+var pagedInfo: PagedInfo?
+var posts: [Post] = []
+
+func retrievePosts() async {
+    let items = try await client.getTimeline(.home, pagedInfo)
+    posts.append(contentsOf: items.result)    
+    self.pagedInfo = items.pagedInfo
+}
+
+```
+
+</details>
+
+<details>
+<summary>Streaming timelines</summary>
+
+
+In TootSDK it is possible to subscribe to some types of content with AsyncSequences, a concept we've wrapped up in our `TootStream` object.
+
+```swift
+for posts in try await client.data.stream(.home) {
+    print(posts)
+}
+```
+
+Underneath the hood, this uses our Paging mechanism. This means that when you ask the client to refresh that stream, it will deliver you new results, from after the ones you requested.
+
+```swift
+client.data.refresh(.home)
+```
+
+You can also pass an initial PagedInfo value to the stream call. For example, to start steaming all posts from the user's home timeline that are newer than post ID 100:
+
+```swift
+for posts in try await client.data.stream(.home, PagedInfo(minId: 100) {
+```
+
+Some timelines require associated query parameters to configure. Luckily these are associated values that their timeline enumeration require when creating - so you can't miss them!
+
+```swift
+
+for posts in try await client.data.stream(HashtagTimelineQuery(tag: "iOSDev") {
+    print(posts)
+}
+```
+
+</details>
+
+<details>
+<summary>Creating an account</summary>
 
 * Register the app with the following scopes `["read", "write:accounts"]`.
 
@@ -135,6 +218,7 @@ let params = RegisterAccountParams(
       username: name, email: email, password: password, agreement: true, locale: "en")
 let token = try await client.registerAccount(params: params)
 ```
+</details>
 
 ## Further Documentation 📖
 
