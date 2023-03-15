@@ -26,15 +26,22 @@ public enum Timeline: Hashable, Sendable {
     
     /// The user's list matching that id
     case list(listID: String)
+
+    /// Timeline with posts submitted by a single user
+    case user(UserTimelineQuery)
     
-    /// A stream of the user's local timeline
+    /// The user's local timeline
     public static var local: Timeline {
         return .local()
     }
     
-    /// A stream of the user's federated timeline
+    /// The user's federated timeline
     public static var federated: Timeline {
         return .federated()
     }
-    
+
+    /// Timeline with posts submitted by a single user
+    public static func user(userID: String) -> Timeline {
+        return .user(UserTimelineQuery(userId: userID))
+    }
 }

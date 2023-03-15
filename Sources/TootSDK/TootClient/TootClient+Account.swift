@@ -102,7 +102,6 @@ extension TootClient {
     // swiftlint:disable todo
     // TODO: - Update account credentials
     
-    // TODO: - Get account’s posts
     // TODO: - Get account’s featured tags
     // TODO: - Get lists containing this account
     // TODO: - Feature account on your profile
