@@ -83,8 +83,8 @@ public extension MediaAttachment {
 }
 
 public struct AttachmentMetaFocus: Codable, Hashable, Sendable {
-    public var x: Double
-    public var y: Double
+    public var x: Double?
+    public var y: Double?
 }
 
 public extension AttachmentMetaFocus {
