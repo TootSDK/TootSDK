@@ -18,7 +18,7 @@ public struct UserTimelineQuery: Sendable {
     /// The id of the user
     public var userId: String
 
-    /// Return only statuses with media attachments
+    /// Return only posts with media attachments
     public var onlyMedia: Bool?
 
     /// Filter out posts in reply to a different account
