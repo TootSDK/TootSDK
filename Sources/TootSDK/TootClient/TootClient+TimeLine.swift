@@ -47,6 +47,8 @@ extension TootClient {
             return ["api", "v1", "timelines", "tag", hashtagTimelineQuery.tag]
         case .list(let listID):
             return ["api", "v1", "timelines", "list", listID]
+        case .user(let query):
+            return ["api", "v1", "accounts", query.userId, "statuses"]
         }
     }
     
@@ -62,6 +64,8 @@ extension TootClient {
             return hashtagTimelineQuery
         case .home, .favourites, .bookmarks, .list:
             return nil
+        case .user(let query):
+            return query
         }
     }
     
