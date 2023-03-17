@@ -59,7 +59,7 @@ public extension TootClient {
     /// Deletes a single post
     /// - Parameter id: the ID of the post to be deleted
     /// - Returns: the post deleted (for delete and redraft), if successful, throws an error if not
-    func deletePost(id: String) async throws -> Post? {
+    func deletePost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
             $0.method = .delete
@@ -71,7 +71,7 @@ public extension TootClient {
 
 public extension TootClient {
     
-    func favouritePost(id: String) async throws -> Post? {
+    func favouritePost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "favourite"])
             $0.method = .post
@@ -79,7 +79,7 @@ public extension TootClient {
         return try await fetch(Post.self, req)
     }
     
-    func unfavouritePost(id: String) async throws -> Post? {
+    func unfavouritePost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unfavourite"])
             $0.method = .post
