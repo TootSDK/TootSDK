@@ -98,11 +98,22 @@ extension TootClient {
             throw error
         }
     }
+
+    /// Get tags featured by user.
+    ///
+    /// - Parameter userID: ID of user in database.
+    /// - Returns: The featured tags or an error if unable to retrieve.
+    public func getFeaturedTags(forUser userID: String) async throws -> [FeaturedTag] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", userID, "featured_tags"])
+            $0.method = .get
+        }
+        return try await fetch([FeaturedTag].self, req)
+    }
     
     // swiftlint:disable todo
     // TODO: - Update account credentials
-    
-    // TODO: - Get account’s featured tags
+
     // TODO: - Get lists containing this account
     // TODO: - Feature account on your profile
     // TODO: - Unfeature account from profile

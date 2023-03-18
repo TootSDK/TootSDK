@@ -23,5 +23,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
       GetPost.self,
       GetFlavour.self,
       RegisterAccount.self,
+      GetFeaturedTags.self,
     ])
 }
