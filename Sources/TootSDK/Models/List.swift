@@ -12,7 +12,7 @@ public struct List: Codable, Hashable, Identifiable {
     /// The user-defined title of the list.
     public var title: String
     
-    /// The user-defined title of the list.
+    /// Which replies should be shown in the list.
     public var repliesPolicy: ListRepliesPolicy?
 
     public init(id: String, title: String, repliesPolicy: ListRepliesPolicy) {
@@ -23,7 +23,7 @@ public struct List: Codable, Hashable, Identifiable {
 }
 
 public enum ListRepliesPolicy: String, Hashable, Codable {
-    ///  Show replies to any followed user
+    /// Show replies to any followed user
     case followed
     /// Show replies to members of the list
     case list
