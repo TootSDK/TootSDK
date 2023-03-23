@@ -5,7 +5,7 @@ import Foundation
 
 /// General information about an instance
 public struct Instance: Codable, Hashable {
-    public init(uri: String, title: String, description: String, shortDescription: String? = nil, email: String, version: String, languages: [String]? = nil, registrations: Bool? = nil, approvalRequired: Bool? = nil, invitesEnabled: Bool? = nil, urls: Instance.InstanceURLs, stats: Instance.Stats, thumbnail: String? = nil, contactAccount: Account? = nil) {
+    public init(uri: String? = nil, title: String? = nil, description: String? = nil, shortDescription: String? = nil, email: String? = nil, version: String, languages: [String]? = nil, registrations: Bool? = nil, approvalRequired: Bool? = nil, invitesEnabled: Bool? = nil, urls: Instance.InstanceURLs, stats: Instance.Stats, thumbnail: String? = nil, contactAccount: Account? = nil) {
         self.uri = uri
         self.title = title
         self.description = description
@@ -23,15 +23,15 @@ public struct Instance: Codable, Hashable {
     }
     
     /// The domain name of the instance.
-    public var uri: String
+    public var uri: String?
     /// The title of the website.
-    public var title: String
+    public var title: String?
     /// Admin-defined description of the Fediverse site.
-    public var description: String
+    public var description: String?
     /// A shorter description defined by the admin.
     public var shortDescription: String?
     /// An email that may be contacted for any inquiries.
-    public var email: String
+    public var email: String?
     /// The version of  the server installed on the instance.
     public var version: String
     /// Primary languages of the website and its staff.
