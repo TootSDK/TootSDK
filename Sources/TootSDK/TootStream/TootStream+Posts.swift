@@ -12,7 +12,7 @@ extension TootDataStream {
     
     /// Provides an async stream of updates for the given stream
     /// - Parameters:
-    ///   - timeline: the type of post stream to updarte
+    ///   - timeline: the type of post stream to update
     ///   - pageInfo: PagedInfo object for max/min/since ids
     ///   - query: the timeline query to apply to the stream
     /// - Returns: async stream of Post values
@@ -29,9 +29,10 @@ extension TootDataStream {
             if let items = try await self?.client.getTimeline(timeline, pageInfo: newHolder?.pageInfo) {
                 newHolder?.internalContinuation?.yield(items.result)
                 
-                // Update PagedInfo
-                let minId = items.result.first?.id
-                newHolder?.pageInfo = PagedInfo(minId: minId)
+                // Update `PagedInfo` only if a new `minId` is available.
+                if let minId = items.info.minId {
+                    newHolder?.pageInfo = PagedInfo(minId: minId)
+                }
             }
         }
         self.cachedStreams[timeline] = newHolder
