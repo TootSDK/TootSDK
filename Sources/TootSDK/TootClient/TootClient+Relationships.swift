@@ -39,26 +39,30 @@ extension TootClient {
         return try await followAccount(by: accountLookup.id)
     }
     
-    /// Mastodon Specific. Looks up an account based on it's account name or URI, and returns a payload that containts the instance's account id
-    /// - Parameter uri: account name on the instance you're on or a users URI (e.g @test@instance.test)
-    /// - Returns: AccountLookup, a payload containing information about the account looked up
-    public func lookupAccount(uri: String) async throws -> AccountLookup {
-        guard flavour == .mastodon else { throw TootSDKError.unsupportedFlavour(current: flavour, required: [.mastodon]) }
-        
+    /// Looks up an account based on it's account name or URI, and returns a payload that contains the instance's account id
+    /// - Parameter uri: account name on the instance you're on or a users URI (e.g test@instance.test)
+    /// - Returns: the looked up account, or an error if unable to retrieve
+    public func lookupAccount(uri: String) async throws -> Account {
+        try requireFlavour(otherThan: [.pixelfed])
+
+        if flavour == .pleroma || flavour == .akkoma {
+            return try await getAccount(by: uri)
+        }
+
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "lookup"])
             $0.method = .get
             $0.addQueryParameter(name: "acct", value: uri)
         }
         
-        return try await fetch(AccountLookup.self, req)
+        return try await fetch(Account.self, req)
     }
     
     /// Pleroma Specific. This follows an account by URI and returns the account being followed
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g @test@instance.test)
     /// - Returns: the Account being followed
     private func pleromaFollowAccountURI(by uri: String) async throws -> Relationship {
-        guard flavour == .pleroma else { throw TootSDKError.unsupportedFlavour(current: flavour, required: [.pleroma]) }
+        try requireFlavour([.pleroma])
 
         let params = PleromaFollowByURIParams(uri: uri)
         
@@ -85,8 +89,8 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func removeAccountFromFollowers(by id: String) async throws -> Relationship {
-        guard flavour != .friendica else { throw TootSDKError.unsupportedFlavour(current: flavour, required: TootSDKFlavour.allCases.filter({$0 != .friendica})) }
-        
+        try requireFlavour(otherThan: [.friendica])
+
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "remove_from_followers"])
             $0.method = .post

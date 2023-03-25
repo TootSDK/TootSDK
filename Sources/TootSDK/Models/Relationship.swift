@@ -17,7 +17,7 @@ public struct Relationship: Codable, Hashable, Identifiable, Sendable {
                 showingReposts: Bool? = nil,
                 notifying: Bool? = nil,
                 blocking: Bool,
-                domainBlocking: Bool,
+                domainBlocking: Bool?,
                 blockedBy: Bool? = nil,
                 note: String? = nil) {
         self.id = id
@@ -56,7 +56,7 @@ public struct Relationship: Codable, Hashable, Identifiable, Sendable {
     /// Are you blocking this user?
     public let blocking: Bool
     /// Are you blocking this user's domain?
-    public let domainBlocking: Bool
+    public let domainBlocking: Bool?
     /// Is this user blocking you?
     public var blockedBy: Bool?
     /// This user's profile bio

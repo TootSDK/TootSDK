@@ -209,7 +209,7 @@ public extension TootClient {
     
     /// Obtain the source properties for a status so that it can be edited.
     func getPostSource(id: String) async throws -> PostSource {
-        guard flavour != .friendica else { throw TootSDKError.unsupportedFlavour(current: flavour, required: TootSDKFlavour.allCases.filter({$0 != .friendica})) }
+        try requireFlavour(otherThan: [.friendica])
         
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "source"])
