@@ -43,7 +43,7 @@ extension TootClient {
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g test@instance.test)
     /// - Returns: the looked up account, or an error if unable to retrieve
     public func lookupAccount(uri: String) async throws -> Account {
-        try requireFlavour(otherThan: [.pixelfed])
+        try requireFlavour(otherThan: [.pixelfed, .friendica])
 
         if flavour == .pleroma || flavour == .akkoma {
             return try await getAccount(by: uri)
