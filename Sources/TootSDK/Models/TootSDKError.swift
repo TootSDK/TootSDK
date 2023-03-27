@@ -15,7 +15,7 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case missingParameter(parameterName: String)
     case invalidParameter(parameterName: String)
     /// The requested operation is not supported by the current server flavour.
-    case unsupportedFlavour(current: TootSDKFlavour, required: [TootSDKFlavour])
+    case unsupportedFlavour(current: TootSDKFlavour, required: Set<TootSDKFlavour>)
     case unexpectedError(_ description: String)
     /// The remote instance did not respond with the expected payload during authorization
     case clientAuthorizationFailed

@@ -207,6 +207,17 @@ extension TootClient {
         
         return (data, httpResponse)
     }
+
+    internal func requireFlavour(_ supportedFlavours: Set<TootSDKFlavour>) throws {
+        if !supportedFlavours.contains(flavour) {
+            throw TootSDKError.unsupportedFlavour(current: flavour, required: supportedFlavours)
+        }
+    }
+
+    internal func requireFlavour(otherThan unsupportedFalvours: Set<TootSDKFlavour>) throws {
+        let supportedFlavours = Set(TootSDKFlavour.allCases).subtracting(unsupportedFalvours)
+        try requireFlavour(supportedFlavours)
+    }
 }
 
 extension TootClient: Equatable {
