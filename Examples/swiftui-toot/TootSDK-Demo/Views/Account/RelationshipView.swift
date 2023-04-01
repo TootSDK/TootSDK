@@ -24,6 +24,7 @@ struct RelationshipView: View {
         VStack(alignment: .leading) {
             AccountItemView(description: "Following", value: "\(relationship.following)")
                 .frame(alignment: .leading)
+            
             Toggle("Showing Boosts:", isOn: $showingReblogs)
             Toggle("Notifying:", isOn: $notifying)
             Toggle("Muting:", isOn: $muting)
@@ -76,17 +77,15 @@ struct RelationshipView: View {
                 self.relationship = try await tootManager.currentClient.unfollowAccount(by: relationship.id)
             }
         } else {
-            HStack {
-                ButtonView(text: "Follow") {
-                    self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(reposts: followShowingReblogs,
-                                                                                                                                           notify: followNotify))
-                }
-                
-                Spacer()
-                
-                Toggle("Show Boosts", isOn: $followShowingReblogs)
-                Toggle("Show Notify", isOn: $followNotify)
+            ButtonView(text: "Follow") {
+                self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(reposts: followShowingReblogs,
+                                                                                                                                       notify: followNotify))
             }
+            
+            Spacer()
+            
+            Toggle("Show Boosts", isOn: $followShowingReblogs)
+            Toggle("Show Notify", isOn: $followNotify)
         }
     }
     

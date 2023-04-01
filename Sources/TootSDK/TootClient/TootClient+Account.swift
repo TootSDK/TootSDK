@@ -111,6 +111,27 @@ extension TootClient {
         return try await fetch([FeaturedTag].self, req)
     }
     
+    public func getAccountPosts(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "statuses"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+        
+        let (data, response) = try await fetch(req: req)
+        let decoded = try decode([Post].self, from: data)
+        var pagination: Pagination?
+        
+        if let links = response.value(forHTTPHeaderField: "Link") {
+            pagination = Pagination(links: links)
+        }
+        
+        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
+        
+        return PagedResult(result: decoded, info: info)
+    }
+    
+    
     // swiftlint:disable todo
     // TODO: - Update account credentials
 
