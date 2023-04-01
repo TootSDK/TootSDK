@@ -95,7 +95,7 @@ public extension TootClient {
         _ = try await fetch(req: req)
     }
     
-    /// Add accounts to a list
+    /// Remove account from a list
     func removeAccountsFromList(id: String, params: RemoveAccountsFromListParams) async throws {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id, "accounts"])
