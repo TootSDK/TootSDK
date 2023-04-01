@@ -111,6 +111,12 @@ extension TootClient {
         return try await fetch([FeaturedTag].self, req)
     }
     
+    /// Get posts from a user
+    /// - Parameters:
+    /// -  id: the ID of the Account in the instance database.
+    ///   - pageInfo: the page info to be applied
+    ///   - limit: the limit of posts being requested
+    /// - Returns: an array of the user's posts
     public func getAccountPosts(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "statuses"])
