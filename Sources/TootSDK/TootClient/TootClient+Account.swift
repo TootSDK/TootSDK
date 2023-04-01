@@ -137,7 +137,6 @@ extension TootClient {
         return PagedResult(result: decoded, info: info)
     }
     
-    
     // swiftlint:disable todo
     // TODO: - Update account credentials
 
@@ -149,4 +148,5 @@ extension TootClient {
     // TODO: - Find familiar followers
     // TODO: - Search for matching accounts
     // TODO: - Lookup account ID from Webfinger address
+    // swiftlint:enable todo
 }
