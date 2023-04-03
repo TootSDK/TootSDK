@@ -224,9 +224,9 @@ let token = try await client.registerAccount(params: params)
 
 - Reference documentation is available [here](https://tootsdk.github.io/TootDocs/?v=2)
 - Example apps:
-  - [swiftui-toot](Examples/swiftui-toot/) - a SwiftUI app that shows authorization, a user's feed, posting and account operations
-  - [swiftyadmin](Examples/swiftyadmin) - a command line utility to interact with and control a server using TootSDK
-  - [vaportoot](Examples/vaportoot) - a web app in Vapor, that shows how to sign in and view a user's feed
+  - [swiftui-toot](https://github.com/TootSDK/TootSDK/tree/main/Examples/swiftui-toot/) - a SwiftUI app that shows authorization, a user's feed, posting and account operations
+  - [swiftyadmin](https://github.com/TootSDK/TootSDK/tree/main/Examples/swiftyadmin) - a command line utility to interact with and control a server using TootSDK
+  - [vaportoot](https://github.com/TootSDK/TootSDK/tree/main/Examples/vaportoot) - a web app in Vapor, that shows how to sign in and view a user's feed
 
 ## Contributing
 
