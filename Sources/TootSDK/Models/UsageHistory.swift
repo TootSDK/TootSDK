@@ -3,8 +3,8 @@
 
 import Foundation
 
-/// Represents daily usage history of a hashtag.
-public struct TagHistory: Codable, Hashable, Sendable {
+/// Represents daily usage history of an item that can trend such as a hashtag or link.
+public struct UsageHistory: Codable, Hashable, Sendable {
     public init(day: String,
                 uses: String,
                 accounts: String) {
@@ -15,8 +15,8 @@ public struct TagHistory: Codable, Hashable, Sendable {
 
     /// UNIX timestamp on midnight of the given day.
     public let day: String
-    /// the counted usage of the tag within that day.
+    /// the counted usage of the item within that day.
     public let uses: String
-    /// the total of accounts using the tag within that day.
+    /// the total of accounts using the item within that day.
     public let accounts: String
 }
