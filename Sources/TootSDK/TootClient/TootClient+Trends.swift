@@ -52,7 +52,7 @@ public extension TootClient {
     ///   - limit: Maximum number of results to return. Defaults to 10, max 20.
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``TrendingLink``.
-    func getTrendingLinkks(limit: Int? = nil, offset: Int? = nil) async throws -> [TrendingLink] {
+    func getTrendingLinks(limit: Int? = nil, offset: Int? = nil) async throws -> [TrendingLink] {
         try requireFlavour([.mastodon, .pixelfed])
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "links"])
