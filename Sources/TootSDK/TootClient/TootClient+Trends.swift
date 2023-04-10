@@ -63,4 +63,3 @@ public extension TootClient {
         return try await fetch([TrendingLink].self, req)
     }
 }
-
