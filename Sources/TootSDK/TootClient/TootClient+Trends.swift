@@ -16,12 +16,16 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``Tag``.
     func getTrendingTags(limit: Int? = nil, offset: Int? = nil) async throws -> [Tag] {
+        let pathComponents: [String]
+        if flavour == .mastodon {
+            pathComponents = ["api", "v1", "trends", "tags"]
+        } else if flavour == .friendica {
+            pathComponents = ["api", "v1", "trends"]
+        } else {
+            return []
+        }
         let req = HTTPRequestBuilder {
-            if flavour == .mastodon || flavour == .pixelfed {
-                $0.url = getURL(["api", "v1", "trends", "tags"])
-            } else {
-                $0.url = getURL(["api", "v1", "trends"])
-            }
+            $0.url = getURL(pathComponents)
             $0.method = .get
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
@@ -36,7 +40,11 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``Post``.
     func getTrendingPosts(limit: Int? = nil, offset: Int? = nil) async throws -> [Post] {
-        try requireFlavour([.mastodon, .pixelfed])
+        do {
+            try requireFlavour([.mastodon])
+        } catch TootSDKError.unsupportedFlavour(_, _) {
+            return []
+        }
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "statuses"])
             $0.method = .get
@@ -53,7 +61,11 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``TrendingLink``.
     func getTrendingLinks(limit: Int? = nil, offset: Int? = nil) async throws -> [TrendingLink] {
-        try requireFlavour([.mastodon, .pixelfed])
+        do {
+            try requireFlavour([.mastodon])
+        } catch TootSDKError.unsupportedFlavour(_, _) {
+            return []
+        }
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "links"])
             $0.method = .get
