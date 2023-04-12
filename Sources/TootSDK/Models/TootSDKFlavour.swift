@@ -10,7 +10,7 @@ public enum TootSDKFlavour: String, Codable, Sendable, CaseIterable {
     case pleroma
     /// Pixelfed server. API Documentation can be found at https://docs.pixelfed.org/technical-documentation/api/
     case pixelfed
-    /// Friendica server. API Documentation can be found at https://wiki.friendi.ca/docs/api-mastodon
+    /// Friendica server. API Documentation can be found at https://github.com/friendica/friendica/blob/stable/doc/API-Mastodon.md
     case friendica
     /// Akkoma server. API Documentation can be found at https://docs.akkoma.dev/stable/development/API/differences_in_mastoapi_responses/
     case akkoma
