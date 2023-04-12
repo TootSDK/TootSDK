@@ -16,16 +16,13 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``Tag``.
     func getTrendingTags(limit: Int? = nil, offset: Int? = nil) async throws -> [Tag] {
-        let pathComponents: [String]
-        if flavour == .mastodon {
-            pathComponents = ["api", "v1", "trends", "tags"]
-        } else if flavour == .friendica {
-            pathComponents = ["api", "v1", "trends"]
-        } else {
+        do {
+            try requireFlavour([.mastodon, .friendica])
+        } catch TootSDKError.unsupportedFlavour(_, _) {
             return []
         }
         let req = HTTPRequestBuilder {
-            $0.url = getURL(pathComponents)
+            $0.url = getURL(["api", "v1", "trends", "tags"])
             $0.method = .get
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
@@ -41,7 +38,7 @@ public extension TootClient {
     /// - Returns: Array of ``Post``.
     func getTrendingPosts(limit: Int? = nil, offset: Int? = nil) async throws -> [Post] {
         do {
-            try requireFlavour([.mastodon])
+            try requireFlavour([.mastodon, .friendica])
         } catch TootSDKError.unsupportedFlavour(_, _) {
             return []
         }
@@ -62,7 +59,7 @@ public extension TootClient {
     /// - Returns: Array of ``TrendingLink``.
     func getTrendingLinks(limit: Int? = nil, offset: Int? = nil) async throws -> [TrendingLink] {
         do {
-            try requireFlavour([.mastodon])
+            try requireFlavour([.mastodon, .friendica])
         } catch TootSDKError.unsupportedFlavour(_, _) {
             return []
         }
