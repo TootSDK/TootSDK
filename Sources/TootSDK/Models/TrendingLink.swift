@@ -21,7 +21,7 @@ public struct TrendingLink: Codable, Hashable {
                 image: String? = nil,
                 embedUrl: String? = nil,
                 blurhash: String? = nil,
-                history: [UsageHistory]? = nil) {
+                history: [History]? = nil) {
         self.url = url
         self.title = title
         self.description = description
@@ -51,5 +51,5 @@ public struct TrendingLink: Codable, Hashable {
     public var image: String?
     public var embedUrl: String?
     public var blurhash: String?
-    public var history: [UsageHistory]?
+    public var history: [History]?
 }
