@@ -1,10 +1,14 @@
-// Created by konstantin on 05/11/2022.
-// Copyright (c) 2022. All rights reserved.
+//
+//  TrendingLinkHistory.swift
+//  
+//
+//  Created by Dale Price on 4/11/23.
+//
 
 import Foundation
 
-public extension Tag {
-    /// Represents daily usage history of a hashtag.
+public extension TrendingLink {
+    /// Represents daily usage history of a link.
     struct History: Codable, Hashable, Sendable {
         public init(day: String,
                     uses: String,
@@ -16,9 +20,9 @@ public extension Tag {
         
         /// UNIX timestamp on midnight of the given day.
         public let day: String
-        /// the counted usage of the hashtag within that day.
+        /// the counted usage of the link within that day.
         public let uses: String
-        /// the total of accounts using the hashtag within that day.
+        /// the total of accounts posting the link within that day.
         public let accounts: String
     }
 }
