@@ -18,7 +18,7 @@ struct GetTrendingPosts: AsyncParsableCommand {
     
     mutating func run() async throws {
         print("Listing trending posts")
-        let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
+        let client = try await TootClient(connect: URL(string: url)!, accessToken: token)
         
         let results = try await client.getTrendingPosts(limit: limit, offset: offset)
         for post in results {
