@@ -14,7 +14,6 @@ extension TootDataStream {
     /// - Parameters:
     ///   - timeline: the type of post stream to update
     ///   - pageInfo: PagedInfo object for max/min/since ids
-    ///   - query: the timeline query to apply to the stream
     /// - Returns: async stream of Post values
     public func stream(_ timeline: Timeline, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
         
