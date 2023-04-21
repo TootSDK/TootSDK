@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a post that will be published at a future scheduled date.
-public struct ScheduledPost: Codable, Sendable {
+public struct ScheduledPost: Codable, Identifiable, Sendable {
     /// ID of the scheduled post in the database.
     public var id: String
     /// ID of the post in the database.
