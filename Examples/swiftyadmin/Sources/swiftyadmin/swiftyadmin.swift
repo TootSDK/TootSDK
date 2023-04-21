@@ -27,5 +27,8 @@ struct SwiftyAdmin: AsyncParsableCommand {
       GetTrendingTags.self,
       GetTrendingPosts.self,
       GetTrendingLinks.self,
+      GetTag.self,
+      FollowTag.self,
+      UnfollowTag.self,
     ])
 }
