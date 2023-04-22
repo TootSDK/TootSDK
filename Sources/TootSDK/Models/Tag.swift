@@ -5,10 +5,11 @@ import Foundation
 
 /// Represents a hashtag used within the content of a post.
 public struct Tag: Codable, Hashable, Sendable {
-    public init(name: String, url: String, history: [History]? = nil) {
+    public init(name: String, url: String, history: [History]? = nil, following: Bool? = nil) {
         self.name = name
         self.url = url
         self.history = history
+        self.following = following
     }
 
     /// The value of the hashtag after the # sign.
@@ -17,4 +18,6 @@ public struct Tag: Codable, Hashable, Sendable {
     public let url: String
     /// Usage statistics for given days.
     public let history: [History]?
+    /// Are you following this tag?
+    public let following: Bool?
 }
