@@ -7,7 +7,7 @@ import Foundation
 
 public extension TootClient {
 
-    /// Get tag.
+    /// Get a tag.
     /// - Parameter id: Name of the tag.
     func getTag(_ id: String) async throws -> Tag {
         let req = HTTPRequestBuilder {
@@ -22,6 +22,7 @@ public extension TootClient {
     /// - Parameter id: Name of the tag.
     @discardableResult
     func followTag(_ id: String) async throws -> Tag {
+        try requireFlavour(flavoursSupportingFollowingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "tags", id, "follow"])
             $0.method = .post
@@ -34,11 +35,21 @@ public extension TootClient {
     /// - Parameter id: Name of the tag.
     @discardableResult
     func unfollowTag(_ id: String) async throws -> Tag {
+        try requireFlavour(flavoursSupportingFollowingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "tags", id, "unfollow"])
             $0.method = .post
         }
 
         return try await fetch(Tag.self, req)
+    }
+
+    /// Tells whether current flavour supports following or unfollowing tags.
+    var canFollowTags: Bool {
+        flavoursSupportingFollowingTags.contains(flavour)
+    }
+
+    private var flavoursSupportingFollowingTags: Set<TootSDKFlavour> {
+        [.mastodon, .friendica]
     }
 }

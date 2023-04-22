@@ -19,7 +19,7 @@ struct FollowTag: AsyncParsableCommand {
     var id: String
 
     mutating func run() async throws {
-        print("Getting tag with local id: \(id)")
+        print("Following tag with local id: \(id)")
         let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
 
         let tag = try await client.followTag(id)
