@@ -5,7 +5,7 @@
 //  Created by dave on 4/12/22.
 //
 
-import Foundation
+@preconcurrency import struct Foundation.Date
 
 public struct PostEdit: Codable, Hashable, Sendable {
     ///  The content of the post at this revision.

@@ -1,7 +1,7 @@
 // Created by konstantin on 02/11/2022
 // Copyright (c) 2022. All rights reserved.
 
-import Foundation
+@preconcurrency import struct Foundation.Date
 
 /// Represents a poll attached to a post.
 public struct Poll: Codable, Hashable, Identifiable, Sendable {

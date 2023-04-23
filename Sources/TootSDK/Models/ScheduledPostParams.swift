@@ -5,7 +5,7 @@
 //  Created by dave on 4/12/22.
 //
 
-import Foundation
+@preconcurrency import struct Foundation.Date
 
 /// Parameters to post a new scheduled post
 public struct ScheduledPostParams: Codable, Sendable {

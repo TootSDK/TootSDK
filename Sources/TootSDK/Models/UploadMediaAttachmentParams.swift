@@ -1,7 +1,7 @@
 // Created by konstantin on 03/02/2023.
 // Copyright (c) 2023. All rights reserved.
 
-import Foundation
+@preconcurrency import struct Foundation.Data
 
 public struct UploadMediaAttachmentParams: Codable, Sendable {
 
