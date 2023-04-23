@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TootClient {
-    
+
     /// Schedules a post based on the components provided
     /// - Parameters:
     ///   - ScheduledPostParams: post components to be published
@@ -16,10 +16,10 @@ public extension TootClient {
             $0.method = .post
             $0.body = try .multipart(requestParams, boundary: UUID().uuidString)
         }
-        
+
         return try await fetch(ScheduledPost.self, req)
     }
-    
+
     /// Gets scheduled posts
     /// - Parameters:
     ///   - minId: Return results immediately newer than ID.
@@ -31,27 +31,27 @@ public extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses"])
             $0.method = .get
-            
+
             if let minId {
                 $0.addQueryParameter(name: "min_id", value: minId)
             }
-            
+
             if let maxId {
                 $0.addQueryParameter(name: "max_id", value: maxId)
             }
-            
+
             if let sinceId {
                 $0.addQueryParameter(name: "since_id", value: sinceId)
             }
-            
+
             if let limit {
                 $0.addQueryParameter(name: "limit", value: String(limit))
             }
         }
-        
+
         return try await fetch([ScheduledPost].self, req)
     }
-    
+
     /// Gets a single Scheduled post by id
     ///
     /// - Parameter id: the ID of the post to be retrieved
@@ -61,10 +61,10 @@ public extension TootClient {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])
             $0.method = .get
         }
-        
+
         return try await fetch(ScheduledPost.self, req)
     }
-    
+
     /// Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
     /// - Parameter id: the ID of the post to be changed
     /// - Parameter params: the updated content of the post to be posted
@@ -76,10 +76,10 @@ public extension TootClient {
             $0.method = .put
             $0.body = try .multipart(requestParams, boundary: UUID().uuidString)
         }
-        
+
         return try await fetch(ScheduledPost.self, req)
     }
-    
+
     /// Deletes a single scheduled post
     /// - Parameter id: the ID of the post to be deleted
     /// - Returns: the post deleted (for delete and redraft), if successful, throws an error if not
@@ -88,8 +88,8 @@ public extension TootClient {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])
             $0.method = .delete
         }
-        
+
         _ = try await fetch(req: req)
     }
-    
+
 }

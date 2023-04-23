@@ -125,7 +125,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public var bookmarked: Bool?
     /// Have you pinned this post? Only appears if the post is pinnable.
     public var pinned: Bool?
-    
+
     public enum Visibility: String, Codable, CaseIterable, Sendable {
         /// Visible to everyone, shown in public timelines.
         case `public`
@@ -136,7 +136,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         /// Visible only to mentioned users.
         case direct
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case uri
@@ -173,36 +173,36 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
 extension Post: Hashable {
     public static func == (lhs: Post, rhs: Post) -> Bool {
         lhs.id == rhs.id
-        && lhs.uri == rhs.uri
-        && lhs.createdAt == rhs.createdAt
-        && lhs.account == rhs.account
-        && lhs.content == rhs.content
-        && lhs.visibility == rhs.visibility
-        && lhs.sensitive == rhs.sensitive
-        && lhs.spoilerText == rhs.spoilerText
-        && lhs.mediaAttachments == rhs.mediaAttachments
-        && lhs.mentions == rhs.mentions
-        && lhs.tags == rhs.tags
-        && lhs.emojis == rhs.emojis
-        && lhs.repostsCount == rhs.repostsCount
-        && lhs.favouritesCount == rhs.favouritesCount
-        && lhs.repliesCount == rhs.repliesCount
-        && lhs.application == rhs.application
-        && lhs.url == rhs.url
-        && lhs.inReplyToId == rhs.inReplyToId
-        && lhs.inReplyToAccountId == rhs.inReplyToAccountId
-        && lhs.repost == rhs.repost
-        && lhs.poll == rhs.poll
-        && lhs.card == rhs.card
-        && lhs.language == rhs.language
-        && lhs.text == rhs.text
-        && lhs.favourited == rhs.favourited
-        && lhs.reposted == rhs.reposted
-        && lhs.muted == rhs.muted
-        && lhs.bookmarked == rhs.bookmarked
-        && lhs.pinned == rhs.pinned
+            && lhs.uri == rhs.uri
+            && lhs.createdAt == rhs.createdAt
+            && lhs.account == rhs.account
+            && lhs.content == rhs.content
+            && lhs.visibility == rhs.visibility
+            && lhs.sensitive == rhs.sensitive
+            && lhs.spoilerText == rhs.spoilerText
+            && lhs.mediaAttachments == rhs.mediaAttachments
+            && lhs.mentions == rhs.mentions
+            && lhs.tags == rhs.tags
+            && lhs.emojis == rhs.emojis
+            && lhs.repostsCount == rhs.repostsCount
+            && lhs.favouritesCount == rhs.favouritesCount
+            && lhs.repliesCount == rhs.repliesCount
+            && lhs.application == rhs.application
+            && lhs.url == rhs.url
+            && lhs.inReplyToId == rhs.inReplyToId
+            && lhs.inReplyToAccountId == rhs.inReplyToAccountId
+            && lhs.repost == rhs.repost
+            && lhs.poll == rhs.poll
+            && lhs.card == rhs.card
+            && lhs.language == rhs.language
+            && lhs.text == rhs.text
+            && lhs.favourited == rhs.favourited
+            && lhs.reposted == rhs.reposted
+            && lhs.muted == rhs.muted
+            && lhs.bookmarked == rhs.bookmarked
+            && lhs.pinned == rhs.pinned
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(uri)
@@ -237,15 +237,15 @@ extension Post: Hashable {
 }
 
 extension Post {
-    
+
     /// Convenience var for which post to display. This can be used by clients instead of if/then checking the repost value itself
     public var displayPost: Post {
         return self.repost ?? self
     }
-        
+
     /// Indicates whether displayPost is a repost or not
     public var displayingRepost: Bool {
         return self.repost != nil
     }
-    
+
 }

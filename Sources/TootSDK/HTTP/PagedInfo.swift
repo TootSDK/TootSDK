@@ -4,18 +4,18 @@
 import Foundation
 
 public struct PagedInfo: Decodable, Sendable {
-  public init(maxId: String? = nil, minId: String? = nil, sinceId: String? = nil) {
-    self.maxId = maxId
-    self.minId = minId
-    self.sinceId = sinceId
-  }
+    public init(maxId: String? = nil, minId: String? = nil, sinceId: String? = nil) {
+        self.maxId = maxId
+        self.minId = minId
+        self.sinceId = sinceId
+    }
 
-  /// Return results older than ID.
-  public let maxId: String?
-  /// Return results immediately newer than ID.
-  public let minId: String?
-  /// Return results newer than ID.
-  public let sinceId: String?
+    /// Return results older than ID.
+    public let maxId: String?
+    /// Return results immediately newer than ID.
+    public let minId: String?
+    /// Return results newer than ID.
+    public let sinceId: String?
 }
 
 public extension PagedInfo {

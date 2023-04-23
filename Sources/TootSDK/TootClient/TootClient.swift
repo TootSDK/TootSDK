@@ -8,7 +8,7 @@ import FoundationNetworking
 
 // MARK: - Initialization
 public class TootClient: @unchecked Sendable {
-    
+
     // MARK: - Public properties
     /// The URL of the instance we're connected to
     public var instanceURL: URL
@@ -28,7 +28,7 @@ public class TootClient: @unchecked Sendable {
     public lazy var data = TootDataStream(client: self)
     /// The clientName the client was initialized with
     public let clientName: String
-    
+
     // MARK: - Internal properties
     internal var decoder: JSONDecoder = TootDecoder()
     internal var encoder: JSONEncoder = TootEncoder()
@@ -36,11 +36,11 @@ public class TootClient: @unchecked Sendable {
     internal let validStatusCodes = 200..<300
     /// The current accessToken in use
     internal var accessToken: String?
-    
+
     #if canImport(AuthenticationServices) && !os(tvOS) && !os(watchOS)
     internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
     #endif
-    
+
     /// Initialize a new instance of `TootClient` by optionally providing an access token for authentication.
     ///
     /// After initializing, you need to manually call ``TootClient/connect()`` in order to obtain the correct flavour of the server.
@@ -61,7 +61,7 @@ public class TootClient: @unchecked Sendable {
         self.scopes = scopes
         self.clientName = clientName
     }
-    
+
     /// Initialize and connect a new instance of `TootClient`.
     ///
     /// The initializer calls ``TootClient/connect()`` internally in order to detect the server flavour.
@@ -83,14 +83,14 @@ public class TootClient: @unchecked Sendable {
         self.clientName = clientName
         try await connect()
     }
-    
+
     /// Prints extra debug details like outgoing requests and responses
     public func debugOn() {
         self.debugRequests = true
         self.debugResponses = true
         self.debugInstance = true
     }
-    
+
     /// Stops printing debug details
     public func debugOff() {
         self.debugRequests = false
@@ -101,41 +101,41 @@ public class TootClient: @unchecked Sendable {
 
 // MARK: - Encoding/Decoding and fetching data
 extension TootClient {
-    
+
     internal func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
         do {
             return try decoder.decode(decodable, from: data)
         } catch {
             let description = fetchError(T.self, data: data)
-            
+
             if debugResponses {
                 print(description)
             }
-            
+
             throw TootSDKError.decodingError(description)
         }
     }
-    
+
     /// Fetch data asynchronously and return the decoded `Decodable` object.
     internal func fetch<T: Decodable>(_ decode: T.Type, _ req: HTTPRequestBuilder) async throws -> T {
         let (data, _) = try await fetch(req: req)
-        
+
         do {
             return try decoder.decode(decode, from: data)
         } catch {
             let description = fetchError(T.self, data: data)
-            
+
             if debugResponses {
                 print(description)
             }
-            
+
             throw TootSDKError.decodingError(description)
         }
     }
-    
+
     private func fetchError<T: Decodable>(_ decode: T.Type, data: Data) -> String {
         var description: String = "Unknown decoding error"
-        
+
         do {
             _ = try decoder.decode(decode, from: data)
         } catch let DecodingError.dataCorrupted(context) {
@@ -149,32 +149,32 @@ extension TootClient {
         } catch {
             description = error.localizedDescription
         }
-        
+
         return description
     }
-    
+
     /// Fetch data asynchronously and return the raw response.
     internal func fetch(req: HTTPRequestBuilder) async throws -> (Data, HTTPURLResponse) {
         if req.headers.index(forKey: "Content-Type") == nil {
             req.headers["Content-Type"] = "application/json"
         }
-        
+
         if req.headers.index(forKey: "Accept") == nil {
             req.headers["Accept"] = "application/json"
         }
-        
+
         if req.headers.index(forKey: "User-Agent") == nil {
             req.headers["User-Agent"] = "TootSDK"
         }
-        
+
         if let accessToken = accessToken {
             req.headers["Authorization"] = "Bearer \(accessToken)"
         }
-        
+
         let request = try req.build()
         return try await dataTask(request)
     }
-    
+
     internal func dataTask(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         if debugRequests {
             print("➡️ flavour: \(self.flavour)")
@@ -187,11 +187,11 @@ extension TootClient {
             }
         }
         let (data, response) = try await session.data(for: request)
-        
+
         guard let httpResponse = response as? HTTPURLResponse else {
             throw TootSDKError.nonHTTPURLResponse(data: data, response: response)
         }
-        
+
         if debugResponses {
             print("⬅️ 🌍 \(httpResponse.url?.absoluteString ?? "-")")
             print("⬅️ 🚦 HTTP \(httpResponse.statusCode)")
@@ -200,11 +200,11 @@ extension TootClient {
             }
             print("⬅️ 💿", data.prettyPrintedJSONString ?? String(data: data, encoding: .utf8) ?? "Undecodable")
         }
-        
+
         guard validStatusCodes.contains(httpResponse.statusCode) else {
             throw TootSDKError.invalidStatusCode(data: data, response: httpResponse)
         }
-        
+
         return (data, httpResponse)
     }
 
@@ -231,13 +231,13 @@ extension TootClient: Equatable {
 }
 
 extension TootClient {
-    
+
     /// Provides the URL for authorizing with the current instanceURL
     /// - Returns: A URL which can be browsed to continue authorization
     public func createAuthorizeURL(callbackURI: String) async throws -> URL {
         return try await self.createAuthorizeURL(server: instanceURL, callbackURI: callbackURI)
     }
-    
+
     /// Provides the URL for authorizing, with a custom server URL.
     /// - Returns: A URL which can be browsed to continue authorization
     public func createAuthorizeURL(server: URL, callbackURI: String) async throws -> URL {
@@ -245,14 +245,14 @@ extension TootClient {
         currentApplicationInfo = authInfo.application
         return authInfo.url
     }
-    
+
     /// Facility method to complete authentication by processing the response from the authorization step.
     /// Exchange the callback authorization code for an accessToken
     /// - Parameters:
     ///   - returnUrl: The full url including query parameters received by the service following the redirect after successfull authorizaiton
     ///   - callbackURI: The callback URI  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
     public func collectToken(returnUrl: URL, callbackURI: String) async throws -> String {
-        
+
         guard
             let code = getCodeFrom(returnUrl: returnUrl),
             let clientId = currentApplicationInfo?.clientId,
@@ -260,16 +260,16 @@ extension TootClient {
         else {
             throw TootSDKError.missingCodeOrClientSecrets
         }
-        
+
         return try await collectToken(code: code, clientId: clientId, clientSecret: clientSecret, callbackURI: callbackURI)
     }
-    
+
     private func getCodeFrom(returnUrl: URL) -> String? {
         var components = URLComponents()
         components.query = returnUrl.query
         return components.queryItems?.first(where: {$0.name == "code"})?.value
     }
-    
+
     /// Exchange the callback authorization code for an accessToken.
     /// - Parameters:
     ///   - code: The authorization code returned by the server
@@ -277,36 +277,36 @@ extension TootClient {
     ///   - clientSecret: The client secret of the application
     ///   - callbackURI: The callback URL (`redirect_uri`) which was used to initiate the authorization flow.  Must match one of the redirect_uris declared during app registration.
     public func collectToken(code: String, clientId: String, clientSecret: String, callbackURI: String) async throws -> String {
-        
+
         let info = try await getAccessToken(code: code, clientId: clientId,
                                             clientSecret: clientSecret,
                                             callbackURI: callbackURI,
                                             grantType: TootGrantType.login.rawValue,
                                             scopes: scopes)
-        
+
         guard let accessToken = info.accessToken else {
             throw TootSDKError.clientAuthorizationFailed
         }
 
         self.accessToken = accessToken
-        
+
         return accessToken
     }
-    
+
     public func collectRegistrationToken(clientId: String, clientSecret: String, callbackURI: String) async throws -> String {
-        
+
         let info = try await getAccessToken(code: nil, clientId: clientId,
                                             clientSecret: clientSecret,
                                             callbackURI: callbackURI,
                                             grantType: TootGrantType.register.rawValue,
                                             scopes: scopes)
-        
+
         guard let accessToken = info.accessToken else {
             throw TootSDKError.clientAuthorizationFailed
         }
 
         self.accessToken = accessToken
-        
+
         return accessToken
     }
 }
@@ -315,9 +315,9 @@ extension TootClient {
     /// Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.
     public func connect() async throws {
         let instance = try await getInstanceInfo()
-         if debugInstance {
+        if debugInstance {
             print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
-         }
+        }
         self.flavour = instance.flavour
     }
 }

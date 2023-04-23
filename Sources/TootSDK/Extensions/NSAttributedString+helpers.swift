@@ -24,7 +24,7 @@ extension NSMutableAttributedString {
             range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
         }
     }
-    
+
 }
 
 ///  Range helper
@@ -33,6 +33,6 @@ extension NSAttributedString {
     internal var fullRange: NSRange {
         return NSRange(location: 0, length: self.length)
     }
-    
+
 }
 #endif

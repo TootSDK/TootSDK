@@ -1,6 +1,6 @@
 //
 //  TrendingLink.swift
-//  
+//
 //
 //  Created by Dale Price on 4/7/23.
 //
@@ -37,7 +37,7 @@ public struct TrendingLink: Codable, Hashable {
         self.blurhash = blurhash
         self.history = history
     }
-    
+
     public var url: String
     public var title: String
     public var description: String

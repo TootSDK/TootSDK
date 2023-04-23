@@ -17,7 +17,7 @@ public struct Results: Codable {
     public var posts: [Post]
     /// Hashtags which match the given query
     public var hashtags: [Tag]
-    
+
     enum CodingKeys: String, CodingKey {
         case accounts
         case posts = "statuses"

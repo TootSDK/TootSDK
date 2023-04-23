@@ -5,28 +5,28 @@ import Foundation
 
 /// Parameters to block a domain
 public struct BlockDomainParams: Codable {
-    
+
     /// Domain to block.
     public var domain: String
-    
+
     /// Whether to apply a silence, suspend, or noop to the domain. Defaults to silence
     public var severity: DomainBlockSeverity?
-    
+
     /// Whether media attachments should be rejected. Defaults to false
     public var rejectMedia: Bool?
-    
+
     /// Whether reports from this domain should be rejected. Defaults to false
     public var rejectReports: Bool?
-    
+
     /// A private note about this domain block, visible only to admins.
     public var privateComment: String?
-    
+
     /// A public note about this domain block, optionally shown on the about page.
     public var publicComment: String?
-    
+
     /// Whether to partially censor the domain when shown in public. Defaults to false
     public var obfuscate: Bool?
-    
+
     /// - Parameters:
     ///   - domain: Domain to block.
     ///   - severity: Whether to apply a silence, suspend, or noop to the domain. Defaults to silence

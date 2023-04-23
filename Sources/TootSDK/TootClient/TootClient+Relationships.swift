@@ -15,30 +15,30 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-        
+
     /// Follow the given account; can be be the account name on the instance you're on, or the user's URI
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g @test@instance.test)
     /// - Returns: your relationship with that account after following
     public func followAccountURI(by uri: String) async throws -> Relationship {
         if self.flavour == .pleroma {
             // TODO: - resolve this issue: https://github.com/TootSDK/TootSDK/issues/34 // swiftlint:disable:this todo
-            
+
             // On Pleroma, we get to follow by URI, but it doesn't return a relationship, it returns an account
             // So we use that to then retrieve the relationship
             let account = try await pleromaFollowAccountURI(by: uri)
-            
+
             if let relationship = try await getRelationships(by: [account.id]).first {
                 return relationship
             } else {
                 throw TootSDKError.unexpectedError("Unable to retrieve relationship")
             }
         }
-        
+
         // Do the webfinger lookup first, then go and follow by account afterwards
         let accountLookup = try await lookupAccount(uri: uri)
         return try await followAccount(by: accountLookup.id)
     }
-    
+
     /// Looks up an account based on it's account name or URI, and returns a payload that contains the instance's account id
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g test@instance.test)
     /// - Returns: the looked up account, or an error if unable to retrieve
@@ -54,10 +54,10 @@ extension TootClient {
             $0.method = .get
             $0.addQueryParameter(name: "acct", value: uri)
         }
-        
+
         return try await fetch(Account.self, req)
     }
-    
+
     /// Pleroma Specific. This follows an account by URI and returns the account being followed
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g @test@instance.test)
     /// - Returns: the Account being followed
@@ -65,7 +65,7 @@ extension TootClient {
         try requireFlavour([.pleroma])
 
         let params = PleromaFollowByURIParams(uri: uri)
-        
+
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follows"])
             $0.method = .post
@@ -73,7 +73,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-        
+
     /// Unfollow the given account.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -84,7 +84,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Remove the given account from your followers.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -97,7 +97,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Block the given account. Clients should filter posts from this account if received (e.g. due to a boost in the Home timeline)
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -108,7 +108,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Unblock the given account
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -119,7 +119,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Mute the given account. Clients should filter posts and notifications from this account, if received (e.g. due to a boost in the Home timeline).
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -131,7 +131,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Unmute the given account.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -142,7 +142,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Find out whether a given account is followed, blocked, muted, etc.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -154,5 +154,5 @@ extension TootClient {
         }
         return try await fetch([Relationship].self, req)
     }
-    
+
 }

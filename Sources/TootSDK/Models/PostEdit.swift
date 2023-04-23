@@ -1,6 +1,6 @@
 //
 //  PostEdit.swift
-//  
+//
 //
 //  Created by dave on 4/12/22.
 //
@@ -24,7 +24,7 @@ public struct PostEdit: Codable, Hashable, Sendable {
     public var mediaAttachments: [MediaAttachment]
     /// Any custom emoji that are used in the current revision
     public var emojis: [Emoji]
-    
+
     public init(content: String, spoilerText: String, sensitive: Bool, createdAt: Date? = nil, account: Account, poll: Poll? = nil, mediaAttachments: [MediaAttachment], emojis: [Emoji]) {
         self.content = content
         self.spoilerText = spoilerText

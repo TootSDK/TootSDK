@@ -8,14 +8,14 @@ public struct Conversation: Codable, Hashable, Identifiable {
     public var accounts: [Account]
     public var unread: Bool
     public var lastPost: Post?
-    
+
     public init(id: String, accounts: [Account], unread: Bool, lastPost: Post?) {
         self.id = id
         self.accounts = accounts
         self.unread = unread
         self.lastPost = lastPost
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case accounts

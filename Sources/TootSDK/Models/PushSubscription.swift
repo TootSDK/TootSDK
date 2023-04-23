@@ -11,7 +11,7 @@ public struct PushSubscription: Codable, Identifiable {
         self.alerts = alerts
         self.serverKey = serverKey
     }
-    
+
     /// The id of the push subscription in the database.
     public var id: String
     /// Where push alerts will be sent to.

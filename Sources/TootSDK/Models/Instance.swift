@@ -21,7 +21,7 @@ public struct Instance: Codable, Hashable {
         self.thumbnail = thumbnail
         self.contactAccount = contactAccount
     }
-    
+
     /// The domain name of the instance.
     public var uri: String?
     /// The title of the website.
@@ -63,7 +63,7 @@ public struct Instance: Codable, Hashable {
         public var postCount: Int?
         /// Domains federated with this instance. Number.
         public var domainCount: Int?
-        
+
         enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
             case userCount
             case postCount = "status_count"

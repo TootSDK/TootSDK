@@ -13,7 +13,7 @@ public extension Tag {
             self.uses = uses
             self.accounts = accounts
         }
-        
+
         /// UNIX timestamp on midnight of the given day.
         public let day: String
         /// the counted usage of the hashtag within that day.

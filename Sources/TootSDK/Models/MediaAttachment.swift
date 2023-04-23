@@ -5,7 +5,7 @@ import Foundation
 
 /// Represents a file or media attachment that can be added to a status.
 public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
-    
+
     public init(id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
         self.id = id
         self.type = type
@@ -16,7 +16,7 @@ public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
         self.description = description
         self.blurhash = blurhash
     }
-    
+
     /// The ID of the attachment in the database.
     public var id: String
     /// The type of the attachment.
@@ -74,10 +74,10 @@ public extension MediaAttachment {
             width != 0,
             height != 0 {
             let aspectRatio = Double(width) / Double(height)
-            
+
             return aspectRatio.isNaN ? nil : aspectRatio
         }
-        
+
         return nil
     }
 }

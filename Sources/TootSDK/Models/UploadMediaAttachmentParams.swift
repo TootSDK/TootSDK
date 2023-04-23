@@ -4,14 +4,14 @@
 import Foundation
 
 public struct UploadMediaAttachmentParams: Codable, Sendable {
-    
+
     public init(file: Data, thumbnail: Data? = nil, description: String? = nil, focus: String? = nil) {
         self.file = file
         self.thumbnail = thumbnail
         self.description = description
         self.focus = focus
     }
-    
+
     /// The file to be attached, encoded using multipart form data. The file must have a MIME
     public let file: Data
     /// The custom thumbnail of the media to be attached, encoded using multipart form data.

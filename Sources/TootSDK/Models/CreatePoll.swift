@@ -11,7 +11,7 @@ public struct CreatePoll: Codable, Hashable, Sendable {
         self.hideTotals = hideTotals
         self.options = options
     }
-    
+
     /// Integer. Duration that the poll should be open, in seconds. If provided, media_ids cannot be used, and poll[options] must be provided.
     public var expiresIn: Int
     ///  Does the poll allow multiple-choice answers? Defaults to false.
@@ -20,7 +20,7 @@ public struct CreatePoll: Codable, Hashable, Sendable {
     public var hideTotals: Bool?
     /// Possible answers for the poll. If provided, media_ids cannot be used, and poll[expires_in] must be provided.
     public var options: [String]
-    
+
     enum CodingKeys: String, CodingKey {
         case expiresIn = "expires_in"
         case multiple = "multiple"

@@ -8,7 +8,7 @@ import FoundationNetworking
 
 /// HttpRequestBuilder is internal to TootSDK
 internal final class HTTPRequestBuilder: HTTPRequest {
-    
+
     /// Initialize a new request.
     ///
     /// - Parameters:
@@ -20,7 +20,7 @@ internal final class HTTPRequestBuilder: HTTPRequest {
 
     /// URLComponents of the network request.
     internal var urlComponents = URLComponents()
-        
+
     /// Set the full absolute URL for the request
     public var url: URL? {
         get {
@@ -33,11 +33,11 @@ internal final class HTTPRequestBuilder: HTTPRequest {
             }
         }
     }
-    
+
     public var method: HTTPMethod = .get
-    
+
     public var headers: [String: String] = [:]
-    
+
     /// Add a new query parameter to the query string's value.
     ///
     /// - Parameters:
@@ -47,7 +47,7 @@ internal final class HTTPRequestBuilder: HTTPRequest {
         let item = URLQueryItem(name: name, value: value)
         add(queryItem: item)
     }
-    
+
     /// Add a new query parameter via `URLQueryItem` instance.
     ///
     /// - Parameter item: instance of the query item to add.
@@ -58,13 +58,13 @@ internal final class HTTPRequestBuilder: HTTPRequest {
             query = [item]
         }
     }
-    
+
     /// Setup a list of query string parameters.
     public var query: [URLQueryItem]? {
         get { urlComponents.queryItems }
         set { urlComponents.queryItems = newValue }
     }
-    
+
     public var body: HTTPBody?
 }
 
@@ -74,18 +74,18 @@ internal extension HTTPRequestBuilder {
         guard let url else {
             throw TootSDKError.requiredURLNotSet
         }
-        
+
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
         urlRequest.allHTTPHeaderFields = headers
-        
+
         if let body {
             urlRequest.httpBody = body.content
             for header in body.headers ?? [:] {
                 urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
             }
         }
-        
+
         return urlRequest
     }
 }

@@ -5,7 +5,7 @@ import Foundation
 
 /// Represents the results of a search.
 public struct Search: Codable, Sendable {
-    
+
     public init(accounts: [Account] = [], posts: [Post] = [], hashtags: [Tag] = []) {
         self.accounts = accounts
         self.posts = posts

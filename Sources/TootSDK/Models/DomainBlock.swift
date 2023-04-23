@@ -17,31 +17,31 @@ public enum DomainBlockSeverity: String, Codable, Hashable {
 public struct DomainBlock: Codable, Hashable {
     /// The ID of the DomainBlock in the database.
     public var id: String?
-    
+
     /// The domain that is not allowed to federate.
     public var domain: String
-    
+
     /// When the domain was blocked from federating.
     public var createdAt: Date?
-    
+
     /// The policy to be applied by this domain block.
     public var severity: DomainBlockSeverity?
-    
+
     /// Whether to reject media attachments from this domain
     public var rejectMedia: Bool?
-    
+
     /// Whether to reject reports from this domain
     public var rejectReports: Bool?
-    
+
     /// A private note about this domain block, visible only to admins.
     public var privateComment: String?
-    
+
     /// public note about this domain block, optionally shown on the about page.
     public var publicComment: String?
-    
+
     /// Whether to partially censor the domain when shown in public. Defaults to false
     public var obfuscate: Bool = false
-    
+
     /// - Parameters:
     ///   - id: The ID of the DomainBlock in the database.
     ///   - domain: The domain that is not allowed to federate.

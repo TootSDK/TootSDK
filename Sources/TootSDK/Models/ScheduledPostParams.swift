@@ -1,6 +1,6 @@
 //
 //  ScheduledPostParams.swift
-//  
+//
 //
 //  Created by dave on 4/12/22.
 //
@@ -9,7 +9,7 @@ import Foundation
 
 /// Parameters to post a new scheduled post
 public struct ScheduledPostParams: Codable, Sendable {
-    
+
     ///  Creates parameters to create a new scheduled post
     /// - Parameters:
     ///   - text: The text content of the post. If mediaIds is provided, this becomes optional. Attaching a poll is optional while post is provided.
@@ -24,7 +24,7 @@ public struct ScheduledPostParams: Codable, Sendable {
     ///   - contentType: (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
     public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Post.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: String? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
-        
+
         self.text = text
         self.mediaIds = mediaIds
         self.sensitive = sensitive
@@ -38,7 +38,7 @@ public struct ScheduledPostParams: Codable, Sendable {
         self.contentType = contentType
         self.inReplyToConversationId = inReplyToConversationId
     }
-    
+
     /// The text content of the post. If media_ids is provided, this becomes optional. Attaching a poll is optional while post is provided.
     public var text: String?
     ///  Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
@@ -63,7 +63,7 @@ public struct ScheduledPostParams: Codable, Sendable {
     public var contentType: String?
     /// (Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
     public var inReplyToConversationId: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case text
         case mediaIds = "media_ids"

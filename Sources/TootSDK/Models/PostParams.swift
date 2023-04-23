@@ -5,7 +5,7 @@ import Foundation
 
 /// Parameters to create a new post
 public struct PostParams: Codable, Sendable {
-        
+
     ///  Creates an object to create a new post with
     /// - Parameters:
     ///   - post: The text content of the post. If media_ids is provided, this becomes optional. Attaching a poll is optional while post is provided.
@@ -39,11 +39,11 @@ public struct PostParams: Codable, Sendable {
         self.contentType = contentType
         self.inReplyToConversationId = inReplyToConversationId
     }
-    
+
     public init(post: String, visibility: Post.Visibility, spoilerText: String? = nil) {
         self.init(post: post, mediaIds: [], poll: nil, inReplyToId: nil, sensitive: nil, spoilerText: spoilerText, visibility: visibility, language: nil, contentType: nil, inReplyToConversationId: nil)
     }
-        
+
     /// The text content of the post. If media_ids is provided, this becomes optional. Attaching a poll is optional while post is provided.
     public var post: String
     ///  Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
@@ -62,10 +62,10 @@ public struct PostParams: Codable, Sendable {
     public var language: String?
     /// (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     public var contentType: String?
-    
+
     /// (Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
     public var inReplyToConversationId: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case post = "status"
         case mediaIds = "media_ids"

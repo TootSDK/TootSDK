@@ -5,13 +5,13 @@ import Foundation
 
 /// Represents a list of some users that the authenticated user follows.
 public struct List: Codable, Hashable, Identifiable {
-    
+
     /// The internal database ID of the list.
     public var id: String
-    
+
     /// The user-defined title of the list.
     public var title: String
-    
+
     /// Which replies should be shown in the list.
     public var repliesPolicy: ListRepliesPolicy?
 
