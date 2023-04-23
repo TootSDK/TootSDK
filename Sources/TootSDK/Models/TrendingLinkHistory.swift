@@ -1,6 +1,6 @@
 //
 //  TrendingLinkHistory.swift
-//  
+//
 //
 //  Created by Dale Price on 4/11/23.
 //
@@ -17,7 +17,7 @@ public extension TrendingLink {
             self.uses = uses
             self.accounts = accounts
         }
-        
+
         /// UNIX timestamp on midnight of the given day.
         public let day: String
         /// the counted usage of the link within that day.

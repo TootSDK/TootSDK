@@ -37,7 +37,7 @@ public struct FeaturedTag: Codable, Hashable, Identifiable {
         self.postsCount = try container.decodeIntFromString(forKey: .postsCount)
         self.lastPostAt = try container.decode(Date.self, forKey: .lastPostAt)
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case name

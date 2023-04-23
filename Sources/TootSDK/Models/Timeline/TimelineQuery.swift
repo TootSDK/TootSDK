@@ -1,6 +1,6 @@
 //
 //  BaseTimelineQuery.swift
-//  
+//
 //
 //  Created by dave on 12/03/23.
 //

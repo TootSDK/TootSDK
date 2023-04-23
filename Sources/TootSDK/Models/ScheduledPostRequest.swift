@@ -29,7 +29,7 @@ internal struct ScheduledPostRequest: Codable {
     public var contentType: String?
     /// (Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
     public var inReplyToConversationId: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case post = "status"
         case mediaIds = "media_ids"
@@ -51,13 +51,13 @@ extension ScheduledPostRequest {
         guard let scheduledAtDate = from.scheduledAt else {
             throw TootSDKError.missingParameter(parameterName: "scheduledAt")
         }
-        
+
         if scheduledAtDate < Date().addingTimeInterval(TimeInterval(5.0 * 60.0)) {
             // scheduled_at must be at least 5 mins into the future
             // https://github.com/mastodon/mastodon/pull/9706
             throw TootSDKError.invalidParameter(parameterName: "scheduledAt")
         }
-        
+
         self = ScheduledPostRequest(post: from.text, mediaIds: from.mediaIds, sensitive: from.sensitive, spoilerText: from.spoilerText, visibility: from.visibility, language: from.language, scheduledAt: TootEncoder.dateFormatter.string(from: scheduledAtDate), poll: from.poll, idempotency: from.idempotency, inReplyToId: from.inReplyToId, contentType: from.contentType, inReplyToConversationId: from.inReplyToConversationId)
     }
 }

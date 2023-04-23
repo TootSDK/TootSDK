@@ -31,7 +31,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.bot = bot
         self.source = source
     }
-    
+
     /// The account id.
     public let id: String
     /// The username of the account, not including domain.
@@ -113,7 +113,7 @@ public extension Account {
 }
 
 extension Account: Hashable {
-    
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(username)
@@ -140,11 +140,11 @@ extension Account: Hashable {
         hasher.combine(bot)
         hasher.combine(source)
     }
-    
+
     public static func == (lhs: Account, rhs: Account) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
-    
+
 }
 
 extension Account: CustomDebugStringConvertible {

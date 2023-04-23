@@ -1,6 +1,6 @@
 //
 //  FollowAccountParams.swift
-//  
+//
 //
 //  Created by dave on 21/12/22.
 //
@@ -14,7 +14,7 @@ public struct FollowAccountParams: Codable, Sendable {
     var reposts: Bool
     /// Array of String (ISO 639-1 language two-letter code). Filter received posts for these languages. If not provided, you will receive this account’s posts in all languages.
     var languages: [String]?
-    
+
     /// - Parameters:
     ///   - reposts: Receive this account’s reposts in home timeline? Defaults to true.
     ///   - notify: Receive notifications when this account posts a post?  Defaults to false.
@@ -26,7 +26,7 @@ public struct FollowAccountParams: Codable, Sendable {
         self.languages = languages
         self.reposts = reposts
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case notify
         case reposts = "reblogs"

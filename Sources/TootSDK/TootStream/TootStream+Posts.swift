@@ -9,25 +9,25 @@ extension Timeline: TootStream {
 
 // MARK: - Post stream creation
 extension TootDataStream {
-    
+
     /// Provides an async stream of updates for the given stream
     /// - Parameters:
     ///   - timeline: the type of post stream to update
     ///   - pageInfo: PagedInfo object for max/min/since ids
     /// - Returns: async stream of Post values
     public func stream(_ timeline: Timeline, _ pageInfo: PagedInfo? = nil) throws -> AsyncStream<[Post]> {
-        
+
         if let streamHolder = cachedStreams[timeline] as? TootEndpointStream<Timeline> {
             return streamHolder.stream
         }
-        
+
         let newHolder = TootEndpointStream(timeline)
         newHolder.pageInfo = pageInfo
-        
+
         newHolder.refresh = {[weak self, weak newHolder] in
             if let items = try await self?.client.getTimeline(timeline, pageInfo: newHolder?.pageInfo) {
                 newHolder?.internalContinuation?.yield(items.result)
-                
+
                 // Update `PagedInfo` only if a new `minId` is available.
                 if let minId = items.info.minId {
                     newHolder?.pageInfo = PagedInfo(minId: minId)

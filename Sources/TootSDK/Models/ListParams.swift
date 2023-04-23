@@ -9,7 +9,7 @@ public struct ListParams: Codable {
     public var title: String
     /// The user-defined title of the list.
     public var repliesPolicy: ListRepliesPolicy?
-    
+
     public init(title: String, repliesPolicy: ListRepliesPolicy? = nil) {
         self.title = title
         self.repliesPolicy = repliesPolicy

@@ -23,7 +23,7 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case internalError(_ description: String)
     /// A specific error message was returned from the server
     case serverError(_ message: String)
-    
+
     public var errorDescription: String? {
         switch self {
         case .decodingError(let description):

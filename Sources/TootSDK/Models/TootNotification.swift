@@ -40,7 +40,7 @@ public struct TootNotification: Codable, Hashable, Identifiable {
         /// Someone you enabled notifications for has posted a post
         case  post = "status"
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case type

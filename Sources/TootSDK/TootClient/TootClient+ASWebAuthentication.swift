@@ -7,7 +7,7 @@ import AuthenticationServices
 import Foundation
 
 extension TootClient {
-    
+
     /// Presents a authentication/authorization page using ASWebAuthenticationSession.
     /// When signIn is initiated on supported platforms, the authorization web page will be presented in a system-dependent manner that negates the need for user's to implement a custom web view. Upon successful authentication (or cancellation), control will be return to this function to handle token retrieval.
     ///
@@ -19,17 +19,17 @@ extension TootClient {
     @MainActor public func presentSignIn(callbackURI: String,
                                          prefersEphemeralWebBrowserSession: Bool = true,
                                          presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil) async throws -> String {
-        
+
         let presentationContextProvider = presentationContextProvider ?? self.defaultPresentationAnchor
-        
+
         guard
             let callbackURLScheme: String = URL(string: callbackURI)?.scheme
         else {
             throw TootSDKError.unexpectedError("Unable to retrieve scheme from callbackURI")
         }
-        
+
         let authUrl = try await createAuthorizeURL(callbackURI: callbackURI)
-        
+
         let returnedUrl: URL = try await withCheckedThrowingContinuation { continuation in
             let authSession = ASWebAuthenticationSession(url: authUrl, callbackURLScheme: callbackURLScheme) { (url, error) in
                 if let error = error {
@@ -40,13 +40,13 @@ extension TootClient {
                 }
                 return continuation.resume(throwing: TootSDKError.unexpectedError("There was a problem authenticating the user: no URL was returned from the first authentication step."))
             }
-            
+
             authSession.presentationContextProvider = presentationContextProvider
-            
+
             authSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
             authSession.start()
         }
-        
+
         return try await collectToken(returnUrl: returnedUrl,
                                       callbackURI: callbackURI)
     }
@@ -54,7 +54,7 @@ extension TootClient {
 
 // via: https://www.andyibanez.com/posts/using-aswebauthenticationaession-swiftui/
 public class TootPresentationAnchor: NSObject, ASWebAuthenticationPresentationContextProviding {
-    
+
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return ASPresentationAnchor()
     }

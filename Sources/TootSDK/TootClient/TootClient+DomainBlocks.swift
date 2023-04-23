@@ -7,7 +7,7 @@ import FoundationNetworking
 #endif
 
 public extension TootClient {
-    
+
     /// Show information about all blocked domains.
     /// - Returns: array of blocked domains
     func adminGetDomainBlocks() async throws -> [DomainBlock] {
@@ -16,10 +16,10 @@ public extension TootClient {
             $0.method = .get
 
         }
-        
+
         return try await fetch([DomainBlock].self, req)
-     }
-    
+    }
+
     /// Show information about a single blocked domain.
     /// - Parameter id: The ID of the DomainBlock in the instance's database
     /// - Returns: DomainBlock (optional)
@@ -28,10 +28,10 @@ public extension TootClient {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", id])
             $0.method = .get
         }
-        
+
         return try? await fetch(DomainBlock.self, req)
     }
-    
+
     /// Blocks a domain on the current instance.
     /// * hide all public posts from it
     /// * hide all notifications from it
@@ -45,10 +45,10 @@ public extension TootClient {
             $0.method = .post
             $0.body = try .multipart(params, boundary: UUID().uuidString)
         }
-        
+
         return try await fetch(DomainBlock.self, req)
     }
-    
+
     /// Lift a block against a domain.
     /// Note that the call will be successful even if the domain was not previously blocked.
     /// - Parameter domain: The ID of the DomainAllow in the database.
@@ -57,13 +57,13 @@ public extension TootClient {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", domain])
             $0.method = .delete
         }
-        
+
         _ = try await fetch(req: req)
     }
 }
 
 public extension TootClient {
-        
+
     /// View domains the user has blocked.
     /// - Parameters:
     ///   - pageInfo: PagedInfo object for max/min/since ids
@@ -78,16 +78,16 @@ public extension TootClient {
         let (data, response) = try await fetch(req: req)
         let decoded = try decode([String].self, from: data)
         var pagination: Pagination?
-        
+
         if let links = response.value(forHTTPHeaderField: "Link") {
             pagination = Pagination(links: links)
         }
-        
+
         let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
-        
+
         return PagedResult(result: decoded, info: info)
     }
-    
+
     /// Blocks a domain on the current instance.
     /// * hide all public posts from it
     /// * hide all notifications from it
@@ -104,7 +104,7 @@ public extension TootClient {
         }
         _ = try await fetch(req: req)
     }
-    
+
     /// Remove a domain block, if it exists in the user’s array of blocked domains.
     /// Note that the call will be successful even if the domain was not previously blocked.
     /// - Parameter domain: the instance's id of the domain being unblocked

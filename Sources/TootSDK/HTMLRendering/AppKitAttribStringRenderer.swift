@@ -9,9 +9,9 @@ import WebURLFoundationExtras
 import SwiftSoup
 
 public class AppKitAttribStringRenderer {
-    
+
     public init() {}
-    
+
     /// Renders the provided HTML string
     /// - Parameters:
     ///   - html: html description
@@ -19,14 +19,14 @@ public class AppKitAttribStringRenderer {
     /// - Returns: an instance `TootContent` with various representations of the content
     public func render(html: String?,
                        emojis: [Emoji]) throws -> TootContent {
-        
+
         guard let html = html else {
             return TootContent(wrappedValue: "", plainContent: "", attributedString: NSAttributedString(string: ""))
         }
-        
+
         return try renderHTML(html: html, emojis: emojis)
     }
-    
+
     /// Renders the provided HTML string
     /// - Parameters:
     ///   - html: html description
@@ -39,9 +39,9 @@ public class AppKitAttribStringRenderer {
         emojis.forEach { emoji in
             html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
-        
+
         let plainText = TootHTML.extractAsPlainText(html: html) ?? ""
-        
+
         if let doc = try? SwiftSoup.parseBodyFragment(html),
            let body = doc.body(),
            let attributedText = attributedTextForHTMLNode(body) {
@@ -52,12 +52,12 @@ public class AppKitAttribStringRenderer {
             return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
         }
     }
-    
+
     private func createAttributedString(_ html: String) throws -> NSAttributedString {
         guard let data = html.data(using: .utf8) else { return NSAttributedString() }
         return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
     }
-    
+
     private func attributedTextForHTMLNode(_ node: Node) -> NSAttributedString? {
         switch node {
         case let node as TextNode:
@@ -68,17 +68,17 @@ public class AppKitAttribStringRenderer {
             return nil
         }
     }
-    
+
     private func attributedTextForElement(_ element: Element) -> NSAttributedString? {  // swiftlint:disable:this cyclomatic_complexity
         var attributed = NSMutableAttributedString(string: "")
-        
+
         for child in element.getChildNodes() {
             /// Recursive appending
             if let childAttributed = attributedTextForHTMLNode(child) {
                 attributed.append(childAttributed)
             }
         }
-        
+
         switch element.tagName() {
         case "br":
             attributed.append(NSAttributedString(string: "\n"))
@@ -106,23 +106,23 @@ public class AppKitAttribStringRenderer {
         default:
             break
         }
-        
+
         return attributed
     }
-    
+
     private func attributedTextForImage(_ element: Element) throws -> NSAttributedString? {
         guard let _ = try? element.attr("src") else { return nil }
         if let _ = try? element.attr("data-tootsdk-emoji"), let alt = try? element.attr("alt") {
             // fallback to the the :short_code
             return NSAttributedString(string: ":" + alt)
         }
-        
+
         return NSAttributedString(string: try element.html())
     }
-    
+
     private func attributedTextForHref(_ element: Element, attributed: inout NSMutableAttributedString) {
         guard let href = try? element.attr("href") else { return }
-        
+
         if let webURL = WebURL(href),
            let url = URL(webURL) {
             attributed.addAttribute(.link, value: url, range: attributed.fullRange())
@@ -130,7 +130,7 @@ public class AppKitAttribStringRenderer {
             attributed.addAttribute(.link, value: url, range: attributed.fullRange())
         }
     }
-    
+
     private func updateAttributedTextForItalic(_ element: Element, attributed: inout NSMutableAttributedString) {
         if attributed.length > 0,
            let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? NSFont {
@@ -139,7 +139,7 @@ public class AppKitAttribStringRenderer {
             // try? attributed.addAttribute(.font, value: config.font.asItalic(), range: attributed.fullRange())
         }
     }
-    
+
     private func updateAttributedTextForBold(_ element: Element, attributed: inout NSMutableAttributedString) {
         if attributed.length > 0,
            let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? NSFont {
@@ -148,11 +148,11 @@ public class AppKitAttribStringRenderer {
             // try? attributed.addAttribute(.font, value: config.font.asBold(), range: attributed.fullRange())
         }
     }
-    
+
     private func updateAttributedTextForList(_ element: Element, attributed: inout NSMutableAttributedString) {
         if let parentTag = element.parent()?.tagName() {
             let bullet: NSAttributedString
-            
+
             switch parentTag {
             case "ol":
                 let index = (try? element.elementSiblingIndex()) ?? 0
@@ -162,12 +162,12 @@ public class AppKitAttribStringRenderer {
             default:
                 bullet = NSAttributedString()
             }
-            
+
             attributed.insert(bullet, at: 0)
             attributed.append(NSAttributedString(string: "\n"))
         }
     }
-    
+
     /// Renders a post into TootContent
     /// - Parameter tootPost: the post to render
     /// - Returns: the TootContent constructed
@@ -198,13 +198,13 @@ extension NSAttributedString {
 extension NSMutableAttributedString {
     public func trimCharactersInSet(charSet: CharacterSet) {
         var range = (string as NSString).rangeOfCharacter(from: charSet as CharacterSet)
-        
+
         // Trim leading characters from character set.
         while range.length != 0 && range.location == 0 {
             replaceCharacters(in: range, with: "")
             range = (string as NSString).rangeOfCharacter(from: charSet)
         }
-        
+
         // Trim trailing characters from character set.
         range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
         while range.length != 0 && NSMaxRange(range) == length {

@@ -1,17 +1,17 @@
 // Created by konstantin on 03/02/2023.
 // Copyright (c) 2023. All rights reserved.
 
-import Foundation
+@preconcurrency import struct Foundation.Data
 
 public struct UploadMediaAttachmentParams: Codable, Sendable {
-    
+
     public init(file: Data, thumbnail: Data? = nil, description: String? = nil, focus: String? = nil) {
         self.file = file
         self.thumbnail = thumbnail
         self.description = description
         self.focus = focus
     }
-    
+
     /// The file to be attached, encoded using multipart form data. The file must have a MIME
     public let file: Data
     /// The custom thumbnail of the media to be attached, encoded using multipart form data.

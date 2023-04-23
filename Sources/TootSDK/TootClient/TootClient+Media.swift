@@ -10,7 +10,7 @@ public extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "media"])
             $0.method = .post
-            
+
             var parts = [MultipartPart]()
             parts.append(
                 MultipartPart(
@@ -29,10 +29,10 @@ public extension TootClient {
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
         let uploadResponse = try await fetch(UploadMediaAttachmentResponse.self, req)
-        
+
         return uploadResponse.url != nil ? UploadedMediaAttachment(id: uploadResponse.id, state: .uploaded) : UploadedMediaAttachment(id: uploadResponse.id, state: .serverProcessing)
     }
-    
+
     /// Retrieve the details of a media attachment that corresponds to the given identifier.
     ///
     /// Requests to Mastodon API flavour return `nil` until the attachment has finished processing.
@@ -43,13 +43,13 @@ public extension TootClient {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .get
         }
-        
+
         let (data, response) = try await fetch(req: req)
-        
+
         if flavour == .mastodon && response.statusCode == 206 {
             return nil
         }
-        
+
         return try decode(MediaAttachment.self, from: data)
     }
 

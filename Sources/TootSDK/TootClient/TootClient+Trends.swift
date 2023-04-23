@@ -1,6 +1,6 @@
 //
 //  TootClient+Trends.swift
-//  
+//
 //
 //  Created by Dale Price on 4/7/23.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 public extension TootClient {
-    
+
     /// Get trending tags
     ///
     /// - Parameters:
@@ -26,10 +26,10 @@ public extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
-        
+
         return try await fetch([Tag].self, req)
     }
-    
+
     /// Get trending posts
     ///
     /// - Parameters:
@@ -47,10 +47,10 @@ public extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
-        
+
         return try await fetch([Post].self, req)
     }
-    
+
     /// Get trending links
     ///
     /// - Parameters:
@@ -68,7 +68,7 @@ public extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
-        
+
         return try await fetch([TrendingLink].self, req)
     }
 }

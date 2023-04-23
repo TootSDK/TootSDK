@@ -7,7 +7,7 @@ public struct RemoveAccountsFromListParams: Codable {
     public init(accountIds: [String]) {
         self.accountIds = accountIds
     }
-    
+
     /// The accounts that should be added to the list.
     public var accountIds: [String]
 }

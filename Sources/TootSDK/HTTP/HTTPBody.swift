@@ -19,7 +19,7 @@ internal extension HTTPBody {
         let headers = ["Content-Type": "application/json"]
         return HTTPBody(content: data, headers: headers)
     }
-    
+
     /// Initialize a new body for a multipart/form-data request with values from the provided parts
     ///
     /// - Returns: HTTPBody
@@ -30,7 +30,7 @@ internal extension HTTPBody {
         let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
         return HTTPBody(content: content, headers: headers)
     }
-    
+
     /// Initialize a new body for a multipart/form-data request with values from the provided encodable object
     ///
     /// - Returns: HTTPBody
@@ -40,7 +40,7 @@ internal extension HTTPBody {
         let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
         return HTTPBody(content: data, headers: headers)
     }
-    
+
     /// Initialize a new body for a application/x-www-form-urlencoded request with values from the provided URLComponents
     ///
     /// - Returns: HTTPBody
@@ -49,7 +49,7 @@ internal extension HTTPBody {
         let headers = ["Content-Type": "application/x-www-form-urlencoded"]
         return HTTPBody(content: data, headers: headers)
     }
-    
+
     /// Initialize a new body for a application/x-www-form-urlencoded request with values from the provided query items
     ///
     /// - Returns: HTTPBody

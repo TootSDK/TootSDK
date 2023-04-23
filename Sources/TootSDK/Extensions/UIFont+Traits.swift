@@ -9,15 +9,15 @@ import class UIKit.UIFont
 import class UIKit.UIFontDescriptor
 
 extension UIFont {
-    
+
     internal func asBold() throws -> UIFont {
         return try asTraits(.traitBold)
     }
-    
+
     internal func asItalic() throws -> UIFont {
         return try asTraits(.traitItalic)
     }
-    
+
     internal func asTraits(_ traits: UIFontDescriptor.SymbolicTraits) throws -> UIFont {
         if let fontDesc = self.fontDescriptor.withSymbolicTraits(traits) {
             return UIFont(descriptor: fontDesc, size: 0)
@@ -25,14 +25,14 @@ extension UIFont {
             throw(TootSDKError.unexpectedError("blah"))
         }
     }
-    
+
     internal func asMonospacedDigit() -> UIFont {
         return customized(by: [
             .typeIdentifier: kNumberSpacingType,
             .featureIdentifier: kMonospacedNumbersSelector
         ])
     }
-    
+
     internal func customized(by features: [UIFontDescriptor.FeatureKey: Any]) -> UIFont {
         let fontDesc = self.fontDescriptor.addingAttributes([.featureSettings: features])
         return UIFont(descriptor: fontDesc, size: 0)

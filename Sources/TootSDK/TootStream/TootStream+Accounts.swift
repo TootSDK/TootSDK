@@ -22,9 +22,9 @@ extension TootDataStream {
         if let streamHolder = cachedStreams[stream] as? TootEndpointStream<AccountTootStreams> {
             return streamHolder.stream
         }
-        
+
         let newHolder = TootEndpointStream(stream)
-        
+
         switch stream {
         case .verifyCredentials:
             newHolder.refresh = {[weak self, weak newHolder] in

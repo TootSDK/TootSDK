@@ -6,7 +6,7 @@ import Foundation
 /// Represents the relationship between accounts,
 /// such as following / blocking / muting / etc.
 public struct Relationship: Codable, Hashable, Identifiable, Sendable {
-    
+
     public init(id: String,
                 following: Bool,
                 requested: Bool,
@@ -61,7 +61,7 @@ public struct Relationship: Codable, Hashable, Identifiable, Sendable {
     public var blockedBy: Bool?
     /// This user's profile bio
     public var note: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case following

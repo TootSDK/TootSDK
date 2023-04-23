@@ -13,7 +13,7 @@ public struct Alerts: Codable, Hashable {
         self.followRequest = followRequest
         self.post = post
     }
-    
+
     /// Receive a push notification when someone has followed you? Boolean.
     public var follow: Bool
     /// Receive a push notification when a post you created has been favourited by someone else? Boolean.
@@ -26,7 +26,7 @@ public struct Alerts: Codable, Hashable {
     public var poll: Bool?
     public var followRequest: Bool?
     public var post: Bool?
-    
+
     enum CodingKeys: String, CodingKey {
         case follow
         case favourite

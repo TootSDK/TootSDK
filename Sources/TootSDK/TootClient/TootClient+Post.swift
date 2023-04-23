@@ -1,6 +1,6 @@
 //
 //  TootClient+Post.swift
-//  
+//
 //
 //  Created by dave on 25/11/22.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 public extension TootClient {
-    
+
     /// Publishes the post based on the components provided
     /// - Parameter PostParams:post components to be published
     /// - Returns: the published post, if successful, throws an error if not
@@ -20,7 +20,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     /// Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
     /// - Parameter id: the ID of the psot to be changed
     /// - Parameter params: the updated content of the post to be posted
@@ -33,7 +33,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     /// Gets a single post
     /// - Parameter id: the ID of the post to be retrieved
     /// - Returns: the post retrieved, if successful, throws an error if not
@@ -44,7 +44,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     func getContext(id: String) async throws -> Context {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "context"])
@@ -55,7 +55,7 @@ public extension TootClient {
 }
 
 public extension TootClient {
-    
+
     /// Deletes a single post
     /// - Parameter id: the ID of the post to be deleted
     /// - Returns: the post deleted (for delete and redraft), if successful, throws an error if not
@@ -66,11 +66,11 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
 }
 
 public extension TootClient {
-    
+
     func favouritePost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "favourite"])
@@ -78,7 +78,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     func unfavouritePost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unfavourite"])
@@ -86,11 +86,11 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
 }
 
 public extension TootClient {
-    
+
     func boostPost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "reblog"])
@@ -98,7 +98,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     func unboostPost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unreblog"])
@@ -106,11 +106,11 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
 }
 
 public extension TootClient {
-    
+
     func bookmarkPost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "bookmark"])
@@ -118,7 +118,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     func unbookmarkPost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unbookmark"])
@@ -126,11 +126,11 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
 }
 
 public extension TootClient {
-    
+
     func mutePost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "mute"])
@@ -138,7 +138,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     func unmutePost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unmute"])
@@ -149,7 +149,7 @@ public extension TootClient {
 }
 
 public extension TootClient {
-    
+
     func pinPost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "pin"])
@@ -157,7 +157,7 @@ public extension TootClient {
         }
         return try await fetch(Post.self, req)
     }
-    
+
     func unpinPost(id: String) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unpin"])
@@ -168,57 +168,57 @@ public extension TootClient {
 }
 
 public extension TootClient {
-    
+
     func getAccountsBoosted(id: String) async throws -> [Account] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "reblogged_by"])
             $0.method = .get
         }
-        
+
         let accounts = try await fetch([Account].self, req)
         return accounts.compactMap({ $0 })
     }
-    
+
     func getAccountsFavourited(id: String) async throws -> [Account] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "favourited_by"])
             $0.method = .get
         }
-        
+
         let accounts = try await fetch([Account].self, req)
         return accounts.compactMap({ $0 })
     }
-    
+
 }
 
 public extension TootClient {
-    
+
     func getHistory(id: String) async throws -> [PostEdit] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "history"])
             $0.method = .get
         }
-        
+
         let postEdits = try await fetch([PostEdit].self, req)
         return postEdits.compactMap({ $0 })
     }
-    
+
 }
 
 public extension TootClient {
-    
+
     /// Obtain the source properties for a status so that it can be edited.
     func getPostSource(id: String) async throws -> PostSource {
         try requireFlavour(otherThan: [.friendica])
-        
+
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "source"])
             $0.method = .get
         }
-        
+
         return try await fetch(PostSource.self, req)
     }
-    
+
 }
 
 public extension TootClient {

@@ -11,14 +11,14 @@ public struct TootHTML {
     /// - Returns: the processed string, free of HTML tags
     public static func extractAsPlainText(html: String?) -> String? {
         guard var html = html else { return nil }
-        
+
         let linebreak = "|tootsdk-linebreak|"
-        
+
         html = html.replacingOccurrences(of: "<p>", with: "")
         html = html.replacingOccurrences(of: "</p>", with: linebreak)
         html = html.replacingOccurrences(of: "<br />", with: linebreak)
         html = html.replacingOccurrences(of: "<br>", with: linebreak)
-                   
+
         if let doc: SwiftSoup.Document = try? SwiftSoup.parse(html) {
             let removeHTML = try? doc.text()
             let withLineBreaksAddedBack = removeHTML?.replacingOccurrences(of: linebreak, with: "\n")
