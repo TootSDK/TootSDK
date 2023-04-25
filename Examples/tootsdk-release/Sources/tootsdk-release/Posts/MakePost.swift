@@ -118,12 +118,12 @@ struct MakePost: AsyncParsableCommand {
         
         let unique = Array(Set(users))
         
-        return unique
+        return uniquew
     }
     
     private func getUserMastodon(user: String) async throws -> String? {
         if user == "kkostov" {
-            return "konstantin@m.iamkonstantin.eu"
+            return "@konstantin@m.iamkonstantin.eu"
         }
 
         let mastodonURL = "https://api.github.com/users/" + user + "/social_accounts"
