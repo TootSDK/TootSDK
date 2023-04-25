@@ -118,7 +118,7 @@ struct MakePost: AsyncParsableCommand {
         
         let unique = Array(Set(users))
         
-        return uniquew
+        return unique
     }
     
     private func getUserMastodon(user: String) async throws -> String? {
