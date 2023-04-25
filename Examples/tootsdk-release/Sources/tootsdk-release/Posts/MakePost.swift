@@ -27,8 +27,6 @@ struct MakePost: AsyncParsableCommand {
         URLSession(configuration: URLSessionConfiguration.default )
     }
     
-    private var maintainers: [String] = ["kkostov", "davidgarywood"]
-    
     mutating func run() async throws {
         guard let postParams = try await getRelease() else { return }
         
@@ -124,6 +122,10 @@ struct MakePost: AsyncParsableCommand {
     }
     
     private func getUserMastodon(user: String) async throws -> String? {
+        if user == "kkostov" {
+            return "konstantin@m.iamkonstantin.eu"
+        }
+
         let mastodonURL = "https://api.github.com/users/" + user + "/social_accounts"
         let (data, _ ) = try await urlSession.getData(from: URL(string: mastodonURL)!)
         
