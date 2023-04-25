@@ -20,6 +20,7 @@ extension URLSession {
         var dataTask: URLSessionDataTask?
         let onCancel = { dataTask?.cancel() }
 
+        try Task.checkCancellation()
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
                 dataTask = self.dataTask(with: request) { data, response, error in
