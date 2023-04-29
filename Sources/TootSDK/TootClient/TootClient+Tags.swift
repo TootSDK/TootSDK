@@ -47,6 +47,7 @@ public extension TootClient {
     /// Get all tags which the current account is following.
     /// - Returns: the tags requested
     func getFollowedTags(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Tag]> {
+        try requireFlavour(flavoursSupportingFollowingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "followed_tags"])
             $0.method = .get
