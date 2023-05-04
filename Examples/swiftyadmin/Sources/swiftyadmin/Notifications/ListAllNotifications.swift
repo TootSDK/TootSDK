@@ -20,17 +20,6 @@ struct ListAllNotifications: AsyncParsableCommand {
     while hasMore {
       let page = try await client.getNotifications(params: query, pagedInfo)
       print("=== page ===")
-      print(
-        """
-        hasPrevious: \(page.hasPrevious)
-        hasNext: \(page.hasNext)
-        maxID: \(page.info.maxId ?? "nil")
-        maxID: \(page.previousPage?.maxId ?? "nil")
-        minId: \(page.info.minId ?? "nil")
-        minId: \(page.previousPage?.minId ?? "nil")
-        sinceId: \(page.info.sinceId ?? "nil")
-        sinceId: \(page.previousPage?.sinceId ?? "nil")
-        """)
       for notification in page.result {
         print(
           notification.id + ", " + notification.type.rawValue + ", "
