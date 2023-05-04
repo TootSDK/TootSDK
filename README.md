@@ -130,7 +130,9 @@ TootSDK returns Posts, Accounts, Lists and DomainBblocks as `PagedResult`. In ou
 <summary>Paging requests</summary>
 
 
-Some requests in TootSDK are paging. This means that we can send and receive PagedInfo structs when making these requests. The properties in this struct are:
+Some requests in TootSDK allow pagination in order to request more information. TootSDK can request a specific page using the `PagedInfo` struct and handles paginaged server responses using the `PagedResult` struct.
+
+PagedInfo has the following properties:
 
 - maxId (Return results older than ID)
 - minId (Return results immediately newer than ID)
@@ -157,6 +159,27 @@ func retrievePosts() async {
 }
 
 ```
+
+TootSDK implements several facilities to make it easier to iterate over multiple pages using the `hasPrevious`, `hasNext`, `previousPage` and `nextPage` properties of `PagedResult`:
+
+```swift
+var pagedInfo: PagedInfo? = nil
+var hasMore = true
+let query = TootNotificationParams(types: [.mention])
+
+while hasMore {
+  let page = try await client.getNotifications(params: query, pagedInfo)
+  for notification in page.result {
+    print(notification.id)
+  }
+  hasMore = page.hasPrevious
+  pagedInfo = page.previousPage
+}
+```
+
+⚠️ Different fediverse servers handle pagination differently and so there is no guarantee that `hasPrevious` or `hasNext` can correctly interpret the server response in all cases.
+
+You can learn more about how pagination works for Fediverse servers using a Mastodon compatible API [here](https://docs.joinmastodon.org/api/guidelines/#pagination).
 
 </details>
 

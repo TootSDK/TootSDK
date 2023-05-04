@@ -43,7 +43,7 @@ public extension TootClient {
 
         return try await fetch(Tag.self, req)
     }
-    
+
     /// Get all tags which the current account is following.
     /// - Returns: the tags requested
     func getFollowedTags(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Tag]> {
