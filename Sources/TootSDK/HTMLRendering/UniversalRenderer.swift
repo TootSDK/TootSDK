@@ -46,8 +46,7 @@ public class UniversalRenderer {
 
         return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
     }
-    
-    
+
     /// Renders a post into TootContent
     /// - Parameter tootPost: the post to render
     /// - Returns: the TootContent constructed
