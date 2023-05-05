@@ -116,32 +116,32 @@ public extension TootClient {
         queryParameters.append(.init(name: "subscription[keys][p256dh]", value: params.subscription.keys.p256dh))
         queryParameters.append(.init(name: "subscription[keys][auth]", value: params.subscription.keys.auth))
 
-        if let alert = params.data?.alerts?.mention, alert {
-            queryParameters.append(.init(name: "data[alerts][mention]", value: "true"))
+        if let alert = params.data?.alerts?.mention {
+            queryParameters.append(.init(name: "data[alerts][mention]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.post, alert {
-            queryParameters.append(.init(name: "data[alerts][status]", value: "true"))
+        if let alert = params.data?.alerts?.post {
+            queryParameters.append(.init(name: "data[alerts][status]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.follow, alert {
-            queryParameters.append(.init(name: "data[alerts][follow]", value: "true"))
+        if let alert = params.data?.alerts?.follow {
+            queryParameters.append(.init(name: "data[alerts][follow]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.followRequest, alert {
-            queryParameters.append(.init(name: "data[alerts][follow_request]", value: "true"))
+        if let alert = params.data?.alerts?.followRequest {
+            queryParameters.append(.init(name: "data[alerts][follow_request]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.favourite, alert {
-            queryParameters.append(.init(name: "data[alerts][favourite]", value: "true"))
+        if let alert = params.data?.alerts?.favourite {
+            queryParameters.append(.init(name: "data[alerts][favourite]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.poll, alert {
-            queryParameters.append(.init(name: "data[alerts][poll]", value: "true"))
+        if let alert = params.data?.alerts?.poll {
+            queryParameters.append(.init(name: "data[alerts][poll]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.update, alert {
-            queryParameters.append(.init(name: "data[alerts][update]", value: "true"))
+        if let alert = params.data?.alerts?.update {
+            queryParameters.append(.init(name: "data[alerts][update]", value: String(alert).lowercased()))
         }
 
         if let policy = params.data?.policy {
@@ -153,32 +153,32 @@ public extension TootClient {
     internal func createQuery(from params: PushSubscriptionUpdateParams) -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
 
-        if let alert = params.data?.alerts?.mention, alert {
-            queryParameters.append(.init(name: "data[alerts][mention]", value: "true"))
+        if let alert = params.data?.alerts?.mention {
+            queryParameters.append(.init(name: "data[alerts][mention]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.post, alert {
-            queryParameters.append(.init(name: "data[alerts][status]", value: "true"))
+        if let alert = params.data?.alerts?.post {
+            queryParameters.append(.init(name: "data[alerts][status]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.follow, alert {
-            queryParameters.append(.init(name: "data[alerts][follow]", value: "true"))
+        if let alert = params.data?.alerts?.follow {
+            queryParameters.append(.init(name: "data[alerts][follow]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.followRequest, alert {
-            queryParameters.append(.init(name: "data[alerts][follow_request]", value: "true"))
+        if let alert = params.data?.alerts?.followRequest {
+            queryParameters.append(.init(name: "data[alerts][follow_request]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.favourite, alert {
-            queryParameters.append(.init(name: "data[alerts][favourite]", value: "true"))
+        if let alert = params.data?.alerts?.favourite {
+            queryParameters.append(.init(name: "data[alerts][favourite]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.poll, alert {
-            queryParameters.append(.init(name: "data[alerts][poll]", value: "true"))
+        if let alert = params.data?.alerts?.poll {
+            queryParameters.append(.init(name: "data[alerts][poll]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.update, alert {
-            queryParameters.append(.init(name: "data[alerts][update]", value: "true"))
+        if let alert = params.data?.alerts?.update {
+            queryParameters.append(.init(name: "data[alerts][update]", value: String(alert).lowercased()))
         }
 
         if let policy = params.data?.policy {
