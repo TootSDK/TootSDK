@@ -60,7 +60,43 @@ public extension TootClient {
         _ = try await fetch(req: req)
     }
 
-    func createQuery(from params: TootNotificationParams) -> [URLQueryItem] {
+    /// Add a Web Push API subscription to receive notifications. Each access token can have one push subscription.
+    ///
+    /// If you create a new subscription, the old subscription is deleted.
+    func createPushSubscription(params: PushSubscriptionParams) async throws -> PushSubscription {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "push", "subscription"])
+            $0.method = .post
+            $0.body = try .form(queryItems: createQuery(from: params))
+        }
+
+        return try await fetch(PushSubscription.self, req)
+    }
+
+    /// View the PushSubscription currently associated with this access token.
+    func getPushSubscription() async throws -> PushSubscription {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "push", "subscription"])
+            $0.method = .get
+        }
+
+        return try await fetch(PushSubscription.self, req)
+    }
+
+    /// Updates the current push subscription. Only the data part can be updated.
+    ///
+    /// To change fundamentals, a new subscription must be created instead.
+    func changePushSubscription(params: PushSubscriptionUpdateParams) async throws -> PushSubscription {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "push", "subscription"])
+            $0.method = .put
+            $0.body = try .form(queryItems: createQuery(from: params))
+        }
+
+        return try await fetch(PushSubscription.self, req)
+    }
+
+    internal func createQuery(from params: TootNotificationParams) -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
 
         if let types = params.types, !types.isEmpty {
@@ -71,6 +107,83 @@ public extension TootClient {
             queryParameters.append(contentsOf: types.map({.init(name: "exclude_types[]", value: $0.rawValue)}))
         }
 
+        return queryParameters
+    }
+
+    internal func createQuery(from params: PushSubscriptionParams) -> [URLQueryItem] {
+        var queryParameters = [URLQueryItem]()
+        queryParameters.append(.init(name: "subscription[endpoint]", value: params.subscription.endpoint))
+        queryParameters.append(.init(name: "subscription[keys][p256dh]", value: params.subscription.keys.p256dh))
+        queryParameters.append(.init(name: "subscription[keys][auth]", value: params.subscription.keys.auth))
+
+        if let alert = params.data?.alerts?.mention, alert {
+            queryParameters.append(.init(name: "data[alerts][mention]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.post, alert {
+            queryParameters.append(.init(name: "data[alerts][status]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.follow, alert {
+            queryParameters.append(.init(name: "data[alerts][follow]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.followRequest, alert {
+            queryParameters.append(.init(name: "data[alerts][follow_request]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.favourite, alert {
+            queryParameters.append(.init(name: "data[alerts][favourite]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.poll, alert {
+            queryParameters.append(.init(name: "data[alerts][poll]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.update, alert {
+            queryParameters.append(.init(name: "data[alerts][update]", value: "true"))
+        }
+
+        if let policy = params.data?.policy {
+            queryParameters.append(.init(name: "data[policy]", value: policy))
+        }
+        return queryParameters
+    }
+
+    internal func createQuery(from params: PushSubscriptionUpdateParams) -> [URLQueryItem] {
+        var queryParameters = [URLQueryItem]()
+
+        if let alert = params.data?.alerts?.mention, alert {
+            queryParameters.append(.init(name: "data[alerts][mention]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.post, alert {
+            queryParameters.append(.init(name: "data[alerts][status]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.follow, alert {
+            queryParameters.append(.init(name: "data[alerts][follow]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.followRequest, alert {
+            queryParameters.append(.init(name: "data[alerts][follow_request]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.favourite, alert {
+            queryParameters.append(.init(name: "data[alerts][favourite]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.poll, alert {
+            queryParameters.append(.init(name: "data[alerts][poll]", value: "true"))
+        }
+
+        if let alert = params.data?.alerts?.update, alert {
+            queryParameters.append(.init(name: "data[alerts][update]", value: "true"))
+        }
+
+        if let policy = params.data?.policy {
+            queryParameters.append(.init(name: "data[policy]", value: policy))
+        }
         return queryParameters
     }
 }

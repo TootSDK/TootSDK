@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Alerts: Codable, Hashable {
+public struct Alerts: Codable, Hashable, Sendable {
     public init(follow: Bool, favourite: Bool, repost: Bool, mention: Bool, poll: Bool? = nil, followRequest: Bool? = nil, post: Bool? = nil) {
         self.follow = follow
         self.favourite = favourite
@@ -27,6 +27,8 @@ public struct Alerts: Codable, Hashable {
     public var followRequest: Bool?
     public var post: Bool?
 
+    public var update: Bool?
+
     enum CodingKeys: String, CodingKey {
         case follow
         case favourite
@@ -35,5 +37,6 @@ public struct Alerts: Codable, Hashable {
         case poll
         case followRequest
         case post = "status"
+        case update
     }
 }
