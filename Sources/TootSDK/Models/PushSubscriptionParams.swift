@@ -12,15 +12,15 @@ public struct PushSubscriptionParams: Codable, Sendable {
     public struct Subscription: Codable, Sendable {
         /// The endpoint URL that is called when a notification event occurs.
         public var endpoint: String
-        public var keys: Keys
+        public var keys: PushSubscriptionParams.Keys
+    }
 
-        public struct Keys: Codable, Sendable {
-            /// User agent public key. Base64 encoded string of a public key from a ECDH keypair using
-            public var p256dh: String
+    public struct Keys: Codable, Sendable {
+        /// User agent public key. Base64 encoded string of a public key from a ECDH keypair using
+        public var p256dh: String
 
-            ///  Auth secret. Base64 encoded string of 16 bytes of random data.
-            public var auth: String
-        }
+        ///  Auth secret. Base64 encoded string of 16 bytes of random data.
+        public var auth: String
     }
 
     public struct SubscriptionData: Codable, Sendable {
