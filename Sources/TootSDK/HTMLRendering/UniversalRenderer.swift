@@ -46,4 +46,17 @@ public class UniversalRenderer {
 
         return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))
     }
+    
+    
+    /// Renders a post into TootContent
+    /// - Parameter tootPost: the post to render
+    /// - Returns: the TootContent constructed
+    public func render(_ tootPost: Post) -> TootContent {
+        do {
+            return try render(html: tootPost.content ?? "", emojis: tootPost.emojis)
+        } catch {
+            print("TootSDK(UniversalRenderer): Failed to render post: \(String(describing: error))")
+            return .init(wrappedValue: "", plainContent: "", attributedString: .init(string: ""))
+        }
+    }
 }
