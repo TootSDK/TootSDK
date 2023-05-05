@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a notification of an event relevant to the user.
-public struct TootNotification: Codable, Hashable, Identifiable {
+public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
     public init(id: String, type: TootNotification.NotificationType, account: Account, createdAt: Date, post: Post? = nil) {
         self.id = id
         self.type = type
@@ -24,7 +24,7 @@ public struct TootNotification: Codable, Hashable, Identifiable {
     /// Post that was the object of the notification, e.g. in mentions, reposts, favourites, or polls.
     public var post: Post?
 
-    public enum NotificationType: String, Codable {
+    public enum NotificationType: String, Codable, Sendable {
         /// Someone followed you
         case follow
         /// Someone mentioned you in their post
@@ -38,7 +38,9 @@ public struct TootNotification: Codable, Hashable, Identifiable {
         /// Someone requested to follow you
         case followRequest = "follow_request"
         /// Someone you enabled notifications for has posted a post
-        case  post = "status"
+        case post = "status"
+
+        case update = "update"
     }
 
     enum CodingKeys: String, CodingKey {
