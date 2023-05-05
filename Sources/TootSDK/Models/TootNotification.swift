@@ -38,7 +38,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         /// Someone requested to follow you
         case followRequest = "follow_request"
         /// Someone you enabled notifications for has posted a post
-        case  post = "status"
+        case post = "status"
 
         case update = "update"
     }
