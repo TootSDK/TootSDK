@@ -164,6 +164,29 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
+    
+    /// Get all accounts which the current account is blocking
+    /// - Returns: the accounts requested
+    public func getMutedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "mutes"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+
+        let (data, response) = try await fetch(req: req)
+        let decoded = try decode([Account].self, from: data)
+        var pagination: Pagination?
+
+        if let links = response.value(forHTTPHeaderField: "Link") {
+            pagination = Pagination(links: links)
+        }
+
+        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
+
+        return PagedResult(result: decoded, info: info)
+    }
+
 
     /// Find out whether a given account is followed, blocked, muted, etc.
     /// - Parameter id: the ID of the Account in the instance database.
