@@ -187,7 +187,6 @@ extension TootClient {
         return PagedResult(result: decoded, info: info)
     }
 
-
     /// Find out whether a given account is followed, blocked, muted, etc.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
