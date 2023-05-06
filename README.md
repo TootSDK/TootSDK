@@ -67,7 +67,7 @@ It's easy to get started with TootSDK.
 
 When using TootSDK within a macOS target you will need to enable the `com.apple.security.network.client` entitlement in your entitlements file or within the **Signing & Capabilities** tab in Xcode.
 
-```json
+```
 <key>com.apple.security.network.client</key>
 <true/>
 ```
