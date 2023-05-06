@@ -62,6 +62,19 @@ It's easy to get started with TootSDK.
 
 ### Signing in (for macOS and iOS):
 
+<details>
+<summary>Network Sandbox Capability/Entitlement (macOS)</summary>
+
+When using TootSDK within a macOS target you will need to enable the `com.apple.security.network.client` entitlement in your entitlements file or within the **Signing & Capabilities** tab in Xcode.
+
+```
+<key>com.apple.security.network.client</key>
+<true/>
+```
+
+![Xcode target view showing the Signing & Capabilities tab with and arrow pointing to a checked Outgoing Connections (Client) option](media/network_sandbox_capability_entitlement.png)
+</details>
+
 - Instantiate your client without a token:
 
 ```swift
