@@ -53,18 +53,8 @@ public extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
-        let (data, response) = try await fetch(req: req)
-        let decoded = try decode([Tag].self, from: data)
-        var pagination: Pagination?
-
-        if let links = response.value(forHTTPHeaderField: "Link") {
-            pagination = Pagination(links: links)
-        }
-
-        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
-
-        return PagedResult(result: decoded, info: info)
+        
+        return try await fetchPagedResult(req, pageInfo, limit: limit)
     }
 
     /// Tells whether current flavour supports following or unfollowing tags.
