@@ -129,7 +129,7 @@ extension TootClient {
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
         
-        return try await fetchPagedResult(req, pageInfo, limit: limit)
+        return try await fetchPagedResult(req)
     }
 
     /// Mute the given account. Clients should filter posts and notifications from this account, if received (e.g. due to a boost in the Home timeline).
@@ -164,7 +164,7 @@ extension TootClient {
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
 
-        return try await fetchPagedResult(req, pageInfo, limit: limit)
+        return try await fetchPagedResult(req)
     }
 
     /// Find out whether a given account is followed, blocked, muted, etc.

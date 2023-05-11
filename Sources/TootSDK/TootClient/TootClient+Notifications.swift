@@ -17,7 +17,7 @@ public extension TootClient {
             $0.query = createQuery(from: params) + getQueryParams(pageInfo, limit: limit)
         }
         
-        return try await fetchPagedResult(req, pageInfo, limit: limit)
+        return try await fetchPagedResult(req)
     }
 
     /// Get info about a single notification

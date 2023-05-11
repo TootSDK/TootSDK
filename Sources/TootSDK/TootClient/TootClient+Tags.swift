@@ -54,7 +54,7 @@ public extension TootClient {
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
         
-        return try await fetchPagedResult(req, pageInfo, limit: limit)
+        return try await fetchPagedResult(req)
     }
 
     /// Tells whether current flavour supports following or unfollowing tags.

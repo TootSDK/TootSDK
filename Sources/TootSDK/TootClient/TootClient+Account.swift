@@ -40,7 +40,7 @@ extension TootClient {
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
         
-        return try await fetchPagedResult(req, pageInfo, limit: limit)
+        return try await fetchPagedResult(req)
     }
 
     /// Get all accounts which the given account is following, if network is not hidden by the account owner.
@@ -53,7 +53,7 @@ extension TootClient {
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
         
-        return try await fetchPagedResult(req, pageInfo, limit: limit)
+        return try await fetchPagedResult(req)
     }
 
     /// Attempts to register a user.
