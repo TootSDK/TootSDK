@@ -39,18 +39,8 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
-        let (data, response) = try await fetch(req: req)
-        let decoded = try decode([Account].self, from: data)
-        var pagination: Pagination?
-
-        if let links = response.value(forHTTPHeaderField: "Link") {
-            pagination = Pagination(links: links)
-        }
-
-        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
-
-        return PagedResult(result: decoded, info: info)
+        
+        return try await fetchPagedResult(req)
     }
 
     /// Get all accounts which the given account is following, if network is not hidden by the account owner.
@@ -62,18 +52,8 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
-        let (data, response) = try await fetch(req: req)
-        let decoded = try decode([Account].self, from: data)
-        var pagination: Pagination?
-
-        if let links = response.value(forHTTPHeaderField: "Link") {
-            pagination = Pagination(links: links)
-        }
-
-        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
-
-        return PagedResult(result: decoded, info: info)
+        
+        return try await fetchPagedResult(req)
     }
 
     /// Attempts to register a user.

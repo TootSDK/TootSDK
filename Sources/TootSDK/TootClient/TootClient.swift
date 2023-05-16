@@ -218,6 +218,26 @@ extension TootClient {
         let supportedFlavours = Set(TootSDKFlavour.allCases).subtracting(unsupportedFalvours)
         try requireFlavour(supportedFlavours)
     }
+    
+    /// Performs a request that returns paginated arrays
+    /// - Parameters:
+    ///   - req: the HTTP request to execute
+    /// - Returns: the fetched paged array and page info
+    internal func fetchPagedResult<T: Decodable>(_ req: HTTPRequestBuilder) async throws -> PagedResult<[T]> {
+
+        let (data, response) = try await fetch(req: req)
+        let decoded = try decode([T].self, from: data)
+        var pagination: Pagination?
+
+        if let links = response.value(forHTTPHeaderField: "Link") {
+            pagination = Pagination(links: links)
+        }
+
+        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
+
+        return PagedResult(result: decoded, info: info)
+    }
+
 }
 
 extension TootClient: Equatable {

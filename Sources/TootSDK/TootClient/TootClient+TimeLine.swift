@@ -16,17 +16,8 @@ extension TootClient {
     ///   - limit: the limit of posts being requested
     /// - Returns: a paged result with an array of posts
     internal func getPosts(_ req: HTTPRequestBuilder, _ pageInfo: PagedInfo? = nil, _ limit: Int? = nil) async throws -> PagedResult<[Post]> {
-        let (data, response) = try await fetch(req: req)
-        let decoded = try decode([Post].self, from: data)
-        var pagination: Pagination?
-
-        if let links = response.value(forHTTPHeaderField: "Link") {
-            pagination = Pagination(links: links)
-        }
-
-        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
-
-        return PagedResult(result: decoded, info: info)
+        
+        return try await fetchPagedResult(req)
     }
 
     /// Provides the url paths as an array of strings, based on the type of timeline
