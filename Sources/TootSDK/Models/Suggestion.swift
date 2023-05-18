@@ -27,9 +27,4 @@ public struct Suggestion: Codable, Hashable, Sendable {
         /// This account has many reblogs, favourites, and active local followers within the last 30 days
         case global
     }
-
-    enum CodingKeys: String, CodingKey {
-        case source
-        case account
-    }
 }
