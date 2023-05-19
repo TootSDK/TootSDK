@@ -13,10 +13,13 @@ public extension Pagination {
     static let paginationTypes: [String] = ["prev", "next"]
 
     init(links: String) {
-        let links = links.components(separatedBy: ",")
+        let links = links.components(separatedBy: ",").map({
+            $0.trimmingCharacters(in: .whitespacesAndNewlines)
+        })
 
         let paginationQueryItems: [URLQueryItem] = links.compactMap({ link in
-            let segments = link
+            let segments =
+                link
                 .condensed()
                 .components(separatedBy: ";")
             let url = segments.first.map(trim(left: "<", right: ">"))
@@ -48,6 +51,7 @@ public extension Pagination {
 func trim(left: Character, right: Character) -> (String) -> String {
     return { string in
         guard string.hasPrefix("\(left)"), string.hasSuffix("\(right)") else { return string }
-        return String(string[string.index(after: string.startIndex)..<string.index(before: string.endIndex)])
+        return String(
+            string[string.index(after: string.startIndex)..<string.index(before: string.endIndex)])
     }
 }
