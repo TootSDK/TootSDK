@@ -2,6 +2,7 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+import WebURL
 
 public struct Pagination {
     public var maxId: String?
@@ -32,33 +33,33 @@ public extension Pagination {
                 print("TootSDK: invalid pagination Link (url): '\(link)'")
                 return []
             }
-            
+
             guard let referenceKey = rel?.first else {
                 print("TootSDK: invalid pagination Link (referenceKey): '\(link)'")
                 return []
             }
-            
+
             guard let referenceValue = rel?.last else {
                 print("TootSDK: invalid pagination Link (referenceValue): '\(link)'")
                 return []
             }
-            
+
             guard referenceKey == "rel" else {
                 print("TootSDK: invalid pagination Link (rel): '\(link)'")
                 return []
             }
-            
+
             guard Self.paginationTypes.contains(referenceValue) else {
                 print("TootSDK: invalid pagination Link (paginationType): '\(link)'")
                 return []
             }
-            
-            guard let queryItems = URLComponents(string: validURL)?.queryItems else {
+
+            guard let webURL = WebURL(validURL) else {
                 print("TootSDK: invalid pagination Link (query): '\(link)'")
                 return []
             }
-            
-            return queryItems
+
+            return webURL.formParams.allKeyValuePairs.map({URLQueryItem(name: $0.0, value: $0.1)})
         }).reduce([], +)
 
         minId = paginationQueryItems.first { $0.name == "min_id" }?.value
