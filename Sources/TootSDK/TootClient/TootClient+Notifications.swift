@@ -114,6 +114,10 @@ public extension TootClient {
             queryParameters.append(.init(name: "data[alerts][status]", value: String(alert).lowercased()))
         }
 
+        if let alert = params.data?.alerts?.repost {
+            queryParameters.append(.init(name: "data[alerts][reblog]", value: String(alert).lowercased()))
+        }
+
         if let alert = params.data?.alerts?.follow {
             queryParameters.append(.init(name: "data[alerts][follow]", value: String(alert).lowercased()))
         }
