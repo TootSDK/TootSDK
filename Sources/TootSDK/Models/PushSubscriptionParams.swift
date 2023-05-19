@@ -10,6 +10,11 @@ public struct PushSubscriptionParams: Codable, Sendable {
     public var data: SubscriptionData?
 
     public struct Subscription: Codable, Sendable {
+        public init(endpoint: String, keys: PushSubscriptionParams.Keys) {
+            self.endpoint = endpoint
+            self.keys = keys
+        }
+
         /// The endpoint URL that is called when a notification event occurs.
         public var endpoint: String
         public var keys: PushSubscriptionParams.Keys
