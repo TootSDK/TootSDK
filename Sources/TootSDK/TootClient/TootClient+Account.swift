@@ -39,7 +39,7 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-        
+
         return try await fetchPagedResult(req)
     }
 
@@ -52,7 +52,7 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-        
+
         return try await fetchPagedResult(req)
     }
 

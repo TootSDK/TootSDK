@@ -218,7 +218,7 @@ extension TootClient {
         let supportedFlavours = Set(TootSDKFlavour.allCases).subtracting(unsupportedFalvours)
         try requireFlavour(supportedFlavours)
     }
-    
+
     /// Performs a request that returns paginated arrays
     /// - Parameters:
     ///   - req: the HTTP request to execute

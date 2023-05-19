@@ -16,7 +16,7 @@ extension TootClient {
     ///   - limit: the limit of posts being requested
     /// - Returns: a paged result with an array of posts
     internal func getPosts(_ req: HTTPRequestBuilder, _ pageInfo: PagedInfo? = nil, _ limit: Int? = nil) async throws -> PagedResult<[Post]> {
-        
+
         return try await fetchPagedResult(req)
     }
 
