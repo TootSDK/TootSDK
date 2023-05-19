@@ -28,17 +28,36 @@ public extension Pagination {
                 .trimmingCharacters(in: .whitespaces)
                 .components(separatedBy: "=")
 
-            guard
-                let validURL = url,
-                let referenceKey = rel?.first, referenceKey == "rel",
-                let referenceValue = rel?.last,
-                Self.paginationTypes.contains(referenceValue),
-                let queryItems = URLComponents(string: validURL)?.queryItems
-            else {
-                print("TootSDK: invalid pagination Link '\(link)'")
+            guard let validURL = url else {
+                print("TootSDK: invalid pagination Link (url): '\(link)'")
                 return []
             }
-
+            
+            guard let referenceKey = rel?.first else {
+                print("TootSDK: invalid pagination Link (referenceKey): '\(link)'")
+                return []
+            }
+            
+            guard let referenceValue = rel?.last else {
+                print("TootSDK: invalid pagination Link (referenceValue): '\(link)'")
+                return []
+            }
+            
+            guard referenceKey == "rel" else {
+                print("TootSDK: invalid pagination Link (rel): '\(link)'")
+                return []
+            }
+            
+            guard Self.paginationTypes.contains(referenceValue) else {
+                print("TootSDK: invalid pagination Link (paginationType): '\(link)'")
+                return []
+            }
+            
+            guard let queryItems = URLComponents(string: validURL)?.queryItems else {
+                print("TootSDK: invalid pagination Link (query): '\(link)'")
+                return []
+            }
+            
             return queryItems
         }).reduce([], +)
 
