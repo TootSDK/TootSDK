@@ -5,7 +5,7 @@
 import Foundation
 
 public extension TootClient {
-    
+
     /// Accounts that are promoted by staff, or that the user has had past positive interactions with, but is not yet following.
     ///
     /// - Parameters:

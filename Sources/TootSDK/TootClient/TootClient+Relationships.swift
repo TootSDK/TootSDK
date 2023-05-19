@@ -119,7 +119,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Get all accounts which the current account is blocking
     /// - Returns: the accounts requested
     public func getBlockedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
@@ -128,7 +128,7 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-        
+
         return try await fetchPagedResult(req)
     }
 
@@ -154,7 +154,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Get all accounts which the current account is blocking
     /// - Returns: the accounts requested
     public func getMutedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
