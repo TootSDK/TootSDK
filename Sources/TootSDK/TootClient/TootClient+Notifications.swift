@@ -16,7 +16,7 @@ public extension TootClient {
             $0.method = .get
             $0.query = createQuery(from: params) + getQueryParams(pageInfo, limit: limit)
         }
-        
+
         return try await fetchPagedResult(req)
     }
 
