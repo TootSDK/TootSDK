@@ -31,7 +31,10 @@ extension TootClient {
     }
 
     /// Get all accounts which follow the given account, if network is not hidden by the account owner.
-    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Parameters
+    ///     - id: the ID of the Account in the instance database.
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested, or an error if unable to retrieve
     public func getFollowers(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
@@ -44,7 +47,10 @@ extension TootClient {
     }
 
     /// Get all accounts which the given account is following, if network is not hidden by the account owner.
-    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Parameters:
+    ///     - id: the ID of the Account in the instance database.
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested, or an error if unable to retrieve
     public func getFollowing(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
