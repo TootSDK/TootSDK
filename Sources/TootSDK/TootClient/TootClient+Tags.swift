@@ -45,6 +45,9 @@ public extension TootClient {
     }
 
     /// Get all tags which the current account is following.
+    /// - Parameters:
+    ///     - pageInfo: PagedInfo object for max/min/since ids.
+    ///     - limit: Maximum number of results to return. Defaults to 100 tags. Max 200 tags.
     /// - Returns: the tags requested
     func getFollowedTags(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Tag]> {
         try requireFlavour(flavoursSupportingFollowingTags)
