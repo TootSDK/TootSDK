@@ -21,4 +21,14 @@ public extension TootClient {
         return try await fetch([Suggestion].self, req)
     }
 
+    /// Remove an account from follow suggestions.
+    /// - Parameter id: The ID of the Account in the database.
+    func removeSuggestion(id: String) async throws {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "suggestions", id])
+            $0.method = .delete
+        }
+        _ = try await fetch(req: req)
+    }
+
 }
