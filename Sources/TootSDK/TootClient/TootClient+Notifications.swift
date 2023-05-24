@@ -53,6 +53,7 @@ public extension TootClient {
     /// Add a Web Push API subscription to receive notifications. Each access token can have one push subscription.
     ///
     /// If you create a new subscription, the old subscription is deleted.
+    @discardableResult
     func createPushSubscription(params: PushSubscriptionParams) async throws -> PushSubscription {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
@@ -112,6 +113,10 @@ public extension TootClient {
 
         if let alert = params.data?.alerts?.post {
             queryParameters.append(.init(name: "data[alerts][status]", value: String(alert).lowercased()))
+        }
+
+        if let alert = params.data?.alerts?.repost {
+            queryParameters.append(.init(name: "data[alerts][reblog]", value: String(alert).lowercased()))
         }
 
         if let alert = params.data?.alerts?.follow {

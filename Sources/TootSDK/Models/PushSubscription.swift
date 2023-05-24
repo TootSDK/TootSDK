@@ -4,16 +4,13 @@
 import Foundation
 
 /// Represents a subscription to the push streaming server.
-public struct PushSubscription: Codable, Identifiable, Sendable {
-    public init(id: String, endpoint: String, alerts: Alerts, serverKey: String) {
-        self.id = id
+public struct PushSubscription: Codable, Sendable {
+    public init(endpoint: String, alerts: Alerts, serverKey: String) {
         self.endpoint = endpoint
         self.alerts = alerts
         self.serverKey = serverKey
     }
 
-    /// The id of the push subscription in the database.
-    public var id: String
     /// Where push alerts will be sent to.
     public var endpoint: String
     /// Which alerts should be delivered to the endpoint.
