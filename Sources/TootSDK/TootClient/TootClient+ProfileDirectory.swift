@@ -14,8 +14,7 @@ public extension TootClient {
     /// - Parameters:
     ///   - offset. Skip the first n results.
     ///   - limit: How many accounts to load. Defaults to 40 accounts. Max 80 accounts.
-    ///   - order. Use active to sort by most recently posted statuses (default) or new to sort by most recently created profiles.
-    ///   - local. If true, returns only local accounts.
+    ///   - params: Includes order and local parameters.
     /// - Returns: Array of ``Account``.
     func getProfileDirectory(params: ProfileDirectoryParams, offset: Int? = nil, limit: Int? = nil) async throws -> [Account] {
         let req = HTTPRequestBuilder {
