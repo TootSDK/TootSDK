@@ -51,6 +51,18 @@ public extension TootClient {
 
         return try await fetch([ScheduledPost].self, req)
     }
+    
+    /// Gets scheduled posts
+    /// - Returns: the scheduled posts requested, or an error if unable to retrieve
+    func getScheduledPosts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[ScheduledPost]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "scheduled_statuses"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+        
+        return try await fetchPagedResult(req)
+    }
 
     /// Gets a single Scheduled post by id
     ///
