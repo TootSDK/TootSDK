@@ -10,6 +10,8 @@ import Foundation
 public extension TootClient {
 
     /// Get all notifications concerning the user
+    ///  - Parameters:
+    ///     -  limit: Maximum number of results to return. Defaults to 15 notifications. Max 30 notifications.
     func getNotifications(params: TootNotificationParams = .init(), _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[TootNotification]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications"])
