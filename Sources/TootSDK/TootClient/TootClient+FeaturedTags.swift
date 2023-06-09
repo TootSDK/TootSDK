@@ -7,14 +7,25 @@
 
 import Foundation
 
-extension TootClient {
+public extension TootClient {
     /// Get tags featured by user.
     ///
     /// - Parameter userID: ID of user in database.
     /// - Returns: The featured tags or an error if unable to retrieve.
-    public func getFeaturedTags(forUser userID: String) async throws -> [FeaturedTag] {
+    func getFeaturedTags(forUser userID: String) async throws -> [FeaturedTag] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", userID, "featured_tags"])
+            $0.method = .get
+        }
+        return try await fetch([FeaturedTag].self, req)
+    }
+    
+    /// List all hashtags featured on your profile.
+    ///
+    /// - Returns: The featured tags or an error if unable to retrieve.
+    func getFeaturedTags() async throws -> [FeaturedTag] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .get
         }
         return try await fetch([FeaturedTag].self, req)
