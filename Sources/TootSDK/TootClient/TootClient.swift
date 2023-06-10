@@ -5,6 +5,7 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import OSLog
 
 // MARK: - Initialization
 public class TootClient: @unchecked Sendable {
@@ -36,6 +37,7 @@ public class TootClient: @unchecked Sendable {
     internal let validStatusCodes = 200..<300
     /// The current accessToken in use
     internal var accessToken: String?
+    internal var logger = Logger(subsystem: "TootSDK", category: "")
 
     #if canImport(AuthenticationServices) && !os(tvOS) && !os(watchOS)
     internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
@@ -109,7 +111,7 @@ extension TootClient {
             let description = fetchError(T.self, data: data)
 
             if debugResponses {
-                print(description)
+                logger.error("\(description)")
             }
 
             throw TootSDKError.decodingError(description)
@@ -126,7 +128,7 @@ extension TootClient {
             let description = fetchError(T.self, data: data)
 
             if debugResponses {
-                print(description)
+                logger.error("\(description)")
             }
 
             throw TootSDKError.decodingError(description)
@@ -177,14 +179,17 @@ extension TootClient {
 
     internal func dataTask(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         if debugRequests {
-            print("➡️ flavour: \(self.flavour)")
-            print("➡️ 🌏 \(request.httpMethod ?? "-") \(request.url?.absoluteString ?? "-")")
+            var requestMessage: [String] = []
+            requestMessage.append("➡️ flavour: \(self.flavour)")
+            requestMessage.append("➡️ 🌏 \(request.httpMethod ?? "-") \(request.url?.absoluteString ?? "-")")
             for (k, v) in request.allHTTPHeaderFields ?? [:] {
-                print("➡️ 🏷️ '\(k)': '\(v)'")
+                requestMessage.append("➡️ 🏷️ '\(k)': '\(v)'")
             }
             if let httpBody = request.httpBody {
-                print("➡️ 💿", httpBody.prettyPrintedJSONString ?? String(data: httpBody, encoding: .utf8) ?? "Undecodable")
+                let json = httpBody.prettyPrintedJSONString as? String ?? String(data: httpBody, encoding: .utf8) ?? "Undecodable"
+                requestMessage.append("➡️ 💿 \(json)")
             }
+            logger.debug("\(requestMessage.joined(separator: "\n"))")
         }
         let (data, response) = try await session.data(for: request)
 
@@ -193,12 +198,15 @@ extension TootClient {
         }
 
         if debugResponses {
-            print("⬅️ 🌍 \(httpResponse.url?.absoluteString ?? "-")")
-            print("⬅️ 🚦 HTTP \(httpResponse.statusCode)")
+            var responseMessage: [String] = []
+            responseMessage.append("⬅️ 🌍 \(httpResponse.url?.absoluteString ?? "-")")
+            responseMessage.append("⬅️ 🚦 HTTP \(httpResponse.statusCode)")
             for (k, v) in httpResponse.allHeaderFields {
-                print("⬅️ 🏷️ '\(k)': '\(v)'")
+                responseMessage.append("⬅️ 🏷️ '\(k)': '\(String(describing: v))'")
             }
-            print("⬅️ 💿", data.prettyPrintedJSONString ?? String(data: data, encoding: .utf8) ?? "Undecodable")
+            let json = data.prettyPrintedJSONString as? String ?? String(data: data, encoding: .utf8) ?? "Undecodable"
+            responseMessage.append("⬅️ 💿 \(json)")
+            logger.debug("\(responseMessage.joined(separator: "\n"))")
         }
 
         guard validStatusCodes.contains(httpResponse.statusCode) else {
@@ -335,9 +343,9 @@ extension TootClient {
     /// Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.
     public func connect() async throws {
         let instance = try await getInstanceInfo()
-        if debugInstance {
-            print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
-        }
+         if debugInstance {
+             logger.debug("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
+         }
         self.flavour = instance.flavour
     }
 }

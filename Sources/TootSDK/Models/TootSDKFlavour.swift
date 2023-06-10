@@ -3,7 +3,7 @@
 
 import Foundation
 
-public enum TootSDKFlavour: String, Codable, Sendable, CaseIterable {
+public enum TootSDKFlavour: String, Codable, Sendable, CaseIterable, CustomStringConvertible {
     /// Mastodon server. API Documentation can be found at https://docs.joinmastodon.org/api/
     case mastodon
 
@@ -18,4 +18,8 @@ public enum TootSDKFlavour: String, Codable, Sendable, CaseIterable {
 
     /// Akkoma server. API Documentation can be found at https://docs.akkoma.dev/stable/development/API/differences_in_mastoapi_responses/
     case akkoma
+
+    public var description: String {
+        rawValue
+    }
 }
