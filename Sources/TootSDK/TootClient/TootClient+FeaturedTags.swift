@@ -44,12 +44,14 @@ public extension TootClient {
     }
     
     /// Promote a hashtag on your profile.
+    /// - Parameter name: The hashtag to be featured, without the hash sign.
     @discardableResult
-    func featureTag(params: FeatureTagParams) async throws -> FeaturedTag {
+    func featureTag(name: String) async throws -> FeaturedTag {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .post
-            $0.body = try .json(params, encoder: self.encoder)
+            $0.body = try .json(FeatureTagParams(name: name),
+                                encoder: self.encoder)
         }
         
         return try await fetch(FeaturedTag.self, req)
