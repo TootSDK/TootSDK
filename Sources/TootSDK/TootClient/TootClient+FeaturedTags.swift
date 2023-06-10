@@ -42,4 +42,27 @@ public extension TootClient {
 
         return try await fetch([Tag].self, req)
     }
+    
+    /// Promote a hashtag on your profile.
+    @discardableResult
+    func featureTag(params: FeatureTagParams) async throws -> FeaturedTag {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "featured_tags"])
+            $0.method = .post
+            $0.body = try .json(params, encoder: self.encoder)
+        }
+        
+        return try await fetch(FeaturedTag.self, req)
+    }
+    
+    /// Stop promoting a hashtag on your profile.
+    /// - Parameter id: The ID of the FeaturedTag in the database.
+    func unfeatureTag(id: String) async throws {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "featured_tags", id])
+            $0.method = .delete
+        }
+        
+        _ = try await fetch(req: req)
+    }
 }
