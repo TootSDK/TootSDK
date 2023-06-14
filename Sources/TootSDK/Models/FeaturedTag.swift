@@ -18,9 +18,9 @@ public struct FeaturedTag: Codable, Hashable, Identifiable {
     public var postsCount: Int
 
     /// The date of last authored post containing this tag.
-    public var lastPostAt: Date
+    public var lastPostAt: Date?
 
-    public init(id: String, name: String, url: String, postsCount: Int, lastPostAt: Date) {
+    public init(id: String, name: String, url: String, postsCount: Int, lastPostAt: Date? = nil) {
         self.id = id
         self.name = name
         self.url = url
