@@ -85,6 +85,22 @@ extension TootClient {
         }
     }
 
+    /// Search for matching accounts by username or display name.
+    ///
+    /// - Parameters:
+    ///   - params: The search parameters.
+    ///   - limit: Maximum number of results to return. Defaults to 40. Max 80 accounts.
+    ///   - offset: Skip the first n results.
+    /// - Returns: Search results.
+    public func searchAccounts(params: SearchAccountsParams, limit: Int? = nil, offset: Int? = nil) async throws -> [Account] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", "search"])
+            $0.method = .get
+            $0.query = getQueryParams(limit: limit, offset: offset) + params.queryItems
+        }
+        return try await fetch([Account].self, req)
+    }
+
     // swiftlint:disable todo
     // TODO: - Update account credentials
 
@@ -94,7 +110,6 @@ extension TootClient {
     // TODO: - Set private note on profile
 
     // TODO: - Find familiar followers
-    // TODO: - Search for matching accounts
     // TODO: - Lookup account ID from Webfinger address
     // swiftlint:enable todo
 }
