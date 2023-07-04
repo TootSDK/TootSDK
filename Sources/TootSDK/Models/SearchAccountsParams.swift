@@ -35,7 +35,7 @@ extension SearchAccountsParams {
         [
             URLQueryItem(name: "q", value: query),
             URLQueryItem(name: "resolve", value: resolve?.description),
-            URLQueryItem(name: "following", value: following?.description),
+            URLQueryItem(name: "following", value: following?.description)
         ].filter { $0.value != nil }
     }
 }
