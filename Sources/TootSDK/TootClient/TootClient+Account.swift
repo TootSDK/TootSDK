@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MultipartKitTootSDK
 
 extension TootClient {
 
@@ -17,6 +18,89 @@ extension TootClient {
             $0.method = .get
         }
         return try await fetch(Account.self, req)
+    }
+
+    /// Update the user’s display and preferences.
+    /// - Returns: The user’s own Account with source attribute
+    public func updateCredentials(params: UpdateCredentialsParams) async throws -> Account {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", "update_credentials"])
+            $0.method = .patch
+            var parts = [MultipartPart]()
+            if let data = params.avatar,
+                let mimeType = params.avatarMimeType {
+                parts.append(
+                    MultipartPart(file: "avatar",
+                        mimeType: mimeType,
+                        body: data))
+            }
+            if let data = params.header,
+                let mimeType = params.headerMimeType {
+                parts.append(
+                    MultipartPart(file: "header",
+                        mimeType: mimeType,
+                        body: data))
+            }
+            if let name = params.displayName {
+                parts.append(
+                    MultipartPart(name: "display_name", body: name))
+            }
+            if let note = params.note {
+                parts.append(
+                    MultipartPart(name: "note", body: note))
+            }
+            if let locked = params.locked {
+                parts.append(
+                    MultipartPart(name: "locked",
+                                  body: String(locked)))
+            }
+            if let bot = params.bot {
+                parts.append(
+                    MultipartPart(name: "bot",
+                                  body: String(bot)))
+            }
+            if let discoverable = params.discoverable {
+                parts.append(
+                    MultipartPart(name: "discoverable",
+                                  body: String(discoverable)))
+            }
+            parts.append(contentsOf: getFieldParts(params))
+            parts.append(contentsOf: getSourceParts(params))
+            $0.body = try .multipart(parts, boundary: UUID().uuidString)
+        }
+        return try await fetch(Account.self, req)
+    }
+    
+    func getFieldParts(_ params: UpdateCredentialsParams) -> [MultipartPart] {
+        var parts = [MultipartPart]()
+        if let fields = params.fieldsAttributes {
+            for (key, field) in fields {
+                parts.append(
+                    MultipartPart(name: "fields_attributes[\(key)][name]",
+                                  body: field.name))
+                parts.append(
+                    MultipartPart(name: "fields_attributes[\(key)][value]",
+                                  body: field.value))
+            }
+        }
+        return parts
+    }
+
+    func getSourceParts(_ params: UpdateCredentialsParams) -> [MultipartPart] {
+        var parts = [MultipartPart]()
+        if let privacy = params.source?.privacy {
+            parts.append(MultipartPart(name: "source[privacy]",
+                body: privacy.rawValue))
+        }
+        if let sensitive = params.source?.sensitive {
+            parts.append(MultipartPart(name: "source[sensitive]",
+                body: String(sensitive)))
+        }
+        if let language = params.source?.language {
+            parts.append(MultipartPart(name: "source[language]",
+                body: language))
+        }
+        return parts
     }
 
     /// View information about a profile.
@@ -102,8 +186,6 @@ extension TootClient {
     }
 
     // swiftlint:disable todo
-    // TODO: - Update account credentials
-
     // TODO: - Get lists containing this account
     // TODO: - Feature account on your profile
     // TODO: - Unfeature account from profile
