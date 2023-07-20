@@ -7,7 +7,7 @@ public struct MultipartPart: Equatable {
 
     /// The part's raw data.
     public var body: ByteBuffer
-    
+
     /// Gets or sets the `name` attribute from the part's `"Content-Disposition"` header.
     public var name: String? {
         get { self.headers.getParameter("Content-Disposition", "name") }
@@ -33,16 +33,35 @@ public struct MultipartPart: Equatable {
     ///     - headers: The part's headers.
     ///     - body: The part's data.
     public init<Data>(headers: HTTPHeaders = .init(), body: Data)
-        where Data: DataProtocol
+    where Data: DataProtocol
     {
         var buffer = ByteBufferAllocator().buffer(capacity: body.count)
         buffer.writeBytes(body)
         self.init(headers: headers, body: buffer)
     }
-    
+
     public init(headers: HTTPHeaders = .init(), body: ByteBuffer) {
         self.headers = headers
         self.body = body
+    }
+
+    /// convenience init that sets form-data name
+    public init(name: String, body: String) {
+        self.init(headers: [
+            "Content-Disposition": "form-data; name=\"\(name)\""
+            ],
+            body: body
+        )
+    }
+
+    /// convenience init for file/data upload
+    public init<Data>(file: String, mimeType: String, body: Data) where Data: DataProtocol {
+        self.init(headers: [
+            "Content-Disposition": "form-data; name=\"\(file)\"; filename=\"\(file)\"",
+            "Content-Type": mimeType
+            ],
+            body: body
+        )
     }
 }
 
