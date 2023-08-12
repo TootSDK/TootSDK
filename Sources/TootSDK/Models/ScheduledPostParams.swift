@@ -8,7 +8,7 @@
 @preconcurrency import struct Foundation.Date
 
 /// Parameters to post a new scheduled post
-public struct ScheduledPostParams: Codable, Sendable {
+public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
 
     ///  Creates parameters to create a new scheduled post
     /// - Parameters:
@@ -77,5 +77,22 @@ public struct ScheduledPostParams: Codable, Sendable {
         case scheduledAt = "scheduled_at"
         case contentType = "content_type"
         case inReplyToConversationId = "in_reply_to_conversation_id"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.text = try? container.decode(String.self, forKey: .text)
+        self.mediaIds = try? container.decode([String].self, forKey: .mediaIds)
+        self.poll = try? container.decode(CreatePoll.self, forKey: .poll)
+        self.inReplyToId = try? container.decode(String.self, forKey: .inReplyToId)
+        // Mastodon incorrectly returns this as string
+        self.sensitive = try? container.decodeBoolFromString(forKey: .sensitive)
+        self.spoilerText = try? container.decode(String.self, forKey: .spoilerText)
+        self.visibility = (try? container.decode(Post.Visibility.self, forKey: .visibility)) ?? .public
+        self.language = try? container.decode(String.self, forKey: .language)
+        self.idempotency = try? container.decode(String.self, forKey: .idempotency)
+        self.scheduledAt = try? container.decode(Date.self, forKey: .scheduledAt)
+        self.contentType = try? container.decode(String.self, forKey: .contentType)
+        self.inReplyToConversationId = try? container.decode(String.self, forKey: .inReplyToConversationId)
     }
 }
