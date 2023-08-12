@@ -35,7 +35,7 @@ public struct FeaturedTag: Codable, Hashable, Identifiable {
         self.url = try container.decode(String.self, forKey: .url)
         // Mastodon incorrectly returns this count as string
         self.postsCount = try container.decodeIntFromString(forKey: .postsCount)
-        self.lastPostAt = try? container.decode(Date.self, forKey: .lastPostAt)
+        self.lastPostAt = try? container.decodeIfPresent(Date.self, forKey: .lastPostAt)
     }
 
     enum CodingKeys: String, CodingKey {
