@@ -28,18 +28,18 @@ extension TootClient {
             $0.method = .patch
             var parts = [MultipartPart]()
             if let data = params.avatar,
-                let mimeType = params.avatarMimeType {
+               let mimeType = params.avatarMimeType {
                 parts.append(
                     MultipartPart(file: "avatar",
-                        mimeType: mimeType,
-                        body: data))
+                                  mimeType: mimeType,
+                                  body: data))
             }
             if let data = params.header,
-                let mimeType = params.headerMimeType {
+               let mimeType = params.headerMimeType {
                 parts.append(
                     MultipartPart(file: "header",
-                        mimeType: mimeType,
-                        body: data))
+                                  mimeType: mimeType,
+                                  body: data))
             }
             if let name = params.displayName {
                 parts.append(
@@ -70,7 +70,7 @@ extension TootClient {
         }
         return try await fetch(Account.self, req)
     }
-    
+
     func getFieldParts(_ params: UpdateCredentialsParams) -> [MultipartPart] {
         var parts = [MultipartPart]()
         if let fields = params.fieldsAttributes {
@@ -90,15 +90,15 @@ extension TootClient {
         var parts = [MultipartPart]()
         if let privacy = params.source?.privacy {
             parts.append(MultipartPart(name: "source[privacy]",
-                body: privacy.rawValue))
+                                       body: privacy.rawValue))
         }
         if let sensitive = params.source?.sensitive {
             parts.append(MultipartPart(name: "source[sensitive]",
-                body: String(sensitive)))
+                                       body: String(sensitive)))
         }
         if let language = params.source?.language {
             parts.append(MultipartPart(name: "source[language]",
-                body: language))
+                                       body: language))
         }
         return parts
     }
