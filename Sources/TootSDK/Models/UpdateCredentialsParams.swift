@@ -1,6 +1,6 @@
 //
 //  UpdateCredentialsParams.swift
-//  
+//
 //
 //  Created by Philip Chu on 6/26/23.
 //
@@ -42,8 +42,8 @@ public struct UpdateCredentialsParams: Codable {
         self.fieldsAttributes = fieldsAttributes
         self.source = source
     }
-    
-    /// Represents a profile field as a name-value pair 
+
+    /// Represents a profile field as a name-value pair
     public struct Field: Codable, Hashable, Sendable {
         public init(name: String, value: String) {
             self.name = name
@@ -55,7 +55,7 @@ public struct UpdateCredentialsParams: Codable {
         /// The value associated with the name key.
         public var value: String
     }
-    
+
     public struct Source: Codable, Hashable, Sendable {
         public init(privacy: Post.Visibility? = nil, sensitive: Bool? = nil, language: String? = nil) {
             self.privacy = privacy

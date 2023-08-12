@@ -1,6 +1,6 @@
 //
 //  TootClient+FeaturedTags.swift
-//  
+//
 //
 //  Created by Philip Chu on 6/9/23.
 //
@@ -20,7 +20,7 @@ public extension TootClient {
         }
         return try await fetch([FeaturedTag].self, req)
     }
-    
+
     /// List all hashtags featured on your profile.
     ///
     /// - Returns: The featured tags or an error if unable to retrieve.
@@ -45,7 +45,7 @@ public extension TootClient {
 
         return try await fetch([Tag].self, req)
     }
-    
+
     /// Promote a hashtag on your profile.
     /// - Parameter name: The hashtag to be featured, without the hash sign.
     @discardableResult
@@ -57,10 +57,10 @@ public extension TootClient {
             $0.body = try .json(FeatureTagParams(name: name),
                                 encoder: self.encoder)
         }
-        
+
         return try await fetch(FeaturedTag.self, req)
     }
-    
+
     /// Stop promoting a hashtag on your profile.
     /// - Parameter id: The ID of the FeaturedTag in the database.
     func unfeatureTag(id: String) async throws {
@@ -69,7 +69,7 @@ public extension TootClient {
             $0.url = getURL(["api", "v1", "featured_tags", id])
             $0.method = .delete
         }
-        
+
         _ = try await fetch(req: req)
     }
 }

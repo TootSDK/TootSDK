@@ -39,7 +39,7 @@ let package = Package(
             dependencies: ["MultipartKitTootSDK",
                            .product(name:"SwiftSoup", package: "SwiftSoup"),
                            .product(name: "WebURL", package: "swift-url"),
-                           .product(name: "WebURLFoundationExtras", package: "swift-url")]
+                           .product(name: "WebURLFoundationExtras", package: "swift-url")], resources: [.copy("PrivacyInfo.xcprivacy")]
         ),
         .testTarget(
             name: "TootSDKTests",
