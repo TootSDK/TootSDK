@@ -23,7 +23,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
     ///   - scheduledAt: UTC Datetime at which to schedule a post. Must be at least 5 minutes in the future.
     ///   - contentType: (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
-    public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Post.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: Int? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
+    public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Post.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: String? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
 
         self.text = text
         self.mediaIds = mediaIds
@@ -58,7 +58,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
     /// Unique post to prevent double posting
     public var idempotency: String?
     ///  ID of the post being replied to, if post is a reply.
-    public var inReplyToId: Int?
+    public var inReplyToId: String?
     /// (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     public var contentType: String?
     /// (Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
@@ -84,8 +84,14 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
         self.text = try? container.decodeIfPresent(String.self, forKey: .text)
         self.mediaIds = try? container.decodeIfPresent([String].self, forKey: .mediaIds)
         self.poll = try? container.decodeIfPresent(CreatePoll.self, forKey: .poll)
-        self.inReplyToId = try? container.decodeIfPresent(Int.self, forKey: .inReplyToId)
-        // Mastodon incorrectly returns this as string
+        // Int in Mastodon but String in Pleroma, so try one then the other
+        self.inReplyToId = try? container.decodeIfPresent(String.self, forKey: .inReplyToId)
+        if self.inReplyToId == nil {
+            if let int = try? container.decodeIfPresent(Int.self, forKey: .inReplyToId) {
+                self.inReplyToId = String(int)
+            }
+        }
+        // Mastodon incorrectly returns sensitive as a string
         self.sensitive = try? container.decodeBoolFromString(forKey: .sensitive)
         self.spoilerText = try? container.decodeIfPresent(String.self, forKey: .spoilerText)
         self.visibility = try container.decode(Post.Visibility.self, forKey: .visibility)

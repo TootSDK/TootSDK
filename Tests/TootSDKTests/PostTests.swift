@@ -101,7 +101,7 @@ final class PostTests: XCTestCase {
          XCTAssertEqual(result.id, "1032")
          XCTAssertNotNil(result.scheduledAt)
          XCTAssertNotNil(result.params)
-         XCTAssertEqual(result.params.inReplyToId, 110883505948339014)
+         XCTAssertEqual(result.params.inReplyToId, "110883505948339014")
          XCTAssertNil(result.params.inReplyToConversationId)
          XCTAssertNil(result.params.sensitive)
          XCTAssertEqual(result.params.text, "@technicat testing scheduled reply")

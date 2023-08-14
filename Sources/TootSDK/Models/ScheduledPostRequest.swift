@@ -58,6 +58,6 @@ extension ScheduledPostRequest {
             throw TootSDKError.invalidParameter(parameterName: "scheduledAt")
         }
 
-        self = ScheduledPostRequest(post: from.text, mediaIds: from.mediaIds, sensitive: from.sensitive, spoilerText: from.spoilerText, visibility: from.visibility, language: from.language, scheduledAt: TootEncoder.dateFormatter.string(from: scheduledAtDate), poll: from.poll, idempotency: from.idempotency, inReplyToId: from.inReplyToId != nil ? String(from.inReplyToId!) : nil, contentType: from.contentType, inReplyToConversationId: from.inReplyToConversationId)
+        self = ScheduledPostRequest(post: from.text, mediaIds: from.mediaIds, sensitive: from.sensitive, spoilerText: from.spoilerText, visibility: from.visibility, language: from.language, scheduledAt: TootEncoder.dateFormatter.string(from: scheduledAtDate), poll: from.poll, idempotency: from.idempotency, inReplyToId: from.inReplyToId, contentType: from.contentType, inReplyToConversationId: from.inReplyToConversationId)
     }
 }
