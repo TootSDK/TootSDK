@@ -88,7 +88,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
         // Mastodon incorrectly returns this as string
         self.sensitive = try? container.decodeBoolFromString(forKey: .sensitive)
         self.spoilerText = try? container.decodeIfPresent(String.self, forKey: .spoilerText)
-        self.visibility = (try? container.decode(Post.Visibility.self, forKey: .visibility)) ?? .public
+        self.visibility = try container.decode(Post.Visibility.self, forKey: .visibility)
         self.language = try? container.decodeIfPresent(String.self, forKey: .language)
         self.idempotency = try? container.decodeIfPresent(String.self, forKey: .idempotency)
         self.scheduledAt = try? container.decodeIfPresent(Date.self, forKey: .scheduledAt)
