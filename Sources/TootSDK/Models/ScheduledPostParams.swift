@@ -23,7 +23,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
     ///   - scheduledAt: UTC Datetime at which to schedule a post. Must be at least 5 minutes in the future.
     ///   - contentType: (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
-    public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Post.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: String? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
+    public init(text: String? = nil, mediaIds: [String]? = nil, sensitive: Bool? = nil, spoilerText: String? = nil, visibility: Post.Visibility, language: String? = nil, scheduledAt: Date? = nil, poll: CreatePoll? = nil, idempotency: String? = nil, inReplyToId: Int? = nil, contentType: String? = nil, inReplyToConversationId: String? = nil) {
 
         self.text = text
         self.mediaIds = mediaIds
@@ -58,7 +58,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
     /// Unique post to prevent double posting
     public var idempotency: String?
     ///  ID of the post being replied to, if post is a reply.
-    public var inReplyToId: String?
+    public var inReplyToId: Int?
     /// (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     public var contentType: String?
     /// (Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
@@ -66,11 +66,11 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case text
-        case mediaIds = "media_ids"
+        case mediaIds
         case poll
-        case inReplyToId = "in_reply_to_id"
+        case inReplyToId
         case sensitive
-        case spoilerText = "spoiler_text"
+        case spoilerText
         case visibility
         case language
         case idempotency
@@ -84,7 +84,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
         self.text = try? container.decodeIfPresent(String.self, forKey: .text)
         self.mediaIds = try? container.decodeIfPresent([String].self, forKey: .mediaIds)
         self.poll = try? container.decodeIfPresent(CreatePoll.self, forKey: .poll)
-        self.inReplyToId = try? container.decodeIfPresent(String.self, forKey: .inReplyToId)
+        self.inReplyToId = try? container.decodeIfPresent(Int.self, forKey: .inReplyToId)
         // Mastodon incorrectly returns this as string
         self.sensitive = try? container.decodeBoolFromString(forKey: .sensitive)
         self.spoilerText = try? container.decodeIfPresent(String.self, forKey: .spoilerText)
