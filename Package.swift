@@ -54,6 +54,9 @@ let package = Package(
                 .copy("Resources/pixelfed.json"),
                 .copy("Resources/mastodon.json"),
                 .copy("Resources/pleroma.json"),
+                .copy("Resources/scheduled_post_sensitive.json"),
+                .copy("Resources/scheduled_post_attachment.json"),
+                .copy("Resources/scheduled_post_reply.json")
             ]),
     ]
 )
