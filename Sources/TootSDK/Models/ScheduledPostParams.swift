@@ -74,9 +74,9 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
         case visibility
         case language
         case idempotency
-        case scheduledAt = "scheduled_at"
-        case contentType = "content_type"
-        case inReplyToConversationId = "in_reply_to_conversation_id"
+        case scheduledAt
+        case contentType
+        case inReplyToConversationId
     }
     
     public init(from decoder: Decoder) throws {
