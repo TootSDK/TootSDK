@@ -154,7 +154,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-
+    
     /// Get all accounts which the current account is blocking
     /// - Returns: the accounts requested
     public func getMutedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
@@ -165,6 +165,28 @@ extension TootClient {
         }
 
         return try await fetchPagedResult(req)
+    }
+    
+    /// Add the given account to the user’s featured profiles. (Featured profiles are currently shown on the user’s own public profile.)
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the relationship to the account requested, or an error if unable to retrieve
+    public func pinAccount(by id: String) async throws -> Relationship {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "pin"])
+            $0.method = .post
+        }
+        return try await fetch(Relationship.self, req)
+    }
+    
+    /// Remove the given account from the user’s featured profiles.
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the relationship to the account requested, or an error if unable to retrieve
+    public func unpinAccount(by id: String) async throws -> Relationship {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "unpin"])
+            $0.method = .post
+        }
+        return try await fetch(Relationship.self, req)
     }
 
     /// Find out whether a given account is followed, blocked, muted, etc.
