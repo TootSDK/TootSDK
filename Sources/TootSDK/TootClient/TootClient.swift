@@ -12,7 +12,7 @@ public class TootClient: @unchecked Sendable {
     // MARK: - Public properties
     /// The URL of the instance we're connected to
     public var instanceURL: URL
-    /// The application info retreived from the instance
+    /// The application info retrieved from the instance
     public var currentApplicationInfo: TootApplication?
     /// Set this to `true` to see a `print()` of outgoing requests.
     public var debugRequests: Bool = false
@@ -339,5 +339,10 @@ extension TootClient {
             print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
         }
         self.flavour = instance.flavour
+    }
+    
+    /// Returns `true` if this instance of `TootClient` has no `accessToken`.
+    public var isAnonymous: Bool {
+        accessToken == nil
     }
 }
