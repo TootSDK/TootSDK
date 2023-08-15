@@ -78,7 +78,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
         case contentType
         case inReplyToConversationId
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.text = try? container.decodeIfPresent(String.self, forKey: .text)

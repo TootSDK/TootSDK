@@ -340,7 +340,7 @@ extension TootClient {
         }
         self.flavour = instance.flavour
     }
-    
+
     /// Returns `true` if this instance of `TootClient` has no `accessToken`.
     public var isAnonymous: Bool {
         accessToken == nil
