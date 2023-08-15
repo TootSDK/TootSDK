@@ -17,4 +17,16 @@ extension KeyedDecodingContainerProtocol {
             throw error
         }
     }
+    
+    func decodeBoolFromString(forKey key: Key) throws -> Bool {
+        do {
+            return try decode(Bool.self, forKey: key)
+        } catch {
+            let string = try decode(String.self, forKey: key)
+            if let bool = Bool(string) {
+                return bool
+            }
+            throw error
+        }
+    }
 }

@@ -8,7 +8,7 @@
 @preconcurrency import struct Foundation.Date
 
 /// Parameters to post a new scheduled post
-public struct ScheduledPostParams: Codable, Sendable {
+public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
 
     ///  Creates parameters to create a new scheduled post
     /// - Parameters:
@@ -66,16 +66,39 @@ public struct ScheduledPostParams: Codable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case text
-        case mediaIds = "media_ids"
+        case mediaIds
         case poll
-        case inReplyToId = "in_reply_to_id"
+        case inReplyToId
         case sensitive
-        case spoilerText = "spoiler_text"
+        case spoilerText
         case visibility
         case language
         case idempotency
-        case scheduledAt = "scheduled_at"
-        case contentType = "content_type"
-        case inReplyToConversationId = "in_reply_to_conversation_id"
+        case scheduledAt
+        case contentType
+        case inReplyToConversationId
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.text = try? container.decodeIfPresent(String.self, forKey: .text)
+        self.mediaIds = try? container.decodeIfPresent([String].self, forKey: .mediaIds)
+        self.poll = try? container.decodeIfPresent(CreatePoll.self, forKey: .poll)
+        // Int in Mastodon but String in Pleroma, so try one then the other
+        self.inReplyToId = try? container.decodeIfPresent(String.self, forKey: .inReplyToId)
+        if self.inReplyToId == nil {
+            if let int = try? container.decodeIfPresent(Int.self, forKey: .inReplyToId) {
+                self.inReplyToId = String(int)
+            }
+        }
+        // Mastodon incorrectly returns sensitive as a string
+        self.sensitive = try? container.decodeBoolFromString(forKey: .sensitive)
+        self.spoilerText = try? container.decodeIfPresent(String.self, forKey: .spoilerText)
+        self.visibility = try container.decode(Post.Visibility.self, forKey: .visibility)
+        self.language = try? container.decodeIfPresent(String.self, forKey: .language)
+        self.idempotency = try? container.decodeIfPresent(String.self, forKey: .idempotency)
+        self.scheduledAt = try? container.decodeIfPresent(Date.self, forKey: .scheduledAt)
+        self.contentType = try? container.decodeIfPresent(String.self, forKey: .contentType)
+        self.inReplyToConversationId = try? container.decodeIfPresent(String.self, forKey: .inReplyToConversationId)
     }
 }

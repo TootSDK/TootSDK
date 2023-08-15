@@ -35,4 +35,82 @@ final class PostTests: XCTestCase {
         // act
         XCTAssertNoThrow(try ScheduledPostRequest(from: params))
     }
+    
+    func testDecodesSensitiveAsBoolean() throws {
+         // arrange
+         let json = localContent("scheduled_post_sensitive")
+         let decoder = TootDecoder()
+
+         // act
+         let result = try decoder.decode(ScheduledPost.self, from: json)
+
+         // assert
+         XCTAssertNotNil(result)
+         XCTAssertEqual(result.id, "1023")
+         XCTAssertNotNil(result.scheduledAt)
+         XCTAssertNotNil(result.params)
+         XCTAssertNil(result.params.inReplyToId)
+         XCTAssertNil(result.params.inReplyToConversationId)
+         XCTAssertEqual(result.params.sensitive, true)
+         XCTAssertEqual(result.params.text, "Test")
+         XCTAssertNil(result.params.scheduledAt)
+         XCTAssertNil(result.params.mediaIds)
+         XCTAssertNil(result.params.poll)
+         XCTAssertNil(result.params.idempotency)
+         XCTAssertEqual(result.params.spoilerText, "Warn")
+         XCTAssertEqual(result.params.language, "en")
+         XCTAssertEqual(result.params.visibility, .direct)
+     }
+    
+    func testScheduledPostMediaIds() throws {
+         // arrange
+         let json = localContent("scheduled_post_attachment")
+         let decoder = TootDecoder()
+
+         // act
+         let result = try decoder.decode(ScheduledPost.self, from: json)
+
+         // assert
+         XCTAssertNotNil(result)
+         XCTAssertEqual(result.id, "1031")
+         XCTAssertNotNil(result.scheduledAt)
+         XCTAssertNotNil(result.params)
+         XCTAssertNil(result.params.inReplyToId)
+         XCTAssertNil(result.params.inReplyToConversationId)
+         XCTAssertNil(result.params.sensitive)
+         XCTAssertEqual(result.params.text, "Testing scheduled attachment")
+         XCTAssertNil(result.params.scheduledAt)
+         XCTAssertNotNil(result.params.mediaIds)
+         XCTAssertNil(result.params.poll)
+         XCTAssertNil(result.params.idempotency)
+         XCTAssertNil(result.params.spoilerText)
+         XCTAssertEqual(result.params.language, "en")
+         XCTAssertEqual(result.params.visibility, .private)
+     }
+    
+    func testScheduledPostReplyIds() throws {
+         // arrange
+         let json = localContent("scheduled_post_reply")
+         let decoder = TootDecoder()
+
+         // act
+         let result = try decoder.decode(ScheduledPost.self, from: json)
+
+         // assert
+         XCTAssertNotNil(result)
+         XCTAssertEqual(result.id, "1032")
+         XCTAssertNotNil(result.scheduledAt)
+         XCTAssertNotNil(result.params)
+         XCTAssertEqual(result.params.inReplyToId, "110883505948339014")
+         XCTAssertNil(result.params.inReplyToConversationId)
+         XCTAssertNil(result.params.sensitive)
+         XCTAssertEqual(result.params.text, "@technicat testing scheduled reply")
+         XCTAssertNil(result.params.scheduledAt)
+         XCTAssertNil(result.params.mediaIds)
+         XCTAssertNil(result.params.poll)
+         XCTAssertNil(result.params.idempotency)
+         XCTAssertNil(result.params.spoilerText)
+         XCTAssertEqual(result.params.language, "en")
+         XCTAssertEqual(result.params.visibility, .unlisted)
+     }
 }
