@@ -121,6 +121,9 @@ extension TootClient {
     }
 
     /// Get all accounts which the current account is blocking
+    /// - Parameters:
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getBlockedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
@@ -128,7 +131,6 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
         return try await fetchPagedResult(req)
     }
 
@@ -156,6 +158,9 @@ extension TootClient {
     }
     
     /// Get all accounts which the current account is blocking
+    /// - Parameters:
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getMutedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
@@ -163,7 +168,6 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
         return try await fetchPagedResult(req)
     }
     
@@ -187,6 +191,20 @@ extension TootClient {
             $0.method = .post
         }
         return try await fetch(Relationship.self, req)
+    }
+    
+    /// Accounts that the user is currently featuring on their profile.
+    /// - Parameters:
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
+    /// - Returns: the accounts requested
+    public func getEndorsements(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "endorsements"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+        return try await fetchPagedResult(req)
     }
 
     /// Find out whether a given account is followed, blocked, muted, etc.
