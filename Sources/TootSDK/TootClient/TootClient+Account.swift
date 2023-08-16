@@ -187,8 +187,6 @@ extension TootClient {
 
     // swiftlint:disable todo
     // TODO: - Get lists containing this account
-    // TODO: - Feature account on your profile
-    // TODO: - Unfeature account from profile
     // TODO: - Set private note on profile
 
     // TODO: - Find familiar followers
