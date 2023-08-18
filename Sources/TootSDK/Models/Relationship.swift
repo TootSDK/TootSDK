@@ -59,7 +59,7 @@ public struct Relationship: Codable, Hashable, Identifiable, Sendable {
     public let domainBlocking: Bool?
     /// Is this user blocking you?
     public var blockedBy: Bool?
-    /// This user's profile bio
+    /// A note to yourself about this user (not the same as the user's bio, the Mastodon doc is incorrect on this).
     public var note: String?
 
     enum CodingKeys: String, CodingKey {

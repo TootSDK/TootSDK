@@ -121,6 +121,9 @@ extension TootClient {
     }
 
     /// Get all accounts which the current account is blocking
+    /// - Parameters:
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getBlockedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
@@ -128,7 +131,6 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
         return try await fetchPagedResult(req)
     }
 
@@ -154,8 +156,11 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-
+    
     /// Get all accounts which the current account is blocking
+    /// - Parameters:
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getMutedAccounts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
@@ -163,7 +168,42 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
+        return try await fetchPagedResult(req)
+    }
+    
+    /// Add the given account to the user’s featured profiles. (Featured profiles are currently shown on the user’s own public profile.)
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the relationship to the account requested, or an error if unable to retrieve
+    public func pinAccount(by id: String) async throws -> Relationship {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "pin"])
+            $0.method = .post
+        }
+        return try await fetch(Relationship.self, req)
+    }
+    
+    /// Remove the given account from the user’s featured profiles.
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the relationship to the account requested, or an error if unable to retrieve
+    public func unpinAccount(by id: String) async throws -> Relationship {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "unpin"])
+            $0.method = .post
+        }
+        return try await fetch(Relationship.self, req)
+    }
+    
+    /// Accounts that the user is currently featuring on their profile.
+    /// - Parameters:
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
+    /// - Returns: the accounts requested
+    public func getEndorsements(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "endorsements"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
         return try await fetchPagedResult(req)
     }
 

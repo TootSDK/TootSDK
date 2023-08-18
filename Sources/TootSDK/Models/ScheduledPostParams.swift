@@ -7,7 +7,7 @@
 
 @preconcurrency import struct Foundation.Date
 
-/// Parameters to post a new scheduled post
+/// Parameters to post a new scheduled post. Returned as part of a ScheduledPost. In requests, this is converted to a ScheduledPostRequest for encoding.
 public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
 
     ///  Creates parameters to create a new scheduled post
