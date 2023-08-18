@@ -18,7 +18,7 @@ public extension TootClient {
     /// User lists that you have added this account to.
     func getLists(id: String) async throws -> [List] {
         let req = HTTPRequestBuilder {
-            $0.url = getURL(["api", "v1", id, "lists"])
+            $0.url = getURL(["api", "v1", "accounts", id, "lists"])
             $0.method = .get
         }
 
