@@ -14,6 +14,16 @@ public extension TootClient {
 
         return try await fetch([List].self, req)
     }
+    
+    /// User lists that you have added this account to.
+    func getLists(id: String) async throws -> [List] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", id, "lists"])
+            $0.method = .get
+        }
+
+        return try await fetch([List].self, req)
+    }
 
     /// Fetch the list with the given ID. Used for verifying the title of a list, and which replies to show within that list.
     /// - Parameters:
