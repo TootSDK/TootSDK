@@ -203,7 +203,7 @@ extension TootClient {
     }
 
     /// Retrieve lists in which the given account `id` is present
-    func getListsContainingAccount(id: String) async throws -> [List] {
+    public func getListsContainingAccount(id: String) async throws -> [List] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "lists"])
             $0.method = .get
