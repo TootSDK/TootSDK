@@ -12,8 +12,9 @@ public extension TootClient {
     ///
     /// - Parameter userID: ID of user in database.
     /// - Returns: The featured tags or an error if unable to retrieve.
+    /// - Note: Requires featured tags feature to be available.
     func getFeaturedTags(forUser userID: String) async throws -> [FeaturedTag] {
-        try requireFlavour(flavoursSupportingFeaturingTags)
+        try requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", userID, "featured_tags"])
             $0.method = .get
@@ -24,8 +25,9 @@ public extension TootClient {
     /// List all hashtags featured on your profile.
     ///
     /// - Returns: The featured tags or an error if unable to retrieve.
+    /// - Note: Requires featured tags feature to be available.
     func getFeaturedTags() async throws -> [FeaturedTag] {
-        try requireFlavour(flavoursSupportingFeaturingTags)
+        try requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .get
@@ -36,8 +38,9 @@ public extension TootClient {
     /// Shows up to 10 recently-used tags.
     ///
     /// - Returns: Array of ``Tag``.
+    /// - Note: Requires featured tags feature to be available.
     func getFeaturedTagsSuggestions() async throws -> [Tag] {
-        try requireFlavour(flavoursSupportingFeaturingTags)
+        try requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags", "suggestions"])
             $0.method = .get
@@ -48,9 +51,10 @@ public extension TootClient {
 
     /// Promote a hashtag on your profile.
     /// - Parameter name: The hashtag to be featured, without the hash sign.
+    /// - Note: Requires featured tags feature to be available.
     @discardableResult
     func featureTag(name: String) async throws -> FeaturedTag {
-        try requireFlavour(flavoursSupportingFeaturingTags)
+        try requireFeature(.featuredTags)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .post
@@ -63,8 +67,9 @@ public extension TootClient {
 
     /// Stop promoting a hashtag on your profile.
     /// - Parameter id: The ID of the FeaturedTag in the database.
+    /// - Note: Requires featured tags feature to be available.
     func unfeatureTag(id: String) async throws {
-        try requireFlavour(flavoursSupportingFeaturingTags)
+        try requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags", id])
             $0.method = .delete
@@ -72,13 +77,12 @@ public extension TootClient {
 
         _ = try await fetch(req: req)
     }
+}
 
-    /// Tells whether current flavour supports featuring tags.
-    var canFeatureTags: Bool {
-        flavoursSupportingFeaturingTags.contains(flavour)
-    }
+extension TootFeature {
 
-    private var flavoursSupportingFeaturingTags: Set<TootSDKFlavour> {
-        [.mastodon]
-    }
+    /// Ability to promote hashtags on user profiles.
+    ///
+    /// Available only for Mastodon.
+    public static let featuredTags = TootFeature(supportedFlavours: [.mastodon])
 }
