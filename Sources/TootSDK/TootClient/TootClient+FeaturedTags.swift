@@ -13,7 +13,7 @@ public extension TootClient {
     /// - Parameter userID: ID of user in database.
     /// - Returns: The featured tags or an error if unable to retrieve.
     func getFeaturedTags(forUser userID: String) async throws -> [FeaturedTag] {
-        try requireFlavour([.mastodon])
+        try requireFlavour(flavoursSupportingFeaturingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", userID, "featured_tags"])
             $0.method = .get
@@ -25,7 +25,7 @@ public extension TootClient {
     ///
     /// - Returns: The featured tags or an error if unable to retrieve.
     func getFeaturedTags() async throws -> [FeaturedTag] {
-        try requireFlavour([.mastodon])
+        try requireFlavour(flavoursSupportingFeaturingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .get
@@ -37,7 +37,7 @@ public extension TootClient {
     ///
     /// - Returns: Array of ``Tag``.
     func getFeaturedTagsSuggestions() async throws -> [Tag] {
-        try requireFlavour([.mastodon])
+        try requireFlavour(flavoursSupportingFeaturingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags", "suggestions"])
             $0.method = .get
@@ -50,7 +50,7 @@ public extension TootClient {
     /// - Parameter name: The hashtag to be featured, without the hash sign.
     @discardableResult
     func featureTag(name: String) async throws -> FeaturedTag {
-        try requireFlavour([.mastodon])
+        try requireFlavour(flavoursSupportingFeaturingTags)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .post
@@ -64,12 +64,21 @@ public extension TootClient {
     /// Stop promoting a hashtag on your profile.
     /// - Parameter id: The ID of the FeaturedTag in the database.
     func unfeatureTag(id: String) async throws {
-        try requireFlavour([.mastodon])
+        try requireFlavour(flavoursSupportingFeaturingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags", id])
             $0.method = .delete
         }
 
         _ = try await fetch(req: req)
+    }
+
+    /// Tells whether current flavour supports featuring tags.
+    var canFeatureTags: Bool {
+        flavoursSupportingFeaturingTags.contains(flavour)
+    }
+
+    private var flavoursSupportingFeaturingTags: Set<TootSDKFlavour> {
+        [.mastodon]
     }
 }
