@@ -30,16 +30,18 @@ extension TootClient {
             if let data = params.avatar,
                let mimeType = params.avatarMimeType {
                 parts.append(
-                    MultipartPart(file: "avatar",
-                                  mimeType: mimeType,
-                                  body: data))
+                    MultipartPart(
+                        file: "avatar",
+                        mimeType: mimeType,
+                        body: data))
             }
             if let data = params.header,
                let mimeType = params.headerMimeType {
                 parts.append(
-                    MultipartPart(file: "header",
-                                  mimeType: mimeType,
-                                  body: data))
+                    MultipartPart(
+                        file: "header",
+                        mimeType: mimeType,
+                        body: data))
             }
             if let name = params.displayName {
                 parts.append(
@@ -51,18 +53,21 @@ extension TootClient {
             }
             if let locked = params.locked {
                 parts.append(
-                    MultipartPart(name: "locked",
-                                  body: String(locked)))
+                    MultipartPart(
+                        name: "locked",
+                        body: String(locked)))
             }
             if let bot = params.bot {
                 parts.append(
-                    MultipartPart(name: "bot",
-                                  body: String(bot)))
+                    MultipartPart(
+                        name: "bot",
+                        body: String(bot)))
             }
             if let discoverable = params.discoverable {
                 parts.append(
-                    MultipartPart(name: "discoverable",
-                                  body: String(discoverable)))
+                    MultipartPart(
+                        name: "discoverable",
+                        body: String(discoverable)))
             }
             parts.append(contentsOf: getFieldParts(params))
             parts.append(contentsOf: getSourceParts(params))
@@ -76,11 +81,13 @@ extension TootClient {
         if let fields = params.fieldsAttributes {
             for (key, field) in fields {
                 parts.append(
-                    MultipartPart(name: "fields_attributes[\(key)][name]",
-                                  body: field.name))
+                    MultipartPart(
+                        name: "fields_attributes[\(key)][name]",
+                        body: field.name))
                 parts.append(
-                    MultipartPart(name: "fields_attributes[\(key)][value]",
-                                  body: field.value))
+                    MultipartPart(
+                        name: "fields_attributes[\(key)][value]",
+                        body: field.value))
             }
         }
         return parts
@@ -89,16 +96,22 @@ extension TootClient {
     func getSourceParts(_ params: UpdateCredentialsParams) -> [MultipartPart] {
         var parts = [MultipartPart]()
         if let privacy = params.source?.privacy {
-            parts.append(MultipartPart(name: "source[privacy]",
-                                       body: privacy.rawValue))
+            parts.append(
+                MultipartPart(
+                    name: "source[privacy]",
+                    body: privacy.rawValue))
         }
         if let sensitive = params.source?.sensitive {
-            parts.append(MultipartPart(name: "source[sensitive]",
-                                       body: String(sensitive)))
+            parts.append(
+                MultipartPart(
+                    name: "source[sensitive]",
+                    body: String(sensitive)))
         }
         if let language = params.source?.language {
-            parts.append(MultipartPart(name: "source[language]",
-                                       body: language))
+            parts.append(
+                MultipartPart(
+                    name: "source[language]",
+                    body: language))
         }
         return parts
     }
@@ -120,7 +133,8 @@ extension TootClient {
     ///     - pageInfo: PagedInfo object for max/min/since
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested, or an error if unable to retrieve
-    public func getFollowers(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+    public func getFollowers(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil)
+    async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "followers"])
             $0.method = .get
@@ -136,7 +150,8 @@ extension TootClient {
     ///     - pageInfo: PagedInfo object for max/min/since
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested, or an error if unable to retrieve
-    public func getFollowing(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+    public func getFollowing(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil)
+    async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "following"])
             $0.method = .get
@@ -161,7 +176,8 @@ extension TootClient {
             return try decode(AccessToken.self, from: data)
         } catch {
             if case let TootSDKError.invalidStatusCode(data, _) = error {
-                if let decoded = try? decode(RegisterAccountErrors.self, from: data), let message = decoded.error {
+                if let decoded = try? decode(RegisterAccountErrors.self, from: data),
+                   let message = decoded.error {
                     throw TootSDKError.serverError(message)
                 }
             }
@@ -176,13 +192,24 @@ extension TootClient {
     ///   - limit: Maximum number of results to return. Defaults to 40. Max 80 accounts.
     ///   - offset: Skip the first n results.
     /// - Returns: Search results.
-    public func searchAccounts(params: SearchAccountsParams, limit: Int? = nil, offset: Int? = nil) async throws -> [Account] {
+    public func searchAccounts(params: SearchAccountsParams, limit: Int? = nil, offset: Int? = nil)
+    async throws -> [Account] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "search"])
             $0.method = .get
             $0.query = getQueryParams(limit: limit, offset: offset) + params.queryItems
         }
         return try await fetch([Account].self, req)
+    }
+
+    /// Retrieve lists in which the given account `id` is present
+    func getListsContainingAccount(id: String) async throws -> [List] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "lists"])
+            $0.method = .get
+        }
+
+        return try await fetch([List].self, req)
     }
 
     // swiftlint:disable todo

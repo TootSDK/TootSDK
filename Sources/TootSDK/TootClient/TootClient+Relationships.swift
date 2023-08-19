@@ -156,7 +156,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Get all accounts which the current account is blocking
     /// - Parameters:
     ///     - pageInfo: PagedInfo object for max/min/since
@@ -170,7 +170,7 @@ extension TootClient {
         }
         return try await fetchPagedResult(req)
     }
-    
+
     /// Add the given account to the user’s featured profiles. (Featured profiles are currently shown on the user’s own public profile.)
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -181,7 +181,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Remove the given account from the user’s featured profiles.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
@@ -192,7 +192,7 @@ extension TootClient {
         }
         return try await fetch(Relationship.self, req)
     }
-    
+
     /// Accounts that the user is currently featuring on their profile.
     /// - Parameters:
     ///     - pageInfo: PagedInfo object for max/min/since
