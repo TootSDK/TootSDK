@@ -48,6 +48,7 @@ let package = Package(
                 .copy("Resources/account.json"),
                 .copy("Resources/account_moved.json"),
                 .copy("Resources/activity.json"),
+                .copy("Resources/list.json"),
                 .copy("Resources/post no emojis.json"),
                 .copy("Resources/post with emojis and attachments.json"),
                 .copy("Resources/post wordle linebreaks.json"),
