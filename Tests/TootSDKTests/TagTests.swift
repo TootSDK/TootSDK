@@ -40,5 +40,21 @@ final class TagTests: XCTestCase {
         XCTAssertNotNil(result.lastPostAt)
     }
     
+    func testUnusedFeaturedTagDecode() throws {
+        // arrange
+        let json = localContent("featured_tag_unused")
+        let decoder = TootDecoder()
+        
+        // act
+        let result = try decoder.decode(FeaturedTag.self, from: json)
+        
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.name, "Mandalorian")
+        XCTAssertEqual(result.id, "527787")
+        XCTAssertNil(result.lastPostAt)
+    }
+    
+    
 }
 
