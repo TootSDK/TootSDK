@@ -213,8 +213,6 @@ extension TootClient {
     }
 
     // swiftlint:disable todo
-    // TODO: - Set private note on profile
-
     // TODO: - Find familiar followers
     // TODO: - Lookup account ID from Webfinger address
     // swiftlint:enable todo

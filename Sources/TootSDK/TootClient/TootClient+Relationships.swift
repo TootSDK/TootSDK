@@ -206,6 +206,18 @@ extension TootClient {
         }
         return try await fetchPagedResult(req)
     }
+    
+    /// Sets a private note on a user.
+    /// - Parameter id: the ID of the Account in the instance database.
+    /// - Returns: the relationship to the account requested (including the note), or an error if unable to retrieve
+    public func setNoteForAccount(by id: String, params: SetNoteForAccountParams? = nil) async throws -> Relationship {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "note"])
+            $0.method = .post
+            $0.body = try .json(params)
+        }
+        return try await fetch(Relationship.self, req)
+    }
 
     /// Find out whether a given account is followed, blocked, muted, etc.
     /// - Parameter id: the ID of the Account in the instance database.
