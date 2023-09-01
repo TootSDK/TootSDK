@@ -230,5 +230,17 @@ extension TootClient {
         }
         return try await fetch([Relationship].self, req)
     }
+    
+    /// Obtain a list of all accounts that follow a given account, filtered for accounts you follow.
+    /// - Parameter ids: Find familiar followers for the provided account IDs.
+    /// - Returns: array of FamiliarFollowers
+    public func getFamiliarFollowers(by ids: [String]) async throws -> [FamiliarFollowers] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", "familiar_followers"])
+            $0.method = .get
+            $0.query = ids.map({URLQueryItem(name: "id[]", value: $0)})
+        }
+        return try await fetch([FamiliarFollowers].self, req)
+    }
 
 }
