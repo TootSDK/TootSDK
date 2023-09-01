@@ -1,0 +1,42 @@
+{
+  "following" : false,
+  "name" : "tootsdk",
+  "url" : "https:\/\/universeodon.com\/tags\/tootsdk",
+  "history" : [
+    {
+      "day" : "1692489600",
+      "accounts" : "0",
+      "uses" : "0"
+    },
+    {
+      "day" : "1692403200",
+      "accounts" : "1",
+      "uses" : "3"
+    },
+    {
+      "day" : "1692316800",
+      "accounts" : "1",
+      "uses" : "1"
+    },
+    {
+      "day" : "1692230400",
+      "accounts" : "1",
+      "uses" : "1"
+    },
+    {
+      "day" : "1692144000",
+      "accounts" : "0",
+      "uses" : "0"
+    },
+    {
+      "day" : "1692057600",
+      "accounts" : "1",
+      "uses" : "2"
+    },
+    {
+      "day" : "1691971200",
+      "accounts" : "1",
+      "uses" : "1"
+    }
+  ]
+}

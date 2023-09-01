@@ -48,6 +48,8 @@ let package = Package(
                 .copy("Resources/account.json"),
                 .copy("Resources/account_moved.json"),
                 .copy("Resources/activity.json"),
+                .copy("Resources/featured_tag.json"),
+                .copy("Resources/featured_tag_unused.json"),
                 .copy("Resources/list.json"),
                 .copy("Resources/post no emojis.json"),
                 .copy("Resources/post with emojis and attachments.json"),
@@ -55,9 +57,11 @@ let package = Package(
                 .copy("Resources/pixelfed.json"),
                 .copy("Resources/mastodon.json"),
                 .copy("Resources/pleroma.json"),
+                .copy("Resources/relationship.json"),
                 .copy("Resources/scheduled_post_sensitive.json"),
                 .copy("Resources/scheduled_post_attachment.json"),
-                .copy("Resources/scheduled_post_reply.json")
+                .copy("Resources/scheduled_post_reply.json"),
+                .copy("Resources/tag.json")
             ]),
     ]
 )
