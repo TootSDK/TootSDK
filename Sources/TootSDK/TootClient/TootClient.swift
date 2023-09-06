@@ -81,7 +81,7 @@ public class TootClient: @unchecked Sendable {
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
-        _ = try await connect()
+        try await connect()
     }
 
     /// Prints extra debug details like outgoing requests and responses
@@ -337,13 +337,12 @@ extension TootClient {
 
 extension TootClient {
     /// Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.
-    public func connect() async throws -> Instance {
+    public func connect() async throws {
         let instance = try await getInstanceInfo()
         if debugInstance {
             print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
         }
         self.flavour = instance.flavour
-        return instance
     }
 
     /// Returns `true` if this instance of `TootClient` has no `accessToken`.
