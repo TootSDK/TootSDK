@@ -31,5 +31,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
       FollowTag.self,
       UnfollowTag.self,
       ListAllNotifications.self,
+      GetFollowers.self,
     ])
 }
