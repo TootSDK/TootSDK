@@ -47,7 +47,9 @@ let package = Package(
             resources: [
                 .copy("Resources/account.json"),
                 .copy("Resources/account_moved.json"),
+                .copy("Resources/account_pixelfed.json"),
                 .copy("Resources/activity.json"),
+                .copy("Resources/familiar_followers_nofollowers.json"),
                 .copy("Resources/featured_tag.json"),
                 .copy("Resources/featured_tag_unused.json"),
                 .copy("Resources/list.json"),

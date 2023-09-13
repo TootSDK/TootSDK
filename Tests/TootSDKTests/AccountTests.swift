@@ -45,4 +45,17 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(encodedModel, model)
 //        XCTAssertEqual(encodedData.hashValue, model.hashValue)
     }
+    
+    func testDecodingPixelfed() throws {
+        // arrange
+        let json = localContent("account_pixelfed")
+        let decoder = TootDecoder()
+        
+        // act
+        let result = try decoder.decode(Account.self, from: json)
+        
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.id, "569707951076919035")
+    }
 }
