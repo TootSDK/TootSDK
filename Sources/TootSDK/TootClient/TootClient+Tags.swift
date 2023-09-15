@@ -71,5 +71,5 @@ extension TootFeature {
     /// Ability to follow hashtags.
     ///
     /// Available for Mastodon and Friendica.
-    public static let hashtagFollowing = TootFeature(supportedFlavours: [.mastodon, .friendica])
+    public static let hashtagFollowing = TootFeature(supportedFlavours: [.mastodon, .friendica, .pixelfed])
 }
