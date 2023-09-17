@@ -16,11 +16,7 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``Tag``.
     func getTrendingTags(limit: Int? = nil, offset: Int? = nil) async throws -> [Tag] {
-        do {
-            try requireFlavour([.mastodon, .friendica])
-        } catch TootSDKError.unsupportedFlavour(_, _) {
-            return []
-        }
+        try requireFeature(.trends)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "tags"])
             $0.method = .get
@@ -37,11 +33,7 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``Post``.
     func getTrendingPosts(limit: Int? = nil, offset: Int? = nil) async throws -> [Post] {
-        do {
-            try requireFlavour([.mastodon, .friendica])
-        } catch TootSDKError.unsupportedFlavour(_, _) {
-            return []
-        }
+        try requireFeature(.trends)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "statuses"])
             $0.method = .get
@@ -58,11 +50,7 @@ public extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``TrendingLink``.
     func getTrendingLinks(limit: Int? = nil, offset: Int? = nil) async throws -> [TrendingLink] {
-        do {
-            try requireFlavour([.mastodon, .friendica])
-        } catch TootSDKError.unsupportedFlavour(_, _) {
-            return []
-        }
+        try requireFeature(.trends)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "links"])
             $0.method = .get
@@ -71,4 +59,12 @@ public extension TootClient {
 
         return try await fetch([TrendingLink].self, req)
     }
+}
+
+extension TootFeature {
+
+    /// Ability to query trends
+    ///
+    /// Available for Mastodon and Friendica.
+    public static let trends = TootFeature(supportedFlavours: [.mastodon, .friendica])
 }
