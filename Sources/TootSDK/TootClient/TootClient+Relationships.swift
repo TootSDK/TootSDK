@@ -175,6 +175,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func pinAccount(by id: String) async throws -> Relationship {
+        try requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "pin"])
             $0.method = .post
@@ -186,6 +187,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func unpinAccount(by id: String) async throws -> Relationship {
+        try requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "unpin"])
             $0.method = .post
@@ -199,6 +201,7 @@ extension TootClient {
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getEndorsements(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+        try requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "endorsements"])
             $0.method = .get
@@ -243,4 +246,13 @@ extension TootClient {
         return try await fetch([FamiliarFollowers].self, req)
     }
 
+}
+
+
+extension TootFeature {
+
+    /// Ability to pin/feature accounts on your profile
+    ///
+    /// Available for Mastodon and Pleroma.
+    public static let endorsements = TootFeature(supportedFlavours: [.mastodon, .pleroma])
 }
