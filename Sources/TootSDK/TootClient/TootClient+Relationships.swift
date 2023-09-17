@@ -238,6 +238,7 @@ extension TootClient {
     /// - Parameter ids: Find familiar followers for the provided account IDs.
     /// - Returns: array of FamiliarFollowers
     public func getFamiliarFollowers(by ids: [String]) async throws -> [FamiliarFollowers] {
+        try requireFeature(.familiarFollowers)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "familiar_followers"])
             $0.method = .get
@@ -255,4 +256,12 @@ extension TootFeature {
     ///
     /// Available for Mastodon and Pleroma.
     public static let endorsements = TootFeature(supportedFlavours: [.mastodon, .pleroma])
+}
+
+extension TootFeature {
+
+    /// Ability to query familiar followers.
+    ///
+    /// Available only for Mastodon.
+    public static let familiarFollowers = TootFeature(supportedFlavours: [.mastodon])
 }
