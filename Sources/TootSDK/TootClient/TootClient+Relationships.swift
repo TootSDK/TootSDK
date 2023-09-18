@@ -213,6 +213,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested (including the note), or an error if unable to retrieve
     public func setNoteForAccount(by id: String, params: SetNoteForAccountParams? = nil) async throws -> Relationship {
+        try requireFeature(.privateNote)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "note"])
             $0.method = .post
@@ -270,4 +271,12 @@ extension TootFeature {
     ///
     /// Available for Mastodon, Akkoma, and Pleroma.
     public static let removeFollower = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma])
+}
+
+extension TootFeature {
+
+    /// Ability to set a private note for an account
+    ///
+    /// Not on Pixelfed.
+    public static let privateNote = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica])
 }
