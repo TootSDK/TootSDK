@@ -65,6 +65,6 @@ extension TootFeature {
 
     /// Ability to query trends
     ///
-    /// Available for Mastodon and Friendica.
-    public static let trends = TootFeature(supportedFlavours: [.mastodon, .friendica])
+    /// Available only on Mastodon.
+    public static let trends = TootFeature(supportedFlavours: [.mastodon])
 }

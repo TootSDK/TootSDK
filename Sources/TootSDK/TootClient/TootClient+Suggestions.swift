@@ -39,6 +39,6 @@ extension TootFeature {
 
     /// Ability to query and remove suggestions
     ///
-    /// Available for Mastodon and Friendica.
-    public static let suggestions = TootFeature(supportedFlavours: [.mastodon, .friendica])
+    /// Available only on Mastodon.
+    public static let suggestions = TootFeature(supportedFlavours: [.mastodon])
 }
