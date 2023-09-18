@@ -249,7 +249,6 @@ extension TootClient {
 
 }
 
-
 extension TootFeature {
 
     /// Ability to pin/feature accounts on your profile

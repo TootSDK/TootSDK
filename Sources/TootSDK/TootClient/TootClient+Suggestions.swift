@@ -35,7 +35,6 @@ public extension TootClient {
 
 }
 
-
 extension TootFeature {
 
     /// Ability to query and remove suggestions
