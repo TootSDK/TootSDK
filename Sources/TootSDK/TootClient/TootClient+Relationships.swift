@@ -89,8 +89,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func removeAccountFromFollowers(by id: String) async throws -> Relationship {
-        try requireFlavour(otherThan: [.friendica])
-
+        try requireFeature(.removeFollower)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "remove_from_followers"])
             $0.method = .post
@@ -209,7 +208,7 @@ extension TootClient {
         }
         return try await fetchPagedResult(req)
     }
-    
+
     /// Sets a private note on a user.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested (including the note), or an error if unable to retrieve
@@ -229,11 +228,11 @@ extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "relationships"])
             $0.method = .get
-            $0.query = ids.map({URLQueryItem(name: "id[]", value: $0)})
+            $0.query = ids.map({ URLQueryItem(name: "id[]", value: $0) })
         }
         return try await fetch([Relationship].self, req)
     }
-    
+
     /// Obtain a list of all accounts that follow a given account, filtered for accounts you follow.
     /// - Parameter ids: Find familiar followers for the provided account IDs.
     /// - Returns: array of FamiliarFollowers
@@ -242,7 +241,7 @@ extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "familiar_followers"])
             $0.method = .get
-            $0.query = ids.map({URLQueryItem(name: "id[]", value: $0)})
+            $0.query = ids.map({ URLQueryItem(name: "id[]", value: $0) })
         }
         return try await fetch([FamiliarFollowers].self, req)
     }
@@ -263,4 +262,12 @@ extension TootFeature {
     ///
     /// Available only for Mastodon.
     public static let familiarFollowers = TootFeature(supportedFlavours: [.mastodon])
+}
+
+extension TootFeature {
+
+    /// Ability to remove a follower.
+    ///
+    /// Available for Mastodon, Akkoma, and Pleroma.
+    public static let removeFollower = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma])
 }
