@@ -206,7 +206,7 @@ extension TootClient {
         }
         return try await fetchPagedResult(req)
     }
-    
+
     /// Sets a private note on a user.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested (including the note), or an error if unable to retrieve
@@ -230,7 +230,7 @@ extension TootClient {
         }
         return try await fetch([Relationship].self, req)
     }
-    
+
     /// Obtain a list of all accounts that follow a given account, filtered for accounts you follow.
     /// - Parameter ids: Find familiar followers for the provided account IDs.
     /// - Returns: array of FamiliarFollowers

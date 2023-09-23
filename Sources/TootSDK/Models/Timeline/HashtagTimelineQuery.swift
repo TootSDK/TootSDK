@@ -19,22 +19,22 @@ public struct HashtagTimelineQuery: Codable, Sendable {
     /// The name of the hashtag, not including the `#` symbol
     public var tag: String
 
-    /// Return statuses that contain any of these additional tags
+    /// Return posts that contain any of these additional tags
     public var anyTags: [String]?
 
-    /// Return statuses that contain all of these additional tags
+    /// Return posts that contain all of these additional tags
     public var allTags: [String]?
 
-    /// Return statuses that contain none of these additional tags
+    /// Return posts that contain none of these additional tags
     public var noneTags: [String]?
 
-    /// Return only statuses with media attachments
+    /// Return only posts with media attachments
     public var onlyMedia: Bool?
 
-    /// Return only local statuses
+    /// Return only local posts
     public var local: Bool?
 
-    /// Return only remote statuses
+    /// Return only remote posts
     public var remote: Bool?
 }
 

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  TootNotificationParams.swift
 //
 //
 //  Created by Konstantin on 04/05/2023.
