@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  TootClient+Conversation.swift
 //
 //
 //  Created by Konstantin Kostov on 23/09/2023.
