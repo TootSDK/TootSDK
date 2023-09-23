@@ -25,7 +25,12 @@ extension TootClient {
     public func updateCredentials(params: UpdateCredentialsParams) async throws -> Account {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "update_credentials"])
-            $0.method = .patch
+            if self.flavour == .pixelfed {
+           // https://github.com/pixelfed/pixelfed/issues/4250#issuecomment-1483798056
+                $0.method = .post
+            } else {
+                $0.method = .patch
+            }
             var parts = [MultipartPart]()
             if let data = params.avatar,
                let mimeType = params.avatarMimeType {
