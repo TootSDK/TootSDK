@@ -9,7 +9,7 @@ import Foundation
 
 public struct ProfileDirectoryParams: Codable {
 
-    /// Use active to sort by most recently posted statuses (default) or new to sort by most recently created profiles.
+    /// Use active to sort by most recently posted post (default) or new to sort by most recently created profiles.
     public var order: Order?
     /// If true, returns only local accounts.
     public var local: Bool?

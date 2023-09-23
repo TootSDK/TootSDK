@@ -7,13 +7,13 @@
 
 import Foundation
 
-/// Represents a status's source as plain text.
+/// Represents a post's source as plain text.
 public struct PostSource: Codable, Identifiable, Sendable {
-    /// ID of the status in the database.
+    /// ID of the post in the database.
     public var id: String
-    /// The plain text used to compose the status.
+    /// The plain text used to compose the post.
     public var text: String
-    /// The plain text used to compose the status’s subject or content warning.
+    /// The plain text used to compose the post subject or content warning.
     public var spoilerText: String
 
     public init(id: String, text: String, spoilerText: String) {

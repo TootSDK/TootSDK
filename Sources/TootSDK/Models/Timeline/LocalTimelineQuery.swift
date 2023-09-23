@@ -9,7 +9,7 @@ public struct LocalTimelineQuery: Hashable, Codable, Sendable {
         self.onlyMedia = onlyMedia
     }
 
-    /// Return only statuses with media attachments
+    /// Return only posts with media attachments
     public var onlyMedia: Bool?
 }
 

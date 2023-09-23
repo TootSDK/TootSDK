@@ -3,8 +3,12 @@
 
 import Foundation
 
+/// Represents the tree around a given post. Used for reconstructing threads of posts.
 public struct Context: Codable, Hashable, Sendable {
+    /// Parents in the thread.
     public var ancestors: [Post]
+
+    /// Children in the thread.
     public var descendants: [Post]
 
     public init(ancestors: [Post], descendants: [Post]) {

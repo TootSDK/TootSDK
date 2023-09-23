@@ -7,7 +7,7 @@
 public struct ScheduledPost: Codable, Equatable, Hashable, Identifiable, Sendable {
     /// ID of the scheduled post in the database.
     public var id: String
-    /// The timestamp for when the status will be posted.
+    /// The timestamp for when the post will be posted.
     public var scheduledAt: Date?
     /// The parameters to be used when the post is posted
     public var params: ScheduledPostParams
