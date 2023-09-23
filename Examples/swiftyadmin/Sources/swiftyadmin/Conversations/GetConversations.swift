@@ -11,7 +11,7 @@ struct GetConversations: AsyncParsableCommand {
   var token: String
 
   mutating func run() async throws {
-    let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
+    let client = try await TootClient(connect: URL(string: url)!, accessToken: token)
     var pagedInfo: PagedInfo? = nil
     var hasMore = true
 

@@ -19,7 +19,7 @@ struct GetPostContext: AsyncParsableCommand {
 
   mutating func run() async throws {
     print("Getting post with local id: \(id)")
-    let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
+    let client = try await TootClient(connect: URL(string: url)!, accessToken: token)
 
     let context = try await client.getContext(id: id)
     let json = String.init(data: try TootEncoder().encode(context), encoding: .utf8)
