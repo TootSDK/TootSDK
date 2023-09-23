@@ -7,15 +7,15 @@ If you see anything in our future road map that is particularly important to you
 
 ## Version 0.1 ✅
 - Authorization calls and ability to return the access token to the parent app for safe storage in the keychain etc
-- All status calls
+- All post calls
     - Publishing, Editing, Deleting
     - Mute/unmute conversations
     - Pin/Unpin posts
     - Boosting, Favouriting, Bookmarking
-    - Get parent and child statuses in context
-    - See who boosted a status
+    - Get parent and child posts in context
+    - See who boosted a post
 - Ability to have more than one TootClient connected to more than one instance
-- Async Sequences for timelines and statuses
+- Async Sequences for timelines and posts
 - Example SwiftUI app showing all major operations completed so far
 
 ## Immediate next steps:

@@ -349,7 +349,7 @@ extension TootClient {
     public var isAnonymous: Bool {
         accessToken == nil
     }
-    
+
     /// Returns `true` if this instance of `TootClient` can perform methods that are related to given `feature`.
     ///
     /// - Parameter feature: The feature to check if is supported.
