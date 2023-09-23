@@ -89,8 +89,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func removeAccountFromFollowers(by id: String) async throws -> Relationship {
-        try requireFlavour(otherThan: [.friendica])
-
+        try requireFeature(.removeFollower)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "remove_from_followers"])
             $0.method = .post
@@ -175,6 +174,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func pinAccount(by id: String) async throws -> Relationship {
+        try requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "pin"])
             $0.method = .post
@@ -186,6 +186,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func unpinAccount(by id: String) async throws -> Relationship {
+        try requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "unpin"])
             $0.method = .post
@@ -199,6 +200,7 @@ extension TootClient {
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getEndorsements(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+        try requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "endorsements"])
             $0.method = .get
@@ -211,6 +213,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested (including the note), or an error if unable to retrieve
     public func setNoteForAccount(by id: String, params: SetNoteForAccountParams? = nil) async throws -> Relationship {
+        try requireFeature(.privateNote)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "note"])
             $0.method = .post
@@ -226,7 +229,7 @@ extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "relationships"])
             $0.method = .get
-            $0.query = ids.map({URLQueryItem(name: "id[]", value: $0)})
+            $0.query = ids.map({ URLQueryItem(name: "id[]", value: $0) })
         }
         return try await fetch([Relationship].self, req)
     }
@@ -235,12 +238,45 @@ extension TootClient {
     /// - Parameter ids: Find familiar followers for the provided account IDs.
     /// - Returns: array of FamiliarFollowers
     public func getFamiliarFollowers(by ids: [String]) async throws -> [FamiliarFollowers] {
+        try requireFeature(.familiarFollowers)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "familiar_followers"])
             $0.method = .get
-            $0.query = ids.map({URLQueryItem(name: "id[]", value: $0)})
+            $0.query = ids.map({ URLQueryItem(name: "id[]", value: $0) })
         }
         return try await fetch([FamiliarFollowers].self, req)
     }
 
+}
+
+extension TootFeature {
+
+    /// Ability to pin/feature accounts on your profile
+    ///
+    /// Available for Mastodon and Pleroma.
+    public static let endorsements = TootFeature(supportedFlavours: [.mastodon, .pleroma])
+}
+
+extension TootFeature {
+
+    /// Ability to query familiar followers.
+    ///
+    /// Available only for Mastodon.
+    public static let familiarFollowers = TootFeature(supportedFlavours: [.mastodon])
+}
+
+extension TootFeature {
+
+    /// Ability to remove a follower.
+    ///
+    /// Available for Mastodon, Akkoma, and Pleroma.
+    public static let removeFollower = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma])
+}
+
+extension TootFeature {
+
+    /// Ability to set a private note for an account
+    ///
+    /// Not on Pixelfed.
+    public static let privateNote = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica])
 }
