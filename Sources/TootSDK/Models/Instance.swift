@@ -100,6 +100,8 @@ public struct Instance: Codable, Hashable {
         /// Limits related to polls.
         public var polls: Polls?
 
+        // swiftlint:disable nesting
+
         enum CodingKeys: String, CodingKey {
             case accounts
             case posts = "statuses"
@@ -146,6 +148,8 @@ public struct Instance: Codable, Hashable {
             /// The longest allowed poll duration, in seconds.
             public var maxExpiration: Int?
         }
+
+        // swiftlint:enable nesting
     }
 }
 
