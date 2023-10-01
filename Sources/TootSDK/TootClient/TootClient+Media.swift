@@ -28,9 +28,7 @@ public extension TootClient {
             ))
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
-        let uploadResponse = try await fetch(UploadMediaAttachmentResponse.self, req)
-
-        return uploadResponse.url != nil ? UploadedMediaAttachment(id: uploadResponse.id, state: .uploaded) : UploadedMediaAttachment(id: uploadResponse.id, state: .serverProcessing)
+        return try await fetch(UploadedMediaAttachment.self, req)
     }
 
     /// Retrieve the details of a media attachment that corresponds to the given identifier.
