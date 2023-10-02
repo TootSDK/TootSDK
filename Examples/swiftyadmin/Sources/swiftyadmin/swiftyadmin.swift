@@ -34,5 +34,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
       GetFollowers.self,
       GetPostContext.self,
       GetConversations.self,
+      GetInstance.self,
     ])
 }
