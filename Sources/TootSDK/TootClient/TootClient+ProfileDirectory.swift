@@ -32,6 +32,5 @@ extension TootFeature {
 
     /// Ability to query profile directories
     ///
-    /// Available on everything except Pixelfed
     public static let profileDirectory = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica])
 }

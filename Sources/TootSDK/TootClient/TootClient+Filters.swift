@@ -1,6 +1,6 @@
 //
 //  TootClient+Filters.swift
-//  
+//
 //
 //  Created by Philip Chu on 7/20/23.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 public extension TootClient {
-    
+
     /// Obtain a list of all filter groups for the current user.
     ///
     /// - Returns: The filters or an error if unable to retrieve.
@@ -20,7 +20,7 @@ public extension TootClient {
         }
         return try await fetch([Filter].self, req)
     }
-    
+
     /// Obtain a single filter group owned by the current user.
     /// - Parameters:
     ///     - id: The ID of the Filter in the database.
@@ -33,7 +33,7 @@ public extension TootClient {
         }
         return try await fetch(Filter.self, req)
     }
-    
+
     /// Delete a filter
     /// /// - Parameters:
     ///     - id: The ID of the Filter in the database.
@@ -45,13 +45,12 @@ public extension TootClient {
         }
         _ = try await fetch(req: req)
     }
-    
+
 }
 
 extension TootFeature {
 
     /// Ability to  view/edit/create filters.
     ///
-    /// Available only for Mastodon .
     public static let filtersV2 = TootFeature(supportedFlavours: [.mastodon])
 }

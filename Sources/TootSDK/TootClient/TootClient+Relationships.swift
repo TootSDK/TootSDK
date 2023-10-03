@@ -253,7 +253,6 @@ extension TootFeature {
 
     /// Ability to pin/feature accounts on your profile
     ///
-    /// Available for Mastodon and Pleroma.
     public static let endorsements = TootFeature(supportedFlavours: [.mastodon, .pleroma])
 }
 
@@ -261,7 +260,6 @@ extension TootFeature {
 
     /// Ability to query familiar followers.
     ///
-    /// Available only for Mastodon.
     public static let familiarFollowers = TootFeature(supportedFlavours: [.mastodon])
 }
 
@@ -269,7 +267,6 @@ extension TootFeature {
 
     /// Ability to remove a follower.
     ///
-    /// Available for Mastodon, Akkoma, and Pleroma.
     public static let removeFollower = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma])
 }
 
@@ -277,6 +274,5 @@ extension TootFeature {
 
     /// Ability to set a private note for an account
     ///
-    /// Not on Pixelfed.
     public static let privateNote = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica])
 }

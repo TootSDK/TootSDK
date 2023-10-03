@@ -39,6 +39,5 @@ extension TootFeature {
 
     /// Ability to query and remove suggestions
     ///
-    /// Available only on Mastodon.
     public static let suggestions = TootFeature(supportedFlavours: [.mastodon])
 }

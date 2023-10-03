@@ -27,7 +27,7 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "update_credentials"])
             if self.flavour == .pixelfed {
-           // https://github.com/pixelfed/pixelfed/issues/4250#issuecomment-1483798056
+                // https://github.com/pixelfed/pixelfed/issues/4250#issuecomment-1483798056
                 $0.method = .post
             } else {
                 $0.method = .patch
@@ -227,6 +227,5 @@ extension TootFeature {
 
     /// Ability to edit your profile
     ///
-    /// Available on everything except Friendica
     public static let updateCredentials = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed])
 }

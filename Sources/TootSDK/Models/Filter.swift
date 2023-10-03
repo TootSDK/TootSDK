@@ -16,7 +16,7 @@ public struct Filter: Codable, Hashable, Identifiable {
         /// when viewing a profile
         case account
     }
-    
+
     public enum Action: String, Codable {
         /// show a warning that identifies the matching filter by title, and allow the user to expand the filtered status. This is the default (and unknown values should be treated as equivalent to warn).
         case warn

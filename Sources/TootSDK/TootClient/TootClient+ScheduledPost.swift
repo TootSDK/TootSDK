@@ -116,6 +116,5 @@ extension TootFeature {
 
     /// Ability to schedule a post
     ///
-    /// Available on everything except Pixelfed
     public static let scheduledPost = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica])
 }
