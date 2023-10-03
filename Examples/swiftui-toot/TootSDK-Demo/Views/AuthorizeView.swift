@@ -25,8 +25,9 @@ struct AuthorizeView: View {
                 
                 TextField("https://instance.tld", text: $urlString)
                     .autocorrectionDisabled(true)
+#if os(iOS)
                     .autocapitalization(.none)
-                
+#endif
                 Button {
                     Task {
                         do {

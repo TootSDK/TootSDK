@@ -53,10 +53,10 @@ public class UIKitAttribStringRenderer {
 		   let body = doc.body(),
 		   let attributedText = attributedTextForHTMLNode(body) {
 			let mutAttrString = NSMutableAttributedString(attributedString: attributedText)
-#if os(iOS)
-			mutAttrString.trimTrailingCharactersInSet(.whitespacesAndNewlines)
-#else
+#if os(macOS)
 			mutAttrString.trimCharactersInSet(charSet: .whitespacesAndNewlines)
+#else
+			mutAttrString.trimTrailingCharactersInSet(.whitespacesAndNewlines)
 #endif
 
 			return TootContent(wrappedValue: html, plainContent: plainText, attributedString: mutAttrString)
@@ -98,17 +98,17 @@ public class UIKitAttribStringRenderer {
 		case "strong", "b":
 			updateAttributedTextForBold(element, attributed: &attributed)
 		case "del":
-#if os(iOS)
-			attributed.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: attributed.fullRange)
-#else
+#if os(macOS)
 			attributed.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: attributed.fullRange())
+#else
+			attributed.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: attributed.fullRange)
 #endif
 		case "ol", "ul":
 			attributed.append(NSAttributedString(string: "\n\n"))
-#if os(iOS)
-			attributed.trimLeadingCharactersInSet(.whitespacesAndNewlines)
-#else
+#if os(macOS)
 			attributed.trimCharactersInSet(charSet: .whitespacesAndNewlines)
+#else
+			attributed.trimLeadingCharactersInSet(.whitespacesAndNewlines)
 #endif
 		case "li":
 			updateAttributedTextForList(element, attributed: &attributed)
@@ -138,29 +138,29 @@ public class UIKitAttribStringRenderer {
 
 		if let webURL = WebURL(href),
 		   let url = URL(webURL) {
-#if os(iOS)
-			attributed.addAttribute(.link, value: url, range: attributed.fullRange)
-#else
+#if os(macOS)
 			attributed.addAttribute(.link, value: url, range: attributed.fullRange())
+#else
+			attributed.addAttribute(.link, value: url, range: attributed.fullRange)
 #endif
 		} else if let url = URL(string: href) {
-#if os(iOS)
-			attributed.addAttribute(.link, value: url, range: attributed.fullRange)
-#else
+#if os(macOS)
 			attributed.addAttribute(.link, value: url, range: attributed.fullRange())
+#else
+			attributed.addAttribute(.link, value: url, range: attributed.fullRange)
 #endif
 		}
 	}
 
 	private func updateAttributedTextForItalic(_ element: Element, attributed: inout NSMutableAttributedString) {
 		if attributed.length > 0 {
-#if os(iOS)
-			if let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
-				try? attributed.addAttribute(.font, value: fontInAttributes.asItalic(), range: attributed.fullRange)
-			}
-#else
+#if os(macOS)
 			if let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? NSFont {
 				try? attributed.addAttribute(.font, value: fontInAttributes.asItalic(), range: attributed.fullRange())
+			}
+#else
+			if let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
+				try? attributed.addAttribute(.font, value: fontInAttributes.asItalic(), range: attributed.fullRange)
 			}
 #endif
 		} else {
@@ -170,13 +170,13 @@ public class UIKitAttribStringRenderer {
 
 	private func updateAttributedTextForBold(_ element: Element, attributed: inout NSMutableAttributedString) {
 		if attributed.length > 0 {
-#if os(iOS)
-			if let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
-				try? attributed.addAttribute(.font, value: fontInAttributes.asBold(), range: attributed.fullRange)
-			}
-#else
+#if os(macOS)
 			if let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? NSFont {
 				try? attributed.addAttribute(.font, value: fontInAttributes.asBold(), range: attributed.fullRange())
+			}
+#else
+			if let fontInAttributes = attributed.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
+				try? attributed.addAttribute(.font, value: fontInAttributes.asBold(), range: attributed.fullRange)
 			}
 #endif
 		} else {

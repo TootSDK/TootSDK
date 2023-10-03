@@ -91,7 +91,7 @@ struct MakePostView: View {
             }
             .toolbar {
                 if let _ = lastPostID {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .automatic) {
                         Button {
                             if !lastPostScheduledPost {
                                 path.append(MakePostDestination.postOperations)
@@ -126,10 +126,17 @@ struct MakePostView: View {
         }
         
         if attachImage {
-            guard let imageData = UIImage(named: "dexter")?.jpegData(compressionQuality: 1.0) else {
-                print("🍅 Attachment image not found")
-                return nil
-            }
+#if os(macOS)
+			guard let img = NSImage(named: "dexter"), let imageData = img.tiffRepresentation else {
+				print("🍅 Attachment image not found")
+				return nil
+			}
+#else
+			guard let imageData = UIImage(named: "dexter")?.jpegData(compressionQuality: 1.0) else {
+				print("🍅 Attachment image not found")
+				return nil
+			}
+#endif
             
             let uploadParams = UploadMediaAttachmentParams(file: imageData, thumbnail: nil, description: "Dexter the cat helping me perfect file uploads in TootSDK", focus: nil)
             let uploadedAttachment = try await tootClient.uploadMedia(uploadParams, mimeType: "image/jpeg")

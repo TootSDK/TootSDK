@@ -43,9 +43,15 @@ struct TootSDK_DemoApp: App {
             .onChange(of: tootManager.authenticated) { authenticated in
                 authIsPresented = !authenticated
             }
-            .fullScreenCover(isPresented: $authIsPresented) {
-                AuthorizeView()
-            }
+#if os(macOS)
+			.sheet(isPresented: $authIsPresented) {
+				AuthorizeView()
+			}
+#else
+			.fullScreenCover(isPresented: $authIsPresented) {
+				AuthorizeView()
+			}
+#endif
             .environmentObject(tootManager)
         }
     }
