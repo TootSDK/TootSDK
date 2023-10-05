@@ -46,7 +46,11 @@ struct PostOperationsView: View {
         Group {
             ButtonView(text: "Get Post Details") {
                 guard let post = try await tootManager.currentClient?.getPost(id: postID) else { return }
-                let renderer = UIKitAttribStringRenderer()
+#if os(macOS)
+				let renderer = AppKitAttribStringRenderer()
+#else
+				let renderer = UIKitAttribStringRenderer()
+#endif
                 let content = renderer.render(post)
                 textToShow = content.attributedString.string
             }

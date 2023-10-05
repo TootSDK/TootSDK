@@ -63,7 +63,11 @@ struct FeedPostView: View {
                         EmojiText(markdown: post.markdown,
                                   emojis: post.tootPost.emojis.remoteEmojis())
                     } else {
-                        let renderer = UIKitAttribStringRenderer()
+#if os(macOS)
+						let renderer = AppKitAttribStringRenderer()
+#else
+						let renderer = UIKitAttribStringRenderer()
+#endif
                         Text(renderer.render(post.tootPost.displayPost).string)
                     }
                 }

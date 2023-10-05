@@ -73,7 +73,11 @@ extension FeedViewModel {
         
         Task {
             for await posts in try await tootManager.currentClient.data.stream(streamType) {
-                let renderer = UIKitAttribStringRenderer()
+#if os(macOS)
+				let renderer = AppKitAttribStringRenderer()
+#else
+				let renderer = UIKitAttribStringRenderer()
+#endif
                 
                 let newPosts = posts.map { post in
 
