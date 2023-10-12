@@ -24,7 +24,8 @@ You can use TootSDK to build a client for Apple operating systems, or Linux with
 
 When app developers build apps for Mastodon and the Fediverse, every developer ends up having to solve the same set of problems when it comes to the API and data model.
 
-[Konstantin](https://m.iamkonstantin.eu/konstantin) and [Dave](https://social.davidgarywood.com/@davidgarywood) decided to share this effort.
+[Konstantin](https://social.headbright.eu/@konstantin) and [Dave](https://social.lightbeamapps.com/@dave) decided to share this effort.
+
 TootSDK is a shared Swift Package that any client app can be built on.
 
 ## Key Principles ⚙️
@@ -33,17 +34,6 @@ TootSDK is a shared Swift Package that any client app can be built on.
 - Internal consistency and standardization of model property names
 - Standardization across all supported Fediverse APIs
 - Platform agnostic (TootSDK shouldn't care if it's on iOS, macOS or Linux!)
-
-## Project Status 📈
-
-- Mastodon - Nearly there
-- Pleroma - Nearly there
-- Pixelfed - Nearly there
-- Friendica - Nearly there 
-- Akkoma - Nearly there
-- Writefreely - To do
-
-Our [roadmap](ROADMAP.md) shows where we want to take TootSDK. Our [project board](https://github.com/orgs/TootSDK/projects/1) shows our current backlog of work, and what is in flight.
 
 Please don't hesitate to open an issue or create a PR for features you need 🙏
 
@@ -73,6 +63,7 @@ When using TootSDK within a macOS target you will need to enable the `com.apple.
 ```
 
 ![Xcode target view showing the Signing & Capabilities tab with and arrow pointing to a checked Outgoing Connections (Client) option](media/network_sandbox_capability_entitlement.png)
+
 </details>
 
 - Instantiate your client without a token:
@@ -127,7 +118,6 @@ Once you have your client connected, you're going to want to use it. Our example
 <details>
 <summary>Accessing a user's timeline</summary>
 
-
 There are several different types of timeline in TootSDK that you can access, for example their home timeline, the local timeline of their instance, or the federated timeline. These are all enumerated in the `Timeline` enum.
 
 You can retrieve the latest posts (up to 40 on Mastodon) with a call like so:
@@ -136,12 +126,13 @@ You can retrieve the latest posts (up to 40 on Mastodon) with a call like so:
 let items = try await client.getTimeline(.home)
 let posts = items.result
 ```
+
 TootSDK returns Posts, Accounts, Lists and DomainBblocks as `PagedResult`. In our code, `items` is a PagedResult struct. It contains a property called `result` which will be the type of data request (in this case an array of `Post`).
+
 </details>
 
 <details>
 <summary>Paging requests</summary>
-
 
 Some requests in TootSDK allow pagination in order to request more information. TootSDK can request a specific page using the `PagedInfo` struct and handles paginaged server responses using the `PagedResult` struct.
 
@@ -167,7 +158,7 @@ var posts: [Post] = []
 
 func retrievePosts() async {
     let items = try await client.getTimeline(.home, pagedInfo)
-    posts.append(contentsOf: items.result)    
+    posts.append(contentsOf: items.result)
     self.pagedInfo = items.pagedInfo
 }
 
@@ -198,7 +189,6 @@ You can learn more about how pagination works for Fediverse servers using a Mast
 
 <details>
 <summary>Streaming timelines</summary>
-
 
 In TootSDK it is possible to subscribe to some types of content with AsyncSequences, a concept we've wrapped up in our `TootStream` object.
 
@@ -234,9 +224,9 @@ for posts in try await client.data.stream(HashtagTimelineQuery(tag: "iOSDev") {
 <details>
 <summary>Creating an account</summary>
 
-* Register the app with the following scopes `["read", "write:accounts"]`.
+- Register the app with the following scopes `["read", "write:accounts"]`.
 
-* Get instance information and determine the sign up requirements. Some instances may not be open for registration while others may require additional verification.
+- Get instance information and determine the sign up requirements. Some instances may not be open for registration while others may require additional verification.
 
 ```swift
 let instance = try await client.getInstanceInfo()
@@ -247,13 +237,14 @@ if instance.registrations == false {
 // ...
 ```
 
-* Use the `registerAccount` method to create a user account:
+- Use the `registerAccount` method to create a user account:
 
 ```swift
 let params = RegisterAccountParams(
       username: name, email: email, password: password, agreement: true, locale: "en")
 let token = try await client.registerAccount(params: params)
 ```
+
 </details>
 
 ## Further Documentation 📖
@@ -270,11 +261,6 @@ let token = try await client.registerAccount(params: params)
 
 - Our guide to contributing is available here: [CONTRIBUTING.md](CONTRIBUTING.md).
 - All contributions, pull requests, and issues are expected to adhere to our community code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
-
-### Key contributors ⚡️
-
-- [Konstantin](https://m.iamkonstantin.eu/konstantin)
-- [David Gary Wood](https://social.davidgarywood.com/@davidgarywood)
 
 ## License 📃
 
