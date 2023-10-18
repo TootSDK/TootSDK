@@ -17,6 +17,7 @@ public extension TootClient {
     ///   - params: Includes order and local parameters.
     /// - Returns: Array of ``Account``.
     func getProfileDirectory(params: ProfileDirectoryParams, offset: Int? = nil, limit: Int? = nil) async throws -> [Account] {
+        try requireFeature(.profileDirectory)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "directory"])
             $0.method = .get
@@ -25,4 +26,11 @@ public extension TootClient {
 
         return try await fetch([Account].self, req)
     }
+}
+
+extension TootFeature {
+
+    /// Ability to query profile directories
+    ///
+    public static let profileDirectory = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica])
 }

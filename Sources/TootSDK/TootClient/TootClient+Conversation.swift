@@ -13,6 +13,7 @@ public extension TootClient {
     ///
     /// Direct conversations with other participants. (Currently, just threads containing a post with "direct" visibility.)
     func getConversations(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Conversation]> {
+        try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations"])
             $0.method = .get
@@ -24,7 +25,7 @@ public extension TootClient {
 
     /// Removes a conversation from your list of conversations.
     func deleteConversation(id: String) async throws {
-        try requireFeature(.lists)
+        try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations", id])
             $0.method = .delete
@@ -33,9 +34,9 @@ public extension TootClient {
         _ = try await fetch(req: req)
     }
 
-    /// Removes a conversation from your list of conversations.
+    /// Mark a conversation as read
     func setConversationAsRead(id: String) async throws -> Conversation {
-        try requireFeature(.lists)
+        try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations", id, "read"])
             $0.method = .post
@@ -43,4 +44,11 @@ public extension TootClient {
 
         return try await fetch(Conversation.self, req)
     }
+}
+
+extension TootFeature {
+
+    /// Ability to retrieve conversations.
+    ///
+    public static let conversations = TootFeature(supportedFlavours: [.mastodon, .pleroma, .friendica, .akkoma, .pixelfed])
 }

@@ -83,6 +83,5 @@ extension TootFeature {
 
     /// Ability to promote hashtags on user profiles.
     ///
-    /// Available only for Mastodon.
     public static let featuredTags = TootFeature(supportedFlavours: [.mastodon])
 }

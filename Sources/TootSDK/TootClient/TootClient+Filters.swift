@@ -52,6 +52,5 @@ extension TootFeature {
 
     /// Ability to  view/edit/create filters.
     ///
-    /// Available only for Mastodon .
     public static let filtersV2 = TootFeature(supportedFlavours: [.mastodon])
 }
