@@ -185,7 +185,9 @@ public extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "reblogged_by"])
             $0.method = .get
-            $0.query = getQueryParams(pageInfo, limit: limit)
+            if flavour == .mastodon {
+                $0.query = getQueryParams(pageInfo, limit: limit)
+            }
         }
         return try await fetchPagedResult(req)
     }
@@ -195,7 +197,9 @@ public extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "favourited_by"])
             $0.method = .get
-            $0.query = getQueryParams(pageInfo, limit: limit)
+            if flavour == .mastodon {
+                $0.query = getQueryParams(pageInfo, limit: limit)
+            }
         }
 
         return try await fetchPagedResult(req)
