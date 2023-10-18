@@ -181,25 +181,24 @@ public extension TootClient {
 public extension TootClient {
 
     /// View who boosted a given post.
-    func getAccountsBoosted(id: String) async throws -> [Account] {
+    func getAccountsBoosted(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "reblogged_by"])
             $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
         }
-
-        let accounts = try await fetch([Account].self, req)
-        return accounts.compactMap({ $0 })
+        return try await fetchPagedResult(req)
     }
 
     /// View who favourited a given post.
-    func getAccountsFavourited(id: String) async throws -> [Account] {
+    func getAccountsFavourited(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "favourited_by"])
             $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
         }
 
-        let accounts = try await fetch([Account].self, req)
-        return accounts.compactMap({ $0 })
+        return try await fetchPagedResult(req)
     }
 
 }
