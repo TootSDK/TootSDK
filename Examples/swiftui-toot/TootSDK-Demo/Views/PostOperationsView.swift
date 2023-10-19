@@ -93,7 +93,7 @@ struct PostOperationsView: View {
             
             ButtonView(text: "Who favourited") {
                 let boostAccounts = try await tootManager.currentClient.getAccountsFavourited(id: postID)
-                debugPrint(boostAccounts)
+                debugPrint(boostAccounts.result)
             }
         }
     }
@@ -112,7 +112,7 @@ struct PostOperationsView: View {
             
             ButtonView(text: "Who boosted") {
                 let boostAccounts = try await tootManager.currentClient.getAccountsBoosted(id: postID)
-                debugPrint(boostAccounts)
+                debugPrint(boostAccounts.result)
             }
         }
     }
