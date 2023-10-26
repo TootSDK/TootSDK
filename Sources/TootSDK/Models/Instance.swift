@@ -20,7 +20,8 @@ public struct Instance: Codable, Hashable {
         stats: Instance.Stats,
         thumbnail: String? = nil,
         configuration: Configuration? = nil,
-        contactAccount: Account? = nil
+        contactAccount: Account? = nil,
+        rules: [InstanceRule]? = nil
     ) {
         self.uri = uri
         self.title = title
@@ -37,6 +38,7 @@ public struct Instance: Codable, Hashable {
         self.thumbnail = thumbnail
         self.configuration = configuration
         self.contactAccount = contactAccount
+        self.rules = rules
     }
 
     /// The domain name of the instance.
@@ -69,6 +71,8 @@ public struct Instance: Codable, Hashable {
     public var configuration: Configuration?
     /// A user that can be contacted, as an alternative to email.
     public var contactAccount: Account?
+    /// An itemized list of rules for users of the instance.
+    public var rules: [InstanceRule]?
 
     public struct InstanceURLs: Codable, Hashable {
         /// Websockets address for push streaming. String (URL).
