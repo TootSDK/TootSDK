@@ -25,7 +25,7 @@ public struct ReportParams {
     public var category: ReportCategory
 
     /// For violation category reports, specify the ID of the exact rules broken.
-    public var ruleIds: [Int]?
+    public var ruleIds: [Int]
 
     public init(
         accountId: String,
@@ -33,7 +33,7 @@ public struct ReportParams {
         postIds: [String] = [],
         comment: String? = nil,
         forward: Bool? = nil,
-        ruleIds: [Int]? = nil
+        ruleIds: [Int] = []
     ) {
         self.accountId = accountId
         self.postIds = postIds

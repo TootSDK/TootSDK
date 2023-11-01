@@ -70,7 +70,7 @@ extension TootClient {
         if ReportCategory.mastodonSupported.contains(params.category) {
             queryItems.append(.init(name: "category", value: params.category.rawValue))
         }
-        for ruleId in params.ruleIds ?? [] {
+        for ruleId in params.ruleIds {
             queryItems.append(.init(name: "rule_ids[]", value: String(ruleId)))
         }
         return queryItems
