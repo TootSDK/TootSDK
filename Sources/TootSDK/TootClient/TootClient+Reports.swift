@@ -10,11 +10,13 @@ import Foundation
 public extension TootClient {
 
     /// Report problematic users or posts to moderators.
-    ///
-    /// - Warning: For Pixelfed use `PixelfedReportParams`.
     @discardableResult
-    func report(_ params: ReportParams) async throws -> Report {
-        try requireFlavour(otherThan: [.pixelfed])
+    func report(_ params: ReportParams) async throws -> Report? {
+        if flavour == .pixelfed {
+            try await pixelfedReport(params)
+            return nil
+        }
+
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "reports"])
             $0.method = .post
@@ -23,16 +25,29 @@ public extension TootClient {
 
         return try await fetch(Report.self, req)
     }
+    
+    /// Report categories supported by current flavour.
+    var reportCategories: Set<ReportCategory> {
+        if flavour == .pixelfed {
+            return ReportCategory.pixelfedSupported
+        }
+        return ReportCategory.mastodonSupported
+    }
 
-    /// Report problematic users or posts to moderators.
-    ///
-    /// - Warning: For flavours other than Pixelfed use `ReportParams`.
-    func report(_ params: PixelfedReportParams) async throws {
-        try requireFlavour([.pixelfed])
+    private func pixelfedReport(_ params: ReportParams) async throws {
+        guard ReportCategory.pixelfedSupported.contains(params.category) else {
+            throw TootSDKError.invalidParameter(parameterName: "category")
+        }
+        let postId = params.postIds.first
+        let pixelfedParams = PixelfedReportParams(
+            objectType: postId != nil ? .post : .user,
+            objectId: postId ?? params.accountId,
+            type: params.category
+        )
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1.1", "report"])
             $0.method = .post
-            $0.body = try .json(params)
+            $0.body = try .json(pixelfedParams)
         }
         _ = try await fetch(req: req)
     }
@@ -52,8 +67,8 @@ extension TootClient {
         if let forward = params.forward {
             queryItems.append(.init(name: "forward", value: String(forward).lowercased()))
         }
-        if let category = params.category {
-            queryItems.append(.init(name: "category", value: category))
+        if ReportCategory.mastodonSupported.contains(params.category) {
+            queryItems.append(.init(name: "category", value: params.category.rawValue))
         }
         for ruleId in params.ruleIds ?? [] {
             queryItems.append(.init(name: "rule_ids[]", value: String(ruleId)))
