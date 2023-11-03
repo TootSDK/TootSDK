@@ -10,11 +10,10 @@ import Foundation
 public extension TootClient {
 
     /// Report problematic users or posts to moderators.
-    @discardableResult
-    func report(_ params: ReportParams) async throws -> Report? {
+    func report(_ params: ReportParams) async throws {
         if flavour == .pixelfed {
             try await pixelfedReport(params)
-            return nil
+            return
         }
 
         let req = try HTTPRequestBuilder {
@@ -23,7 +22,7 @@ public extension TootClient {
             $0.body = try .form(queryItems: createQuery(from: params))
         }
 
-        return try await fetch(Report.self, req)
+        _ = try await fetch(req: req)
     }
     
     /// Report categories supported by current flavour.
