@@ -50,6 +50,11 @@ public struct Poll: Codable, Hashable, Identifiable, Sendable {
     public var emojis: [Emoji]
 
     public struct Option: Codable, Hashable, Sendable {
+        public init(title: String, votesCount: Int) {
+            self.title = title
+            self.votesCount = votesCount
+        }
+        
         /// The text value of the poll option. String.
         public var title: String
         /// The number of received votes for this option. Number, or null if results are not published yet.
