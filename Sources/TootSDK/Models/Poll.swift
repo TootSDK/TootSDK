@@ -54,7 +54,7 @@ public struct Poll: Codable, Hashable, Identifiable, Sendable {
             self.title = title
             self.votesCount = votesCount
         }
-        
+
         /// The text value of the poll option. String.
         public var title: String
         /// The number of received votes for this option. Number, or null if results are not published yet.

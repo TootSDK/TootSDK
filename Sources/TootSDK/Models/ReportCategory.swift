@@ -1,6 +1,6 @@
 //
 //  ReportCategory.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 01/11/2023.
 //
