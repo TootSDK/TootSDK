@@ -10,11 +10,12 @@ import Foundation
 public extension TootClient {
 
     /// See all currently active announcements set by admins.
-    func getAnnouncements() async throws -> [Announcement] {
+    func getAnnouncements(params: AnnouncementParams = .init()) async throws -> [Announcement] {
         try requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements"])
             $0.method = .get
+            $0.query = params.queryItems
         }
 
         return try await fetch([Announcement].self, req)
@@ -22,6 +23,7 @@ public extension TootClient {
 
     /// Dismiss a single notification from the server.
     func dismissAnnouncement(id: String) async throws {
+        try requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements", id, "dismiss"])
             $0.method = .post
