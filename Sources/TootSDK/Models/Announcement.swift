@@ -37,7 +37,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
     public let publishedAt: Date?
     /// Whether the announcement is currently active.
     public let published: Bool?
-    /// Whether the announcement is currently active.
+    /// Whether the announcement should start and end on dates only instead of datetimes. Will be false if there is no starts_at or ends_at time.
     public let allDay: Bool
     /// Whether the announcement has a start/end time.
     public let createdAt: Date?

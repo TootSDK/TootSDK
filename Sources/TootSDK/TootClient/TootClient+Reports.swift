@@ -1,6 +1,6 @@
 //
 //  TootClient+Reports.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 26/10/2023.
 //
@@ -24,7 +24,7 @@ public extension TootClient {
 
         _ = try await fetch(req: req)
     }
-    
+
     /// Report categories supported by current flavour.
     var reportCategories: Set<ReportCategory> {
         if flavour == .pixelfed {
