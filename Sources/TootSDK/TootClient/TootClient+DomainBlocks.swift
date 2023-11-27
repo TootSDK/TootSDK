@@ -127,7 +127,7 @@ public extension TootClient {
 
 extension TootFeature {
 
-    /// Ability to query trends
+    /// Ability to block domains
     ///
     /// Not on Friendica
     public static let domainBlocks = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed])

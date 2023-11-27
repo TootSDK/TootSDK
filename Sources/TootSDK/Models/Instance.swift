@@ -201,6 +201,9 @@ public extension Instance {
         if version.lowercased().contains("akkoma") {
             return .akkoma
         }
+        if version.lowercased().contains("firefish") {
+            return .firefish
+        }
         return .mastodon
     }
 }

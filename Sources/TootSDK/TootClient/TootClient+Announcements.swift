@@ -37,5 +37,5 @@ extension TootFeature {
 
     /// Ability to retrieve announcements
     ///
-    public static let announcements = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed])
+    public static let announcements = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .firefish])
 }
