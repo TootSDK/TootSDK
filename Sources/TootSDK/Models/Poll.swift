@@ -46,7 +46,7 @@ public struct Poll: Codable, Hashable, Identifiable, Sendable {
     public var ownVotes: [Int]?
     /// Possible answers for the poll.
     public var options: [Option]
-    /// Custom emoji to be used for rendering poll options.
+    /// Custom emoji to be used for rendering poll options. Not always returned by firefish.
     public var emojis: [Emoji]?
 
     public struct Option: Codable, Hashable, Sendable {
