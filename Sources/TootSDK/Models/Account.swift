@@ -63,7 +63,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     /// When the most recent post was posted
     public let lastPostAt: Date?
     /// How many posts are attached to this account. Not always supplied by firefish.
-    public let postsCount: Int
+    public var postsCount: Int = 0
     /// The reported followers of this profile
     public let followersCount: Int
     /// The reported follows of this profile
