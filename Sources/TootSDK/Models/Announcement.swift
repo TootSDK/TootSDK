@@ -13,6 +13,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
                 createdAt: Date? = nil,
                 updatedAt: Date? = nil,
                 read: Bool,
+                tags: [Tag],
                 emojis: [Emoji],
                 reactions: [AnnouncementReaction],
                 startsAt: Date? = nil,
@@ -25,6 +26,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.read = read
+        self.tags = tags
         self.emojis = emojis
         self.reactions = reactions
         self.startsAt = startsAt
@@ -47,6 +49,8 @@ public struct Announcement: Codable, Hashable, Identifiable {
     public let updatedAt: Date?
     /// Whether the announcement has been read by the user.
     public let read: Bool
+    /// Tags linked in the announcement text.
+    public let tags: [Tag]
     /// Custom emoji used in the announcement text.
     public let emojis: [Emoji]
     /// Emoji reactions attached to the announcement.
