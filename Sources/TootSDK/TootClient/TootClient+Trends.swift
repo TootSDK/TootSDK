@@ -65,5 +65,5 @@ extension TootFeature {
 
     /// Ability to query trends
     ///
-    public static let trends = TootFeature(supportedFlavours: [.mastodon])
+    public static let trends = TootFeature(supportedFlavours: [.mastodon, .firefish])
 }

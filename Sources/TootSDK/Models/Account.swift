@@ -32,6 +32,35 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.source = source
     }
 
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.username = try? container.decodeIfPresent(String.self, forKey: .username)
+        self.acct = try container.decode(String.self, forKey: .acct)
+        self.url = try container.decode(String.self, forKey: .url)
+        self.displayName = try? container.decodeIfPresent(String.self, forKey: .displayName)
+        self.note = try container.decode(String.self, forKey: .note)
+        self.avatar = try container.decode(String.self, forKey: .avatar)
+        self.avatarStatic = try? container.decodeIfPresent(String.self, forKey: .avatarStatic)
+        self.header = try container.decode(String.self, forKey: .header)
+        self.headerStatic = try container.decode(String.self, forKey: .headerStatic)
+        self.locked = try container.decode(Bool.self, forKey: .locked)
+        self.emojis = try container.decode([Emoji].self, forKey: .emojis)
+        self.discoverable = try? container.decodeIfPresent(Bool.self, forKey: .discoverable)
+        self.createdAt = try container.decode(Date.self, forKey: .createdAt)
+        self.lastPostAt = try? container.decodeIfPresent(Date.self, forKey: .lastPostAt)
+        // firefish doesn't return this in reblog info
+        self.postsCount = (try? container.decodeIfPresent(Int.self, forKey: .postsCount)) ?? 0
+        self.followersCount = try container.decode(Int.self, forKey: .followersCount)
+        self.followingCount = try container.decode(Int.self, forKey: .followingCount)
+        self.moved = try? container.decodeIfPresent(Account.self, forKey: .moved)
+        self.suspended = try? container.decodeIfPresent(Bool.self, forKey: .suspended)
+        self.limited = try? container.decodeIfPresent(Bool.self, forKey: .limited)
+        self.fields = try container.decode([TootField].self, forKey: .fields)
+        self.bot = try? container.decodeIfPresent(Bool.self, forKey: .bot)
+        self.source = try? container.decodeIfPresent(TootSource.self, forKey: .source)
+    }
+
     /// The account id.
     public let id: String
     /// The username of the account, not including domain.
@@ -62,7 +91,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let createdAt: Date
     /// When the most recent post was posted
     public let lastPostAt: Date?
-    /// How many posts are attached to this account
+    /// How many posts are attached to this account.
     public let postsCount: Int
     /// The reported followers of this profile
     public let followersCount: Int
@@ -81,6 +110,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let bot: Bool?
     /// An extra entity to be used with API methods to verify credentials and update credentials
     public let source: TootSource?
+
 }
 
 public extension Account {
