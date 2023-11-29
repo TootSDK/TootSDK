@@ -14,6 +14,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
                 updatedAt: Date? = nil,
                 read: Bool? = nil,
                 mentions: [Announcement.Account],
+                statuses: [Announcement.Status],
                 tags: [Tag],
                 emojis: [Emoji],
                 reactions: [AnnouncementReaction],
@@ -28,6 +29,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
         self.updatedAt = updatedAt
         self.read = read
         self.mentions = mentions
+        self.statuses = statuses
         self.tags = tags
         self.emojis = emojis
         self.reactions = reactions
@@ -51,8 +53,11 @@ public struct Announcement: Codable, Hashable, Identifiable {
     public let updatedAt: Date?
     /// Whether the announcement has been read by the user.
     public let read: Bool?
-    /// Tags linked in the announcement text.
+    /// Accounts mentioned in the announcement text.
     public let mentions: [Announcement.Account]
+    /// Statuses mentioned in the announcement text.
+    public let statuses: [Announcement.Status]
+    /// Tags linked in the announcement text.
     public let tags: [Tag]
     /// Custom emoji used in the announcement text.
     public let emojis: [Emoji]
@@ -80,5 +85,17 @@ public struct Announcement: Codable, Hashable, Identifiable {
         /// The webfinger acct: URI of the mentioned user.
         /// Equivalent to username for local users, or username@domain for remote users.
         public var acct: String
+    }
+    
+    public struct Status: Codable, Hashable, Identifiable {
+        public init(id: String, url: String) {
+            self.id = id
+            self.url = url
+        }
+
+        /// The ID of an attached Status in the database.
+        public var id: String
+        /// The URL of an attached Status.
+        public var url: String
     }
 }
