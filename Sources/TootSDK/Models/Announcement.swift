@@ -13,6 +13,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
                 createdAt: Date? = nil,
                 updatedAt: Date? = nil,
                 read: Bool,
+                mentions: [Announcement.Account],
                 tags: [Tag],
                 emojis: [Emoji],
                 reactions: [AnnouncementReaction],
@@ -26,6 +27,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.read = read
+        self.mentions = mentions
         self.tags = tags
         self.emojis = emojis
         self.reactions = reactions
@@ -50,6 +52,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
     /// Whether the announcement has been read by the user.
     public let read: Bool
     /// Tags linked in the announcement text.
+    public let mentions: [Announcement.Account]
     public let tags: [Tag]
     /// Custom emoji used in the announcement text.
     public let emojis: [Emoji]
@@ -59,4 +62,23 @@ public struct Announcement: Codable, Hashable, Identifiable {
     public let startsAt: Date?
     ///  When the future announcement will end.
     public let endsAt: Date?
+
+    public struct Account: Codable, Hashable, Identifiable {
+        public init(id: String, username: String, url: String, acct: String) {
+            self.id = id
+            self.username = username
+            self.url = url
+            self.acct = acct
+        }
+
+        /// The account ID of the mentioned user.
+        public var id: String
+        /// The username of the mentioned user.
+        public var username: String
+        /// The location of the mentioned user’s profile.
+        public var url: String
+        /// The webfinger acct: URI of the mentioned user.
+        /// Equivalent to username for local users, or username@domain for remote users.
+        public var acct: String
+    }
 }
