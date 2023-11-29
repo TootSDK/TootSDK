@@ -12,7 +12,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
                 allDay: Bool,
                 createdAt: Date? = nil,
                 updatedAt: Date? = nil,
-                read: Bool,
+                read: Bool? = nil,
                 mentions: [Announcement.Account],
                 tags: [Tag],
                 emojis: [Emoji],
@@ -50,7 +50,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
     /// When the announcement was last updated.
     public let updatedAt: Date?
     /// Whether the announcement has been read by the user.
-    public let read: Bool
+    public let read: Bool?
     /// Tags linked in the announcement text.
     public let mentions: [Announcement.Account]
     public let tags: [Tag]
