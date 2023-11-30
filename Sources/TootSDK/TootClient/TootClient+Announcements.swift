@@ -31,7 +31,7 @@ public extension TootClient {
 
         _ = try await fetch(req: req)
     }
-    
+
     /// React to an announcement with an emoji.
     /// - Parameters:
     ///   - id: The ID of the Announcement in the database.
@@ -45,7 +45,7 @@ public extension TootClient {
 
         _ = try await fetch(req: req)
     }
-    
+
     /// Undo a react emoji to an announcement.
     /// - Parameters:
     ///   - id: The ID of the Announcement in the database.

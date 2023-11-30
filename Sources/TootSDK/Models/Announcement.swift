@@ -86,7 +86,7 @@ public struct Announcement: Codable, Hashable, Identifiable {
         /// Equivalent to username for local users, or username@domain for remote users.
         public var acct: String
     }
-    
+
     public struct Status: Codable, Hashable, Identifiable {
         public init(id: String, url: String) {
             self.id = id
