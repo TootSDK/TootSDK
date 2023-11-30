@@ -31,6 +31,34 @@ public extension TootClient {
 
         _ = try await fetch(req: req)
     }
+    
+    /// React to an announcement with an emoji.
+    /// - Parameters:
+    ///   - id: The ID of the Announcement in the database.
+    ///   - name: Unicode emoji, or the shortcode of a custom emoji.
+    func addAnnouncementReaction(id: String, name: String) async throws {
+        try requireFeature(.announcements)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "announcements", id, "reactions", name])
+            $0.method = .put
+        }
+
+        _ = try await fetch(req: req)
+    }
+    
+    /// Undo a react emoji to an announcement.
+    /// - Parameters:
+    ///   - id: The ID of the Announcement in the database.
+    ///   - name: Unicode emoji, or the shortcode of a custom emoji.
+    func removeAnnouncementReaction(id: String, name: String) async throws {
+        try requireFeature(.announcements)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "announcements", id, "reactions", name])
+            $0.method = .delete
+        }
+
+        _ = try await fetch(req: req)
+    }
 }
 
 extension TootFeature {
