@@ -36,5 +36,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
       GetConversations.self,
       GetInstance.self,
       GetMarkers.self,
+      UpdateMarkers.self,
     ])
 }
