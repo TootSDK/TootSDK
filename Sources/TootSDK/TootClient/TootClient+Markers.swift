@@ -8,6 +8,9 @@
 import Foundation
 
 public extension TootClient {
+    /// Get saved timeline positions
+    ///
+    /// - Parameter timelines: The timeline(s) for which markers should be fetched.
     func getMarkers(for timelines: Set<Marker.Timeline>) async throws -> [Marker.Timeline: Marker] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "markers"])
@@ -18,6 +21,11 @@ public extension TootClient {
         return try await fetch([Marker.Timeline: Marker].self, req)
     }
 
+    /// Save your position in a timeline
+    ///
+    /// - Parameters:
+    ///   - homeLastReadId: ID of the last status read in the home timeline.
+    ///   - notificationsLastReadId: ID of the last notification read.
     @discardableResult
     func updateMarkers(
         homeLastReadId: String? = nil,

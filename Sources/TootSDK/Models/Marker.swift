@@ -18,6 +18,7 @@ public struct Marker: Codable, Hashable {
     /// Used for locking to prevent write conflicts.
     public var version: Int
 
+    /// Identifies a timeline for which a position can be saved.
     public enum Timeline: String, Hashable, Codable, CodingKeyRepresentable {
         /// Information about the user's position in the home timeline.
         case home
