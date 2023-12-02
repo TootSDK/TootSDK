@@ -24,7 +24,8 @@ struct UpdateMarkers: AsyncParsableCommand {
     var notifications: String?
 
     mutating func run() async throws {
-        let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
+        let client = try await TootClient(connect: URL(string: url)!, accessToken: token)
+        client.debugOn()
         let markers = try await client.updateMarkers(homeLastReadId: home, notificationsLastReadId: notifications)
         print(markers)
     }

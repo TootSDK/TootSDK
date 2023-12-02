@@ -26,7 +26,8 @@ struct GetMarkers: AsyncParsableCommand {
     var timelines: [Marker.Timeline]
 
     mutating func run() async throws {
-        let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
+        let client = try await TootClient(connect: URL(string: url)!, accessToken: token)
+        client.debugOn()
         let markers = try await client.getMarkers(for: Set(timelines))
         print(markers)
     }
