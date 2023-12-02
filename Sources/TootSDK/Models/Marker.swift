@@ -18,7 +18,7 @@ public struct Marker: Codable, Hashable {
     /// Used for locking to prevent write conflicts.
     public var version: Int
 
-    public enum Timeline: String, Codable {
+    public enum Timeline: String, Hashable, Codable, CodingKeyRepresentable {
         /// Information about the user's position in the home timeline.
         case home
         /// Information about the user's position in their notifications.
