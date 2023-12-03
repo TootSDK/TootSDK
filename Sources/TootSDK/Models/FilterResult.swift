@@ -1,6 +1,6 @@
 //
 //  FilterResult.swift
-//  
+//
 //
 //  Created by Philip Chu on 12/2/23.
 //
@@ -15,4 +15,3 @@ public struct FilterResult: Codable, Hashable {
     /// The status ID within the filter that was matched.
     public var statusMatches: [String]?
 }
-
