@@ -34,10 +34,10 @@ public struct Filter: Codable, Hashable, Identifiable {
     public var expiresAt: Date?
     /// The action to be taken when a status matches this filter.
     public var filterAction: Action
-    /// The keywords grouped under this filter.
-    public var keywords: [FilterKeyword]
-    /// The statuses grouped under this filter.
-    public var statuses: [FilterStatus]
+    /// The keywords grouped under this filter (not returned when part of FilterResult)
+    public var keywords: [FilterKeyword]?
+    /// The statuses grouped under this filter (not returned when part of FilterResult)
+    public var statuses: [FilterStatus]?
 }
 
 extension Filter.Context: Identifiable {
