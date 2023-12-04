@@ -127,7 +127,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public var bookmarked: Bool?
     /// Have you pinned this post? Only appears if the post is pinnable.
     public var pinned: Bool?
-    /// If the current token has an authorized user: The filter and keywords that matched this status.
+    /// If the current token has an authorized user: The filter and keywords that matched this post.
     public var filtered: [FilterResult]?
 
     public enum Visibility: String, Codable, CaseIterable, Sendable {
