@@ -23,4 +23,12 @@ extension TootClient {
         }
         return try await fetch([InstanceRule].self, req)
     }
+    
+    public func getExtendedDescription() async throws -> ExtendedDescription {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "description"])
+            $0.method = .get
+        }
+        return try await fetch(ExtendedDescription.self, req)
+    }
 }
