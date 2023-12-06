@@ -11,16 +11,16 @@ public struct Filter: Codable, Hashable, Identifiable {
         case notifications
         /// public timelines
         case `public`
-        /// expanded thread of a detailed status
+        /// expanded thread of a detailed post
         case thread
         /// when viewing a profile
         case account
     }
 
     public enum Action: String, Codable {
-        /// show a warning that identifies the matching filter by title, and allow the user to expand the filtered status. This is the default (and unknown values should be treated as equivalent to warn).
+        /// show a warning that identifies the matching filter by title, and allow the user to expand the filtered post. This is the default (and unknown values should be treated as equivalent to warn).
         case warn
-        /// do not show this status if it is received
+        /// do not show this post if it is received
         case hide
     }
 
@@ -32,12 +32,35 @@ public struct Filter: Codable, Hashable, Identifiable {
     public var context: [Context]
     /// When the filter should no longer be applied.
     public var expiresAt: Date?
-    /// The action to be taken when a status matches this filter.
+    /// The action to be taken when a post matches this filter.
     public var filterAction: Action
     /// The keywords grouped under this filter.
     public var keywords: [FilterKeyword]
-    /// The statuses grouped under this filter.
+    /// The posts grouped under this filter.
     public var statuses: [FilterStatus]
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case context
+        case expiresAt
+        case filterAction
+        case keywords
+        case statuses // posts = "statuses"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.context = try container.decode([Context].self, forKey: .context)
+        self.expiresAt = try? container.decodeIfPresent(Date.self, forKey: .expiresAt)
+        self.filterAction = try container.decode(Action.self, forKey: .filterAction)
+        // not returned when part of FilterResult
+        self.keywords = (try? container.decodeIfPresent([FilterKeyword].self, forKey: .keywords)) ?? []
+        // not returned when part of FilterResult
+        self.statuses = (try? container.decodeIfPresent([FilterStatus].self, forKey: .statuses)) ?? []
+    }
 }
 
 extension Filter.Context: Identifiable {
