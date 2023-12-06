@@ -89,7 +89,7 @@ public struct Instance: Codable, Hashable {
 
         enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
             case userCount
-            case postCount = "status_count"
+            case postCount = "statusCount"
             case domainCount
         }
     }
