@@ -37,5 +37,8 @@ struct SwiftyAdmin: AsyncParsableCommand {
       GetInstance.self,
       GetMarkers.self,
       UpdateMarkers.self,
+      GetPendingFollowRequests.self,
+      AcceptFollowRequest.self,
+      RejectFollowRequest.self,
     ])
 }
