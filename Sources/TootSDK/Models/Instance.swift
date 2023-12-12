@@ -155,7 +155,7 @@ public struct Instance: Codable, Hashable {
 
         // swiftlint:enable nesting
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.uri = try? container.decodeIfPresent(String.self, forKey: .uri)
