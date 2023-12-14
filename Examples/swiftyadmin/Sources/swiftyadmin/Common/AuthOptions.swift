@@ -23,12 +23,4 @@ struct AuthOptions: ParsableArguments {
 
     @Flag(name: .shortAndLong)
     var verbose: Bool = false
-
-    func connect() async throws -> TootClient {
-        let client = try await TootClient(connect: url, accessToken: token)
-        if verbose {
-            client.debugOn()
-        }
-        return client
-    }
 }

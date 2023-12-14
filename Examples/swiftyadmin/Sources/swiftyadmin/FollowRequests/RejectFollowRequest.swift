@@ -14,8 +14,11 @@ struct RejectFollowRequest: AsyncParsableCommand {
     @Option var id: String
 
     mutating func run() async throws {
-        let client = try await auth.connect()
-        let followRequests = try await client.rejectFollowRequest(id: id)
-        print(followRequests)
+        let client = try await TootClient(connect: auth.url, accessToken: auth.token)
+        if auth.verbose {
+            client.debugOn()
+        }
+        let relationship = try await client.rejectFollowRequest(id: id)
+        print(relationship)
     }
 }
