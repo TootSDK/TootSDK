@@ -52,6 +52,7 @@ let package = Package(
                 .copy("Resources/familiar_followers_nofollowers.json"),
                 .copy("Resources/featured_tag.json"),
                 .copy("Resources/featured_tag_unused.json"),
+                .copy("Resources/instance_friendica_noaccount.json"),
                 .copy("Resources/list.json"),
                 .copy("Resources/post no emojis.json"),
                 .copy("Resources/post with emojis and attachments.json"),
