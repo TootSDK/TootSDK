@@ -224,9 +224,7 @@ extension TootClient {
         return try await fetch([List].self, req)
     }
 
-    // swiftlint:disable todo
     // TODO: - Lookup account ID from Webfinger address
-    // swiftlint:enable todo
 }
 
 extension TootFeature {

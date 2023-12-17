@@ -21,7 +21,6 @@ extension TootClient {
     /// - Returns: your relationship with that account after following
     public func followAccountURI(by uri: String) async throws -> Relationship {
         if self.flavour == .pleroma {
-            // TODO: - resolve this issue: https://github.com/TootSDK/TootSDK/issues/34 // swiftlint:disable:this todo
 
             // On Pleroma, we get to follow by URI, but it doesn't return a relationship, it returns an account
             // So we use that to then retrieve the relationship

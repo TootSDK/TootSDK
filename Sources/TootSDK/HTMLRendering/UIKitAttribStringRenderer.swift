@@ -76,7 +76,7 @@
             }
         }
 
-        private func attributedTextForElement(_ element: Element) -> NSAttributedString? {  // swiftlint:disable:this cyclomatic_complexity
+        private func attributedTextForElement(_ element: Element) -> NSAttributedString? {
             var attributed = NSMutableAttributedString(string: "")
 
             for child in element.getChildNodes() {

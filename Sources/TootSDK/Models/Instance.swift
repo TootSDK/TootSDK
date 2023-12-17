@@ -87,7 +87,7 @@ public struct Instance: Codable, Hashable {
         /// Domains federated with this instance. Number.
         public var domainCount: Int?
 
-        enum CodingKeys: String, CodingKey {  // swiftlint:disable:this nesting
+        enum CodingKeys: String, CodingKey {
             case userCount
             case postCount = "statusCount"
             case domainCount
@@ -103,8 +103,6 @@ public struct Instance: Codable, Hashable {
         public var mediaAttachments: MediaAttachments?
         /// Limits related to polls.
         public var polls: Polls?
-
-        // swiftlint:disable nesting
 
         enum CodingKeys: String, CodingKey {
             case accounts
@@ -153,7 +151,6 @@ public struct Instance: Codable, Hashable {
             public var maxExpiration: Int?
         }
 
-        // swiftlint:enable nesting
     }
 
     public init(from decoder: Decoder) throws {
