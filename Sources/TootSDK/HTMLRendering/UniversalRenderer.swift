@@ -44,7 +44,7 @@ public class UniversalRenderer {
 
         // attempt to parse emojis and other special content
         // Replace the custom emojis with image refs and a data attribute which can be used in css:
-        emojis.forEach { emoji in
+        for emoji in emojis {
             html = html.replacingOccurrences(
                 of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
