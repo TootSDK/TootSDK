@@ -15,4 +15,12 @@ checklint: ## Checks the project for linting errors, used by the CI
 
 lint: ## Applies all auto-correctable lint issues and reformats all source files
 	@swift-format format -i --configuration ./.swift-format --recursive ./Sources
-	@swift-format lint --configuration ./.swift-format --recursive ./Sources
+	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/swiftui-toot/TootSDK-Demo
+	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/swiftyadmin/Sources
+	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/tootsdk-release/Sources
+	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/vaportoot/Sources
+	@swift-format lint -p --configuration ./.swift-format --recursive ./Sources
+	@swift-format lint -p --configuration ./.swift-format --recursive ./Examples/swiftui-toot/TootSDK-Demo
+	@swift-format lint -p --configuration ./.swift-format --recursive ./Examples/swiftyadmin/Sources
+	@swift-format lint -p --configuration ./.swift-format --recursive ./Examples/tootsdk-release/Sources
+	@swift-format lint -p --configuration ./.swift-format --recursive ./Examples/vaportoot/Sources
