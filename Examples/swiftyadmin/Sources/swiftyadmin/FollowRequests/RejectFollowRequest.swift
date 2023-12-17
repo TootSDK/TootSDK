@@ -1,12 +1,12 @@
 //
 //  RejectFollowRequest.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 10/12/2023.
 //
 
-import Foundation
 import ArgumentParser
+import Foundation
 import TootSDK
 
 struct RejectFollowRequest: AsyncParsableCommand {

@@ -11,10 +11,10 @@ import TootSDK
 struct FeedView: View {
     @EnvironmentObject var tootManager: TootManager
     @ObservedObject var viewModel: FeedViewModel
-    
+
     @State var name: String = ""
     @State var path: NavigationPath = NavigationPath()
-            
+
     var body: some View {
         NavigationStack(path: $path) {
             List(viewModel.feedPosts, id: \.self) { feedPost in
@@ -22,7 +22,7 @@ struct FeedView: View {
                     self.path.append(feedPost.tootPost.displayPost.id)
                 } label: {
                     FeedPostView(post: feedPost, attributed: true, path: $path)
-                        .background(.background.opacity(0.001)) // Enables the whole row to be pressed
+                        .background(.background.opacity(0.001))  // Enables the whole row to be pressed
                 }
                 .buttonStyle(.plain)
             }
@@ -48,7 +48,7 @@ struct FeedView: View {
                         .ignoresSafeArea()
                     ProgressView()
                 }
-                
+
             }
         }
     }

@@ -11,12 +11,12 @@ extension TootController {
         guard let client = try await getAuthenticatedClient(req: req) else {
             return try await logout(req: req)
         }
-        
+
         client.debugOn()
         guard let account = try? await client.verifyCredentials() else {
             throw Abort(.notFound)
         }
-        
+
         // if replying to a post, add the content to context
         let query = try req.query.decode(MeQuery.self)
         var replyText = ""

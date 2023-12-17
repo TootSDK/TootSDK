@@ -5,28 +5,28 @@
 //  Created by dave on 6/11/22.
 //
 
+import AuthenticationServices
 import SwiftUI
 import TootSDK
-import AuthenticationServices
 
 struct AuthorizeView: View {
     @EnvironmentObject var tootManager: TootManager
-    
+
     @State var urlString: String = ""
     @State var signInDisabled: Bool = false
     @State var test: Bool = false
-    
+
     var body: some View {
         VStack {
             Text("Connect to the Fediverse")
                 .font(.title2)
-            
+
             Form {
-                
+
                 TextField("https://instance.tld", text: $urlString)
                     .autocorrectionDisabled(true)
                     .autocapitalization(.none)
-                
+
                 Button {
                     Task {
                         do {
@@ -49,7 +49,7 @@ struct AuthorizeView: View {
 
 extension AuthorizeView {
     @MainActor func attemptSignIn() async throws {
-        guard let url = URL(string: urlString) else { return }        
+        guard let url = URL(string: urlString) else { return }
         try await tootManager.createClientAndPresentSignIn(url)
     }
 }
