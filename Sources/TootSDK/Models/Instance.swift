@@ -87,7 +87,7 @@ public struct Instance: Codable, Hashable {
         /// Domains federated with this instance. Number.
         public var domainCount: Int?
 
-        enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
+        enum CodingKeys: String, CodingKey {  // swiftlint:disable:this nesting
             case userCount
             case postCount = "statusCount"
             case domainCount
@@ -178,14 +178,14 @@ public struct Instance: Codable, Hashable {
     }
 }
 
-public extension Instance {
-    var majorVersion: Int? {
+extension Instance {
+    public var majorVersion: Int? {
         guard let majorVersionString = version.split(separator: ".").first else { return nil }
 
         return Int(majorVersionString)
     }
 
-    var minorVersion: Int? {
+    public var minorVersion: Int? {
         let versionComponents = version.split(separator: ".")
 
         guard versionComponents.count > 1 else { return nil }
@@ -193,7 +193,7 @@ public extension Instance {
         return Int(versionComponents[1])
     }
 
-    var patchVersion: String? {
+    public var patchVersion: String? {
         let versionComponents = version.split(separator: ".")
 
         guard versionComponents.count > 2 else { return nil }
@@ -201,15 +201,15 @@ public extension Instance {
         return String(versionComponents[2])
     }
 
-    var canShowProfileDirectory: Bool {
+    public var canShowProfileDirectory: Bool {
         guard let majorVersion = majorVersion else { return false }
 
         return majorVersion >= 3
     }
 }
 
-public extension Instance {
-    var flavour: TootSDKFlavour {
+extension Instance {
+    public var flavour: TootSDKFlavour {
         if version.lowercased().contains("pleroma") {
             return .pleroma
         }

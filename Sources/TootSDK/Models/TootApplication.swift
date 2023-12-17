@@ -5,13 +5,15 @@ import Foundation
 
 /// Represents an application that interfaces with the REST API to access accounts or posts.
 public struct TootApplication: Codable, Hashable, Identifiable {
-    public init(name: String,
-                website: String? = nil,
-                vapidKey: String? = nil,
-                redirectUri: String? = nil,
-                clientId: String? = nil,
-                clientSecret: String? = nil,
-                id: String? = nil) {
+    public init(
+        name: String,
+        website: String? = nil,
+        vapidKey: String? = nil,
+        redirectUri: String? = nil,
+        clientId: String? = nil,
+        clientSecret: String? = nil,
+        id: String? = nil
+    ) {
         self.name = name
         self.website = website
         self.vapidKey = vapidKey

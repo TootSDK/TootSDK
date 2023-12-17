@@ -24,7 +24,7 @@ extension TootDataStream {
         let newHolder = TootEndpointStream(timeline)
         newHolder.pageInfo = pageInfo
 
-        newHolder.refresh = {[weak self, weak newHolder] in
+        newHolder.refresh = { [weak self, weak newHolder] in
             if let items = try await self?.client.getTimeline(timeline, pageInfo: newHolder?.pageInfo) {
                 newHolder?.internalContinuation?.yield(items.result)
 

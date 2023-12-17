@@ -4,8 +4,7 @@ extension FormDataEncoder.Encoder: SingleValueEncodingContainer {
     }
 
     func encode<T: Encodable>(_ value: T) throws {
-        if
-            let convertible = value as? MultipartPartConvertible,
+        if let convertible = value as? MultipartPartConvertible,
             let part = convertible.multipart
         {
             storage.dataContainer = SingleValueDataContainer(part: part)

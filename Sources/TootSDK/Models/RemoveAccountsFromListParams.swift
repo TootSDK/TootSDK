@@ -12,8 +12,8 @@ public struct RemoveAccountsFromListParams: Codable {
     public var accountIds: [String]
 }
 
-public extension RemoveAccountsFromListParams {
-    init(accountId: String) {
+extension RemoveAccountsFromListParams {
+    public init(accountId: String) {
         self = RemoveAccountsFromListParams(accountIds: [accountId])
     }
 }

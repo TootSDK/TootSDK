@@ -11,7 +11,7 @@ public struct FormDataEncoder {
     public var userInfo: [CodingUserInfoKey: Any] = [:]
 
     /// Creates a new `FormDataEncoder`.
-    public init() { }
+    public init() {}
 
     /// Encodes an `Encodable` item to `String` using the supplied boundary.
     ///

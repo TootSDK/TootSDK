@@ -35,9 +35,9 @@ public final class MultipartParser {
         case epilogue
     }
 
-    public var onHeader: (String, String) -> ()
-    public var onBody: (inout ByteBuffer) -> ()
-    public var onPartComplete: () -> ()
+    public var onHeader: (String, String) -> Void
+    public var onBody: (inout ByteBuffer) -> Void
+    public var onPartComplete: () -> Void
 
     private let boundary: [UInt8]
     private let boundaryLength: Int
@@ -51,7 +51,7 @@ public final class MultipartParser {
 
         self.onHeader = { _, _ in }
         self.onBody = { _ in }
-        self.onPartComplete = { }
+        self.onPartComplete = {}
 
         self.boundary = Array("\r\n--\(boundary)".utf8)
         self.boundaryLength = self.boundary.count
@@ -101,13 +101,13 @@ public final class MultipartParser {
             // allow skipping the initial CRLF
             if boundaryMatchIndex == 0, byte == boundary[2] {
                 boundaryMatchIndex = 3
-            // (continues to) match boundary: move on to next index
+                // (continues to) match boundary: move on to next index
             } else if byte == boundary[boundaryMatchIndex] {
                 boundaryMatchIndex = boundaryMatchIndex + 1
-            // stopped matching boundary but matches with start of boundary: restart at 1
+                // stopped matching boundary but matches with start of boundary: restart at 1
             } else if boundaryMatchIndex > 0, byte == boundary[0] {
                 boundaryMatchIndex = 1
-            // no match at either current position or start of boundary: restart at 0
+                // no match at either current position or start of boundary: restart at 0
             } else {
                 boundaryMatchIndex = 0
             }
@@ -253,13 +253,13 @@ public final class MultipartParser {
     }
 }
 
-private extension UInt8 {
-    static let colon: UInt8 = 58
-    static let lf: UInt8 = 10
-    static let cr: UInt8 = 13
-    static let hyphen: UInt8 = 45
-    static let space: UInt8 = 9
-    static let tab: UInt8 = 32
+extension UInt8 {
+    fileprivate static let colon: UInt8 = 58
+    fileprivate static let lf: UInt8 = 10
+    fileprivate static let cr: UInt8 = 13
+    fileprivate static let hyphen: UInt8 = 45
+    fileprivate static let space: UInt8 = 9
+    fileprivate static let tab: UInt8 = 32
 
     /*
      See https://tools.ietf.org/html/rfc1341#page-6 and https://tools.ietf.org/html/rfc822#section-3.2
@@ -277,40 +277,40 @@ private extension UInt8 {
      */
     private static let allowedHeaderFieldNameCharacterFlags: [Bool] = [
         //  0 nul   1 soh   2 stx   3 etx   4 eot   5 enq   6 ack   7 bel
-            false,  false,  false,  false,  false,  false,  false,  false,
+        false, false, false, false, false, false, false, false,
         //  8 bs    9 ht    10 nl   11 vt   12 np   13 cr   14 so   15 si
-            false,  false,  false,  false,  false,  false,  false,  false,
+        false, false, false, false, false, false, false, false,
         //  16 dle  17 dc1  18 dc2  19 dc3  20 dc4  21 nak  22 syn  23 etb
-            false,  false,  false,  false,  false,  false,  false,  false,
+        false, false, false, false, false, false, false, false,
         //  24 can  25 em   26 sub  27 esc  28 fs   29 gs   30 rs   31 us
-            false,  false,  false,  false,  false,  false,  false,  false,
+        false, false, false, false, false, false, false, false,
         //  32 sp   33 !    34 "    35 #    36 $    37 %    38 &    39
-            false,  true,   false,  true,   true,   true,   true,   true,
+        false, true, false, true, true, true, true, true,
         //  40 (    41 )    42 *    43 +    44 ,    45 -    46 .    47
-            false,  false,  true,   true,   false,  true,   true,   false,
+        false, false, true, true, false, true, true, false,
         //  48 0    49 1    50 2    51 3    52 4    53 5    54 6    55 7
-            true,   true,   true,   true,   true,   true,   true,   true,
+        true, true, true, true, true, true, true, true,
         //  56 8    57 9    58 :    59 ;    60 <    61 =    62 >    63
-            true,   true,   false,  false,  false,  false,  false,  false,
+        true, true, false, false, false, false, false, false,
         //  64 @    65 A    66 B    67 C    68 D    69 E    70 F    71 G
-            false,  true,   true,   true,   true,   true,   true,   true,
+        false, true, true, true, true, true, true, true,
         //  72 H    73 I    74 J    75 K    76 L    77 M    78 N    79 O
-            true,   true,   true,   true,   true,   true,   true,   true,
+        true, true, true, true, true, true, true, true,
         //  80 P    81 Q    82 R    83 S    84 T    85 U    86 V    87 W
-            true,   true,   true,   true,   true,   true,   true,   true,
+        true, true, true, true, true, true, true, true,
         //  88 X    89 Y    90 Z    91 [    92 \    93 ]    94 ^    95 _
-            true,   true,   true,    false, false,  false,  true,   true,
+        true, true, true, false, false, false, true, true,
         //  96 `    97 a    98 b    99 c    100 d   101 e   102 f   103 g
-            true,   true,   true,   true,   true,   true,   true,   true,
+        true, true, true, true, true, true, true, true,
         //  104 h   105 i   106 j   107 k   108 l   109 m   110 n   111 o
-            true,   true,   true,   true,   true,   true,   true,   true,
+        true, true, true, true, true, true, true, true,
         //  112 p   113 q   114 r   115 s   116 t   117 u   118 v   119 w
-            true,   true,   true,   true,   true,   true,   true,   true,
+        true, true, true, true, true, true, true, true,
         //  120 x   121 y   122 z   123 {   124 |   125 }   126 ~   127 del
-            true,   true,   true,   false,  true,   false,  true,   false
+        true, true, true, false, true, false, true, false,
     ]
 
-    var isAllowedHeaderFieldNameCharacter: Bool {
+    fileprivate var isAllowedHeaderFieldNameCharacter: Bool {
         Self.allowedHeaderFieldNameCharacterFlags[Int(self)]
     }
 }

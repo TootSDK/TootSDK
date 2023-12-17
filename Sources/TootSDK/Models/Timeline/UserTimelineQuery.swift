@@ -6,7 +6,9 @@ import Foundation
 /// Specifies the parameters for a user posts timeline request
 public struct UserTimelineQuery: Sendable {
 
-    public init(userId: String, onlyMedia: Bool? = nil, excludeReplies: Bool? = nil, excludeBoosts: Bool? = nil, pinned: Bool? = nil, tagged: String? = nil) {
+    public init(
+        userId: String, onlyMedia: Bool? = nil, excludeReplies: Bool? = nil, excludeBoosts: Bool? = nil, pinned: Bool? = nil, tagged: String? = nil
+    ) {
         self.userId = userId
         self.onlyMedia = onlyMedia
         self.excludeReplies = excludeReplies

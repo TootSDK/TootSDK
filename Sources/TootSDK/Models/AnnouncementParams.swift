@@ -20,8 +20,9 @@ public struct AnnouncementParams: Codable, Sendable {
 extension AnnouncementParams {
     var queryItems: [URLQueryItem] {
         [
-            URLQueryItem(name: "with_dismissed",
-                         value: withDismissed?.description)
+            URLQueryItem(
+                name: "with_dismissed",
+                value: withDismissed?.description)
         ].filter { $0.value != nil }
     }
 }

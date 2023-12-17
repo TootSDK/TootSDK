@@ -8,20 +8,22 @@
 import Foundation
 
 public struct TrendingLink: Codable, Hashable {
-    public init(url: String,
-                title: String,
-                description: String,
-                authorName: String? = nil,
-                authorUrl: String? = nil,
-                providerName: String? = nil,
-                providerUrl: String? = nil,
-                html: String? = nil,
-                width: Int? = nil,
-                height: Int? = nil,
-                image: String? = nil,
-                embedUrl: String? = nil,
-                blurhash: String? = nil,
-                history: [History]? = nil) {
+    public init(
+        url: String,
+        title: String,
+        description: String,
+        authorName: String? = nil,
+        authorUrl: String? = nil,
+        providerName: String? = nil,
+        providerUrl: String? = nil,
+        html: String? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        image: String? = nil,
+        embedUrl: String? = nil,
+        blurhash: String? = nil,
+        history: [History]? = nil
+    ) {
         self.url = url
         self.title = title
         self.description = description

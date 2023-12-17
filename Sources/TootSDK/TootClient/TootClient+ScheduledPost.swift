@@ -3,13 +3,13 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Schedules a post based on the components provided
     /// - Parameters:
     ///   - ScheduledPostParams: post components to be published
     /// - Returns: the ScheduledPost, if successful, throws an error if not
-    func schedulePost(_ params: ScheduledPostParams) async throws -> ScheduledPost {
+    public func schedulePost(_ params: ScheduledPostParams) async throws -> ScheduledPost {
         try requireFeature(.scheduledPost)
         let requestParams = try ScheduledPostRequest(from: params)
         let req = try HTTPRequestBuilder {
@@ -28,7 +28,7 @@ public extension TootClient {
     ///   - sinceId: Return results newer than ID
     ///   - limit: Maximum number of results to return. Defaults to 20. Max 40
     /// - Returns: array of scheduled posts (empty if none), an error if any issue
-    func getScheduledPost(minId: String?, maxId: String?, sinceId: String?, limit: Int?) async throws -> [ScheduledPost] {
+    public func getScheduledPost(minId: String?, maxId: String?, sinceId: String?, limit: Int?) async throws -> [ScheduledPost] {
         try requireFeature(.scheduledPost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses"])
@@ -56,7 +56,7 @@ public extension TootClient {
 
     /// Gets scheduled posts
     /// - Returns: the scheduled posts requested, or an error if unable to retrieve
-    func getScheduledPosts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[ScheduledPost]> {
+    public func getScheduledPosts(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[ScheduledPost]> {
         try requireFeature(.scheduledPost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses"])
@@ -71,7 +71,7 @@ public extension TootClient {
     ///
     /// - Parameter id: the ID of the post to be retrieved
     /// - Returns: the scheduled post retrieved, if successful, throws an error if not
-    func getScheduledPost(id: String) async throws -> ScheduledPost? {
+    public func getScheduledPost(id: String) async throws -> ScheduledPost? {
         try requireFeature(.scheduledPost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])
@@ -85,7 +85,7 @@ public extension TootClient {
     /// - Parameter id: the ID of the post to be changed
     /// - Parameter params: the updated content of the post to be posted
     /// - Returns: the post after the update
-    func updateScheduledPostDate(id: String, _ params: ScheduledPostParams) async throws -> ScheduledPost? {
+    public func updateScheduledPostDate(id: String, _ params: ScheduledPostParams) async throws -> ScheduledPost? {
         try requireFeature(.scheduledPost)
         let requestParams = try ScheduledPostRequest(from: params)
         let req = try HTTPRequestBuilder {
@@ -100,7 +100,7 @@ public extension TootClient {
     /// Deletes a single scheduled post
     /// - Parameter id: the ID of the post to be deleted
     /// - Returns: the post deleted (for delete and redraft), if successful, throws an error if not
-    func deleteScheduledPost(id: String) async throws {
+    public func deleteScheduledPost(id: String) async throws {
         try requireFeature(.scheduledPost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])

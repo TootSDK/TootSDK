@@ -29,12 +29,12 @@ public enum ReportCategory: String, CaseIterable, Codable {
         .copyright,
         .impersonation,
         .scam,
-        .terrorism
+        .terrorism,
     ]
 
     public static let mastodonSupported: Set<ReportCategory> = [
         .spam,
         .other,
-        .violation
+        .violation,
     ]
 }

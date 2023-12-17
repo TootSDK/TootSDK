@@ -16,7 +16,7 @@ public final class TootEncoder: JSONEncoder {
     }
 }
 
-internal extension TootEncoder {
+extension TootEncoder {
     static let dateFormatter: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
 

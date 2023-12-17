@@ -7,10 +7,10 @@ extension HTTPHeaders {
                 .first?
                 .split(separator: "=")
                 .last
-                .flatMap { $0 .trimmingCharacters(in: .quotes)}
+                .flatMap { $0.trimmingCharacters(in: .quotes) }
         }
     }
-    
+
     mutating func setParameter(
         _ name: String,
         _ key: String,
@@ -30,7 +30,7 @@ extension HTTPHeaders {
             .trimmingCharacters(in: .whitespaces)
         self.replaceOrAdd(name: name, value: new)
     }
-    
+
     func headerParts(name: String) -> [String]? {
         return self[name]
             .first

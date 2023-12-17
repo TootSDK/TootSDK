@@ -7,10 +7,10 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Report problematic users or posts to moderators.
-    func report(_ params: ReportParams) async throws {
+    public func report(_ params: ReportParams) async throws {
         if flavour == .pixelfed {
             try await pixelfedReport(params)
             return
@@ -26,7 +26,7 @@ public extension TootClient {
     }
 
     /// Report categories supported by current flavour.
-    var reportCategories: Set<ReportCategory> {
+    public var reportCategories: Set<ReportCategory> {
         if flavour == .pixelfed {
             return ReportCategory.pixelfedSupported
         }

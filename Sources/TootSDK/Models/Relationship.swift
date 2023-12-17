@@ -7,19 +7,21 @@ import Foundation
 /// such as following / blocking / muting / etc.
 public struct Relationship: Codable, Hashable, Identifiable, Sendable {
 
-    public init(id: String,
-                following: Bool,
-                requested: Bool,
-                endorsed: Bool? = nil,
-                followedBy: Bool,
-                muting: Bool,
-                mutingNotifications: Bool? = nil,
-                showingReposts: Bool? = nil,
-                notifying: Bool? = nil,
-                blocking: Bool,
-                domainBlocking: Bool?,
-                blockedBy: Bool? = nil,
-                note: String? = nil) {
+    public init(
+        id: String,
+        following: Bool,
+        requested: Bool,
+        endorsed: Bool? = nil,
+        followedBy: Bool,
+        muting: Bool,
+        mutingNotifications: Bool? = nil,
+        showingReposts: Bool? = nil,
+        notifying: Bool? = nil,
+        blocking: Bool,
+        domainBlocking: Bool?,
+        blockedBy: Bool? = nil,
+        note: String? = nil
+    ) {
         self.id = id
         self.following = following
         self.requested = requested

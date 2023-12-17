@@ -10,7 +10,7 @@ extension MultipartPart: MultipartPartConvertible {
     public var multipart: MultipartPart? {
         return self
     }
-    
+
     public init?(multipart: MultipartPart) {
         self = multipart
     }
@@ -39,16 +39,16 @@ extension FixedWidthInteger {
     }
 }
 
-extension Int: MultipartPartConvertible { }
-extension Int8: MultipartPartConvertible { }
-extension Int16: MultipartPartConvertible { }
-extension Int32: MultipartPartConvertible { }
-extension Int64: MultipartPartConvertible { }
-extension UInt: MultipartPartConvertible { }
-extension UInt8: MultipartPartConvertible { }
-extension UInt16: MultipartPartConvertible { }
-extension UInt32: MultipartPartConvertible { }
-extension UInt64: MultipartPartConvertible { }
+extension Int: MultipartPartConvertible {}
+extension Int8: MultipartPartConvertible {}
+extension Int16: MultipartPartConvertible {}
+extension Int32: MultipartPartConvertible {}
+extension Int64: MultipartPartConvertible {}
+extension UInt: MultipartPartConvertible {}
+extension UInt8: MultipartPartConvertible {}
+extension UInt16: MultipartPartConvertible {}
+extension UInt32: MultipartPartConvertible {}
+extension UInt64: MultipartPartConvertible {}
 
 extension Float: MultipartPartConvertible {
     public var multipart: MultipartPart? {
@@ -93,7 +93,7 @@ extension Data: MultipartPartConvertible {
     public var multipart: MultipartPart? {
         return MultipartPart(body: self)
     }
-    
+
     public init?(multipart: MultipartPart) {
         self.init(multipart.body.readableBytesView)
     }

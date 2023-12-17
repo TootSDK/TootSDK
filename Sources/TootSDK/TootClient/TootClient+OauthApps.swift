@@ -3,13 +3,13 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Retrieve a list of OAuth applications
     ///
     /// * This method requires the `admin:write` scope.
     /// * This method requires the pleroma API flavour.
-    func adminGetOauthApps(_ page: Int = 1, params: ListOauthAppsParams? = nil) async throws -> [PleromaOauthApp]? {
+    public func adminGetOauthApps(_ page: Int = 1, params: ListOauthAppsParams? = nil) async throws -> [PleromaOauthApp]? {
         try requireFlavour([.pleroma])
 
         let req = HTTPRequestBuilder {
@@ -46,7 +46,7 @@ public extension TootClient {
     ///
     /// * This method requires the `admin:write` scope.
     /// * This method requires the pleroma API flavour.
-    func adminDeleteOauthApp(appId: Int) async throws {
+    public func adminDeleteOauthApp(appId: Int) async throws {
         try requireFlavour([.pleroma])
 
         let req = HTTPRequestBuilder {

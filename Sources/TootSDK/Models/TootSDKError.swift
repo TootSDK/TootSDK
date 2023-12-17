@@ -2,8 +2,9 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 public enum TootSDKError: Error, LocalizedError, Equatable {
@@ -41,7 +42,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
         case .invalidParameter(let parameterName):
             return "A parameter has an illegal value: \(parameterName)."
         case .unsupportedFlavour(let current, let required):
-            return "Operation not supported for server flavour \(current), compatible flavours are: \(required.map({"\($0)"}).joined(separator: ", "))."
+            return
+                "Operation not supported for server flavour \(current), compatible flavours are: \(required.map({"\($0)"}).joined(separator: ", "))."
         case .unexpectedError(let description):
             return "Unexpected error: \(description)"
         case .clientAuthorizationFailed:

@@ -58,7 +58,7 @@ extension SearchParams {
             URLQueryItem(name: "resolve", value: resolve?.description),
             URLQueryItem(name: "following", value: following?.description),
             URLQueryItem(name: "account_id", value: accountId?.description),
-            URLQueryItem(name: "exclude_unreviewed", value: excludeUnreviewed?.description)
+            URLQueryItem(name: "exclude_unreviewed", value: excludeUnreviewed?.description),
         ].filter { $0.value != nil }
     }
 }

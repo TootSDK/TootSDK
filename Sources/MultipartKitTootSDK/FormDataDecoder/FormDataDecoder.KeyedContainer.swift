@@ -21,7 +21,8 @@ extension FormDataDecoder.KeyedContainer: KeyedDecodingContainerProtocol {
     func getValue(forKey key: CodingKey) throws -> MultipartFormData {
         guard let value = data[key.stringValue] else {
             throw DecodingError.keyNotFound(
-                key, .init(
+                key,
+                .init(
                     codingPath: codingPath,
                     debugDescription: "No value associated with key \"\(key.stringValue)\"."
                 )
