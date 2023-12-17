@@ -1,0 +1,26 @@
+name: Lint
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/lint.yml"
+      - ".swift-format"
+      - "**/*.swift"
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@65540b95f51493d65f5e59e97dcef9629ddf11bf
+      - name: Install swift-format
+        run: |
+          VERSION=509.0.0
+          git clone https://github.com/apple/swift-format.git
+          cd swift-format
+          git checkout "tags/$VERSION"
+          swift build -c release
+          sudo mv .build/release/swift-format /usr/local/bin/
+      - name: Run swift-format
+        run: make checklint

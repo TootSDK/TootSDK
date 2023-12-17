@@ -21,7 +21,7 @@ You can also execute tests in Xcode by switching to the Test navigator and execu
 - Get familiar with the [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/).
 - Spaces, not tabs.
 - Whitespace-only lines are not trimmed.
-- We use SwiftLint to ensure a consistent look and feel of the library code. Your changes should contain no SwiftLint errors or warnings. Please run and check SwiftLint on any code contributions before submitting e.g. `swiftlint lint --fix --format`.
+- We use [swift-format](https://github.com/apple/swift-format) to ensure a consistent look and feel of the library code. Your changes should contain no swift-format errors or warnings. Please lint code contributions before submitting e.g. `make lint`.
 - Avoid bringing in new libraries or dependencies without good justification. Any PR that brings in a new library needs to make the case for why it is necessary.
 
 ### Read our Architecture Decision Records (ADRs))

@@ -1,8 +1,0 @@
-included:
-  - ./Sources/TootSDK
-disabled_rules:
-  - identifier_name
-  - line_length
-  - trailing_whitespace
-  - unused_optional_binding
-  - function_body_length
