@@ -18,16 +18,18 @@ public struct PostParams: Codable, Sendable {
     ///   - language: ISO 639 language code for this post.
     ///   - contentType: (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
-    public init(post: String,
-                mediaIds: [String]? = nil,
-                poll: CreatePoll? = nil,
-                inReplyToId: String? = nil,
-                sensitive: Bool? = nil,
-                spoilerText: String? = nil,
-                visibility: Post.Visibility,
-                language: String? = nil,
-                contentType: String? = nil,
-                inReplyToConversationId: String? = nil) {
+    public init(
+        post: String,
+        mediaIds: [String]? = nil,
+        poll: CreatePoll? = nil,
+        inReplyToId: String? = nil,
+        sensitive: Bool? = nil,
+        spoilerText: String? = nil,
+        visibility: Post.Visibility,
+        language: String? = nil,
+        contentType: String? = nil,
+        inReplyToConversationId: String? = nil
+    ) {
         self.post = post
         self.mediaIds = mediaIds
         self.poll = poll
@@ -41,7 +43,9 @@ public struct PostParams: Codable, Sendable {
     }
 
     public init(post: String, visibility: Post.Visibility, spoilerText: String? = nil) {
-        self.init(post: post, mediaIds: [], poll: nil, inReplyToId: nil, sensitive: nil, spoilerText: spoilerText, visibility: visibility, language: nil, contentType: nil, inReplyToConversationId: nil)
+        self.init(
+            post: post, mediaIds: [], poll: nil, inReplyToId: nil, sensitive: nil, spoilerText: spoilerText, visibility: visibility, language: nil,
+            contentType: nil, inReplyToConversationId: nil)
     }
 
     /// The text content of the post. If media_ids is provided, this becomes optional. Attaching a poll is optional while post is provided.

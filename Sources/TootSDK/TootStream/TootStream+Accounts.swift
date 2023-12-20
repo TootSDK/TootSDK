@@ -27,15 +27,15 @@ extension TootDataStream {
 
         switch stream {
         case .verifyCredentials:
-            newHolder.refresh = {[weak self, weak newHolder] in
+            newHolder.refresh = { [weak self, weak newHolder] in
                 if let item = try await self?.client.verifyCredentials() {
                     newHolder?.internalContinuation?.yield(item)
                 }
             }
             self.cachedStreams[stream] = newHolder
             return newHolder.stream
-        case .account(id: let id):
-            newHolder.refresh = {[weak self, weak newHolder] in
+        case .account(let id):
+            newHolder.refresh = { [weak self, weak newHolder] in
                 if let item = try await self?.client.getAccount(by: id) {
                     newHolder?.internalContinuation?.yield(item)
                 }

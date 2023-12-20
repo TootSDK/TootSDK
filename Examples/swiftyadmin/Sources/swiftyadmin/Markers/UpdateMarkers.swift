@@ -1,12 +1,12 @@
 //
 //  UpdateMarkers.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 02/12/2023.
 //
 
-import Foundation
 import ArgumentParser
+import Foundation
 import TootSDK
 
 struct UpdateMarkers: AsyncParsableCommand {

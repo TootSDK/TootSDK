@@ -32,18 +32,19 @@ extension FormDataDecoder.Decoder {
     }
 }
 
-private extension FormDataDecoder.Decoder {
-    func decodingError(expectedType: String) -> Error {
+extension FormDataDecoder.Decoder {
+    fileprivate func decodingError(expectedType: String) -> Error {
         let encounteredType: Any.Type
         let encounteredTypeDescription: String
 
         switch data {
         case .nestingDepthExceeded:
-            return DecodingError.dataCorrupted(.init(
-                codingPath: codingPath,
-                debugDescription: "Nesting depth exceeded while expecting \(expectedType).",
-                underlyingError: nil
-            ))
+            return DecodingError.dataCorrupted(
+                .init(
+                    codingPath: codingPath,
+                    debugDescription: "Nesting depth exceeded while expecting \(expectedType).",
+                    underlyingError: nil
+                ))
         case .array:
             encounteredType = [MultipartFormData].self
             encounteredTypeDescription = "array"
@@ -57,11 +58,11 @@ private extension FormDataDecoder.Decoder {
 
         return DecodingError.typeMismatch(
             encounteredType,
-                .init(
-                    codingPath: codingPath,
-                    debugDescription: "Expected \(expectedType) but encountered \(encounteredTypeDescription).",
-                    underlyingError: nil
-                )
+            .init(
+                codingPath: codingPath,
+                debugDescription: "Expected \(expectedType) but encountered \(encounteredTypeDescription).",
+                underlyingError: nil
+            )
         )
     }
 }

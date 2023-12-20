@@ -3,12 +3,14 @@
 
 import Foundation
 
-public extension Tag {
+extension Tag {
     /// Represents daily usage history of a hashtag.
-    struct History: Codable, Hashable, Sendable {
-        public init(day: String,
-                    uses: String,
-                    accounts: String) {
+    public struct History: Codable, Hashable, Sendable {
+        public init(
+            day: String,
+            uses: String,
+            accounts: String
+        ) {
             self.day = day
             self.uses = uses
             self.accounts = accounts

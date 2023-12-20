@@ -20,8 +20,8 @@ public struct Search: Codable, Sendable {
     public let hashtags: [Tag]
 }
 
-public extension Search {
-    enum CodingKeys: String, CodingKey {
+extension Search {
+    public enum CodingKeys: String, CodingKey {
         case accounts
         case posts = "statuses"
         case hashtags

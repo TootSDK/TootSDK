@@ -2,8 +2,9 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 extension TootClient {
@@ -16,10 +17,12 @@ extension TootClient {
         return url
     }
 
-    internal func getQueryParams(_ pageInfo: PagedInfo? = nil,
-                                 limit: Int? = nil,
-                                 offset: Int? = nil,
-                                 query: (any TimelineQuery)? = nil) -> [URLQueryItem] {
+    internal func getQueryParams(
+        _ pageInfo: PagedInfo? = nil,
+        limit: Int? = nil,
+        offset: Int? = nil,
+        query: (any TimelineQuery)? = nil
+    ) -> [URLQueryItem] {
 
         var queryParameters = [URLQueryItem]()
 
@@ -50,14 +53,17 @@ extension TootClient {
         return queryParameters
     }
 
-    internal func getAuthorizationInfo(callbackURI: String,
-                                       scopes: [String],
-                                       website: String = "",
-                                       responseType: String = "code") async throws -> CallbackInfo {
+    internal func getAuthorizationInfo(
+        callbackURI: String,
+        scopes: [String],
+        website: String = "",
+        responseType: String = "code"
+    ) async throws -> CallbackInfo {
 
-        let createAppData = CreateAppRequest(clientName: clientName,
-                                             redirectUris: callbackURI,
-                                             scopes: scopes.joined(separator: " "), website: website)
+        let createAppData = CreateAppRequest(
+            clientName: clientName,
+            redirectUris: callbackURI,
+            scopes: scopes.joined(separator: " "), website: website)
 
         let registerAppReq = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "apps"])
@@ -86,7 +92,10 @@ extension TootClient {
         return .init(url: url, application: app)
     }
 
-    internal func getAccessToken(code: String?, clientId: String, clientSecret: String, callbackURI: String, grantType: String = "authorization_code", scopes: [String] = ["read", "write", "follow", "push"]) async throws -> AccessToken {
+    internal func getAccessToken(
+        code: String?, clientId: String, clientSecret: String, callbackURI: String, grantType: String = "authorization_code",
+        scopes: [String] = ["read", "write", "follow", "push"]
+    ) async throws -> AccessToken {
 
         let queryItems: [URLQueryItem] = [
             .init(name: "client_id", value: clientId),
@@ -94,7 +103,7 @@ extension TootClient {
             .init(name: "grant_type", value: grantType),
             .init(name: "scope", value: scopes.joined(separator: " ")),
             .init(name: "code", value: code),
-            .init(name: "redirect_uri", value: callbackURI)
+            .init(name: "redirect_uri", value: callbackURI),
         ]
 
         let req = try HTTPRequestBuilder {

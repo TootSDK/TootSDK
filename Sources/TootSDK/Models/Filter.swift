@@ -46,7 +46,7 @@ public struct Filter: Codable, Hashable, Identifiable {
         case expiresAt
         case filterAction
         case keywords
-        case statuses // posts = "statuses"
+        case statuses  // posts = "statuses"
     }
 
     public init(from decoder: Decoder) throws {

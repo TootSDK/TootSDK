@@ -1,11 +1,11 @@
 import ArgumentParser
-import Foundation
-import TootSDK
 import FeedKit
+import Foundation
 import SwiftSoup
+import TootSDK
 
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 struct SocialAccount: Codable {
@@ -24,7 +24,7 @@ struct MakePost: AsyncParsableCommand {
     private var feedURL = "https://github.com/tootsdk/tootsdk/releases.atom"
 
     private var urlSession: URLSession {
-        URLSession(configuration: URLSessionConfiguration.default )
+        URLSession(configuration: URLSessionConfiguration.default)
     }
 
     mutating func run() async throws {
@@ -43,7 +43,7 @@ struct MakePost: AsyncParsableCommand {
     private mutating func getRelease() async throws -> PostParams? {
         guard
             let url = URL(string: feedURL),
-            let (data, _ ) = try? await urlSession.getData(from: url)
+            let (data, _) = try? await urlSession.getData(from: url)
         else {
             print("unable to retrieve releases atom feed")
             return nil
@@ -123,7 +123,7 @@ struct MakePost: AsyncParsableCommand {
 
     private func getUserMastodon(user: String) async throws -> String? {
         let mastodonURL = "https://api.github.com/users/" + user + "/social_accounts"
-        let (data, _ ) = try await urlSession.getData(from: URL(string: mastodonURL)!)
+        let (data, _) = try await urlSession.getData(from: URL(string: mastodonURL)!)
 
         let socialAccounts = try JSONDecoder().decode([SocialAccount].self, from: data)
 
@@ -150,9 +150,11 @@ struct MakePost: AsyncParsableCommand {
     ///   - tag: the tag for the latest release in format X.X.X
     ///   - releaseURL: theURL to point to the latest release
     /// - Returns: TootSDK post params for a new post
-    private func createPost(tag: String,
-                            releaseURL: String,
-                            changes: [String]) -> PostParams {
+    private func createPost(
+        tag: String,
+        releaseURL: String,
+        changes: [String]
+    ) -> PostParams {
 
         let changes = changes.map({ change in
             return "- " + change
@@ -161,7 +163,8 @@ struct MakePost: AsyncParsableCommand {
 
         let changeText = changes.isEmpty ? "" : changes + "\n\n"
 
-        let text = "A new release of TootSDK - "
+        let text =
+            "A new release of TootSDK - "
             + tag + " 📣 \n\n"
             + releaseURL + "\n\n"
             + "What's changed:" + "\n\n"

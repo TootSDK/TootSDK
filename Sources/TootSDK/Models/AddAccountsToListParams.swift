@@ -12,8 +12,8 @@ public struct AddAccountsToListParams: Codable {
     public var accountIds: [String]
 }
 
-public extension AddAccountsToListParams {
-    init(accountId: String) {
+extension AddAccountsToListParams {
+    public init(accountId: String) {
         self = AddAccountsToListParams(accountIds: [accountId])
     }
 }

@@ -20,7 +20,10 @@ public struct PleromaOauthApp: Codable, Identifiable {
     /// oAuth scopes
     public var scopes: [String]?
 
-    public init(id: Int, name: String? = nil, clientId: String? = nil, clientSecret: String? = nil, redirectUri: String? = nil, trusted: Bool? = nil, website: String? = nil, scopes: [String]? = nil) {
+    public init(
+        id: Int, name: String? = nil, clientId: String? = nil, clientSecret: String? = nil, redirectUri: String? = nil, trusted: Bool? = nil,
+        website: String? = nil, scopes: [String]? = nil
+    ) {
         self.id = id
         self.name = name
         self.clientId = clientId

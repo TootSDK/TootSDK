@@ -10,10 +10,10 @@ public struct Pagination {
     public var sinceId: String?
 }
 
-public extension Pagination {
-    static let paginationTypes: [String] = ["prev", "next"]
+extension Pagination {
+    public static let paginationTypes: [String] = ["prev", "next"]
 
-    init(links: String) {
+    public init(links: String) {
         let links = links.components(separatedBy: ",").map({
             $0.trimmingCharacters(in: .whitespacesAndNewlines)
         })
@@ -59,7 +59,7 @@ public extension Pagination {
                 return []
             }
 
-            return webURL.formParams.allKeyValuePairs.map({URLQueryItem(name: $0.0, value: $0.1)})
+            return webURL.formParams.allKeyValuePairs.map({ URLQueryItem(name: $0.0, value: $0.1) })
         }).reduce([], +)
 
         minId = paginationQueryItems.first { $0.name == "min_id" }?.value

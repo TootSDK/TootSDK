@@ -3,7 +3,7 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Search for content in accounts, posts and hashtags.
     ///
@@ -13,7 +13,7 @@ public extension TootClient {
     ///   - limit: Maximum number of results to return. Defaults to 40.
     ///   - offset: Skip the first n results.
     /// - Returns: Search results.
-    func search(params: SearchParams, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> Search {
+    public func search(params: SearchParams, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> Search {
         if params.excludeUnreviewed != nil && flavour != .mastodon {
             try requireFlavour([.mastodon])
         }

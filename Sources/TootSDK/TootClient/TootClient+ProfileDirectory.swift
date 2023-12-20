@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// List accounts visible in the directory.
     ///
@@ -16,7 +16,7 @@ public extension TootClient {
     ///   - limit: How many accounts to load. Defaults to 40 accounts. Max 80 accounts.
     ///   - params: Includes order and local parameters.
     /// - Returns: Array of ``Account``.
-    func getProfileDirectory(params: ProfileDirectoryParams, offset: Int? = nil, limit: Int? = nil) async throws -> [Account] {
+    public func getProfileDirectory(params: ProfileDirectoryParams, offset: Int? = nil, limit: Int? = nil) async throws -> [Account] {
         try requireFeature(.profileDirectory)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "directory"])

@@ -7,12 +7,12 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Return all conversations.
     ///
     /// Direct conversations with other participants. (Currently, just threads containing a post with "direct" visibility.)
-    func getConversations(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Conversation]> {
+    public func getConversations(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Conversation]> {
         try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations"])
@@ -24,7 +24,7 @@ public extension TootClient {
     }
 
     /// Removes a conversation from your list of conversations.
-    func deleteConversation(id: String) async throws {
+    public func deleteConversation(id: String) async throws {
         try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations", id])
@@ -35,7 +35,7 @@ public extension TootClient {
     }
 
     /// Mark a conversation as read
-    func setConversationAsRead(id: String) async throws -> Conversation {
+    public func setConversationAsRead(id: String) async throws -> Conversation {
         try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations", id, "read"])

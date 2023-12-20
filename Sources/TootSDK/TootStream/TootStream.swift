@@ -2,8 +2,9 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 /// A protocol that all stream types can adopt
@@ -13,10 +14,10 @@ public protocol TootStream {
 
 internal protocol TootStreamHolder {
     associatedtype ReturnType: Decodable
-    var stream: AsyncStream<ReturnType> {get}
-    var internalContinuation: AsyncStream<ReturnType>.Continuation? {get set}
-    var pageInfo: PagedInfo? {get set}
-    var refresh: (() async throws -> Void)? {get}
+    var stream: AsyncStream<ReturnType> { get }
+    var internalContinuation: AsyncStream<ReturnType>.Continuation? { get set }
+    var pageInfo: PagedInfo? { get set }
+    var refresh: (() async throws -> Void)? { get }
 }
 
 internal class TootEndpointStream<E: TootStream>: TootStreamHolder {

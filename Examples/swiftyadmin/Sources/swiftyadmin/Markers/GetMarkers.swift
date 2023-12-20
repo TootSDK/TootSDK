@@ -5,8 +5,8 @@
 //  Created by Łukasz Rutkowski on 02/12/2023.
 //
 
-import Foundation
 import ArgumentParser
+import Foundation
 import TootSDK
 
 struct GetMarkers: AsyncParsableCommand {
@@ -17,12 +17,14 @@ struct GetMarkers: AsyncParsableCommand {
     @Option(name: .short, help: "Access token for an account with sufficient permissions.")
     var token: String
 
-    @Option(name: .long, parsing: .remaining, transform: { rawValue in
-        guard let timeline = Marker.Timeline(rawValue: rawValue) else {
-            throw ValidationError("Unknown timeline")
-        }
-        return timeline
-    })
+    @Option(
+        name: .long, parsing: .remaining,
+        transform: { rawValue in
+            guard let timeline = Marker.Timeline(rawValue: rawValue) else {
+                throw ValidationError("Unknown timeline")
+            }
+            return timeline
+        })
     var timelines: [Marker.Timeline]
 
     mutating func run() async throws {

@@ -7,12 +7,14 @@
 
 import Foundation
 
-public extension TrendingLink {
+extension TrendingLink {
     /// Represents daily usage history of a link.
-    struct History: Codable, Hashable, Sendable {
-        public init(day: String,
-                    uses: String,
-                    accounts: String) {
+    public struct History: Codable, Hashable, Sendable {
+        public init(
+            day: String,
+            uses: String,
+            accounts: String
+        ) {
             self.day = day
             self.uses = uses
             self.accounts = accounts

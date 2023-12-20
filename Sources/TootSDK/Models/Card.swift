@@ -4,19 +4,21 @@
 import Foundation
 
 public struct Card: Codable, Hashable {
-    public init(url: String,
-                title: String,
-                description: String,
-                type: Card.CardType,
-                authorName: String? = nil,
-                authorUrl: String? = nil,
-                providerName: String? = nil,
-                providerUrl: String? = nil,
-                html: String? = nil,
-                width: Int? = nil,
-                height: Int? = nil,
-                image: String? = nil,
-                embedUrl: String? = nil) {
+    public init(
+        url: String,
+        title: String,
+        description: String,
+        type: Card.CardType,
+        authorName: String? = nil,
+        authorUrl: String? = nil,
+        providerName: String? = nil,
+        providerUrl: String? = nil,
+        html: String? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        image: String? = nil,
+        embedUrl: String? = nil
+    ) {
         self.url = url
         self.title = title
         self.description = description

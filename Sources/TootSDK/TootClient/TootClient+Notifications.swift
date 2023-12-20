@@ -7,12 +7,14 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Get all notifications concerning the user
     ///  - Parameters:
     ///     -  limit: Maximum number of results to return. Defaults to 15 notifications. Max 30 notifications.
-    func getNotifications(params: TootNotificationParams = .init(), _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[TootNotification]> {
+    public func getNotifications(params: TootNotificationParams = .init(), _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws
+        -> PagedResult<[TootNotification]>
+    {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications"])
             $0.method = .get
@@ -23,7 +25,7 @@ public extension TootClient {
     }
 
     /// Get info about a single notification
-    func getNotification(id: String) async throws -> TootNotification {
+    public func getNotification(id: String) async throws -> TootNotification {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications", id])
             $0.method = .get
@@ -33,7 +35,7 @@ public extension TootClient {
     }
 
     /// Clear all notifications from the server.
-    func dismissAllNotifications() async throws {
+    public func dismissAllNotifications() async throws {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications", "clear"])
             $0.method = .post
@@ -43,7 +45,7 @@ public extension TootClient {
     }
 
     /// Dismiss a single notification from the server.
-    func dismissNotification(id: String) async throws {
+    public func dismissNotification(id: String) async throws {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications", id, "dismiss"])
             $0.method = .post
@@ -56,7 +58,7 @@ public extension TootClient {
     ///
     /// If you create a new subscription, the old subscription is deleted.
     @discardableResult
-    func createPushSubscription(params: PushSubscriptionParams) async throws -> PushSubscription {
+    public func createPushSubscription(params: PushSubscriptionParams) async throws -> PushSubscription {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .post
@@ -67,7 +69,7 @@ public extension TootClient {
     }
 
     /// View the PushSubscription currently associated with this access token.
-    func getPushSubscription() async throws -> PushSubscription {
+    public func getPushSubscription() async throws -> PushSubscription {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .get
@@ -79,7 +81,7 @@ public extension TootClient {
     /// Updates the current push subscription. Only the data part can be updated.
     ///
     /// To change fundamentals, a new subscription must be created instead.
-    func changePushSubscription(params: PushSubscriptionUpdateParams) async throws -> PushSubscription {
+    public func changePushSubscription(params: PushSubscriptionUpdateParams) async throws -> PushSubscription {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .put
@@ -93,11 +95,11 @@ public extension TootClient {
         var queryParameters = [URLQueryItem]()
 
         if let types = params.types, !types.isEmpty {
-            queryParameters.append(contentsOf: types.map({.init(name: "types[]", value: $0.rawValue)}))
+            queryParameters.append(contentsOf: types.map({ .init(name: "types[]", value: $0.rawValue) }))
         }
 
         if let types = params.excludeTypes, !types.isEmpty {
-            queryParameters.append(contentsOf: types.map({.init(name: "exclude_types[]", value: $0.rawValue)}))
+            queryParameters.append(contentsOf: types.map({ .init(name: "exclude_types[]", value: $0.rawValue) }))
         }
 
         return queryParameters

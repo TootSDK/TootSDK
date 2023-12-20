@@ -8,7 +8,8 @@ import Foundation
 ///   - suspend = All incoming data from this domain will be rejected
 ///   - noop = Do nothing. Allows for rejecting media or reports
 public enum DomainBlockSeverity: String, Codable, Hashable {
-    case silence ///
+    case silence
+    ///
     case suspend
     case noop
 }
@@ -52,15 +53,17 @@ public struct DomainBlock: Codable, Hashable {
     ///   - privateComment: A private note about this domain block, visible only to admins.
     ///   - publicComment: public note about this domain block, optionally shown on the about page.
     ///   - obfuscate: Whether to partially censor the domain when shown in public. Defaults to false
-    public init(id: String?,
-                domain: String,
-                createdAt: Date?,
-                severity: DomainBlockSeverity?,
-                rejectMedia: Bool?,
-                rejectReports: Bool?,
-                privateComment: String? = nil,
-                publicComment: String? = nil,
-                obfuscate: Bool = false) {
+    public init(
+        id: String?,
+        domain: String,
+        createdAt: Date?,
+        severity: DomainBlockSeverity?,
+        rejectMedia: Bool?,
+        rejectReports: Bool?,
+        privateComment: String? = nil,
+        publicComment: String? = nil,
+        obfuscate: Bool = false
+    ) {
         self.id = id
         self.domain = domain
         self.createdAt = createdAt

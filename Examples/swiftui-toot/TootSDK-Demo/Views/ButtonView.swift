@@ -10,7 +10,7 @@ import SwiftUI
 struct ButtonView: View {
     var text: String
     var action: () async throws -> Void
-    
+
     var body: some View {
         Button {
             Task {

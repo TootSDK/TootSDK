@@ -7,10 +7,10 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// See all currently active announcements set by admins.
-    func getAnnouncements(params: AnnouncementParams = .init()) async throws -> [Announcement] {
+    public func getAnnouncements(params: AnnouncementParams = .init()) async throws -> [Announcement] {
         try requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements"])
@@ -22,7 +22,7 @@ public extension TootClient {
     }
 
     /// Dismiss a single notification from the server.
-    func dismissAnnouncement(id: String) async throws {
+    public func dismissAnnouncement(id: String) async throws {
         try requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements", id, "dismiss"])
@@ -36,7 +36,7 @@ public extension TootClient {
     /// - Parameters:
     ///   - id: The ID of the Announcement in the database.
     ///   - name: Unicode emoji, or the shortcode of a custom emoji.
-    func addAnnouncementReaction(id: String, name: String) async throws {
+    public func addAnnouncementReaction(id: String, name: String) async throws {
         try requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements", id, "reactions", name])
@@ -50,7 +50,7 @@ public extension TootClient {
     /// - Parameters:
     ///   - id: The ID of the Announcement in the database.
     ///   - name: Unicode emoji, or the shortcode of a custom emoji.
-    func removeAnnouncementReaction(id: String, name: String) async throws {
+    public func removeAnnouncementReaction(id: String, name: String) async throws {
         try requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements", id, "reactions", name])

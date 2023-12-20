@@ -4,6 +4,7 @@ extension FormDataDecoder.Decoder: SingleValueDecodingContainer {
     }
 
     func decode<T: Decodable>(_: T.Type = T.self) throws -> T {
+        // swift-format-ignore: AlwaysUseLowerCamelCase
         guard
             let part = data.part,
             let Convertible = T.self as? MultipartPartConvertible.Type

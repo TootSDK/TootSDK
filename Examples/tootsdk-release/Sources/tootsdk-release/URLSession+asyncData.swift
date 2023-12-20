@@ -2,8 +2,9 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 // Extensions to add support for async methods on `URLSession`

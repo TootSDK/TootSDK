@@ -34,7 +34,8 @@ extension TootClient {
             }
             var parts = [MultipartPart]()
             if let data = params.avatar,
-               let mimeType = params.avatarMimeType {
+                let mimeType = params.avatarMimeType
+            {
                 parts.append(
                     MultipartPart(
                         file: "avatar",
@@ -42,7 +43,8 @@ extension TootClient {
                         body: data))
             }
             if let data = params.header,
-               let mimeType = params.headerMimeType {
+                let mimeType = params.headerMimeType
+            {
                 parts.append(
                     MultipartPart(
                         file: "header",
@@ -140,7 +142,8 @@ extension TootClient {
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested, or an error if unable to retrieve
     public func getFollowers(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil)
-    async throws -> PagedResult<[Account]> {
+        async throws -> PagedResult<[Account]>
+    {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "followers"])
             $0.method = .get
@@ -157,7 +160,8 @@ extension TootClient {
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested, or an error if unable to retrieve
     public func getFollowing(for id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil)
-    async throws -> PagedResult<[Account]> {
+        async throws -> PagedResult<[Account]>
+    {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "following"])
             $0.method = .get
@@ -183,7 +187,8 @@ extension TootClient {
         } catch {
             if case let TootSDKError.invalidStatusCode(data, _) = error {
                 if let decoded = try? decode(RegisterAccountErrors.self, from: data),
-                   let message = decoded.error {
+                    let message = decoded.error
+                {
                     throw TootSDKError.serverError(message)
                 }
             }
@@ -199,7 +204,8 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Search results.
     public func searchAccounts(params: SearchAccountsParams, limit: Int? = nil, offset: Int? = nil)
-    async throws -> [Account] {
+        async throws -> [Account]
+    {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "search"])
             $0.method = .get
@@ -218,9 +224,7 @@ extension TootClient {
         return try await fetch([List].self, req)
     }
 
-    // swiftlint:disable todo
     // TODO: - Lookup account ID from Webfinger address
-    // swiftlint:enable todo
 }
 
 extension TootFeature {

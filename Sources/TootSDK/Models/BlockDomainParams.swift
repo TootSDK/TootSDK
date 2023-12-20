@@ -35,7 +35,10 @@ public struct BlockDomainParams: Codable {
     ///   - privateComment: A private note about this domain block, visible only to admins.
     ///   - publicComment: public note about this domain block, optionally shown on the about page.
     ///   - obfuscate: Whether to partially censor the domain when shown in public. Defaults to false
-    public init(domain: String, severity: DomainBlockSeverity? = nil, rejectMedia: Bool? = nil, rejectReports: Bool? = nil, privateComment: String? = nil, publicComment: String? = nil, obfuscate: Bool? = nil) {
+    public init(
+        domain: String, severity: DomainBlockSeverity? = nil, rejectMedia: Bool? = nil, rejectReports: Bool? = nil, privateComment: String? = nil,
+        publicComment: String? = nil, obfuscate: Bool? = nil
+    ) {
         self.domain = domain
         self.severity = severity
         self.rejectMedia = rejectMedia

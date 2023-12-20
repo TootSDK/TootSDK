@@ -6,6 +6,6 @@ public enum MultipartError: Error, CustomStringConvertible {
     case nesting
     case missingPart(String)
     case missingFilename
-    
+
     public var description: String { "" }
 }

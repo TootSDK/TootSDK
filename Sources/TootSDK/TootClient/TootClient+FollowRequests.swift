@@ -1,13 +1,13 @@
 //
 //  TootClient+FollowRequests.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 10/12/2023.
 //
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Get pending follow requests.
     ///
@@ -15,7 +15,7 @@ public extension TootClient {
     ///    - pageInfo: PagedInfo object for max/since.
     ///    - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: The accounts that are requesting a follow.
-    func getPendingFollowRequests(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> [Account] {
+    public func getPendingFollowRequests(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> [Account] {
         try requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follow_requests"])
@@ -30,7 +30,7 @@ public extension TootClient {
     /// - Parameter id: The id of the account received from ``getPendingFollowRequests``.
     /// - Returns: Relationship with the account.
     @discardableResult
-    func acceptFollowRequest(id: String) async throws -> Relationship {
+    public func acceptFollowRequest(id: String) async throws -> Relationship {
         try requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follow_requests", id, "authorize"])
@@ -44,7 +44,7 @@ public extension TootClient {
     /// - Parameter id: The id of the account received from ``getPendingFollowRequests``.
     /// - Returns: Relationship with the account.
     @discardableResult
-    func rejectFollowRequest(id: String) async throws -> Relationship {
+    public func rejectFollowRequest(id: String) async throws -> Relationship {
         try requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follow_requests", id, "reject"])
@@ -55,7 +55,7 @@ public extension TootClient {
 }
 
 extension TootFeature {
-    
+
     /// Ability to view and manage follow requests.
     public static let followRequests = TootFeature(supportedFlavours: [.mastodon, .pleroma, .pixelfed, .friendica, .akkoma, .firefish])
 }

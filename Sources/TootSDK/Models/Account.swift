@@ -5,7 +5,12 @@ import Foundation
 
 /// Represents a user  and their associated profile.
 public class Account: Codable, Identifiable, @unchecked Sendable {
-    public init(id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String, avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date, lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil, limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil) {
+    public init(
+        id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String,
+        avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date,
+        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil,
+        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil
+    ) {
         self.id = id
         self.username = username
         self.acct = acct
@@ -113,8 +118,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
 
 }
 
-public extension Account {
-    enum CodingKeys: String, CodingKey {
+extension Account {
+    public enum CodingKeys: String, CodingKey {
         case id
         case username
         case acct

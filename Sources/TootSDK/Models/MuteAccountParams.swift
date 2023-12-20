@@ -14,8 +14,10 @@ public struct MuteAccountParams: Codable, Sendable {
     /// - Parameters:
     ///   - notifications: Mute notifications in addition to posts? Defaults to true.
     ///   - duration: How long the mute should last, in seconds. Defaults to 0 (indefinite).
-    public init(notifications: Bool = true,
-                duration: Int = 0) {
+    public init(
+        notifications: Bool = true,
+        duration: Int = 0
+    ) {
         self.notifications = notifications
         self.duration = duration
     }

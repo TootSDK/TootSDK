@@ -10,16 +10,16 @@ import TootSDK
 
 struct RelationshipView: View {
     @EnvironmentObject var tootManager: TootManager
-    
+
     @State var relationship: Relationship
     @State var showingReblogs: Bool = false
     @State var notifying: Bool = false
     @State var muting: Bool = false
     @State var blocking: Bool = false
-    
+
     @State var followNotify: Bool = false
     @State var followShowingReblogs: Bool = false
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             AccountItemView(description: "Following", value: "\(relationship.following)")
@@ -28,7 +28,7 @@ struct RelationshipView: View {
             Toggle("Notifying:", isOn: $notifying)
             Toggle("Muting:", isOn: $muting)
             Toggle("Blocking:", isOn: $blocking)
-            
+
             buttons()
         }
         .onAppear {
@@ -62,14 +62,14 @@ struct RelationshipView: View {
             }
         }
     }
-    
+
     func updateTogglesWith(_ value: Relationship) {
         showingReblogs = value.showingReposts ?? false
         notifying = value.notifying ?? false
         muting = value.muting
         blocking = value.blocking
     }
-    
+
     @ViewBuilder func buttons() -> some View {
         if relationship.following == true {
             ButtonView(text: "Unfollow") {
@@ -78,21 +78,25 @@ struct RelationshipView: View {
         } else {
             HStack {
                 ButtonView(text: "Follow") {
-                    self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(reposts: followShowingReblogs,
-                                                                                                                                           notify: followNotify))
+                    self.relationship = try await tootManager.currentClient.followAccount(
+                        by: relationship.id,
+                        params: FollowAccountParams(
+                            reposts: followShowingReblogs,
+                            notify: followNotify))
                 }
-                
+
                 Spacer()
-                
+
                 Toggle("Show Boosts", isOn: $followShowingReblogs)
                 Toggle("Show Notify", isOn: $followNotify)
             }
         }
     }
-    
+
     func refreshAccount() {
         Task {
-            self.relationship = try await tootManager.currentClient.followAccount(by: relationship.id, params: FollowAccountParams(reposts: showingReblogs, notify: notifying))
+            self.relationship = try await tootManager.currentClient.followAccount(
+                by: relationship.id, params: FollowAccountParams(reposts: showingReblogs, notify: notifying))
         }
     }
 }

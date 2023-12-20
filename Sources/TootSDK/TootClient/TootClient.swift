@@ -2,8 +2,9 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 // MARK: - Initialization
@@ -38,7 +39,7 @@ public class TootClient: @unchecked Sendable {
     internal var accessToken: String?
 
     #if canImport(AuthenticationServices) && !os(tvOS) && !os(watchOS)
-    internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
+        internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
     #endif
 
     /// Initialize a new instance of `TootClient` by optionally providing an access token for authentication.
@@ -50,11 +51,13 @@ public class TootClient: @unchecked Sendable {
     ///   - instanceURL: the instance you are connecting to
     ///   - accessToken: the existing access token; if you already have one
     ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
-    public init(clientName: String = "TootSDK",
-                session: URLSession = URLSession.shared,
-                instanceURL: URL,
-                accessToken: String? = nil,
-                scopes: [String] = ["read", "write", "follow", "push"]) {
+    public init(
+        clientName: String = "TootSDK",
+        session: URLSession = URLSession.shared,
+        instanceURL: URL,
+        accessToken: String? = nil,
+        scopes: [String] = ["read", "write", "follow", "push"]
+    ) {
         self.session = session
         self.instanceURL = instanceURL
         self.accessToken = accessToken
@@ -71,11 +74,13 @@ public class TootClient: @unchecked Sendable {
     ///   - session: the URLSession being used internally, defaults to shared
     ///   - accessToken: the existing access token; if you already have one
     ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
-    public init(connect instanceURL: URL,
-                clientName: String = "TootSDK",
-                session: URLSession = URLSession.shared,
-                accessToken: String? = nil,
-                scopes: [String] = ["read", "write", "follow", "push"]) async throws {
+    public init(
+        connect instanceURL: URL,
+        clientName: String = "TootSDK",
+        session: URLSession = URLSession.shared,
+        accessToken: String? = nil,
+        scopes: [String] = ["read", "write", "follow", "push"]
+    ) async throws {
         self.session = session
         self.instanceURL = instanceURL
         self.accessToken = accessToken
@@ -291,7 +296,7 @@ extension TootClient {
     private func getCodeFrom(returnUrl: URL) -> String? {
         var components = URLComponents()
         components.query = returnUrl.query
-        return components.queryItems?.first(where: {$0.name == "code"})?.value
+        return components.queryItems?.first(where: { $0.name == "code" })?.value
     }
 
     /// Exchange the callback authorization code for an accessToken.
@@ -302,11 +307,12 @@ extension TootClient {
     ///   - callbackURI: The callback URL (`redirect_uri`) which was used to initiate the authorization flow.  Must match one of the redirect_uris declared during app registration.
     public func collectToken(code: String, clientId: String, clientSecret: String, callbackURI: String) async throws -> String {
 
-        let info = try await getAccessToken(code: code, clientId: clientId,
-                                            clientSecret: clientSecret,
-                                            callbackURI: callbackURI,
-                                            grantType: TootGrantType.login.rawValue,
-                                            scopes: scopes)
+        let info = try await getAccessToken(
+            code: code, clientId: clientId,
+            clientSecret: clientSecret,
+            callbackURI: callbackURI,
+            grantType: TootGrantType.login.rawValue,
+            scopes: scopes)
 
         guard let accessToken = info.accessToken else {
             throw TootSDKError.clientAuthorizationFailed
@@ -319,11 +325,12 @@ extension TootClient {
 
     public func collectRegistrationToken(clientId: String, clientSecret: String, callbackURI: String) async throws -> String {
 
-        let info = try await getAccessToken(code: nil, clientId: clientId,
-                                            clientSecret: clientSecret,
-                                            callbackURI: callbackURI,
-                                            grantType: TootGrantType.register.rawValue,
-                                            scopes: scopes)
+        let info = try await getAccessToken(
+            code: nil, clientId: clientId,
+            clientSecret: clientSecret,
+            callbackURI: callbackURI,
+            grantType: TootGrantType.register.rawValue,
+            scopes: scopes)
 
         guard let accessToken = info.accessToken else {
             throw TootSDKError.clientAuthorizationFailed
