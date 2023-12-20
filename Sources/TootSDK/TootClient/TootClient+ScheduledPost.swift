@@ -28,6 +28,7 @@ extension TootClient {
     ///   - sinceId: Return results newer than ID
     ///   - limit: Maximum number of results to return. Defaults to 20. Max 40
     /// - Returns: array of scheduled posts (empty if none), an error if any issue
+    @available(*, deprecated, renamed: "getScheduledPosts")
     public func getScheduledPost(minId: String?, maxId: String?, sinceId: String?, limit: Int?) async throws -> [ScheduledPost] {
         try requireFeature(.scheduledPost)
         let req = HTTPRequestBuilder {
