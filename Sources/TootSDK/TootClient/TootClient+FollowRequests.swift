@@ -32,7 +32,7 @@ extension TootClient {
     ///    - pageInfo: PagedInfo object for max/since.
     ///    - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: The accounts that are requesting a follow. Some server flavours may ignore the limit and return all requests.
-    func getFollowRequests(_ pageInfo: PagedInfo? = nil, limit: Int = 40) async throws -> PagedResult<[Account]> {
+    public func getFollowRequests(_ pageInfo: PagedInfo? = nil, limit: Int = 40) async throws -> PagedResult<[Account]> {
         let requestLimit = min(limit, 80)
         try requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
