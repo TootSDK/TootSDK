@@ -1,0 +1,22 @@
+{
+  "description": "",
+  "languages": ["fr"],
+  "stats": {
+    "domain_count": 0,
+    "user_count": 0,
+    "status_count": 0
+  },
+  "version": "2.8.0 (compatible; Friendica 2023.05)",
+  "uri": "social.thisworksonmycomputer.local",
+  "short_description": "",
+  "invites_enabled": false,
+  "rules": [],
+  "title": "Social",
+  "urls": null,
+  "approval_required": false,
+  "max_toot_chars": 200000,
+  "thumbnail": "https://social.thisworksonmycomputer.local/images/friendica-banner.jpg",
+  "contact_account": [],
+  "email": "",
+  "registrations": true
+}

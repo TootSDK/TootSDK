@@ -6,7 +6,7 @@ import struct NIO.ByteBufferAllocator
 public final class MultipartSerializer {
 
     /// Creates a new `MultipartSerializer`.
-    public init() { }
+    public init() {}
 
     /// Serializes the `MultipartForm` to data.
     ///

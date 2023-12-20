@@ -2,8 +2,9 @@
 // Copyright (c) 2023. All rights reserved.
 
 import Foundation
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 extension TootClient {

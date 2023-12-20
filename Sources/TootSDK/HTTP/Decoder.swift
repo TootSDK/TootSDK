@@ -12,11 +12,14 @@ public final class TootDecoder: JSONDecoder {
             let container = try decoder.singleValueContainer()
             let dateString = try container.decode(String.self)
 
-            guard let date = Self.dateFormatter.date(from: dateString) ??
-                    Self.dateFormatterWithoutFractionalSeconds.date(from: dateString) ??
-                    Self.dateFormatterWithFullDate.date(from: dateString) else {
-                throw DecodingError.dataCorruptedError(in: container, debugDescription:
-                                                        "Error parsing date: '\(dateString)'")
+            guard
+                let date = Self.dateFormatter.date(from: dateString) ?? Self.dateFormatterWithoutFractionalSeconds.date(from: dateString)
+                    ?? Self.dateFormatterWithFullDate.date(from: dateString)
+            else {
+                throw DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription:
+                        "Error parsing date: '\(dateString)'")
             }
 
             return date
@@ -24,7 +27,7 @@ public final class TootDecoder: JSONDecoder {
     }
 }
 
-internal extension TootDecoder {
+extension TootDecoder {
     static let dateFormatter: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

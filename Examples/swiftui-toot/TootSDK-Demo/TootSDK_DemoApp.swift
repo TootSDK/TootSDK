@@ -11,7 +11,7 @@ import TootSDK
 @main
 struct TootSDK_DemoApp: App {
     @StateObject var tootManager: TootManager = TootManager()
-    
+
     @State var authIsPresented: Bool = true
 
     var body: some Scene {
@@ -21,12 +21,12 @@ struct TootSDK_DemoApp: App {
                     .tabItem {
                         Label("Make Post", systemImage: "plus.message")
                     }
-                
+
                 FeedSelectionView()
                     .tabItem {
                         Label("Browse Feed", systemImage: "list.bullet.rectangle")
                     }
-                
+
                 UserAccountView()
                     .tabItem {
                         Label("Account", systemImage: "person.fill")
@@ -49,5 +49,5 @@ struct TootSDK_DemoApp: App {
             .environmentObject(tootManager)
         }
     }
-    
+
 }

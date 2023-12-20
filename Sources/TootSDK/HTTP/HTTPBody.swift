@@ -10,7 +10,7 @@ internal struct HTTPBody {
     internal var headers: [String: String]?
 }
 
-internal extension HTTPBody {
+extension HTTPBody {
     /// Initialize a new body with an object conform to `Encodable` which will converted to a JSON string.
     ///
     /// - Returns: HTTPBody

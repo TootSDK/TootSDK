@@ -13,9 +13,11 @@ struct AccountItemView<Content: View>: View {
 
     let content: Content
 
-    init(description: String,
-         value: String? = nil,
-         @ViewBuilder content: () -> Content = { EmptyView() }) {
+    init(
+        description: String,
+        value: String? = nil,
+        @ViewBuilder content: () -> Content = { EmptyView() }
+    ) {
         self.description = description
         self.value = value
         self.content = content()

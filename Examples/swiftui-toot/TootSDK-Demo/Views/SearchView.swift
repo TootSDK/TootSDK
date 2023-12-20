@@ -13,7 +13,7 @@ struct SearchView: View {
     @State private var searchResults: Search?
     @State private var path = NavigationPath()
     @EnvironmentObject private var tootManager: TootManager
-    
+
     var body: some View {
         NavigationStack(path: $path) {
             List {

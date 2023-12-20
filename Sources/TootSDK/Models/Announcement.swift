@@ -5,21 +5,23 @@ import Foundation
 
 /// Represents an announcement set by an administrator.
 public struct Announcement: Codable, Hashable, Identifiable {
-    public init(id: String,
-                content: String,
-                publishedAt: Date? = nil,
-                published: Bool? = nil,
-                allDay: Bool,
-                createdAt: Date? = nil,
-                updatedAt: Date? = nil,
-                read: Bool? = nil,
-                mentions: [Announcement.Account],
-                statuses: [Announcement.Status],
-                tags: [Tag],
-                emojis: [Emoji],
-                reactions: [AnnouncementReaction],
-                startsAt: Date? = nil,
-                endsAt: Date? = nil) {
+    public init(
+        id: String,
+        content: String,
+        publishedAt: Date? = nil,
+        published: Bool? = nil,
+        allDay: Bool,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        read: Bool? = nil,
+        mentions: [Announcement.Account],
+        statuses: [Announcement.Status],
+        tags: [Tag],
+        emojis: [Emoji],
+        reactions: [AnnouncementReaction],
+        startsAt: Date? = nil,
+        endsAt: Date? = nil
+    ) {
         self.id = id
         self.content = content
         self.publishedAt = publishedAt

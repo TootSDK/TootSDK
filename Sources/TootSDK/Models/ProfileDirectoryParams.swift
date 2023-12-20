@@ -14,8 +14,10 @@ public struct ProfileDirectoryParams: Codable {
     /// If true, returns only local accounts.
     public var local: Bool?
 
-    public init(order: Order? = nil,
-                local: Bool? = nil) {
+    public init(
+        order: Order? = nil,
+        local: Bool? = nil
+    ) {
         self.order = order
         self.local = local
     }
@@ -30,7 +32,7 @@ extension ProfileDirectoryParams {
     var queryItems: [URLQueryItem] {
         [
             URLQueryItem(name: "order", value: order?.rawValue),
-            URLQueryItem(name: "local", value: local?.description)
+            URLQueryItem(name: "local", value: local?.description),
         ].filter { $0.value != nil }
     }
 }

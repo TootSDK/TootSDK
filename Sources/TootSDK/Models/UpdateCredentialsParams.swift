@@ -29,7 +29,11 @@ public struct UpdateCredentialsParams: Codable {
     /// An extra entity to be used with API methods to verify credentials and update credentials
     public let source: Source?
 
-    public init(displayName: String? = nil, note: String? = nil, avatar: Data? = nil, avatarMimeType: String? = nil, header: Data? = nil, headerMimeType: String? = nil, locked: Bool? = nil, bot: Bool? = nil, discoverable: Bool? = nil, fieldsAttributes: [String: Field]? = nil, source: Source? = nil) {
+    public init(
+        displayName: String? = nil, note: String? = nil, avatar: Data? = nil, avatarMimeType: String? = nil, header: Data? = nil,
+        headerMimeType: String? = nil, locked: Bool? = nil, bot: Bool? = nil, discoverable: Bool? = nil, fieldsAttributes: [String: Field]? = nil,
+        source: Source? = nil
+    ) {
         self.displayName = displayName
         self.note = note
         self.avatar = avatar

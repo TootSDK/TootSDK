@@ -5,7 +5,10 @@ import Foundation
 
 /// Represents display or publishing preferences of user's own account. Returned as an additional entity when verifying and updated credentials, as an attribute of Account.
 public struct TootSource: Codable, Hashable, Sendable {
-    public init(note: String? = nil, fields: [TootField], privacy: Post.Visibility? = nil, sensitive: Bool? = nil, language: String? = nil, followRequestsCount: Int? = nil) {
+    public init(
+        note: String? = nil, fields: [TootField], privacy: Post.Visibility? = nil, sensitive: Bool? = nil, language: String? = nil,
+        followRequestsCount: Int? = nil
+    ) {
         self.note = note
         self.fields = fields
         self.privacy = privacy

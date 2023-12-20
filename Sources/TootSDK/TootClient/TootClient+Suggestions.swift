@@ -4,14 +4,14 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Accounts that are promoted by staff, or that the user has had past positive interactions with, but is not yet following.
     ///
     /// - Parameters:
     ///   - limit: Maximum number of results to return. Defaults to 40, max 80.
     /// - Returns: Array of ``Suggestion``.
-    func getSuggestions(limit: Int? = nil) async throws -> [Suggestion] {
+    public func getSuggestions(limit: Int? = nil) async throws -> [Suggestion] {
         try requireFeature(.suggestions)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "suggestions"])
@@ -24,7 +24,7 @@ public extension TootClient {
 
     /// Remove an account from follow suggestions.
     /// - Parameter id: The ID of the Account in the database.
-    func removeSuggestion(id: String) async throws {
+    public func removeSuggestion(id: String) async throws {
         try requireFeature(.suggestions)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "suggestions", id])

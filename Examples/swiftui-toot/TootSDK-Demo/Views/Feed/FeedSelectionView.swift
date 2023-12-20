@@ -14,13 +14,13 @@ enum SelectionOptions: String, CaseIterable {
 }
 
 struct FeedSelectionView: View {
-    
+
     @State private var selection: SelectionOptions = .home
-    
+
     @StateObject var timeLineHomeViewModel = FeedViewModel(streamType: .home)
     @StateObject var timeLineLocalViewModel = FeedViewModel(streamType: .local)
     @StateObject var timeLineFederatedViewModel = FeedViewModel(streamType: .federated)
-    
+
     var body: some View {
         VStack {
             Picker("Select your feed", selection: $selection) {
@@ -30,7 +30,7 @@ struct FeedSelectionView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
-            
+
             switch selection {
             case .home:
                 FeedView(viewModel: timeLineHomeViewModel)

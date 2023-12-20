@@ -6,7 +6,10 @@ import Foundation
 /// Specifies the parameters for a hashtag timeline request
 public struct HashtagTimelineQuery: Codable, Sendable {
 
-    public init(tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, local: Bool? = nil, remote: Bool? = nil) {
+    public init(
+        tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, local: Bool? = nil,
+        remote: Bool? = nil
+    ) {
         self.tag = tag
         self.anyTags = anyTags
         self.allTags = allTags

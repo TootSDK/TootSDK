@@ -56,7 +56,8 @@ extension MultipartFormData {
         switch data {
         case .array(let array):
             return array.enumerated().flatMap { offset, element in
-                namedParts(from: element, path: path.map { "\($0)[]" }) }
+                namedParts(from: element, path: path.map { "\($0)[]" })
+            }
         case .single(var part):
             part.name = path
             return [part]
@@ -70,12 +71,12 @@ extension MultipartFormData {
     }
 }
 
-private extension MultipartFormData {
-    mutating func insert(_ part: MultipartPart, at path: ArraySlice<Substring>, remainingNestingDepth: Int) {
+extension MultipartFormData {
+    fileprivate mutating func insert(_ part: MultipartPart, at path: ArraySlice<Substring>, remainingNestingDepth: Int) {
         self = inserting(part, at: path, remainingNestingDepth: remainingNestingDepth)
     }
 
-    func inserting(_ part: MultipartPart, at path: ArraySlice<Substring>, remainingNestingDepth: Int) -> MultipartFormData {
+    fileprivate func inserting(_ part: MultipartPart, at path: ArraySlice<Substring>, remainingNestingDepth: Int) -> MultipartFormData {
         guard let head = path.first else {
             return .single(part)
         }

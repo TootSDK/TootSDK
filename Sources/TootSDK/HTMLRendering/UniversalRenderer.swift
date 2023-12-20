@@ -2,9 +2,9 @@
 // Copyright (c) 2023. All rights reserved.
 
 import Foundation
+import SwiftSoup
 import WebURL
 import WebURLFoundationExtras
-import SwiftSoup
 
 /// A simple renderer to adapt HTML content including custom emojis or render them as plain text
 public class UniversalRenderer {
@@ -16,8 +16,10 @@ public class UniversalRenderer {
     ///   - html: html description
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
     /// - Returns: an instance `TootContent` with various representations of the content
-    public func render(html: String?,
-                       emojis: [Emoji]) throws -> TootContent {
+    public func render(
+        html: String?,
+        emojis: [Emoji]
+    ) throws -> TootContent {
 
         guard let html = html else {
             return TootContent(wrappedValue: "", plainContent: "", attributedString: NSAttributedString(string: ""))
@@ -31,8 +33,10 @@ public class UniversalRenderer {
     ///   - html: html description
     ///   - emojis: the custom emojis used in the HTML, provided with shortcode values between ":"
     /// - Returns: an instance `TootContent` with various representations of the content
-    public func render(html: String,
-                       emojis: [Emoji]) throws -> TootContent {
+    public func render(
+        html: String,
+        emojis: [Emoji]
+    ) throws -> TootContent {
 
         let plainText = TootHTML.extractAsPlainText(html: html) ?? ""
 
@@ -40,8 +44,9 @@ public class UniversalRenderer {
 
         // attempt to parse emojis and other special content
         // Replace the custom emojis with image refs and a data attribute which can be used in css:
-        emojis.forEach { emoji in
-            html = html.replacingOccurrences(of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
+        for emoji in emojis {
+            html = html.replacingOccurrences(
+                of: ":" + emoji.shortcode + ":", with: "<img src='" + emoji.staticUrl + "' alt='" + emoji.shortcode + "' data-tootsdk-emoji='true'>")
         }
 
         return TootContent(wrappedValue: html, plainContent: plainText, attributedString: NSAttributedString(string: html))

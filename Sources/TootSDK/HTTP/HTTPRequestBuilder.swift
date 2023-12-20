@@ -2,8 +2,9 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 /// HttpRequestBuilder is internal to TootSDK
@@ -28,7 +29,8 @@ internal final class HTTPRequestBuilder: HTTPRequest {
         }
         set {
             if let url = newValue,
-               let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            {
                 urlComponents = components
             }
         }
@@ -68,7 +70,7 @@ internal final class HTTPRequestBuilder: HTTPRequest {
     public var body: HTTPBody?
 }
 
-internal extension HTTPRequestBuilder {
+extension HTTPRequestBuilder {
     /// Create an instance of `URLRequest` using the current configuration
     func build() throws -> URLRequest {
         guard let url else {

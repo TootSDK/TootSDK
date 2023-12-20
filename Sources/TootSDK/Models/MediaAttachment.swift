@@ -6,7 +6,10 @@ import Foundation
 /// Represents a file or media attachment that can be added to a post.
 public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
 
-    public init(id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil, description: String? = nil, blurhash: String? = nil) {
+    public init(
+        id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil,
+        description: String? = nil, blurhash: String? = nil
+    ) {
         self.id = id
         self.type = type
         self.url = url
@@ -65,14 +68,14 @@ public struct AttachmentMetaInfo: Codable, Hashable, Sendable {
     public var bitrate: Int?
 }
 
-public extension MediaAttachment {
-    var aspectRatio: Double? {
-        if
-            let info = meta?.original,
+extension MediaAttachment {
+    public var aspectRatio: Double? {
+        if let info = meta?.original,
             let width = info.width,
             let height = info.height,
             width != 0,
-            height != 0 {
+            height != 0
+        {
             let aspectRatio = Double(width) / Double(height)
 
             return aspectRatio.isNaN ? nil : aspectRatio
@@ -87,8 +90,8 @@ public struct AttachmentMetaFocus: Codable, Hashable, Sendable {
     public var y: Double?
 }
 
-public extension AttachmentMetaFocus {
-    static let `default` = Self(x: 0, y: 0)
+extension AttachmentMetaFocus {
+    public static let `default` = Self(x: 0, y: 0)
 }
 
 public struct UploadedMediaAttachment: Identifiable, Sendable {

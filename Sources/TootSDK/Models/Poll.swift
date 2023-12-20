@@ -5,16 +5,18 @@
 
 /// Represents a poll attached to a post.
 public struct Poll: Codable, Hashable, Identifiable, Sendable {
-    public init(id: String,
-                expiresAt: Date? = nil,
-                expired: Bool,
-                multiple: Bool,
-                votesCount: Int,
-                votersCount: Int? = nil,
-                voted: Bool? = nil,
-                ownVotes: [Int]? = nil,
-                options: [Poll.Option],
-                emojis: [Emoji]) {
+    public init(
+        id: String,
+        expiresAt: Date? = nil,
+        expired: Bool,
+        multiple: Bool,
+        votesCount: Int,
+        votersCount: Int? = nil,
+        voted: Bool? = nil,
+        ownVotes: [Int]? = nil,
+        options: [Poll.Option],
+        emojis: [Emoji]
+    ) {
         self.id = id
         self.expiresAt = expiresAt
         self.expired = expired

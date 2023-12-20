@@ -10,7 +10,7 @@ import TootSDK
 
 struct UserAccountView: View {
     @EnvironmentObject var tootManager: TootManager
-    
+
     var body: some View {
         NavigationView {
             VStack {

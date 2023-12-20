@@ -7,12 +7,12 @@
 
 import Foundation
 
-public extension TootClient {
+extension TootClient {
 
     /// Obtain a list of all filter groups for the current user.
     ///
     /// - Returns: The filters or an error if unable to retrieve.
-    func getFilters() async throws -> [Filter] {
+    public func getFilters() async throws -> [Filter] {
         try requireFeature(.filtersV2)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters"])
@@ -25,7 +25,7 @@ public extension TootClient {
     /// - Parameters:
     ///     - id: The ID of the Filter in the database.
     /// - Returns: the Filter, if successful, throws an error if not
-    func getFilter(id: String) async throws -> Filter {
+    public func getFilter(id: String) async throws -> Filter {
         try requireFeature(.filtersV2)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters", id])
@@ -37,7 +37,7 @@ public extension TootClient {
     /// Delete a filter
     /// /// - Parameters:
     ///     - id: The ID of the Filter in the database.
-    func deleteFilter(id: String) async throws {
+    public func deleteFilter(id: String) async throws {
         try requireFeature(.filtersV2)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters", id])

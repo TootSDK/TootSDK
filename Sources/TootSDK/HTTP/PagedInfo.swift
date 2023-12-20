@@ -18,8 +18,8 @@ public struct PagedInfo: Decodable, Sendable {
     public let sinceId: String?
 }
 
-public extension PagedInfo {
-    var isPaged: Bool {
+extension PagedInfo {
+    public var isPaged: Bool {
         return self.maxId != nil || self.minId != nil || self.sinceId != nil
     }
 }
