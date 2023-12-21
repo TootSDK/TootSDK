@@ -24,4 +24,20 @@ extension TootClient {
         }
         return try await fetch([InstanceRule].self, req)
     }
+
+    public func getExtendedDescription() async throws -> ExtendedDescription {
+        try requireFeature(.extendedDescription)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "extended_description"])
+            $0.method = .get
+        }
+        return try await fetch(ExtendedDescription.self, req)
+    }
+}
+
+extension TootFeature {
+
+    /// Ability to retrieve instance extended descriptions
+    ///
+    public static let extendedDescription = TootFeature(supportedFlavours: [.mastodon])
 }
