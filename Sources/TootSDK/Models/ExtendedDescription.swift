@@ -1,6 +1,6 @@
 //
 //  ExtendedDescription.swift
-//  
+//
 //
 //  Created by Philip Chu on 12/4/23.
 //
@@ -12,7 +12,7 @@ public struct ExtendedDescription: Codable, Hashable {
     /// A timestamp of when the extended description was last updated.
     /// Note: this is not optional in the Mastodon spec but in practice sometimes null
     public var updatedAt: Date?
-    
+
     /// The rendered HTML content of the extended description.
     public var content: String
 
@@ -21,4 +21,3 @@ public struct ExtendedDescription: Codable, Hashable {
         self.content = content
     }
 }
-
