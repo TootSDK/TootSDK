@@ -231,5 +231,5 @@ extension TootFeature {
 
     /// Ability to edit your profile
     ///
-    public static let updateCredentials = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .firefish])
+    public static let updateCredentials = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .firefish, .sharkey])
 }

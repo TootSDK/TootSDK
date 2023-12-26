@@ -131,5 +131,5 @@ extension TootFeature {
     /// Ability to block domains
     ///
     /// Not on Friendica
-    public static let domainBlocks = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed])
+    public static let domainBlocks = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .sharkey])
 }

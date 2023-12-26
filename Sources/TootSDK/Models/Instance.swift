@@ -219,8 +219,11 @@ extension Instance {
         if version.lowercased().contains("akkoma") {
             return .akkoma
         }
-        if version.lowercased().contains("firefish") {
+        if version.lowercased().contains("firefish") || version.lowercased().contains("iceshrimp") {
             return .firefish
+        }
+        if version.lowercased().contains("sharkey") {
+            return .sharkey
         }
         return .mastodon
     }
