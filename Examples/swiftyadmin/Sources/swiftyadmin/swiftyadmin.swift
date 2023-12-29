@@ -40,5 +40,7 @@ struct SwiftyAdmin: AsyncParsableCommand {
             GetPendingFollowRequests.self,
             AcceptFollowRequest.self,
             RejectFollowRequest.self,
+            GetPushSubscription.self,
+            DeletePushSubscription.self,
         ])
 }
