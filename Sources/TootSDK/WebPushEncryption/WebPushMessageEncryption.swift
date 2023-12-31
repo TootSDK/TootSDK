@@ -5,9 +5,8 @@
 //  Created by Łukasz Rutkowski on 30/12/2023.
 //
 
-#if canImport(CryptoKit)
 import Foundation
-import CryptoKit
+import Crypto
 
 /// Helper for Web Push message handling.
 public enum WebPushMessageEncryption {
@@ -85,4 +84,3 @@ public enum WebPushMessageEncryption {
         return Array("Content-Encoding: \(name)\0".utf8) + context
     }
 }
-#endif

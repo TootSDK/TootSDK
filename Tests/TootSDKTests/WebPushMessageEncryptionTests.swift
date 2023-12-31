@@ -5,11 +5,10 @@
 //  Created by Łukasz Rutkowski on 30/12/2023.
 //
 
-#if canImport(CryptoKit)
 import Foundation
 import XCTest
 import TootSDK
-import CryptoKit
+import Crypto
 
 final class WebPushMessageEncryptionTests: XCTestCase {
     func testDecrypt() throws {
@@ -36,4 +35,3 @@ final class WebPushMessageEncryptionTests: XCTestCase {
         return try XCTUnwrap(Data(urlSafeBase64Encoded: base64UrlEncoded))
     }
 }
-#endif
