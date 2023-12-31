@@ -59,6 +59,7 @@ extension TootClient {
     /// If you create a new subscription, the old subscription is deleted.
     @discardableResult
     public func createPushSubscription(params: PushSubscriptionParams) async throws -> PushSubscription {
+        try requireFeature(.pushSubscriptions)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .post
@@ -70,6 +71,7 @@ extension TootClient {
 
     /// View the PushSubscription currently associated with this access token.
     public func getPushSubscription() async throws -> PushSubscription {
+        try requireFeature(.pushSubscriptions)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .get
@@ -82,6 +84,7 @@ extension TootClient {
     ///
     /// To change fundamentals, a new subscription must be created instead.
     public func changePushSubscription(params: PushSubscriptionUpdateParams) async throws -> PushSubscription {
+        try requireFeature(.pushSubscriptions)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .put
@@ -91,6 +94,23 @@ extension TootClient {
         return try await fetch(PushSubscription.self, req)
     }
 
+    /// Removes the current Web Push API subscription.
+    public func deletePushSubscription() async throws {
+        try requireFeature(.pushSubscriptions)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "push", "subscription"])
+            $0.method = .delete
+        }
+        _ = try await fetch(req: req)
+    }
+}
+
+extension TootFeature {
+    /// Ability to create Web Push API subscriptions to receive notifications.
+    public static let pushSubscriptions = TootFeature(supportedFlavours: [.mastodon, .akkoma, .friendica, .pleroma])
+}
+
+extension TootClient {
     internal func createQuery(from params: TootNotificationParams) -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
 
