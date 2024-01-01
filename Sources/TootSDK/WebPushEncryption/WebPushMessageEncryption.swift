@@ -10,6 +10,32 @@ import Crypto
 
 /// Helper for Web Push message handling.
 public enum WebPushMessageEncryption {
+    
+    /// Decrypts and decodes a push notification.
+    ///
+    /// - Parameters:
+    ///   - encryptedMessage: The encrypted message data received in push.
+    ///   - privateKey: The private key corresponding to a public key used when registering push subscription.
+    ///   - serverPublicKey: The public key of a server received in push  as "dh" parameter of "Crypto-Key" HTTP header
+    ///   - auth: The authentication secret used when registering push subscription.
+    ///   - salt: The salt received from server in push  as "salt" parameter of "Encryption" HTTP header.
+    /// - Returns: Push notification.
+    public static func decryptAndDecodePush(
+        _ encryptedMessage: Data,
+        privateKey: P256.KeyAgreement.PrivateKey,
+        serverPublicKey: P256.KeyAgreement.PublicKey,
+        auth: Data,
+        salt: Data
+    ) throws -> PushNotification {
+        let decryptedMessageData = try decrypt(
+            encryptedMessage,
+            privateKey: privateKey,
+            serverPublicKey: serverPublicKey,
+            auth: auth,
+            salt: salt
+        )
+        return try TootDecoder().decode(PushNotification.self, from: decryptedMessageData)
+    }
 
     /// Decrypts a message encrypted by server according to Web Push standard.
     ///
