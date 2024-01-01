@@ -5,8 +5,8 @@
 //  Created by Łukasz Rutkowski on 30/12/2023.
 //
 
-import Foundation
 import Crypto
+import Foundation
 
 /// Helper for Web Push message handling.
 public enum WebPushMessageEncryption {
