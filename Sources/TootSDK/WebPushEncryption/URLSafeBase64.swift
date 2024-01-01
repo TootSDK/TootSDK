@@ -1,6 +1,6 @@
 //
 //  URLSafeBase64.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 30/12/2023.
 //

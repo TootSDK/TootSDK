@@ -1,6 +1,6 @@
 //
 //  WebPushMessageEncryption.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 30/12/2023.
 //
@@ -10,7 +10,7 @@ import Crypto
 
 /// Helper for Web Push message handling.
 public enum WebPushMessageEncryption {
-    
+
     /// Decrypts and decodes a push notification.
     ///
     /// - Parameters:
