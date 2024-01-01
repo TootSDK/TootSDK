@@ -2,6 +2,7 @@
 // Copyright (c) 2023. All rights reserved.
 
 import Foundation
+import Crypto
 
 /// Web Push API subscription request
 public struct PushSubscriptionParams: Codable, Sendable {
@@ -19,17 +20,33 @@ public struct PushSubscriptionParams: Codable, Sendable {
         public var endpoint: String
         public var keys: PushSubscriptionParams.Keys
     }
-
+    
+    /// Encryption related data of push subscription.
     public struct Keys: Codable, Sendable {
-        /// User agent public key. Base64 encoded string of a public key from a ECDH keypair using
+        /// User agent public key. Base64 URL safe encoded string of a public key from a ECDH keypair using
         public var p256dh: String
 
-        ///  Auth secret. Base64 encoded string of 16 bytes of random data.
+        /// Auth secret. Base64 URLS safe encoded string of 16 bytes of random data.
         public var auth: String
 
+        /// Initializes encryption related data of push subscription.
+        ///
+        /// - Parameters:
+        ///   - p256dh: User agent public key. Base64 URL safe encoded string of a public key from a ECDH keypair using
+        ///   - auth: Auth secret. Base64 URL safe encoded string of 16 bytes of random data.
         public init(p256dh: String, auth: String) {
             self.p256dh = p256dh
             self.auth = auth
+        }
+        
+        /// Initializes encryption related data of push subscription.
+        ///
+        /// - Parameters:
+        ///   - p256dh: User agent public key.
+        ///   - auth: Auth secret as 16 bytes of random data.
+        public init(p256dh: P256.KeyAgreement.PublicKey, auth: Data) {
+            self.p256dh = p256dh.x963Representation.urlSafeBase64EncodedString()
+            self.auth = auth.urlSafeBase64EncodedString()
         }
     }
 

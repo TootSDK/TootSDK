@@ -16,6 +16,15 @@ extension Data {
     public init?(urlSafeBase64Encoded: String) {
         self.init(base64Encoded: urlSafeBase64Encoded.urlSafeBase64EncodedToBase64EncodedString())
     }
+
+    /// Returns a Base-64 URL safe encoded string.
+    public func urlSafeBase64EncodedString() -> String {
+        base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+
 }
 
 extension String {
