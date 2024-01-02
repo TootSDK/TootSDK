@@ -26,7 +26,7 @@ public struct PushSubscriptionParams: Codable, Sendable {
         /// User agent public key. Base64 URL safe encoded string of a public key from a ECDH keypair using
         public var p256dh: String
 
-        /// Auth secret. Base64 URLS safe encoded string of 16 bytes of random data.
+        /// Auth secret. Base64 URL safe encoded string of 16 bytes of random data.
         public var auth: String
 
         /// Initializes encryption related data of push subscription.
