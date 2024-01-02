@@ -31,6 +31,11 @@ final class WebPushMessageEncryptionTests: XCTestCase {
         XCTAssertEqual(decryptedMessage, "I am the walrus")
     }
 
+    func testAuthSecretLength() throws {
+        let authSecret = WebPushMessageEncryption.Keys.newAuthSecret()
+        XCTAssertEqual(authSecret.count, 16)
+    }
+
     private func decode(_ base64UrlEncoded: String) throws -> Data {
         return try XCTUnwrap(Data(urlSafeBase64Encoded: base64UrlEncoded))
     }

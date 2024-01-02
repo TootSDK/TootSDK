@@ -48,6 +48,14 @@ public struct PushSubscriptionParams: Codable, Sendable {
             self.p256dh = p256dh.x963Representation.urlSafeBase64EncodedString()
             self.auth = auth.urlSafeBase64EncodedString()
         }
+
+        /// Initializes encryption related data of push subscription.
+        public init(_ keys: WebPushMessageEncryption.Keys) {
+            self.init(
+                p256dh: keys.publicKey,
+                auth: keys.auth
+            )
+        }
     }
 
     public struct SubscriptionData: Codable, Sendable {
