@@ -5,8 +5,8 @@
 //  Created by Łukasz Rutkowski on 02/01/2024.
 //
 
-import Foundation
 import Crypto
+import Foundation
 
 extension WebPushMessageEncryption {
 
@@ -19,7 +19,7 @@ extension WebPushMessageEncryption {
 
         /// Auth secret as 16 bytes of random data.
         public let auth: Data
-        
+
         /// The corresponding user agent public key.
         public var publicKey: P256.KeyAgreement.PublicKey {
             privateKey.publicKey
