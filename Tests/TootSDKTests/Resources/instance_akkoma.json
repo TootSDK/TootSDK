@@ -1,0 +1,81 @@
+{
+  "poll_limits" : {
+    "max_options" : 20,
+    "min_expiration" : 0,
+    "max_option_chars" : 200,
+    "max_expiration" : 31536000
+  },
+  "thumbnail" : "https://social.thisworksonmycomputer.local/images/akkoma-banner.jpg",
+  "banner_upload_limit" : 4000000,
+  "title" : "Social",
+  "description_limit" : 5000,
+  "background_upload_limit" : 4000000,
+  "pleroma" : {
+    "stats" : {
+      "mau" : 5
+    },
+    "vapid_public_key" : "BNIq9QDO4zehtRBzVRqR-f-FqlSaj7HFwUZ9ykZ_47cKokHv9kqyHnT8vqdCe4IfUVX0NbKhlAwhnAaxRAQKodc",
+    "metadata" : {
+      "account_activation_required" : true,
+      "fields_limits" : {
+        "name_length" : 512,
+        "value_length" : 2048,
+        "max_fields" : 10,
+        "max_remote_fields" : 20
+      },
+      "features" : [
+        "pleroma_api",
+        "akkoma_api",
+        "mastodon_api",
+        "mastodon_api_streaming",
+        "polls",
+        "v2_suggestions",
+        "pleroma_explicit_addressing",
+        "shareable_emoji_packs",
+        "multifetch",
+        "pleroma:api/v1/notifications:include_types_filter",
+        "quote_posting",
+        "editing",
+        "bubble_timeline",
+        "pleroma_emoji_reactions",
+        "exposable_reactions",
+        "profile_directory",
+        "custom_emoji_reactions",
+        "pleroma:get:main/ostatus"
+      ],
+      "privileged_staff" : false,
+      "post_formats" : [
+        "text/plain",
+        "text/html",
+        "text/markdown",
+        "text/bbcode",
+        "text/x.misskeymarkdown"
+      ],
+      "federation" : {
+        "enabled" : true
+      }
+    }
+  },
+  "registrations" : true,
+  "approval_required" : true,
+  "background_image" : "https://social.thisworksonmycomputer.local/images/background.jpg",
+  "upload_limit" : 16000000,
+  "version" : "2.7.2 (compatible; Akkoma 3.10.4-0-gebfb617)",
+  "uri" : "https://social.thisworksonmycomputer.local",
+  "max_toot_chars" : 5000,
+  "email" : "toot@social.thisworksonmycomputer.local",
+  "urls" : {
+    "streaming_api" : "wss://social.thisworksonmycomputer.local"
+  },
+  "stats" : {
+    "user_count" : 5,
+    "remote_user_count" : 71062,
+    "domain_count" : 5844,
+    "status_count" : 16
+  },
+  "languages" : [
+    "en"
+  ],
+  "avatar_upload_limit" : 2000000,
+  "description" : "Akkoma: The cooler fediverse server"
+}

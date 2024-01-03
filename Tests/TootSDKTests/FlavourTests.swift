@@ -26,4 +26,9 @@ final class FlavourTests: XCTestCase {
         let instance = try localObject(Instance.self, "instance_friendica_nocontact")
         XCTAssertEqual(instance.flavour, .friendica)
     }
+    
+    func testDetectsAkkoma() throws {
+        let instance = try localObject(Instance.self, "instance_akkoma")
+        XCTAssertEqual(instance.flavour, .akkoma)
+    }
 }
