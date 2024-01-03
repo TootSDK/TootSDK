@@ -31,4 +31,9 @@ final class FlavourTests: XCTestCase {
         let instance = try localObject(Instance.self, "instance_akkoma")
         XCTAssertEqual(instance.flavour, .akkoma)
     }
+    
+    func testDetectsFirefish() throws {
+        let instance = try localObject(Instance.self, "instance_firefish_contact_removed")
+        XCTAssertEqual(instance.flavour, .firefish)
+    }
 }

@@ -53,6 +53,7 @@ let package = Package(
                 .copy("Resources/featured_tag.json"),
                 .copy("Resources/featured_tag_unused.json"),
                 .copy("Resources/instance_akkoma.json"),
+                .copy("Resources/instance_firefish_contact_removed.json"),
                 .copy("Resources/instance_friendica_nocontact.json"),
                 .copy("Resources/list.json"),
                 .copy("Resources/post no emojis.json"),
