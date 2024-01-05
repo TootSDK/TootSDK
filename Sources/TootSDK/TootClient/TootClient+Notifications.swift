@@ -114,8 +114,15 @@ extension TootClient {
     internal func createQuery(from params: TootNotificationParams) -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
 
+        let params = params.corrected(for: flavour)
+
         if let types = params.types, !types.isEmpty {
-            queryParameters.append(contentsOf: types.map({ .init(name: "types[]", value: $0.rawValue) }))
+            let name =
+                switch flavour {
+                case .pleroma, .akkoma: "include_types[]"
+                default: "types[]"
+                }
+            queryParameters.append(contentsOf: types.map({ .init(name: name, value: $0.rawValue) }))
         }
 
         if let types = params.excludeTypes, !types.isEmpty {

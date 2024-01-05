@@ -4,18 +4,16 @@ import TootSDK
 
 struct ListAllNotifications: AsyncParsableCommand {
 
-    @Option(name: .short, help: "URL to the instance to connect to")
-    var url: String
-
-    @Option(name: .short, help: "Access token for an account with sufficient permissions.")
-    var token: String
+    @OptionGroup var auth: AuthOptions
+    @Option var types: [TootNotification.NotificationType] = [.mention]
+    @Option var excludeTypes: [TootNotification.NotificationType] = []
 
     mutating func run() async throws {
-        let client = try await TootClient(connect: URL(string: url)!, accessToken: token)
+        let client = try await TootClient(connect: auth.url, accessToken: auth.token)
 
         var pagedInfo: PagedInfo? = nil
         var hasMore = true
-        let query = TootNotificationParams(types: [.mention])
+        let query = TootNotificationParams(excludeTypes: excludeTypes, types: types)
 
         while hasMore {
             let page = try await client.getNotifications(params: query, pagedInfo)
@@ -29,5 +27,11 @@ struct ListAllNotifications: AsyncParsableCommand {
             pagedInfo = page.previousPage
         }
 
+    }
+}
+
+extension TootNotification.NotificationType: ExpressibleByArgument {
+    public init?(argument: String) {
+        self.init(rawValue: argument)
     }
 }

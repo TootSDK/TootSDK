@@ -24,7 +24,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
     /// Post that was the object of the notification, e.g. in mentions, reposts, favourites, or polls.
     public var post: Post?
 
-    public enum NotificationType: String, Codable, Sendable {
+    public enum NotificationType: String, Codable, Sendable, CaseIterable {
         /// Someone followed you
         case follow
         /// Someone mentioned you in their post
