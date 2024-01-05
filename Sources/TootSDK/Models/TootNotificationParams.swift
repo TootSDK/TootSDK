@@ -37,7 +37,7 @@ extension TootNotificationParams {
         guard flavour == .friendica else { return self }
         var params = self
         if let types = params.types {
-            var correctedExcludeTypes = Set(TootNotification.NotificationType.allCases).subtracting(types)
+            var correctedExcludeTypes = TootNotification.NotificationType.supported(by: flavour).subtracting(types)
             if let excludeTypes = params.excludeTypes {
                 correctedExcludeTypes.formUnion(excludeTypes)
             }

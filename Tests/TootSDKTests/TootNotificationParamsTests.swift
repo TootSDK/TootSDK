@@ -24,19 +24,19 @@ final class TootNotificationParamsTests: XCTestCase {
 
     func testFriendicaConvertTypesToExcludeTypes_whenOnlyTypesProvided() throws {
         let params = TootNotificationParams(types: [.mention]).corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll, .followRequest, .post, .update])
+        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll])
         XCTAssertEqual(params.types, nil)
     }
 
     func testFriendicaConvertTypesToExcludeTypes_whenBothTypesAndExcludedTypesProvided() throws {
         let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention]).corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll, .followRequest, .post, .update])
+        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll])
         XCTAssertEqual(params.types, nil)
     }
 
     func testFriendicaConvertTypesToExcludeTypes_whenTypesOverlap() throws {
         let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention, .favourite]).corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll, .followRequest, .post, .update])
+        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll])
         XCTAssertEqual(params.types, nil)
     }
 
@@ -57,12 +57,9 @@ final class TootNotificationParamsTests: XCTestCase {
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
         XCTAssertEqual(query, [
             URLQueryItem(name: "exclude_types[]", value: "follow"),
-            URLQueryItem(name: "exclude_types[]", value: "follow_request"),
             URLQueryItem(name: "exclude_types[]", value: "mention"),
             URLQueryItem(name: "exclude_types[]", value: "poll"),
             URLQueryItem(name: "exclude_types[]", value: "reblog"),
-            URLQueryItem(name: "exclude_types[]", value: "status"),
-            URLQueryItem(name: "exclude_types[]", value: "update"),
         ])
     }
 
