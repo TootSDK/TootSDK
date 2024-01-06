@@ -171,7 +171,7 @@ extension TootClient {
         }
 
         if let policy = params.data?.policy {
-            queryParameters.append(.init(name: "data[policy]", value: policy))
+            queryParameters.append(.init(name: "data[policy]", value: policy.rawValue))
         }
         return queryParameters
     }
@@ -179,36 +179,36 @@ extension TootClient {
     internal func createQuery(from params: PushSubscriptionUpdateParams) -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
 
-        if let alert = params.data?.alerts?.mention {
+        if let alert = params.data.alerts?.mention {
             queryParameters.append(.init(name: "data[alerts][mention]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.post {
+        if let alert = params.data.alerts?.post {
             queryParameters.append(.init(name: "data[alerts][status]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.follow {
+        if let alert = params.data.alerts?.follow {
             queryParameters.append(.init(name: "data[alerts][follow]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.followRequest {
+        if let alert = params.data.alerts?.followRequest {
             queryParameters.append(.init(name: "data[alerts][follow_request]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.favourite {
+        if let alert = params.data.alerts?.favourite {
             queryParameters.append(.init(name: "data[alerts][favourite]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.poll {
+        if let alert = params.data.alerts?.poll {
             queryParameters.append(.init(name: "data[alerts][poll]", value: String(alert).lowercased()))
         }
 
-        if let alert = params.data?.alerts?.update {
+        if let alert = params.data.alerts?.update {
             queryParameters.append(.init(name: "data[alerts][update]", value: String(alert).lowercased()))
         }
 
-        if let policy = params.data?.policy {
-            queryParameters.append(.init(name: "data[policy]", value: policy))
+        if let policy = params.data.policy {
+            queryParameters.append(.init(name: "data[policy]", value: policy.rawValue))
         }
         return queryParameters
     }

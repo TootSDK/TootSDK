@@ -59,11 +59,12 @@ public struct PushSubscriptionParams: Codable, Sendable {
     }
 
     public struct SubscriptionData: Codable, Sendable {
+        /// Specify which alerts should be received.
         public var alerts: Alerts?
         /// Specify whether to receive push notifications from all, followed, follower, or none users.
-        public var policy: String?
+        public var policy: PushSubscriptionPolicy?
 
-        public init(alerts: Alerts? = nil, policy: String? = nil) {
+        public init(alerts: Alerts? = nil, policy: PushSubscriptionPolicy? = nil) {
             self.alerts = alerts
             self.policy = policy
         }
