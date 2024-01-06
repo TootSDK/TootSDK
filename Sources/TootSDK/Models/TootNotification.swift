@@ -41,7 +41,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         case post = "status"
         /// A post you interacted with has been edited
         case update = "update"
-        
+
         /// Returns notification types supported by the given `flavour`.
         public static func supported(by flavour: TootSDKFlavour) -> Set<NotificationType> {
             switch flavour {
@@ -57,7 +57,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 return [.follow, .mention, .repost, .poll, .followRequest]
             }
         }
-        
+
         /// Returns push notification types supported by the given `flavour`.
         public static func supportedAsPush(by flavour: TootSDKFlavour) -> Set<NotificationType> {
             switch flavour {
@@ -69,12 +69,12 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 return []
             }
         }
-        
+
         /// Returns true if this notification type is supported by the given `flavour`.
         public func isSupported(by flavour: TootSDKFlavour) -> Bool {
             return Self.supported(by: flavour).contains(self)
         }
-        
+
         /// Returns true if this notification type is supported as push notification by the given `flavour`.
         public func isSupportedAsPush(by flavour: TootSDKFlavour) -> Bool {
             return Self.supportedAsPush(by: flavour).contains(self)

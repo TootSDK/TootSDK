@@ -1,6 +1,6 @@
 //
 //  PushSubscriptionPolicy.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 06/01/2024.
 //
