@@ -120,11 +120,11 @@ extension TootClient {
         let params = params.corrected(for: flavour)
 
         if let types = params.types, !types.isEmpty {
-            let name =
-                switch flavour {
-                case .pleroma, .akkoma: "include_types[]"
-                default: "types[]"
-                }
+            let name: String
+            switch flavour {
+            case .pleroma, .akkoma: name = "include_types[]"
+            default: name = "types[]"
+            }
             queryParameters.append(contentsOf: types.map({ .init(name: name, value: $0.rawValue) }))
         }
 
