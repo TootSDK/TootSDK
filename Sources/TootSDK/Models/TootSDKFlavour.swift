@@ -19,6 +19,9 @@ public enum TootSDKFlavour: String, Codable, Sendable, CaseIterable {
     /// Akkoma server. API Documentation can be found at https://docs.akkoma.dev/stable/development/API/differences_in_mastoapi_responses/
     case akkoma
 
-    /// Firefish server.
+    /// Firefish server. Source at https://git.joinfirefish.org/firefish/firefish
     case firefish
+
+    /// Sharkey server. Source at https://git.joinsharkey.org/Sharkey/Sharkey
+    case sharkey
 }

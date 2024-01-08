@@ -1,0 +1,83 @@
+{
+  "description" : "A general-purpose Sharkey instance, open for everyone. Small, personal, running on dedicated hardware.",
+  "languages" : [
+
+  ],
+  "stats" : {
+    "domain_count" : 229440,
+    "user_count" : 179,
+    "status_count" : 46109
+  },
+  "version" : "3.0.0 (compatible; Sharkey 2024.1.0.beta1)",
+  "uri" : "https://plasmatrap.com",
+  "short_description" : "A general-purpose Sharkey instance, open for everyone. Small, personal, running on dedicated hardware.",
+  "invites_enabled" : true,
+  "rules" : [
+
+  ],
+  "configuration" : {
+    "statuses" : {
+      "max_media_attachments" : 16,
+      "characters_reserved_per_url" : 22,
+      "max_characters" : 3000
+    },
+    "reactions" : {
+      "max_reactions" : 1
+    },
+    "polls" : {
+      "max_expiration" : 2629746,
+      "min_expiration" : 50,
+      "max_characters_per_option" : 50,
+      "max_options" : 10
+    },
+    "accounts" : {
+      "max_featured_tags" : 20
+    },
+    "media_attachments" : {
+      "image_matrix_limit" : 16777216,
+      "supported_mime_types" : [
+        "image/png",
+        "image/gif",
+        "image/jpeg",
+        "image/webp",
+        "image/avif",
+        "image/apng",
+        "image/bmp",
+        "image/tiff",
+        "image/x-icon",
+        "audio/opus",
+        "video/ogg",
+        "audio/ogg",
+        "application/ogg",
+        "video/quicktime",
+        "video/mp4",
+        "audio/mp4",
+        "video/x-m4v",
+        "audio/x-m4a",
+        "video/3gpp",
+        "video/3gpp2",
+        "video/mpeg",
+        "audio/mpeg",
+        "video/webm",
+        "audio/webm",
+        "audio/aac",
+        "audio/flac",
+        "audio/wav",
+        "audio/x-flac",
+        "audio/vnd.wave"
+      ],
+      "video_frame_rate_limit" : 60,
+      "video_size_limit" : 41943040,
+      "video_matrix_limit" : 2304000,
+      "image_size_limit" : 10485760
+    }
+  },
+  "title" : "Social",
+  "urls" : {
+    "streaming_api" : "wss://social.thisworksonmycomputer.local/streaming"
+  },
+  "approval_required" : false,
+  "thumbnail" : "https://social.thisworksonmycomputer.local/background.webp",
+  "email" : "contact@social.thisworksonmycomputer.local",
+  "registrations" : true
+}

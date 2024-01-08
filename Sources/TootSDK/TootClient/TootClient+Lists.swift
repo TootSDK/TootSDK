@@ -109,5 +109,5 @@ extension TootFeature {
 
     /// Ability to create lists.
     ///
-    public static let lists = TootFeature(supportedFlavours: [.mastodon, .pleroma, .friendica, .akkoma, .firefish])
+    public static let lists = TootFeature(supportedFlavours: [.mastodon, .pleroma, .friendica, .akkoma, .firefish, .sharkey])
 }

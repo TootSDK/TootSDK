@@ -207,20 +207,30 @@ extension Instance {
 
 extension Instance {
     public var flavour: TootSDKFlavour {
+        // 2.7.2 (compatible; Pleroma 2.5.0)
         if version.lowercased().contains("pleroma") {
             return .pleroma
         }
+        // 2.7.2 (compatible; Pixelfed 0.11.9)
         if version.lowercased().contains("pixelfed") {
             return .pixelfed
         }
+        // 2.8.0 (compatible; Friendica 2023.05)
         if version.lowercased().contains("friendica") {
             return .friendica
         }
+        // 2.7.2 (compatible; Akkoma 3.10.4-0-gebfb617)
         if version.lowercased().contains("akkoma") {
             return .akkoma
         }
-        if version.lowercased().contains("firefish") {
+        // 3.0.0 (compatible; Firefish 1.0.4-dev5)
+        // 4.2.1 (compatible; Iceshrimp 2023.12-pre3)
+        if version.lowercased().contains("firefish") || version.lowercased().contains("iceshrimp") {
             return .firefish
+        }
+        // 3.0.0 (compatible; Sharkey 2023.12.0.beta3)
+        if version.lowercased().contains("sharkey") {
+            return .sharkey
         }
         return .mastodon
     }
