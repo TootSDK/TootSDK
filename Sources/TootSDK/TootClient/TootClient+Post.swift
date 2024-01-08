@@ -118,6 +118,7 @@ extension TootClient {
 
     /// Privately bookmark a post.
     public func bookmarkPost(id: String) async throws -> Post {
+        try requireFeature(.bookmark)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "bookmark"])
             $0.method = .post
@@ -127,6 +128,7 @@ extension TootClient {
 
     /// Remove a post from your private bookmarks.
     public func unbookmarkPost(id: String) async throws -> Post {
+        try requireFeature(.bookmark)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unbookmark"])
             $0.method = .post
@@ -140,6 +142,7 @@ extension TootClient {
 
     /// Do not receive notifications for the thread that this post is part of. Must be a thread in which you are a participant.
     public func mutePost(id: String) async throws -> Post {
+        try requireFeature(.mutePost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "mute"])
             $0.method = .post
@@ -149,6 +152,7 @@ extension TootClient {
 
     /// Start receiving notifications again for the thread that this post is part of.
     public func unmutePost(id: String) async throws -> Post {
+        try requireFeature(.mutePost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unmute"])
             $0.method = .post
@@ -236,4 +240,18 @@ extension TootClient {
         return try await fetch(PostSource.self, req)
     }
 
+}
+
+extension TootFeature {
+
+    /// Ability to bookmark posts
+    ///
+    public static let bookmark = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish])
+}
+
+extension TootFeature {
+
+    /// Ability to mute a conversation that mentions you
+    ///
+    public static let mutePost = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish])
 }
