@@ -46,6 +46,7 @@ extension TootClient {
 
     /// Dismiss a single notification from the server.
     public func dismissNotification(id: String) async throws {
+        try requireFeature(.dismissNotification)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications", id, "dismiss"])
             $0.method = .post
@@ -205,4 +206,11 @@ extension TootClient {
         }
         return queryParameters
     }
+}
+
+extension TootFeature {
+
+    /// Ability to dismiss (or mark as read) a single notification
+    ///
+    public static let dismissNotification = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish])
 }
