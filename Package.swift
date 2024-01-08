@@ -23,6 +23,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-collections.git", from: "1.0.2"),
         .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.4.3"),
         .package(url: "https://github.com/karwa/swift-url.git", from: "0.4.1"),
+        .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0" ..< "4.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -36,10 +37,14 @@ let package = Package(
             ]),
         .target(
             name: "TootSDK",
-            dependencies: ["MultipartKitTootSDK",
-                           .product(name:"SwiftSoup", package: "SwiftSoup"),
-                           .product(name: "WebURL", package: "swift-url"),
-                           .product(name: "WebURLFoundationExtras", package: "swift-url")], resources: [.copy("PrivacyInfo.xcprivacy")]
+            dependencies: [
+                "MultipartKitTootSDK",
+                .product(name:"SwiftSoup", package: "SwiftSoup"),
+                .product(name: "WebURL", package: "swift-url"),
+                .product(name: "WebURLFoundationExtras", package: "swift-url"),
+                .product(name: "Crypto", package: "swift-crypto"),
+            ],
+            resources: [.copy("PrivacyInfo.xcprivacy")]
         ),
         .testTarget(
             name: "TootSDKTests",
@@ -64,7 +69,8 @@ let package = Package(
                 .copy("Resources/scheduled_post_sensitive.json"),
                 .copy("Resources/scheduled_post_attachment.json"),
                 .copy("Resources/scheduled_post_reply.json"),
-                .copy("Resources/tag.json")
+                .copy("Resources/tag.json"),
+                .copy("Resources/encrypted_push_notification.base64"),
             ]),
     ]
 )
