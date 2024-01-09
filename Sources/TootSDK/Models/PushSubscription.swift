@@ -5,7 +5,7 @@ import Foundation
 
 /// Represents a subscription to the push streaming server.
 public struct PushSubscription: Codable, Sendable {
-    public init(endpoint: String, alerts: Alerts, serverKey: String, policy: PushSubscriptionPolicy?) {
+    public init(endpoint: String, alerts: Alerts, serverKey: String, policy: PushSubscriptionPolicy = .all) {
         self.endpoint = endpoint
         self.alerts = alerts
         self.serverKey = serverKey

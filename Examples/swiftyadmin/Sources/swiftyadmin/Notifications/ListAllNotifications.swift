@@ -13,7 +13,7 @@ struct ListAllNotifications: AsyncParsableCommand {
 
         var pagedInfo: PagedInfo? = nil
         var hasMore = true
-        let query = TootNotificationParams(excludeTypes: excludeTypes, types: types)
+        let query = TootNotificationParams(excludeTypes: Set(excludeTypes), types: Set(types))
 
         while hasMore {
             let page = try await client.getNotifications(params: query, pagedInfo)
