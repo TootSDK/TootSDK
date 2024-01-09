@@ -47,10 +47,12 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.note = try container.decode(String.self, forKey: .note)
         self.avatar = try container.decode(String.self, forKey: .avatar)
         self.avatarStatic = try? container.decodeIfPresent(String.self, forKey: .avatarStatic)
-        self.header = try container.decode(String.self, forKey: .header)
-        self.headerStatic = try container.decode(String.self, forKey: .headerStatic)
+        // pixelfed doesn't include headers in block/mute lists
+        self.header = (try? container.decodeIfPresent(String.self, forKey: .header)) ?? ""
+        self.headerStatic = (try? container.decodeIfPresent(String.self, forKey: .headerStatic)) ?? ""
         self.locked = try container.decode(Bool.self, forKey: .locked)
-        self.emojis = try container.decode([Emoji].self, forKey: .emojis)
+        // pixelfed doesn't include emojis in block/mute lists
+        self.emojis = (try? container.decodeIfPresent([Emoji].self, forKey: .emojis)) ?? []
         self.discoverable = try? container.decodeIfPresent(Bool.self, forKey: .discoverable)
         self.createdAt = try container.decode(Date.self, forKey: .createdAt)
         self.lastPostAt = try? container.decodeIfPresent(Date.self, forKey: .lastPostAt)
@@ -61,7 +63,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.moved = try? container.decodeIfPresent(Account.self, forKey: .moved)
         self.suspended = try? container.decodeIfPresent(Bool.self, forKey: .suspended)
         self.limited = try? container.decodeIfPresent(Bool.self, forKey: .limited)
-        self.fields = try container.decode([TootField].self, forKey: .fields)
+        // pixelfed doesn't include fields in block/mute lists
+        self.fields = (try? container.decodeIfPresent([TootField].self, forKey: .fields)) ?? []
         self.bot = try? container.decodeIfPresent(Bool.self, forKey: .bot)
         self.source = try? container.decodeIfPresent(TootSource.self, forKey: .source)
     }
