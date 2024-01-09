@@ -34,7 +34,7 @@ public struct TootNotificationParams: Codable, Sendable {
 
 extension TootNotificationParams {
     func corrected(for flavour: TootSDKFlavour) -> TootNotificationParams {
-        guard flavour == .friendica else { return self }
+        guard flavour == .friendica || flavour == .sharkey else { return self }
         var params = self
         if let types = params.types {
             var correctedExcludeTypes = TootNotification.NotificationType.supported(by: flavour).subtracting(types)

@@ -10,48 +10,79 @@ import XCTest
 
 final class TootNotificationParamsTests: XCTestCase {
 
-    func testFriendicaKeepUnchanged_whenNothingSpecified() throws {
-        let params = TootNotificationParams().corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, nil)
-        XCTAssertEqual(params.types, nil)
-    }
+    private let flavoursNotSupportingTypes: [TootSDKFlavour] = [.friendica, .sharkey]
 
-    func testFriendicaKeepUnchanged_whenOnlyExcludedTypesProvided() throws {
-        let params = TootNotificationParams(excludeTypes: [.mention]).corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, [.mention])
-        XCTAssertEqual(params.types, nil)
-    }
-
-    func testFriendicaConvertTypesToExcludeTypes_whenOnlyTypesProvided() throws {
-        let params = TootNotificationParams(types: [.mention]).corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll])
-        XCTAssertEqual(params.types, nil)
-    }
-
-    func testFriendicaConvertTypesToExcludeTypes_whenBothTypesAndExcludedTypesProvided() throws {
-        let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention]).corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll])
-        XCTAssertEqual(params.types, nil)
-    }
-
-    func testFriendicaConvertTypesToExcludeTypes_whenTypesOverlap() throws {
-        let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention, .favourite]).corrected(for: .friendica)
-        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll])
-        XCTAssertEqual(params.types, nil)
-    }
-
-    func testUnmodifiedForOtherFlavours() throws {
-        let flavours = Set(TootSDKFlavour.allCases).subtracting([.friendica])
-        for flavour in flavours {
-            let params = TootNotificationParams(types: [.mention]).corrected(for: flavour)
-            XCTAssertEqual(params.excludeTypes, nil)
-            XCTAssertEqual(params.types, [.mention])
+    func testFriendicaSharkeyKeepUnchanged_whenNothingSpecified() throws {
+        for flavour in flavoursNotSupportingTypes {
+            let params = TootNotificationParams().corrected(for: flavour)
+            XCTAssertEqual(params.excludeTypes, nil, "Incorrect exclude types for \(flavour)")
+            XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
         }
     }
 
-    func testFriendicaQueryParams() throws {
+    func testFriendicaSharkeyKeepUnchanged_whenOnlyExcludedTypesProvided() throws {
+        for flavour in flavoursNotSupportingTypes {
+            let params = TootNotificationParams(excludeTypes: [.mention]).corrected(for: flavour)
+            XCTAssertEqual(params.excludeTypes, [.mention], "Incorrect exclude types for \(flavour)")
+            XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
+        }
+    }
+
+    func testFriendicaConvertTypesToExcludeTypes_whenOnlyTypesProvided() throws {
+        let flavour = TootSDKFlavour.friendica
+        let params = TootNotificationParams(types: [.mention]).corrected(for: flavour)
+        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll], "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
+    }
+
+    func testSharkeyConvertTypesToExcludeTypes_whenOnlyTypesProvided() throws {
+        let flavour = TootSDKFlavour.sharkey
+        let params = TootNotificationParams(types: [.mention]).corrected(for: flavour)
+        XCTAssertEqual(params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
+    }
+
+    func testFriendicaConvertTypesToExcludeTypes_whenBothTypesAndExcludedTypesProvided() throws {
+        let flavour = TootSDKFlavour.friendica
+        let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention]).corrected(for: flavour)
+        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll], "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
+    }
+
+    func testSharkeyConvertTypesToExcludeTypes_whenBothTypesAndExcludedTypesProvided() throws {
+        let flavour = TootSDKFlavour.sharkey
+        let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention]).corrected(for: flavour)
+        XCTAssertEqual(params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
+    }
+
+    func testFriendicaConvertTypesToExcludeTypes_whenTypesOverlap() throws {
+        let flavour = TootSDKFlavour.friendica
+        let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention, .favourite]).corrected(for: flavour)
+        XCTAssertEqual(params.excludeTypes, [.follow, .repost, .favourite, .poll], "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
+    }
+
+    func testSharkeyConvertTypesToExcludeTypes_whenTypesOverlap() throws {
+        let flavour = TootSDKFlavour.sharkey
+        let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention, .favourite]).corrected(for: flavour)
+        XCTAssertEqual(params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
+    }
+
+    func testUnmodifiedForOtherFlavours() throws {
+        let flavours = Set(TootSDKFlavour.allCases).subtracting([.friendica, .sharkey])
+        for flavour in flavours {
+            let params = TootNotificationParams(types: [.mention]).corrected(for: flavour)
+            XCTAssertEqual(params.excludeTypes, nil, "Incorrect exclude types for \(flavour)")
+            XCTAssertEqual(params.types, [.mention], "Incorrect types for \(flavour)")
+        }
+    }
+
+    func testFriendicaSharkeyQueryParams() throws {
+        let flavour = TootSDKFlavour.friendica
         let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
-        client.flavour = .friendica
+        client.flavour = flavour
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
@@ -60,7 +91,25 @@ final class TootNotificationParamsTests: XCTestCase {
             URLQueryItem(name: "exclude_types[]", value: "mention"),
             URLQueryItem(name: "exclude_types[]", value: "poll"),
             URLQueryItem(name: "exclude_types[]", value: "reblog"),
-        ])
+        ], "Incorrect params for \(flavour)")
+    }
+
+    func testFriendicaQueryParams() throws {
+        let flavour = TootSDKFlavour.sharkey
+        let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
+        client.flavour = flavour
+
+        let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
+        let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
+        XCTAssertEqual(query, [
+            URLQueryItem(name: "exclude_types[]", value: "follow"),
+            URLQueryItem(name: "exclude_types[]", value: "follow_request"),
+            URLQueryItem(name: "exclude_types[]", value: "mention"),
+            URLQueryItem(name: "exclude_types[]", value: "poll"),
+            URLQueryItem(name: "exclude_types[]", value: "reblog"),
+            URLQueryItem(name: "exclude_types[]", value: "status"),
+            URLQueryItem(name: "exclude_types[]", value: "update"),
+        ], "Incorrect params for \(flavour)")
     }
 
     func testPleromaAkkomaQueryParams() throws {

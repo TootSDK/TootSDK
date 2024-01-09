@@ -45,7 +45,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         /// Returns notification types supported by the given `flavour`.
         public static func supported(by flavour: TootSDKFlavour) -> Set<NotificationType> {
             switch flavour {
-            case .mastodon:
+            case .mastodon, .sharkey:
                 return Set(allCases)
             case .pleroma, .akkoma:
                 return [.follow, .mention, .repost, .favourite, .poll, .followRequest, .update]
@@ -63,7 +63,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
             switch flavour {
             case .mastodon:
                 return Set(allCases)
-            case .pleroma, .akkoma, .friendica:
+            case .pleroma, .akkoma, .friendica, .sharkey:
                 return [.follow, .mention, .repost, .favourite, .poll]
             case .pixelfed, .firefish:
                 return []
