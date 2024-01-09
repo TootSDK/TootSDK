@@ -160,8 +160,12 @@ extension TootClient {
 
     /// Fetch data asynchronously and return the raw response.
     internal func fetch(req: HTTPRequestBuilder) async throws -> (Data, HTTPURLResponse) {
-        if req.headers.index(forKey: "Content-Type") == nil {
+        if req.headers.index(forKey: "Content-Type") == nil && req.body != nil {
             req.headers["Content-Type"] = "application/json"
+        }
+        
+        if req.headers.index(forKey: "Content-Length") == nil && req.body == nil && (req.method == .post || req.method == .put) {
+            req.headers["Content-Length"] = "0"
         }
 
         if req.headers.index(forKey: "Accept") == nil {
