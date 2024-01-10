@@ -10,7 +10,7 @@ on:
       - ".vscode"
 
 jobs:
-  build:
+  buildtools:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -25,3 +25,14 @@ jobs:
         run: cd ./Examples/swiftyadmin && swift build -v
       - name: Build tootsdk-release
         run: cd ./Examples/tootsdk-release && swift build -v
+      - name: Build SwiftUI-Toot
+        run: make buildswiftexample
+  buildapps:
+    strategy:
+      matrix:
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build SwiftUI-Toot
+        run: make buildswiftexample
