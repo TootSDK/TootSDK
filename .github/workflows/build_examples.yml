@@ -24,8 +24,6 @@ jobs:
         run: cd ./Examples/swiftyadmin && swift build -v
       - name: Build tootsdk-release
         run: cd ./Examples/tootsdk-release && swift build -v
-      - name: Build SwiftUI-Toot
-        run: make buildswiftexample
   buildapps:
     strategy:
       matrix:
