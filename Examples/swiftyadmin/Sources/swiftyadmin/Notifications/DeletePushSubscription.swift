@@ -1,12 +1,12 @@
 //
 //  DeletePushSubscription.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 29/12/2023.
 //
 
-import Foundation
 import ArgumentParser
+import Foundation
 import TootSDK
 
 struct DeletePushSubscription: AsyncParsableCommand {

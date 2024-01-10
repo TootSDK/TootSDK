@@ -1,12 +1,12 @@
 //
 //  GetPushSubscription.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 28/12/2023.
 //
 
-import Foundation
 import ArgumentParser
+import Foundation
 import TootSDK
 
 struct GetPushSubscription: AsyncParsableCommand {
@@ -21,4 +21,3 @@ struct GetPushSubscription: AsyncParsableCommand {
         print(subscription)
     }
 }
-
