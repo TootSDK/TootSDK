@@ -13,9 +13,9 @@ struct ListAllNotifications: AsyncParsableCommand {
 
         var pagedInfo: PagedInfo? = nil
         var hasMore = true
-        let query = TootNotificationParams(excludeTypes: Set(excludeTypes), types: Set(types))
+        let query = TootNotificationParams(excludeTypes: excludeTypes, types: types)
         let dateFormatter = DateFormatter()
-        formatter1.dateStyle = .long
+        dateFormatter.dateStyle = .long
 
         while hasMore {
             let page = try await client.getNotifications(params: query, pagedInfo)

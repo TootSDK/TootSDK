@@ -17,7 +17,7 @@ struct GetPendingFollowRequests: AsyncParsableCommand {
         if auth.verbose {
             client.debugOn()
         }
-        let followRequests = try await client.getPendingFollowRequests()
+        let followRequests = try await client.getFollowRequests()
         print(followRequests)
     }
 }
