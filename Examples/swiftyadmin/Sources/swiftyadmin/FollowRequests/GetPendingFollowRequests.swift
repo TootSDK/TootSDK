@@ -17,7 +17,20 @@ struct GetPendingFollowRequests: AsyncParsableCommand {
         if auth.verbose {
             client.debugOn()
         }
-        let followRequests = try await client.getFollowRequests()
-        print(followRequests)
+
+        var pagedInfo: PagedInfo? = nil
+        var hasMore = true
+
+        while hasMore {
+            let page = try await client.getFollowRequests(pagedInfo)
+
+            print("=== page ===")
+            for follower in page.result {
+                let json = String.init(data: try TootEncoder().encode(follower), encoding: .utf8)
+                print(json ?? "")
+            }
+            hasMore = page.hasPrevious
+            pagedInfo = page.previousPage
+        }
     }
 }
