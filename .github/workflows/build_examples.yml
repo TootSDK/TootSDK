@@ -22,3 +22,7 @@ jobs:
         run: cd ./Examples/vaportoot && swift build -v
       - name: Run Vapor tests
         run: cd ./Examples/vaportoot && swift test -v
+      - name: Build swiftyadmin
+        run: cd ./Examples/swiftyadmin && swift build -v
+      - name: Build tootsdk-release
+        run: cd ./Examples/tootsdk-release && swift build -v
