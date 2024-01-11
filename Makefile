@@ -10,6 +10,10 @@ test: ## Run unit tests
 build: ## Build the library
 	@swift build
 
+buildswiftexample: ## Builds the examples
+	@echo "Building Examples/swiftui-toot"
+	@xcodebuild build -project Examples/swiftui-toot/SwiftUI-Toot.xcodeproj -scheme SwiftUI-Toot
+
 checklint: ## Checks the project for linting errors, used by the CI
 	@swift-format lint -s --configuration ./.swift-format --recursive ./Sources
 

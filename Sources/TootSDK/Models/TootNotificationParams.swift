@@ -8,6 +8,12 @@
 import Foundation
 
 public struct TootNotificationParams: Codable, Sendable {
+
+    public init(excludeTypes: [TootNotification.NotificationType]? = nil, types: [TootNotification.NotificationType]? = nil) {
+        self.excludeTypes = excludeTypes != nil ? Set(excludeTypes!) : nil
+        self.types = types != nil ? Set(types!) : nil
+    }
+
     public init(
         excludeTypes: Set<TootNotification.NotificationType>? = nil,
         types: Set<TootNotification.NotificationType>? = nil

@@ -4,17 +4,15 @@ on:
   pull_request:
     branches: ["main"]
     paths-ignore:
-      - "architecture/**"
       - "media/**"
       - "*.md"
       - ".vscode"
 
 jobs:
-  build:
+  buildtools:
     strategy:
       matrix:
-        # os: [ubuntu-latest, macos-latest]
-        os: [ubuntu-latest] #GitHub currently thinks "macos-latest is macOS 11 and has no support for macOS 13 😢"
+        os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -22,3 +20,16 @@ jobs:
         run: cd ./Examples/vaportoot && swift build -v
       - name: Run Vapor tests
         run: cd ./Examples/vaportoot && swift test -v
+      - name: Build swiftyadmin
+        run: cd ./Examples/swiftyadmin && swift build -v
+      - name: Build tootsdk-release
+        run: cd ./Examples/tootsdk-release && swift build -v
+  buildapps:
+    strategy:
+      matrix:
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build SwiftUI-Toot
+        run: make buildswiftexample
