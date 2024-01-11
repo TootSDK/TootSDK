@@ -164,7 +164,9 @@ extension TootClient {
             req.headers["Content-Type"] = "application/json"
         }
 
-        if req.headers.index(forKey: "Content-Length") == nil && req.body == nil && (req.method == .post || req.method == .put || req.method == .patch || req.method == .delete) {
+        if req.headers.index(forKey: "Content-Length") == nil && req.body == nil
+            && (req.method == .post || req.method == .put || req.method == .patch || req.method == .delete)
+        {
             req.headers["Content-Length"] = "0"
         }
 
