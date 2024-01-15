@@ -1,0 +1,25 @@
+{
+  "acct" : "technicat@social.thisworksonmycomputer.local",
+  "location" : null,
+  "locked" : false,
+  "statuses_count" : 0,
+  "last_fetched_at" : "2024-01-10T06:01:48.000000Z",
+  "following_count" : 0,
+  "note_text" : null,
+  "url" : "https://social.thisworksonmycomputer.local/users/technicat",
+  "discoverable" : true,
+  "header_bg" : null,
+  "id" : "650577272541390361",
+  "website" : null,
+  "is_admin" : false,
+  "followers_count" : 0,
+  "local" : false,
+  "note" : "",
+  "avatar" : "https://social.thisworksonmycomputer.local/storage/avatars/default.jpg",
+  "display_name" : "technicat",
+  "created_at" : "2024-01-10T06:01:48.000000Z",
+  "pronouns" : [
+
+  ],
+  "username" : "technicat"
+}

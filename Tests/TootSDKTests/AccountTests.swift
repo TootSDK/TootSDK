@@ -58,4 +58,17 @@ final class AccountTests: XCTestCase {
         XCTAssertNotNil(result)
         XCTAssertEqual(result.id, "569707951076919035")
     }
+    
+    func testDecodingPixelfedAccountInMutesOrBlocksList() throws {
+        // arrange
+        let json = localContent("account_pixelfed_mutes_blocks")
+        let decoder = TootDecoder()
+        
+        // act
+        let result = try decoder.decode(Account.self, from: json)
+        
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.id, "650577272541390361")
+    }
 }

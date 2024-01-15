@@ -164,6 +164,13 @@ extension TootClient {
             req.headers["Content-Type"] = "application/json"
         }
 
+        if flavour == .sharkey && req.body == nil {
+            req.headers["Content-Type"] = nil
+            if req.method == .post || req.method == .put || req.method == .patch || req.method == .delete {
+                req.headers["Content-Length"] = "0"
+            }
+        }
+
         if req.headers.index(forKey: "Accept") == nil {
             req.headers["Accept"] = "application/json"
         }
