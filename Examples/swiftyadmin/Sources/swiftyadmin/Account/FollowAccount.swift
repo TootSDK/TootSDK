@@ -17,9 +17,9 @@ struct FollowAccount: AsyncParsableCommand {
     var id: String
 
     @Option(help: "Receive notifications when this account posts a post")
-    var notify: Bool?
+    var notify: Bool = false
     @Option(help: "Receive this account’s reposts in home timeline")
-    var reposts: Bool?
+    var reposts: Bool = true
     @Option(help: "Array of String (ISO 639-1 language two-letter code). Filter received posts for these languages")
     var languages: [String] = []
 
