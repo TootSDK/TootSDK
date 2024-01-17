@@ -276,7 +276,7 @@ This is a permissive license which allows for any type of use, provided the copy
 
 ## Built with TootSDK ##
 
-- [Fedicat *Testflight*](https://testflight.apple.com/join/b6GatWTY) ([Website](https://fedicat.com/) \| [Mastodon](https://iosdev.space/@technicat) \| [GitHub](https://github.com/technicat/fedicat) \|\| **free during Testflight**)
-- [Pipilo](https://apps.apple.com/pl/app/pipilo/id1584544719) ([Testflight](https://testflight.apple.com/join/0RfZtIsx)  \| [Mastodon](https://indieapps.space/@pipilo)) - Fediverse client with a horizontally scrolling timeline.
-- TootyGraph ([Mastodon](https://togl.me/@tootygraph) \| [GitHub](https://github.com/samscam/tootygraph)) - a playful, photography-focussed, fediverse client app for iOS
-- [Topiary](https://apps.apple.com/us/app/topiary-trim-your-followers/id6446443154) ([Website](https://lightbeamapps.com/topiary/)) - Manage your Mastodon account
+- [Fedicat](https://fedicat.com/))
+- [Pipilo](https://apps.apple.com/pl/app/pipilo/id1584544719)
+- [TootyGraph](https://github.com/samscam/tootygraph)
+- [Topiary](https://lightbeamapps.com/topiary/)
