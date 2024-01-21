@@ -273,3 +273,10 @@ This is a permissive license which allows for any type of use, provided the copy
 - The Mastodon API documentation https://github.com/mastodon/documentation
 - We hat-tip top Metatext's source for some guidance on what's where: https://github.com/metabolist/metatext
 - [Kris Slazinski](https://mastodon.social/@kslazinski) for our TootSDK logo 🤩
+
+## Built with TootSDK ##
+
+- [Fedicat](https://fedicat.com/)
+- [Pipilo](https://apps.apple.com/pl/app/pipilo/id1584544719)
+- [TootyGraph](https://github.com/samscam/tootygraph)
+- [Topiary](https://lightbeamapps.com/topiary/)
