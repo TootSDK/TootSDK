@@ -225,7 +225,8 @@ extension Instance {
         }
         // 3.0.0 (compatible; Firefish 1.0.4-dev5)
         // 4.2.1 (compatible; Iceshrimp 2023.12-pre3)
-        if version.lowercased().contains("firefish") || version.lowercased().contains("iceshrimp") {
+        // 4.2.1 (compatible; Catodon 24.01-dev)
+        if version.lowercased().contains("firefish") || version.lowercased().contains("catodon") || version.lowercased().contains("iceshrimp") {
             return .firefish
         }
         // 3.0.0 (compatible; Sharkey 2023.12.0.beta3)

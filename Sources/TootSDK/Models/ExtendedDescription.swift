@@ -16,7 +16,7 @@ public struct ExtendedDescription: Codable, Hashable {
     /// The rendered HTML content of the extended description.
     public var content: String
 
-    public init(updatedAt: Date? = nil, content: String) {
+    public init(updatedAt: Date? = nil, content: String = "") {
         self.updatedAt = updatedAt
         self.content = content
     }
