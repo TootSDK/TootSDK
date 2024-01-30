@@ -9,8 +9,8 @@ import Foundation
 
 public struct Translation: Codable {
     
-    var content: String
-    var spoilerWarning: String
-    var detectedSourceLanguage: String
-    var provider: String
+    public var content: String
+    public var spoilerWarning: String
+    public var detectedSourceLanguage: String
+    public var provider: String
 }

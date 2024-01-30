@@ -244,7 +244,7 @@ extension TootClient {
 
 extension TootClient {
     
-    public func getPostTranslation(id: String, params: TranslatePostParams? = nil) async throws -> Translation {
+    public func getPostTranslation(id: String, params: PostTranslationParams? = nil) async throws -> Translation {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "translate"])
             $0.method = .post
