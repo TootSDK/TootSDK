@@ -10,7 +10,8 @@ import Foundation
 public struct Translation: Codable {
     
     public var content: String
-    public var spoilerWarning: String
+ // mastodon spec incorrectly lists as spoiler_warning
+    public var spoilerText: String
     public var detectedSourceLanguage: String
     public var provider: String
 }
