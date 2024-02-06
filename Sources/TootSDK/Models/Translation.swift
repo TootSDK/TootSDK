@@ -40,4 +40,28 @@ public struct Translation: Codable {
         /// Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.
         public var description: String?
     }
+    
+    public struct Poll: Codable, Hashable, Identifiable, Sendable {
+        public init(
+            id: String,
+            options: [Poll.Option]
+        ) {
+            self.id = id
+            self.options = options
+        }
+        
+        /// The ID of the poll in the database.
+        public var id: String
+        /// Possible answers for the poll.
+        public var options: [Option]
+        
+        public struct Option: Codable, Hashable, Sendable {
+            public init(title: String) {
+                self.title = title
+            }
+            
+            /// The text value of the poll option. String.
+            public var title: String
+        }
+    }
 }
