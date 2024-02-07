@@ -113,4 +113,19 @@ final class PostTests: XCTestCase {
          XCTAssertEqual(result.params.language, "en")
          XCTAssertEqual(result.params.visibility, .unlisted)
      }
+    
+    func testTranslatedPostPoll() throws {
+         // arrange
+         let json = localContent("translation_poll")
+         let decoder = TootDecoder()
+
+         // act
+         let result = try decoder.decode(Translation.self, from: json)
+
+         // assert
+         XCTAssertNotNil(result)
+         XCTAssertEqual(result.detectedSourceLanguage, "es")
+         XCTAssertEqual(result.provider, "LibreTranslate")
+         XCTAssertNotNil(result.poll)
+     }
 }
