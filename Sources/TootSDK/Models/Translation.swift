@@ -12,10 +12,11 @@ public struct Translation: Codable {
     /// HTML-encoded translated content of the status.
     public var content: String
     /// The translated spoiler warning of the status.
-    /// The Mastodon spec incorrectly lists this as spoiler_warning
+    /// The Mastodon spec incorrectly lists this as spoiler_warning.
     public var spoilerText: String
     /// The translated poll options of the status.
-    public var poll: [Poll]
+    /// The Mastodon spec incorrectly lists this as an array.
+    public var poll: Poll?
     /// The translated media descriptions of the status
     public var mediaAttachments: [MediaAttachment]
     /// The language of the source text, as auto-detected by the machine translation provider.
