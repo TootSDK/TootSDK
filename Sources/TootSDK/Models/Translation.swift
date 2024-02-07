@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Translation: Codable {
-    
+
     /// HTML-encoded translated content of the status.
     public var content: String
     /// The translated spoiler warning of the status.
@@ -27,9 +27,9 @@ public struct Translation: Codable {
     /// The target language
     /// Not in the Mastodon spec, but in the Mastodon code
     public var language: String
-    
+
     public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
-        
+
         public init(
             id: String,
             description: String? = nil
@@ -37,13 +37,13 @@ public struct Translation: Codable {
             self.id = id
             self.description = description
         }
-        
+
         /// The ID of the attachment in the database.
         public var id: String
         /// Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.
         public var description: String?
     }
-    
+
     public struct Poll: Codable, Hashable, Identifiable, Sendable {
         public init(
             id: String,
@@ -52,17 +52,17 @@ public struct Translation: Codable {
             self.id = id
             self.options = options
         }
-        
+
         /// The ID of the poll in the database.
         public var id: String
         /// Possible answers for the poll.
         public var options: [Option]
-        
+
         public struct Option: Codable, Hashable, Sendable {
             public init(title: String) {
                 self.title = title
             }
-            
+
             /// The text value of the poll option. String.
             public var title: String
         }
