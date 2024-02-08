@@ -132,4 +132,20 @@ final class PostTests: XCTestCase {
          XCTAssertEqual(result.poll!.options[1].title, "Two.")
          XCTAssertEqual(result.poll!.options[2].title, "Three.")
      }
+    
+     func testTranslatedPostAttachment() throws {
+         // arrange
+         let json = localContent("translation_attachment")
+         let decoder = TootDecoder()
+
+         // act
+         let result = try decoder.decode(Translation.self, from: json)
+
+         // assert
+         XCTAssertNotNil(result)
+         XCTAssertEqual(result.detectedSourceLanguage, "de")
+         XCTAssertEqual(result.provider, "DeepL.com")
+         XCTAssertNil(result.poll)
+         XCTAssertEqual(result.mediaAttachments[0].description, "three cats")
+     }
 }

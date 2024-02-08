@@ -76,6 +76,7 @@ let package = Package(
                 .copy("Resources/scheduled_post_attachment.json"),
                 .copy("Resources/scheduled_post_reply.json"),
                 .copy("Resources/tag.json"),
+                .copy("Resources/translation_attachment.json"),
                 .copy("Resources/translation_poll.json"),
                 .copy("Resources/encrypted_push_notification.base64"),
             ]),

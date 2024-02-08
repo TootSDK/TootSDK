@@ -1,0 +1,14 @@
+{
+  "detected_source_language" : "de",
+  "provider" : "DeepL.com",
+  "content" : "<p>Test cats</p>",
+  "poll" : null,
+  "media_attachments" : [
+    {
+      "id" : "111897950658086793",
+      "description" : "three cats"
+    }
+  ],
+  "language" : "en",
+  "spoiler_text" : ""
+}
