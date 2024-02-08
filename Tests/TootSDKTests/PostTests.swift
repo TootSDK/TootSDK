@@ -127,5 +127,9 @@ final class PostTests: XCTestCase {
          XCTAssertEqual(result.detectedSourceLanguage, "es")
          XCTAssertEqual(result.provider, "LibreTranslate")
          XCTAssertNotNil(result.poll)
+         XCTAssertEqual(result.poll!.id, "255331")
+         XCTAssertEqual(result.poll!.options[0].title, "One")
+         XCTAssertEqual(result.poll!.options[1].title, "Two.")
+         XCTAssertEqual(result.poll!.options[2].title, "Three.")
      }
 }
