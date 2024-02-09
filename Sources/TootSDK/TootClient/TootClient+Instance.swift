@@ -25,6 +25,7 @@ extension TootClient {
         return try await fetch([InstanceRule].self, req)
     }
 
+    /// Obtain an extended description of this server
     public func getExtendedDescription() async throws -> ExtendedDescription {
         try requireFeature(.extendedDescription)
         let req = HTTPRequestBuilder {
@@ -32,6 +33,16 @@ extension TootClient {
             $0.method = .get
         }
         return try await fetch(ExtendedDescription.self, req)
+    }
+    
+    /// Translation language pairs supported by the translation engine used by the server.
+    public func getTranslationLanguages() async throws -> [String : [String]] {
+        try requireFeature(.translatePost)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "translation_languages"])
+            $0.method = .get
+        }
+        return try await fetch([String : [String]].self, req)
     }
 }
 
