@@ -5,7 +5,7 @@ import XCTest
 
 @testable import TootSDK
 
-final class PostTests: XCTestCase {
+final class ScheduledPostTests: XCTestCase {
     func testScheduledPostValidatesScheduledAtRequired() throws {
         // arrange
         let params = ScheduledPostParams(mediaIds: [], visibility: .public)
