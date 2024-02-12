@@ -1,11 +1,12 @@
 //
 //  DecodingTests.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 18/03/2023.
 //
 
 import XCTest
+
 @testable import TootSDK
 
 final class DecodingTests: XCTestCase {

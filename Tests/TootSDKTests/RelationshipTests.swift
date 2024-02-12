@@ -1,23 +1,24 @@
 //
 //  RelationshipTests.swift
-//  
+//
 //
 //  Created by Philip Chu on 8/21/23.
 //
 
 import XCTest
+
 @testable import TootSDK
 
 final class RelationshipTests: XCTestCase {
-    
+
     func testRelationshipDecode() throws {
         // arrange
         let json = localContent("relationship")
         let decoder = TootDecoder()
-        
+
         // act
         let result = try decoder.decode(Relationship.self, from: json)
-        
+
         // assert
         XCTAssertNotNil(result)
         XCTAssertEqual(result.id, "109580351883608424")
@@ -32,6 +33,6 @@ final class RelationshipTests: XCTestCase {
         XCTAssertEqual(result.showingReposts, false)
         XCTAssertEqual(result.endorsed, false)
         XCTAssertEqual(result.note, "")
-       
+
     }
 }
