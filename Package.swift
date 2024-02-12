@@ -74,6 +74,7 @@ let package = Package(
                 .copy("Resources/relationship.json"),
                 .copy("Resources/scheduled_post_sensitive.json"),
                 .copy("Resources/scheduled_post_attachment.json"),
+                .copy("Resources/scheduled_post_multiple_attachments.json"),
                 .copy("Resources/scheduled_post_reply.json"),
                 .copy("Resources/tag.json"),
                 .copy("Resources/translation_attachment.json"),
