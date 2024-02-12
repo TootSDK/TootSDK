@@ -28,7 +28,7 @@ public struct Translation: Codable {
     /// Not in the Mastodon spec, but in the Mastodon code
     public var language: String
 
-    public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
+    public struct MediaAttachmentTranslation: Codable, Hashable, Identifiable, Sendable {
 
         public init(
             id: String,
