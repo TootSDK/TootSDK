@@ -245,7 +245,7 @@ extension TootClient {
 extension TootClient {
 
     /// Translate the post content into some language.
-    public fund publishPostTranslation(id: String, params: PostTranslationParams? = nil) async throws -> Translation {
+    public func getPostTranslation(id: String, params: PostTranslationParams? = nil) async throws -> Translation {
         try requireFeature(.translatePost)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "translate"])
