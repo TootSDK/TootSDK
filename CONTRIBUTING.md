@@ -12,9 +12,9 @@ Reviewing [issues](https://github.com/TootSDK/TootSDK/issues) and merged pull re
 
 ### Run and add tests
 
-You can run tests using the Swift CLI by running `swift test` in the root of the project.
+You can run tests using the `make test` in the root of the project.
 
-You can also execute tests in Xcode by switching to the Test navigator and executing one or more tests.
+You can also execute tests in Xcode by switching to the Test navigator and executing one or more tests.'
 
 Each addition to the codebase that introduces something new, or changes the way an existing piece of code works, should add or update relevant tests.
 
