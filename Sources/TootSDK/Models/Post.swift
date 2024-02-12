@@ -15,7 +15,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         sensitive: Bool,
         spoilerText: String,
         mediaAttachments: [MediaAttachment],
-        application: TootApplication,
+        application: TootApplication?,
         mentions: [Mention],
         tags: [Tag],
         emojis: [Emoji],

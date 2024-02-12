@@ -1,0 +1,24 @@
+{
+  "detected_source_language" : "es",
+  "provider" : "LibreTranslate",
+  "content" : "<p>a test</p>",
+  "poll" : {
+    "id" : "255331",
+    "options" : [
+      {
+        "title" : "One"
+      },
+      {
+        "title" : "Two."
+      },
+      {
+        "title" : "Three."
+      }
+    ]
+  },
+  "media_attachments" : [
+
+  ],
+  "language" : "en",
+  "spoiler_text" : ""
+}
