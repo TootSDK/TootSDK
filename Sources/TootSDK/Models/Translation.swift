@@ -44,7 +44,7 @@ public struct Translation: Codable {
         public var description: String?
     }
 
-    public struct Poll: Codable, Hashable, Identifiable, Sendable {
+    public struct PollTranslation: Codable, Hashable, Identifiable, Sendable {
         public init(
             id: String,
             options: [Poll.Option]
