@@ -2,7 +2,7 @@
 
 ## Answer issues and contribute to discussions
 
-Answering [issues](https://github.com/TootSDK/TootSDK/issues), participating in [discussions](https://github.com/TootSDK/TootSDK/discussions) is a great way to help, get familiar with the library, and shape its direction.
+Reviewing [issues](https://github.com/TootSDK/TootSDK/issues) and merged pull requests is a great way to help, get familiar with the library, and shape its direction.
 
 ## Contribute to the TootSDK codebase
 
@@ -24,9 +24,7 @@ You can also execute tests in Xcode by switching to the Test navigator and execu
 - We use [swift-format](https://github.com/apple/swift-format) to ensure a consistent look and feel of the library code. Your changes should contain no swift-format errors or warnings. Please lint code contributions before submitting e.g. `make lint`.
 - Avoid bringing in new libraries or dependencies without good justification. Any PR that brings in a new library needs to make the case for why it is necessary.
 
-### Read our Architecture Decision Records (ADRs))
-
-All major architectural decisions are captured in our [ADRs](https://github.com/TootSDK/TootSDK/tree/main/architecture/decisions). It is worth reading these to gain context of our direction and general approach to the SDK, before writing code and submitting a PR.
+- Run `make lint` on your changes before opening a PR.
 
 ### Please provide documentation for your changes
 
@@ -40,7 +38,7 @@ Optionally, you may consider extending one of the examples in order to showcase 
 
 We'd love it if you'd talk to us over on the Fediverse! Current maintainers and admins for TootSDK are:
 
-- [Konstantin](https://m.iamkonstantin.eu/konstantin)
+- [Konstantin](https://social.headbright.eu/@konstantin)
 - [David Gary Wood](https://social.davidgarywood.com/@davidgarywood)
 
 ### Open a pull request with your changes (targeting the `main` branch)!
