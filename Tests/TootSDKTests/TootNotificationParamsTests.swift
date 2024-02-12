@@ -6,6 +6,7 @@
 //
 
 import XCTest
+
 @testable import TootSDK
 
 final class TootNotificationParamsTests: XCTestCase {
@@ -38,7 +39,8 @@ final class TootNotificationParamsTests: XCTestCase {
     func testSharkeyConvertTypesToExcludeTypes_whenOnlyTypesProvided() throws {
         let flavour = TootSDKFlavour.sharkey
         let params = TootNotificationParams(types: [.mention]).corrected(for: flavour)
-        XCTAssertEqual(params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(
+            params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
         XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
     }
 
@@ -52,7 +54,8 @@ final class TootNotificationParamsTests: XCTestCase {
     func testSharkeyConvertTypesToExcludeTypes_whenBothTypesAndExcludedTypesProvided() throws {
         let flavour = TootSDKFlavour.sharkey
         let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention]).corrected(for: flavour)
-        XCTAssertEqual(params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(
+            params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
         XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
     }
 
@@ -66,7 +69,8 @@ final class TootNotificationParamsTests: XCTestCase {
     func testSharkeyConvertTypesToExcludeTypes_whenTypesOverlap() throws {
         let flavour = TootSDKFlavour.sharkey
         let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention, .favourite]).corrected(for: flavour)
-        XCTAssertEqual(params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+        XCTAssertEqual(
+            params.excludeTypes, Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
         XCTAssertEqual(params.types, nil, "Incorrect types for \(flavour)")
     }
 
@@ -86,12 +90,14 @@ final class TootNotificationParamsTests: XCTestCase {
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
-        XCTAssertEqual(query, [
-            URLQueryItem(name: "exclude_types[]", value: "follow"),
-            URLQueryItem(name: "exclude_types[]", value: "mention"),
-            URLQueryItem(name: "exclude_types[]", value: "poll"),
-            URLQueryItem(name: "exclude_types[]", value: "reblog"),
-        ], "Incorrect params for \(flavour)")
+        XCTAssertEqual(
+            query,
+            [
+                URLQueryItem(name: "exclude_types[]", value: "follow"),
+                URLQueryItem(name: "exclude_types[]", value: "mention"),
+                URLQueryItem(name: "exclude_types[]", value: "poll"),
+                URLQueryItem(name: "exclude_types[]", value: "reblog"),
+            ], "Incorrect params for \(flavour)")
     }
 
     func testFriendicaQueryParams() throws {
@@ -101,15 +107,17 @@ final class TootNotificationParamsTests: XCTestCase {
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
-        XCTAssertEqual(query, [
-            URLQueryItem(name: "exclude_types[]", value: "follow"),
-            URLQueryItem(name: "exclude_types[]", value: "follow_request"),
-            URLQueryItem(name: "exclude_types[]", value: "mention"),
-            URLQueryItem(name: "exclude_types[]", value: "poll"),
-            URLQueryItem(name: "exclude_types[]", value: "reblog"),
-            URLQueryItem(name: "exclude_types[]", value: "status"),
-            URLQueryItem(name: "exclude_types[]", value: "update"),
-        ], "Incorrect params for \(flavour)")
+        XCTAssertEqual(
+            query,
+            [
+                URLQueryItem(name: "exclude_types[]", value: "follow"),
+                URLQueryItem(name: "exclude_types[]", value: "follow_request"),
+                URLQueryItem(name: "exclude_types[]", value: "mention"),
+                URLQueryItem(name: "exclude_types[]", value: "poll"),
+                URLQueryItem(name: "exclude_types[]", value: "reblog"),
+                URLQueryItem(name: "exclude_types[]", value: "status"),
+                URLQueryItem(name: "exclude_types[]", value: "update"),
+            ], "Incorrect params for \(flavour)")
     }
 
     func testPleromaAkkomaQueryParams() throws {
@@ -119,10 +127,12 @@ final class TootNotificationParamsTests: XCTestCase {
 
             let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
             let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
-            XCTAssertEqual(query, [
-                URLQueryItem(name: "exclude_types[]", value: "mention"),
-                URLQueryItem(name: "include_types[]", value: "favourite"),
-            ], "Incorrect params for \(flavour)")
+            XCTAssertEqual(
+                query,
+                [
+                    URLQueryItem(name: "exclude_types[]", value: "mention"),
+                    URLQueryItem(name: "include_types[]", value: "favourite"),
+                ], "Incorrect params for \(flavour)")
         }
     }
 
@@ -132,9 +142,11 @@ final class TootNotificationParamsTests: XCTestCase {
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
-        XCTAssertEqual(query, [
-            URLQueryItem(name: "exclude_types[]", value: "mention"),
-            URLQueryItem(name: "types[]", value: "favourite"),
-        ])
+        XCTAssertEqual(
+            query,
+            [
+                URLQueryItem(name: "exclude_types[]", value: "mention"),
+                URLQueryItem(name: "types[]", value: "favourite"),
+            ])
     }
 }

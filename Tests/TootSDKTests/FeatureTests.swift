@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import TootSDK
 
 final class FeatureTests: XCTestCase {

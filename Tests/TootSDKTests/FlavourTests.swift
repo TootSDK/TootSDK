@@ -2,8 +2,8 @@
 // Copyright (c) 2023. All rights reserved.
 
 import Foundation
-
 import XCTest
+
 @testable import TootSDK
 
 final class FlavourTests: XCTestCase {
@@ -11,42 +11,42 @@ final class FlavourTests: XCTestCase {
         let instance = try localObject(Instance.self, "mastodon")
         XCTAssertEqual(instance.flavour, .mastodon)
     }
-    
+
     func testDetectsPleroma() throws {
         let instance = try localObject(Instance.self, "pleroma")
         XCTAssertEqual(instance.flavour, .pleroma)
     }
-    
+
     func testDetectsPixelfed() throws {
         let instance = try localObject(Instance.self, "pixelfed")
         XCTAssertEqual(instance.flavour, .pixelfed)
     }
-    
+
     func testDetectsFriendica() throws {
         let instance = try localObject(Instance.self, "instance_friendica_nocontact")
         XCTAssertEqual(instance.flavour, .friendica)
     }
-    
+
     func testDetectsAkkoma() throws {
         let instance = try localObject(Instance.self, "instance_akkoma")
         XCTAssertEqual(instance.flavour, .akkoma)
     }
-    
+
     func testDetectsFirefish() throws {
         let instance = try localObject(Instance.self, "instance_firefish_contact_removed")
         XCTAssertEqual(instance.flavour, .firefish)
     }
-    
+
     func testDetectsCatodonAsFirefish() throws {
         let instance = try localObject(Instance.self, "instance_catodon_contact_removed")
         XCTAssertEqual(instance.flavour, .firefish)
     }
-    
+
     func testDetectsIceshrimpAsFirefish() throws {
         let instance = try localObject(Instance.self, "instance_iceshrimp_contact_removed")
         XCTAssertEqual(instance.flavour, .firefish)
     }
-    
+
     func testDetectsSharkey() throws {
         let instance = try localObject(Instance.self, "instance_sharkey_contact_removed")
         XCTAssertEqual(instance.flavour, .sharkey)

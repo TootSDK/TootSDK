@@ -5,10 +5,10 @@
 //  Created by Łukasz Rutkowski on 30/12/2023.
 //
 
-import Foundation
-import XCTest
-import TootSDK
 import Crypto
+import Foundation
+import TootSDK
+import XCTest
 
 final class WebPushMessageEncryptionTests: XCTestCase {
     func testDecrypt() throws {
@@ -39,7 +39,8 @@ final class WebPushMessageEncryptionTests: XCTestCase {
     func testDecryptAndDecode() throws {
         let encryptedMessageString = try XCTUnwrap(String(data: localContent("encrypted_push_notification", "base64"), encoding: .utf8))
         let encryptedMessage = try decode(encryptedMessageString)
-        let privateKeyData = try decode("BF1sQLyEbj_Q2w9Gr7CxULMW0dXT5ieNqfNW_SHnilFLf938diBugHck3W2xf3dTUC93J0yPv8_a79qQ-AbfStlVgbJLWlzK4MFXqFGJRYX6wVOoHsmRr36B11LrtN0dJQ")
+        let privateKeyData = try decode(
+            "BF1sQLyEbj_Q2w9Gr7CxULMW0dXT5ieNqfNW_SHnilFLf938diBugHck3W2xf3dTUC93J0yPv8_a79qQ-AbfStlVgbJLWlzK4MFXqFGJRYX6wVOoHsmRr36B11LrtN0dJQ")
         let privateKey = try P256.KeyAgreement.PrivateKey(x963Representation: privateKeyData)
         let serverPublicKeyData = try decode("BFbMjBuONvogk0Z5gdaPYx1hshYTfoc7eoMHjaPpGspYTfzdba8KMaXJGew63nD7S9ttnGl-hys_VlTxjnGUCZQ")
         let serverPublicKey = try P256.KeyAgreement.PublicKey(x963Representation: serverPublicKeyData)
