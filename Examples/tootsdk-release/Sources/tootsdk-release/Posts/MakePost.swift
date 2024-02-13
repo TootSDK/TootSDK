@@ -31,6 +31,7 @@ struct MakePost: AsyncParsableCommand {
         guard let postParams = try await getRelease() else { return }
 
         let client = try await TootClient(connect: URL(string: url)!, accessToken: token)
+        client.debugOn()
 
         do {
             let post = try await client.publishPost(postParams)
@@ -163,7 +164,7 @@ struct MakePost: AsyncParsableCommand {
 
         let changeText = changes.isEmpty ? "" : changes + "\n\n"
 
-        let text =
+        var text =
             "A new release of TootSDK - "
             + tag + " 📣 \n\n"
             + releaseURL + "\n\n"
@@ -171,14 +172,20 @@ struct MakePost: AsyncParsableCommand {
 
             + changeText
 
-            + "We’d like to thank everyone who has submitted PRs, raised issues since we released the package publicly." + "\n\n"
-
-            + "Community contributions are greatly appreciated 🙌" + "\n\n"
-
-            + " #iOSDev #Swift #TootSDK #Fediverse"
+        text = addNiceToHave(text: text, additional: "Community contributions are greatly appreciated 🙌" + "\n\n")
+        text = addNiceToHave(text: text, additional: " #iOSDev #Swift #TootSDK #Fediverse")
 
         let params = PostParams(post: text, visibility: .public)
         return params
+    }
+
+    // This adds the additional text, only if we're below the 500 char limit of the instance the TootSDK account is on
+    func addNiceToHave(text: String, additional: String) -> String {
+        if text.count < (500 - additional.count) {
+            return text + additional
+        } else {
+            return text
+        }
     }
 
 }
