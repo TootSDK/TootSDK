@@ -10,6 +10,23 @@ import MultipartKitTootSDK
 
 extension TootClient {
 
+    /// Requests the server to invalidate the app's authentication token
+    ///
+    /// - Parameters:
+    ///   - clientId: The client ID, obtained during app registration.
+    ///   - clientSecret: The client secret, obtained during app registration.
+    public func logout(clientId: String, clientSecret: String) async throws {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["oauth", "revoke"])
+            $0.method = .post
+            $0.body = try .form(queryItems: [
+                URLQueryItem(name: "client_id", value: clientId),
+                URLQueryItem(name: "client_secret", value: clientSecret),
+            ])
+        }
+        _ = try await fetch(req: req)
+    }
+
     /// A test to make sure that the user token works, and retrieves the account information
     /// - Returns: Returns the current authenticated user's account, or throws an error if unable to retrieve
     public func verifyCredentials() async throws -> Account {

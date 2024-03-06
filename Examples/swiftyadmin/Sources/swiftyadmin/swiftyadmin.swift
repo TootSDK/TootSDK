@@ -8,6 +8,7 @@ struct SwiftyAdmin: AsyncParsableCommand {
         version: "1.0.0",
         subcommands: [
             Login.self,
+            Logout.self,
             ListDomainBlocks.self,
             BlockDomain.self,
             UnblockDomain.self,
