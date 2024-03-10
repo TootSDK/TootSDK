@@ -8,7 +8,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public init(
         id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String,
         avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date,
-        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil,
+        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil, suspended: Bool? = nil,
         limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil
     ) {
         self.id = id
@@ -30,6 +30,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.followersCount = followersCount
         self.followingCount = followingCount
         self.moved = moved
+        self.noindex = noindex
         self.suspended = suspended
         self.limited = limited
         self.fields = fields
@@ -60,6 +61,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.postsCount = (try? container.decodeIfPresent(Int.self, forKey: .postsCount)) ?? 0
         self.followersCount = try container.decode(Int.self, forKey: .followersCount)
         self.followingCount = try container.decode(Int.self, forKey: .followingCount)
+        self.noindex = try? container.decodeIfPresent(Bool.self, forKey: .noindex)
         self.moved = try? container.decodeIfPresent(Account.self, forKey: .moved)
         self.suspended = try? container.decodeIfPresent(Bool.self, forKey: .suspended)
         self.limited = try? container.decodeIfPresent(Bool.self, forKey: .limited)
@@ -105,6 +107,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let followersCount: Int
     /// The reported follows of this profile
     public let followingCount: Int
+    /// Whether the local user has opted out of being indexed by search engines.
+    public let noindex: Bool?
     /// Indicates that the profile is currently inactive and that its user has moved to a new account
     public let moved: Account?
     /// An extra attribute returned only when an account is suspended.
@@ -141,6 +145,7 @@ extension Account {
         case postsCount = "statusesCount"
         case followersCount
         case followingCount
+        case noindex
         case moved
         case suspended
         case limited
