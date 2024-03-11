@@ -103,6 +103,10 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let emojis: [Emoji]
     /// Whether the account has opted into discovery features such as the profile directory
     public let discoverable: Bool?
+    /// Whether to hide followers and followed accounts.
+    public let hideCollections: Bool?
+    /// Whether public posts should be searchable to anyone.
+    public let indexable: Bool?
     /// When the account was created
     public let createdAt: Date
     /// When the most recent post was posted
@@ -115,10 +119,6 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let followingCount: Int
     /// Whether the local user has opted out of being indexed by search engines.
     public let noindex: Bool?
-    ///
-    public let indexable: Bool?
-    ///
-    public let hideCollections: Bool?
     /// Indicates that the profile is currently inactive and that its user has moved to a new account
     public let moved: Account?
     /// An extra attribute returned only when an account is suspended.
@@ -150,6 +150,8 @@ extension Account {
         case locked
         case emojis
         case discoverable
+        case hideCollections
+        case indexable
         case createdAt
         case lastPostAt = "lastStatusAt"
         case postsCount = "statusesCount"
@@ -162,8 +164,6 @@ extension Account {
         case fields
         case bot
         case source
-        case indexable
-        case hideCollections
     }
 }
 
@@ -183,14 +183,14 @@ extension Account: Hashable {
         hasher.combine(locked)
         hasher.combine(emojis)
         hasher.combine(discoverable)
+        hasher.combine(hideCollections)
+        hasher.combine(indexable)
         hasher.combine(createdAt)
         hasher.combine(lastPostAt)
         hasher.combine(postsCount)
         hasher.combine(followersCount)
         hasher.combine(followingCount)
         hasher.combine(noindex)
-        hasher.combine(indexable)
-        hasher.combine(hideCollections)
         hasher.combine(moved)
         hasher.combine(suspended)
         hasher.combine(limited)

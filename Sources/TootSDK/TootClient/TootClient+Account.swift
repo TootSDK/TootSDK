@@ -94,6 +94,12 @@ extension TootClient {
                         name: "discoverable",
                         body: String(discoverable)))
             }
+            if let hideCollections = params.hideCollections {
+                parts.append(
+                    MultipartPart(
+                        name: "hide_collections",
+                        body: String(hideCollections)))
+            }
             if let indexable = params.indexable {
                 parts.append(
                     MultipartPart(
