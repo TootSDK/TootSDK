@@ -7,8 +7,10 @@ import Foundation
 public class Account: Codable, Identifiable, @unchecked Sendable {
     public init(
         id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String,
-        avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date,
-        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil, suspended: Bool? = nil,
+        avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil,
+        indexable: Bool? = nil, hideCollections: Bool? = nil, createdAt: Date,
+        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil,
+        suspended: Bool? = nil,
         limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil
     ) {
         self.id = id
@@ -36,6 +38,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.fields = fields
         self.bot = bot
         self.source = source
+        self.indexable = indexable
+        self.hideCollections = hideCollections
     }
 
     required public init(from decoder: Decoder) throws {
@@ -62,6 +66,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.followersCount = try container.decode(Int.self, forKey: .followersCount)
         self.followingCount = try container.decode(Int.self, forKey: .followingCount)
         self.noindex = try? container.decodeIfPresent(Bool.self, forKey: .noindex)
+        self.indexable = try? container.decodeIfPresent(Bool.self, forKey: .indexable)
+        self.hideCollections = try? container.decodeIfPresent(Bool.self, forKey: .hideCollections)
         self.moved = try? container.decodeIfPresent(Account.self, forKey: .moved)
         self.suspended = try? container.decodeIfPresent(Bool.self, forKey: .suspended)
         self.limited = try? container.decodeIfPresent(Bool.self, forKey: .limited)
@@ -109,6 +115,10 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let followingCount: Int
     /// Whether the local user has opted out of being indexed by search engines.
     public let noindex: Bool?
+    ///
+    public let indexable: Bool?
+    ///
+    public let hideCollections: Bool?
     /// Indicates that the profile is currently inactive and that its user has moved to a new account
     public let moved: Account?
     /// An extra attribute returned only when an account is suspended.
@@ -152,6 +162,8 @@ extension Account {
         case fields
         case bot
         case source
+        case indexable
+        case hideCollections
     }
 }
 
@@ -176,6 +188,9 @@ extension Account: Hashable {
         hasher.combine(postsCount)
         hasher.combine(followersCount)
         hasher.combine(followingCount)
+        hasher.combine(noindex)
+        hasher.combine(indexable)
+        hasher.combine(hideCollections)
         hasher.combine(moved)
         hasher.combine(suspended)
         hasher.combine(limited)
