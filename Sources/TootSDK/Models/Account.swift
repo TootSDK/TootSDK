@@ -11,7 +11,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         indexable: Bool? = nil, hideCollections: Bool? = nil, createdAt: Date,
         lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil,
         suspended: Bool? = nil,
-        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil
+        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil, role: TootRole? = nil
     ) {
         self.id = id
         self.username = username
@@ -26,6 +26,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.locked = locked
         self.emojis = emojis
         self.discoverable = discoverable
+        self.indexable = indexable
+        self.hideCollections = hideCollections
         self.createdAt = createdAt
         self.lastPostAt = lastPostAt
         self.postsCount = postsCount
@@ -38,8 +40,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.fields = fields
         self.bot = bot
         self.source = source
-        self.indexable = indexable
-        self.hideCollections = hideCollections
+        self.role = role
     }
 
     required public init(from decoder: Decoder) throws {
@@ -75,6 +76,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.fields = (try? container.decodeIfPresent([TootField].self, forKey: .fields)) ?? []
         self.bot = try? container.decodeIfPresent(Bool.self, forKey: .bot)
         self.source = try? container.decodeIfPresent(TootSource.self, forKey: .source)
+        self.role = try? container.decodeIfPresent(TootRole.self, forKey: .role)
     }
 
     /// The account id.
@@ -132,6 +134,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let bot: Bool?
     /// An extra entity to be used with API methods to verify credentials and update credentials
     public let source: TootSource?
+    /// The role assigned to the currently authorized user.
+    public let role: TootRole?
 
 }
 
@@ -164,6 +168,7 @@ extension Account {
         case fields
         case bot
         case source
+        case role
     }
 }
 
@@ -197,6 +202,7 @@ extension Account: Hashable {
         hasher.combine(fields)
         hasher.combine(bot)
         hasher.combine(source)
+        hasher.combine(role)
     }
 
     public static func == (lhs: Account, rhs: Account) -> Bool {
