@@ -27,9 +27,9 @@ public struct EditPostParams: Codable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case post = "status"
-        case spoilerText
+        case spoilerText = "spoiler_text"
         case sensitive
-        case mediaIds
+        case mediaIds = "media_ids"
         case poll
     }
 }
