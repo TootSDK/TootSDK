@@ -72,7 +72,7 @@ final class AccountTests: XCTestCase {
         XCTAssertNotNil(result)
         XCTAssertEqual(result.id, "650577272541390361")
     }
-    
+
     func testDecodingMastodonOfficialAccount() throws {
         // arrange
         let json = localContent("account_mastodon_official")
@@ -97,7 +97,7 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(result.url, "https://mastodon.social/@Mastodon")
         XCTAssertNotNil(result.emojis)
     }
-    
+
     func testDecodingVerifyCredentials() throws {
         // arrange
         let json = localContent("account_verify_credentials")

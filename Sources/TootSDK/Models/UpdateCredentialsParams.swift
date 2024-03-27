@@ -35,7 +35,8 @@ public struct UpdateCredentialsParams: Codable {
 
     public init(
         displayName: String? = nil, note: String? = nil, avatar: Data? = nil, avatarMimeType: String? = nil, header: Data? = nil,
-        headerMimeType: String? = nil, locked: Bool? = nil, bot: Bool? = nil, discoverable: Bool? = nil, hideCollections: Bool? = nil, indexable: Bool? = nil,
+        headerMimeType: String? = nil, locked: Bool? = nil, bot: Bool? = nil, discoverable: Bool? = nil, hideCollections: Bool? = nil,
+        indexable: Bool? = nil,
         fieldsAttributes: [String: Field]? = nil,
         source: Source? = nil
     ) {

@@ -6,7 +6,9 @@ import Foundation
 /// Params to edit a given post
 public struct EditPostParams: Codable, Sendable {
 
-    public init(post: String, spoilerText: String? = nil, sensitive: Bool? = nil, language: String? = nil, mediaIds: [String]? = nil, poll: CreatePoll? = nil) {
+    public init(
+        post: String, spoilerText: String? = nil, sensitive: Bool? = nil, language: String? = nil, mediaIds: [String]? = nil, poll: CreatePoll? = nil
+    ) {
         self.post = post
         self.spoilerText = spoilerText
         self.sensitive = sensitive

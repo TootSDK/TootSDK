@@ -13,7 +13,7 @@ public struct TootRole: Codable, Hashable, Sendable {
         self.permissions = permissions
         self.highlighted = highlighted
     }
-    
+
     /// The ID of the Role in the database.
     public var id: String
     /// The name of the role.
@@ -25,5 +25,3 @@ public struct TootRole: Codable, Hashable, Sendable {
     /// Whether the role is publicly visible as a badge on user profiles.
     public var highlighted: Bool
 }
-    
-    
