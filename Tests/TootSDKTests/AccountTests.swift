@@ -97,4 +97,18 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(result.url, "https://mastodon.social/@Mastodon")
         XCTAssertNotNil(result.emojis)
     }
+    
+    func testDecodingVerifyCredentials() throws {
+        // arrange
+        let json = localContent("account_verify_credentials")
+        let decoder = TootDecoder()
+
+        // act
+        let result = try decoder.decode(Account.self, from: json)
+
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertNotNil(result.source)
+        XCTAssertNotNil(result.role)
+    }
 }
