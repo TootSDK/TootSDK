@@ -100,7 +100,7 @@ final class AccountTests: XCTestCase {
 
     func testDecodingVerifyCredentials() throws {
         // arrange
-        let json = localContent("account_verify_credentials")
+        let json = localContent("account_verify_credentials_condensed")
         let decoder = TootDecoder()
 
         // act
