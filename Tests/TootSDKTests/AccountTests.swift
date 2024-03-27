@@ -72,4 +72,29 @@ final class AccountTests: XCTestCase {
         XCTAssertNotNil(result)
         XCTAssertEqual(result.id, "650577272541390361")
     }
+    
+    func testDecodingMastodonOfficialAccount() throws {
+        // arrange
+        let json = localContent("account_mastodon_official")
+        let decoder = TootDecoder()
+
+        // act
+        let result = try decoder.decode(Account.self, from: json)
+
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.id, "13179")
+        XCTAssertEqual(result.noindex, false)
+        XCTAssertEqual(result.indexable, false)
+        XCTAssertEqual(result.locked, false)
+        XCTAssertEqual(result.bot, false)
+        XCTAssertEqual(result.discoverable, true)
+        XCTAssertEqual(result.hideCollections, false)
+        XCTAssertEqual(result.username, "Mastodon")
+        XCTAssertEqual(result.displayName, "Mastodon")
+        XCTAssertEqual(result.followersCount, 814295)
+        XCTAssertEqual(result.followingCount, 3)
+        XCTAssertEqual(result.url, "https://mastodon.social/@Mastodon")
+        XCTAssertNotNil(result.emojis)
+    }
 }
