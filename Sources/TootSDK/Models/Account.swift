@@ -132,6 +132,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     /// A presentational flag.
     /// Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot
     public let bot: Bool?
+    // the following are in CredentialAccount
+    // https://docs.joinmastodon.org/entities/Account/#CredentialAccount
     /// An extra entity to be used with API methods to verify credentials and update credentials
     public let source: TootSource?
     /// The role assigned to the currently authorized user.
