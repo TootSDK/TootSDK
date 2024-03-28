@@ -15,4 +15,6 @@ public struct InstanceRule: Codable, Hashable, Identifiable {
     public var id: String
     /// The text content of the rule.
     public var text: String?
+    /// Optional text providing more details about the rule.
+    public var hint: String?
 }
