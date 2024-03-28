@@ -9,6 +9,8 @@ import Foundation
 
 public enum ReportCategory: String, CaseIterable, Codable {
     case spam
+    /// Content that is illegal in the user's or the instance's country.
+    case legal
     case sensitive
     case abusive
     case underage
@@ -34,6 +36,7 @@ public enum ReportCategory: String, CaseIterable, Codable {
 
     public static let mastodonSupported: Set<ReportCategory> = [
         .spam,
+        .legal,
         .other,
         .violation,
     ]
