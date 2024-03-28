@@ -1,0 +1,44 @@
+{
+  "acct": "Mastodon",
+  "bot": false,
+  "locked": false,
+  "avatar_static": "https://files.mastodon.social/accounts/avatars/000/013/179/original/b4ceb19c9c54ec7e.png",
+  "statuses_count": 262,
+  "url": "https://mastodon.social/@Mastodon",
+  "following_count": 3,
+  "hide_collections": false,
+  "emojis": [],
+  "discoverable": true,
+  "last_status_at": "2024-02-28",
+  "group": false,
+  "uri": "https://mastodon.social/users/Mastodon",
+  "id": "13179",
+  "indexable": false,
+  "header_static": "https://files.mastodon.social/accounts/headers/000/013/179/original/1375be116fbe0f1d.png",
+  "roles": [],
+  "followers_count": 814295,
+  "note": "<p>Free, open-source decentralized social media platform.</p>",
+  "avatar": "https://files.mastodon.social/accounts/avatars/000/013/179/original/b4ceb19c9c54ec7e.png",
+  "display_name": "Mastodon",
+  "header": "https://files.mastodon.social/accounts/headers/000/013/179/original/1375be116fbe0f1d.png",
+  "created_at": "2016-11-23T00:00:00.000Z",
+  "noindex": false,
+  "fields": [
+    {
+      "name": "Homepage",
+      "value": "<a href=\"https://joinmastodon.org\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">joinmastodon.org</span><span class=\"invisible\"></span></a>",
+      "verified_at": "2018-10-31T04:11:00.076+00:00"
+    },
+    {
+      "name": "Patreon",
+      "value": "<a href=\"https://patreon.com/mastodon\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">patreon.com/mastodon</span><span class=\"invisible\"></span></a>",
+      "verified_at": null
+    },
+    {
+      "name": "GitHub",
+      "value": "<a href=\"https://github.com/mastodon\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">github.com/mastodon</span><span class=\"invisible\"></span></a>",
+      "verified_at": "2023-07-21T13:27:45.996+00:00"
+    }
+  ],
+  "username": "Mastodon"
+}

@@ -51,6 +51,8 @@ let package = Package(
             dependencies: ["TootSDK"],
             resources: [
                 .copy("Resources/account.json"),
+                .copy("Resources/account_verify_credentials_condensed.json"),
+                .copy("Resources/account_mastodon_official.json"),
                 .copy("Resources/account_moved.json"),
                 .copy("Resources/account_pixelfed.json"),
                 .copy("Resources/account_pixelfed_mutes_blocks.json"),

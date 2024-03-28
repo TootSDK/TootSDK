@@ -6,10 +6,13 @@ import Foundation
 /// Params to edit a given post
 public struct EditPostParams: Codable, Sendable {
 
-    public init(post: String, spoilerText: String? = nil, sensitive: Bool? = nil, mediaIds: [String]? = nil, poll: CreatePoll? = nil) {
+    public init(
+        post: String, spoilerText: String? = nil, sensitive: Bool? = nil, language: String? = nil, mediaIds: [String]? = nil, poll: CreatePoll? = nil
+    ) {
         self.post = post
         self.spoilerText = spoilerText
         self.sensitive = sensitive
+        self.language = language
         self.mediaIds = mediaIds
         self.poll = poll
     }
@@ -20,6 +23,8 @@ public struct EditPostParams: Codable, Sendable {
     public var spoilerText: String?
     /// Mark post and attached media as sensitive? Defaults to false.
     public var sensitive: Bool?
+    /// ISO 639 language code for the post.
+    public var language: String?
     ///  Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
     public var mediaIds: [String]?
     /// Poll options. Note that editing a poll’s options will reset the votes.
@@ -27,9 +32,10 @@ public struct EditPostParams: Codable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case post = "status"
-        case spoilerText
+        case spoilerText = "spoiler_text"
         case sensitive
-        case mediaIds
+        case language
+        case mediaIds = "media_ids"
         case poll
     }
 }

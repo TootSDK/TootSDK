@@ -7,7 +7,7 @@ import Foundation
 public struct TootSource: Codable, Hashable, Sendable {
     public init(
         note: String? = nil, fields: [TootField], privacy: Post.Visibility? = nil, sensitive: Bool? = nil, language: String? = nil,
-        followRequestsCount: Int? = nil
+        followRequestsCount: Int? = nil, indexable: Bool? = nil, hideCollections: Bool? = nil, discoverable: Bool? = nil
     ) {
         self.note = note
         self.fields = fields
@@ -15,6 +15,9 @@ public struct TootSource: Codable, Hashable, Sendable {
         self.sensitive = sensitive
         self.language = language
         self.followRequestsCount = followRequestsCount
+        self.indexable = indexable
+        self.hideCollections = hideCollections
+        self.discoverable = discoverable
     }
 
     /// Profile bio.
@@ -29,4 +32,10 @@ public struct TootSource: Codable, Hashable, Sendable {
     public var language: String?
     /// The number of pending follow requests.
     public var followRequestsCount: Int?
+    /// Whether public posts should be searchable to anyone.
+    public let indexable: Bool?
+    /// Whether to hide followers and followed accounts.
+    public let hideCollections: Bool?
+    /// Whether the account has opted into discovery features such as the profile directory
+    public let discoverable: Bool?
 }
