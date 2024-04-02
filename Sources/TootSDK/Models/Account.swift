@@ -7,9 +7,11 @@ import Foundation
 public class Account: Codable, Identifiable, @unchecked Sendable {
     public init(
         id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String,
-        avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil, createdAt: Date,
-        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, moved: Account? = nil, suspended: Bool? = nil,
-        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil
+        avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil,
+        indexable: Bool? = nil, hideCollections: Bool? = nil, createdAt: Date,
+        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil,
+        suspended: Bool? = nil,
+        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil, role: TootRole? = nil
     ) {
         self.id = id
         self.username = username
@@ -24,17 +26,21 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.locked = locked
         self.emojis = emojis
         self.discoverable = discoverable
+        self.indexable = indexable
+        self.hideCollections = hideCollections
         self.createdAt = createdAt
         self.lastPostAt = lastPostAt
         self.postsCount = postsCount
         self.followersCount = followersCount
         self.followingCount = followingCount
         self.moved = moved
+        self.noindex = noindex
         self.suspended = suspended
         self.limited = limited
         self.fields = fields
         self.bot = bot
         self.source = source
+        self.role = role
     }
 
     required public init(from decoder: Decoder) throws {
@@ -60,6 +66,9 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.postsCount = (try? container.decodeIfPresent(Int.self, forKey: .postsCount)) ?? 0
         self.followersCount = try container.decode(Int.self, forKey: .followersCount)
         self.followingCount = try container.decode(Int.self, forKey: .followingCount)
+        self.noindex = try? container.decodeIfPresent(Bool.self, forKey: .noindex)
+        self.indexable = try? container.decodeIfPresent(Bool.self, forKey: .indexable)
+        self.hideCollections = try? container.decodeIfPresent(Bool.self, forKey: .hideCollections)
         self.moved = try? container.decodeIfPresent(Account.self, forKey: .moved)
         self.suspended = try? container.decodeIfPresent(Bool.self, forKey: .suspended)
         self.limited = try? container.decodeIfPresent(Bool.self, forKey: .limited)
@@ -67,6 +76,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.fields = (try? container.decodeIfPresent([TootField].self, forKey: .fields)) ?? []
         self.bot = try? container.decodeIfPresent(Bool.self, forKey: .bot)
         self.source = try? container.decodeIfPresent(TootSource.self, forKey: .source)
+        self.role = try? container.decodeIfPresent(TootRole.self, forKey: .role)
     }
 
     /// The account id.
@@ -95,6 +105,10 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let emojis: [Emoji]
     /// Whether the account has opted into discovery features such as the profile directory
     public let discoverable: Bool?
+    /// Whether to hide followers and followed accounts.
+    public let hideCollections: Bool?
+    /// Whether public posts should be searchable to anyone.
+    public let indexable: Bool?
     /// When the account was created
     public let createdAt: Date
     /// When the most recent post was posted
@@ -105,6 +119,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let followersCount: Int
     /// The reported follows of this profile
     public let followingCount: Int
+    /// Whether the local user has opted out of being indexed by search engines.
+    public let noindex: Bool?
     /// Indicates that the profile is currently inactive and that its user has moved to a new account
     public let moved: Account?
     /// An extra attribute returned only when an account is suspended.
@@ -116,8 +132,12 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     /// A presentational flag.
     /// Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot
     public let bot: Bool?
+    // the following are in CredentialAccount
+    // https://docs.joinmastodon.org/entities/Account/#CredentialAccount
     /// An extra entity to be used with API methods to verify credentials and update credentials
     public let source: TootSource?
+    /// The role assigned to the currently authorized user.
+    public let role: TootRole?
 
 }
 
@@ -136,17 +156,21 @@ extension Account {
         case locked
         case emojis
         case discoverable
+        case hideCollections
+        case indexable
         case createdAt
         case lastPostAt = "lastStatusAt"
         case postsCount = "statusesCount"
         case followersCount
         case followingCount
+        case noindex
         case moved
         case suspended
         case limited
         case fields
         case bot
         case source
+        case role
     }
 }
 
@@ -166,17 +190,21 @@ extension Account: Hashable {
         hasher.combine(locked)
         hasher.combine(emojis)
         hasher.combine(discoverable)
+        hasher.combine(hideCollections)
+        hasher.combine(indexable)
         hasher.combine(createdAt)
         hasher.combine(lastPostAt)
         hasher.combine(postsCount)
         hasher.combine(followersCount)
         hasher.combine(followingCount)
+        hasher.combine(noindex)
         hasher.combine(moved)
         hasher.combine(suspended)
         hasher.combine(limited)
         hasher.combine(fields)
         hasher.combine(bot)
         hasher.combine(source)
+        hasher.combine(role)
     }
 
     public static func == (lhs: Account, rhs: Account) -> Bool {

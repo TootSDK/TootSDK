@@ -94,6 +94,18 @@ extension TootClient {
                         name: "discoverable",
                         body: String(discoverable)))
             }
+            if let hideCollections = params.hideCollections {
+                parts.append(
+                    MultipartPart(
+                        name: "hide_collections",
+                        body: String(hideCollections)))
+            }
+            if let indexable = params.indexable {
+                parts.append(
+                    MultipartPart(
+                        name: "indexable",
+                        body: String(indexable)))
+            }
             parts.append(contentsOf: getFieldParts(params))
             parts.append(contentsOf: getSourceParts(params))
             $0.body = try .multipart(parts, boundary: UUID().uuidString)

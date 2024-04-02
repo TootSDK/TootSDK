@@ -24,6 +24,10 @@ public struct UpdateCredentialsParams: Codable {
     public var bot: Bool?
     /// Whether he account should be shown in the profile directory.
     public var discoverable: Bool?
+    /// Whether to hide followers and followed accounts.
+    public var hideCollections: Bool?
+    /// Whether public posts should be searchable to anyone.
+    public var indexable: Bool?
     /// Additional metadata attached to a profile as name-value pairs
     public let fieldsAttributes: [String: Field]?
     /// An extra entity to be used with API methods to verify credentials and update credentials
@@ -31,7 +35,9 @@ public struct UpdateCredentialsParams: Codable {
 
     public init(
         displayName: String? = nil, note: String? = nil, avatar: Data? = nil, avatarMimeType: String? = nil, header: Data? = nil,
-        headerMimeType: String? = nil, locked: Bool? = nil, bot: Bool? = nil, discoverable: Bool? = nil, fieldsAttributes: [String: Field]? = nil,
+        headerMimeType: String? = nil, locked: Bool? = nil, bot: Bool? = nil, discoverable: Bool? = nil, hideCollections: Bool? = nil,
+        indexable: Bool? = nil,
+        fieldsAttributes: [String: Field]? = nil,
         source: Source? = nil
     ) {
         self.displayName = displayName
@@ -43,6 +49,8 @@ public struct UpdateCredentialsParams: Codable {
         self.locked = locked
         self.bot = bot
         self.discoverable = discoverable
+        self.hideCollections = hideCollections
+        self.indexable = indexable
         self.fieldsAttributes = fieldsAttributes
         self.source = source
     }
