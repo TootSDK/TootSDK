@@ -24,6 +24,7 @@ final class ListTests: XCTestCase {
         XCTAssertEqual(result.id, "3309")
         XCTAssertEqual(result.title, "tech")
         XCTAssertEqual(result.repliesPolicy, .followed)
+        XCTAssertEqual(result.exclusive, false)
     }
 
 }
