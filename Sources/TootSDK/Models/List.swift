@@ -14,7 +14,7 @@ public struct List: Codable, Hashable, Identifiable {
 
     /// Which replies should be shown in the list.
     public var repliesPolicy: ListRepliesPolicy?
-    
+
     /// Whether members of this list need to get removed from the “Home” feed.
     public var exclusive: Bool?
 
