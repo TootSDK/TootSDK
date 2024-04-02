@@ -9,9 +9,12 @@ public struct ListParams: Codable {
     public var title: String
     /// The user-defined title of the list.
     public var repliesPolicy: ListRepliesPolicy?
+    /// Whether members of this list need to get removed from the “Home” feed
+    public var exclusive: Bool?
 
-    public init(title: String, repliesPolicy: ListRepliesPolicy? = nil) {
+    public init(title: String, repliesPolicy: ListRepliesPolicy? = nil, exclusive: Bool? = nil) {
         self.title = title
         self.repliesPolicy = repliesPolicy
+        self.exclusive = exclusive
     }
 }
