@@ -253,6 +253,26 @@ extension TootClient {
         return try await fetch([List].self, req)
     }
 
+    /// Deletes the avatar associated with the user’s profile.
+    public func deleteProfileAvatar() async throws -> Account {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "profile", "avatar"])
+            $0.method = .delete
+        }
+
+        return try await fetch(Account.self, req)
+    }
+
+    /// Deletes the header image associated with the user’s profile.
+    public func deleteProfileHeader() async throws -> Account{
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "profile", "header"])
+            $0.method = .delete
+        }
+
+        return try await fetch(Account.self, req)
+    }
+
     // TODO: - Lookup account ID from Webfinger address
 }
 
