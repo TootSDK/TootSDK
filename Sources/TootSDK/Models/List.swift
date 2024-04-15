@@ -15,10 +15,14 @@ public struct List: Codable, Hashable, Identifiable {
     /// Which replies should be shown in the list.
     public var repliesPolicy: ListRepliesPolicy?
 
-    public init(id: String, title: String, repliesPolicy: ListRepliesPolicy) {
+    /// Whether members of this list need to get removed from the “Home” feed.
+    public var exclusive: Bool?
+
+    public init(id: String, title: String, repliesPolicy: ListRepliesPolicy, exclusive: Bool? = nil) {
         self.id = id
         self.title = title
         self.repliesPolicy = repliesPolicy
+        self.exclusive = exclusive
     }
 }
 
