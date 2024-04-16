@@ -11,7 +11,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         indexable: Bool? = nil, hideCollections: Bool? = nil, createdAt: Date,
         lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil,
         suspended: Bool? = nil,
-        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, source: TootSource? = nil, role: TootRole? = nil
+        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, group: Bool? = nil, source: TootSource? = nil, role: TootRole? = nil
     ) {
         self.id = id
         self.username = username
@@ -39,6 +39,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.limited = limited
         self.fields = fields
         self.bot = bot
+        self.group = group
         self.source = source
         self.role = role
     }
@@ -75,6 +76,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         // pixelfed doesn't include fields in block/mute lists
         self.fields = (try? container.decodeIfPresent([TootField].self, forKey: .fields)) ?? []
         self.bot = try? container.decodeIfPresent(Bool.self, forKey: .bot)
+        self.group = try? container.decodeIfPresent(Bool.self, forKey: .group)
         self.source = try? container.decodeIfPresent(TootSource.self, forKey: .source)
         self.role = try? container.decodeIfPresent(TootRole.self, forKey: .role)
     }
@@ -132,13 +134,14 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     /// A presentational flag.
     /// Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot
     public let bot: Bool?
+    /// Indicates that the account represents a Group actor.
+    public let group: Bool?
     // the following are in CredentialAccount
     // https://docs.joinmastodon.org/entities/Account/#CredentialAccount
     /// An extra entity to be used with API methods to verify credentials and update credentials
     public let source: TootSource?
     /// The role assigned to the currently authorized user.
     public let role: TootRole?
-
 }
 
 extension Account {
@@ -169,6 +172,7 @@ extension Account {
         case limited
         case fields
         case bot
+        case group
         case source
         case role
     }
@@ -203,6 +207,7 @@ extension Account: Hashable {
         hasher.combine(limited)
         hasher.combine(fields)
         hasher.combine(bot)
+        hasher.combine(group)
         hasher.combine(source)
         hasher.combine(role)
     }

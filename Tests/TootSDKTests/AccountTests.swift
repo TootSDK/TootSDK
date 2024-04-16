@@ -88,6 +88,7 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(result.indexable, false)
         XCTAssertEqual(result.locked, false)
         XCTAssertEqual(result.bot, false)
+        XCTAssertEqual(result.group, false)
         XCTAssertEqual(result.discoverable, true)
         XCTAssertEqual(result.hideCollections, false)
         XCTAssertEqual(result.username, "Mastodon")
