@@ -208,7 +208,7 @@ extension Post: Hashable {
             && lhs.card == rhs.card
             && lhs.language == rhs.language
             && lhs.text == rhs.text
-        && lhs.editedAt == rhs.editedAt
+            && lhs.editedAt == rhs.editedAt
             && lhs.favourited == rhs.favourited
             && lhs.reposted == rhs.reposted
             && lhs.muted == rhs.muted
