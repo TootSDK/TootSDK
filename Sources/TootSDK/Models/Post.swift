@@ -30,6 +30,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         card: Card? = nil,
         language: String? = nil,
         text: String? = nil,
+        editedAt: Date? = nil,
         favourited: Bool? = nil,
         reposted: Bool? = nil,
         muted: Bool? = nil,
@@ -61,6 +62,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         self.card = card
         self.language = language
         self.text = text
+        self.editedAt = editedAt
         self.favourited = favourited
         self.reposted = reposted
         self.muted = muted
@@ -119,6 +121,8 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     /// Plain-text source of a post. Returned instead of content when post is deleted so the user
     /// may redraft from the source text without the client having to reverse-engineer the original text from the HTML content.
     public var text: String?
+    /// The date when the post was last edited.
+    public var editedAt: Date?
     /// Have you favourited this post?
     public var favourited: Bool?
     /// Have you reposted this post?
@@ -168,6 +172,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case card
         case language
         case text
+        case editedAt
         case favourited
         case reposted = "reblogged"
         case muted
@@ -203,6 +208,7 @@ extension Post: Hashable {
             && lhs.card == rhs.card
             && lhs.language == rhs.language
             && lhs.text == rhs.text
+        && lhs.editedAt == rhs.editedAt
             && lhs.favourited == rhs.favourited
             && lhs.reposted == rhs.reposted
             && lhs.muted == rhs.muted
@@ -236,6 +242,7 @@ extension Post: Hashable {
         hasher.combine(card)
         hasher.combine(language)
         hasher.combine(text)
+        hasher.combine(editedAt)
         hasher.combine(favourited)
         hasher.combine(reposted)
         hasher.combine(muted)
