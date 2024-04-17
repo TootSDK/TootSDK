@@ -224,11 +224,11 @@ extension TootClient {
     /// Find out whether a given account is followed, blocked, muted, etc.
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
-    public func getRelationships(by ids: [String]) async throws -> [Relationship] {
+    public func getRelationships(by ids: [String], params: RelationshipParams = .init()) async throws -> [Relationship] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "relationships"])
             $0.method = .get
-            $0.query = ids.map({ URLQueryItem(name: "id[]", value: $0) })
+            $0.query = ids.map({ URLQueryItem(name: "id[]", value: $0) }) + params.queryItems
         }
         return try await fetch([Relationship].self, req)
     }
