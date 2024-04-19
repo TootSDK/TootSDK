@@ -254,6 +254,7 @@ extension TootClient {
     }
 
     /// Deletes the avatar associated with the user’s profile.
+    @discardableResult
     public func deleteProfileAvatar() async throws -> Account {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "profile", "avatar"])
@@ -264,7 +265,8 @@ extension TootClient {
     }
 
     /// Deletes the header image associated with the user’s profile.
-    public func deleteProfileHeader() async throws -> Account{
+    @discardableResult
+    public func deleteProfileHeader() async throws -> Account {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "profile", "header"])
             $0.method = .delete
