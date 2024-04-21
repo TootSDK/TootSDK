@@ -9,12 +9,12 @@
     },
     "language" : "en",
     "account" : {
-      "acct" : "technicat",
+      "acct" : "person",
       "bot" : false,
       "locked" : false,
-      "avatar_static" : "https://media.universeodon.com/accounts/avatars/109/821/003/814/913/641/original/d15a73c9d3b22e27.jpeg",
+      "avatar_static" : "https://media.example.com/accounts/avatars/109/821/003/814/913/641/original/d15a73c9d3b22e27.jpeg",
       "statuses_count" : 14881,
-      "url" : "https://universeodon.com/@technicat",
+      "url" : "https://example.com/@person",
       "following_count" : 394,
       "emojis" : [
 
@@ -22,45 +22,30 @@
       "discoverable" : true,
       "last_status_at" : "2024-04-20",
       "group" : false,
-      "uri" : "https://universeodon.com/users/technicat",
+      "uri" : "https://example.com/users/person",
       "id" : "109821003814913641",
       "roles" : [
 
       ],
-      "header_static" : "https://media.universeodon.com/accounts/headers/109/821/003/814/913/641/original/6a6d879a38c226fd.jpeg",
+      "header_static" : "https://media.example.com/accounts/headers/109/821/003/814/913/641/original/6a6d879a38c226fd.jpeg",
       "followers_count" : 424,
-      "note" : "<p>This is my talk (and block) about anything account. Official app business at <span class=\"h-card\" translate=\"no\"><a href=\"https://iosdev.space/@technicat\" class=\"u-url mention\">@<span>technicat</span></a></span> on iosdev.space, pics on pixelfed.social, books on bookwyrm.social...</p>",
-      "avatar" : "https://media.universeodon.com/accounts/avatars/109/821/003/814/913/641/original/d15a73c9d3b22e27.jpeg",
-      "display_name" : "technicat",
-      "header" : "https://media.universeodon.com/accounts/headers/109/821/003/814/913/641/original/6a6d879a38c226fd.jpeg",
+      "note" : "<p>This is my talk (and block) about anything account.</p>",
+      "avatar" : "https://media.example.com/accounts/avatars/109/821/003/814/913/641/original/d15a73c9d3b22e27.jpeg",
+      "display_name" : "Person",
+      "header" : "https://media.example.com/accounts/headers/109/821/003/814/913/641/original/6a6d879a38c226fd.jpeg",
       "created_at" : "2023-02-07T00:00:00.000Z",
       "noindex" : false,
       "fields" : [
         {
-          "name" : "Technicat LLC",
-          "value" : "<a href=\"https://technicat.com/\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">technicat.com/</span><span class=\"invisible\"></span></a>",
-          "verified_at" : "2023-07-20T15:38:55.194+00:00"
-        },
-        {
-          "name" : "LinkStack",
-          "value" : "<a href=\"https://pc.cafe/\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">pc.cafe/</span><span class=\"invisible\"></span></a>",
-          "verified_at" : null
-        },
-        {
-          "name" : "GitHub",
-          "value" : "<a href=\"https://github.com/technicat\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">github.com/technicat</span><span class=\"invisible\"></span></a>",
-          "verified_at" : "2024-01-24T17:14:28.315+00:00"
-        },
-        {
-          "name" : "AlbumWhale",
-          "value" : "<a href=\"https://albumwhale.com/technicat\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">albumwhale.com/technicat</span><span class=\"invisible\"></span></a>",
+          "name" : "Example",
+          "value" : "<a href=\"https://example.com/technicat\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">example.com/person</span><span class=\"invisible\"></span></a>",
           "verified_at" : null
         }
       ],
-      "username" : "technicat"
+      "username" : "person"
     },
     "spoiler_text" : "",
-    "url" : "https://universeodon.com/@technicat/112300188527054704",
+    "url" : "https://example.com/@person/112300188527054704",
     "media_attachments" : [
 
     ],
@@ -69,7 +54,7 @@
     "tags" : [
       {
         "name" : "ub40",
-        "url" : "https://universeodon.com/tags/ub40"
+        "url" : "https://example.com/tags/ub40"
       }
     ],
     "emojis" : [
@@ -81,27 +66,27 @@
     ],
     "visibility" : "public",
     "card" : {
-      "description" : "UB45 by UB40 on AlbumWhale",
+      "description" : "UB45 by UB40",
       "provider_url" : "",
       "embed_url" : "",
-      "image_description" : "UB45 by UB40 on Album Whale",
+      "image_description" : "UB45 by UB40",
       "blurhash" : "UJEfG_n#02R+ofRjWBxu4:kDxtobWAs;s;Ri",
       "published_at" : null,
-      "provider_name" : "Album Whale",
+      "provider_name" : "Album Example",
       "width" : 1400,
-      "url" : "https://albumwhale.com/albums/8513",
+      "url" : "https://example.com/albums/8513",
       "author_url" : "",
       "type" : "link",
-      "title" : "UB45 by UB40 on Album Whale",
+      "title" : "UB45 by UB40",
 
-      "image" : "https://media.universeodon.com/cache/preview_cards/images/024/062/128/original/1c7d0494ae037a8f.jpg",
+      "image" : "https://media.example.com/cache/preview_cards/images/024/062/128/original/1c7d0494ae037a8f.jpg",
       "language" : "en",
       "height" : 1400,
       "author_name" : "",
       "html" : ""
     },
     "poll" : null,
-    "uri" : "https://universeodon.com/users/technicat/statuses/112300188527054704",
+    "uri" : "https://example.com/users/technicat/statuses/112300188527054704",
     "edited_at" : "2024-04-19T22:15:22.419Z",
     "id" : "112300188527054704",
     "reblogs_count" : 0,
@@ -113,5 +98,5 @@
     "pinned" : false,
     "favourites_count" : 1,
     "bookmarked" : true,
-    "content" : "<p>listening to <a href=\"https://universeodon.com/tags/UB40\" class=\"mention hashtag\" rel=\"tag\">#<span>UB40</span></a> </p><p><a href=\"https://albumwhale.com/albums/8513\" target=\"_blank\" rel=\"nofollow noopener noreferrer\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">albumwhale.com/albums/8513</span><span class=\"invisible\"></span></a></p>"
+    "content" : "<p>listening to <a href=\"https://example.com/tags/UB40\" class=\"mention hashtag\" rel=\"tag\">#<span>UB40</span></a> </p><p><a href=\"https://example.com/albums/8513\" target=\"_blank\" rel=\"nofollow noopener noreferrer\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">example.com/albums/8513</span><span class=\"invisible\"></span></a></p>"
   }
