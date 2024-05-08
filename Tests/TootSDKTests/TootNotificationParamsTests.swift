@@ -110,11 +110,14 @@ final class TootNotificationParamsTests: XCTestCase {
         XCTAssertEqual(
             query,
             [
+                URLQueryItem(name: "exclude_types[]", value: "admin.report"),
+                URLQueryItem(name: "exclude_types[]", value: "admin.sign_up"),
                 URLQueryItem(name: "exclude_types[]", value: "follow"),
                 URLQueryItem(name: "exclude_types[]", value: "follow_request"),
                 URLQueryItem(name: "exclude_types[]", value: "mention"),
                 URLQueryItem(name: "exclude_types[]", value: "poll"),
                 URLQueryItem(name: "exclude_types[]", value: "reblog"),
+                URLQueryItem(name: "exclude_types[]", value: "severed_relationships"),
                 URLQueryItem(name: "exclude_types[]", value: "status"),
                 URLQueryItem(name: "exclude_types[]", value: "update"),
             ], "Incorrect params for \(flavour)")

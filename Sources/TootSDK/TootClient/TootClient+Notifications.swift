@@ -183,6 +183,14 @@ extension TootClient {
             queryParameters.append(.init(name: "data[alerts][update]", value: String(alert).lowercased()))
         }
 
+        if let alert = data?.alerts?.adminSignUp {
+            queryParameters.append(.init(name: "data[alerts][admin.sign_up]", value: String(alert).lowercased()))
+        }
+
+        if let alert = data?.alerts?.adminReport {
+            queryParameters.append(.init(name: "data[alerts][admin.report]", value: String(alert).lowercased()))
+        }
+
         if let policy = data?.policy {
             queryParameters.append(.init(name: "data[policy]", value: policy.rawValue))
         }

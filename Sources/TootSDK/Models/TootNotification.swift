@@ -5,12 +5,22 @@ import Foundation
 
 /// Represents a notification of an event relevant to the user.
 public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
-    public init(id: String, type: TootNotification.NotificationType, account: Account, createdAt: Date, post: Post? = nil) {
+    public init(
+        id: String,
+        type: TootNotification.NotificationType,
+        account: Account,
+        createdAt: Date,
+        post: Post? = nil,
+        report: Report? = nil,
+        relationshipSeveranceEvent: RelationshipSeveranceEvent? = nil
+    ) {
         self.id = id
         self.type = type
         self.account = account
         self.createdAt = createdAt
         self.post = post
+        self.report = report
+        self.relationshipSeveranceEvent = relationshipSeveranceEvent
     }
 
     /// The id of the notification in the database.
@@ -23,6 +33,10 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
     public var createdAt: Date
     /// Post that was the object of the notification, e.g. in mentions, reposts, favourites, or polls.
     public var post: Post?
+    /// Report that was the object of the notification. Attached when type of the notification is ``NotificationType/adminReport``.
+    public var report: Report?
+    /// Summary of the event that caused follow relationships to be severed. Attached when type of the notification is ``NotificationType/severedRelationships``.
+    public var relationshipSeveranceEvent: RelationshipSeveranceEvent?
 
     public enum NotificationType: String, Codable, Sendable, CaseIterable {
         /// Someone followed you
@@ -41,6 +55,12 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         case post = "status"
         /// A post you interacted with has been edited
         case update = "update"
+        /// Someone signed up
+        case adminSignUp = "admin.sign_up"
+        /// A new report has been filed
+        case adminReport = "admin.report"
+        /// Some of your follow relationships have been severed as a result of a moderation or block event
+        case severedRelationships = "severed_relationships"
 
         /// Returns notification types supported by the given `flavour`.
         public static func supported(by flavour: TootSDKFlavour) -> Set<NotificationType> {
@@ -87,6 +107,8 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         case account
         case createdAt
         case post = "status"
+        case report
+        case relationshipSeveranceEvent = "relationship_severance_event"
     }
 }
 
