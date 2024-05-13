@@ -12,7 +12,9 @@ public struct Alerts: Codable, Hashable, Sendable {
         poll: Bool? = nil,
         followRequest: Bool? = nil,
         post: Bool? = nil,
-        update: Bool? = nil
+        update: Bool? = nil,
+        adminSignUp: Bool? = nil,
+        adminReport: Bool? = nil
     ) {
         self.follow = follow
         self.favourite = favourite
@@ -22,6 +24,8 @@ public struct Alerts: Codable, Hashable, Sendable {
         self.followRequest = followRequest
         self.post = post
         self.update = update
+        self.adminSignUp = adminSignUp
+        self.adminReport = adminReport
     }
 
     /// Receive a push notification when someone has followed you.
@@ -40,6 +44,10 @@ public struct Alerts: Codable, Hashable, Sendable {
     public var post: Bool?
     /// Receive a push notification when a post you boosted with has been edited.
     public var update: Bool?
+    /// Receive a push notification when someone signs up.
+    public var adminSignUp: Bool?
+    /// Receive a push notification about a new report.
+    public var adminReport: Bool?
 
     enum CodingKeys: String, CodingKey {
         case follow
@@ -50,5 +58,7 @@ public struct Alerts: Codable, Hashable, Sendable {
         case followRequest
         case post = "status"
         case update
+        case adminSignUp = "admin.sign_up"
+        case adminReport = "admin.report"
     }
 }
