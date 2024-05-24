@@ -38,6 +38,7 @@ public class TootSocket {
     /// Send a JSON-encoded request to subscribe to or unsubscribe from a streaming timeline.
     ///
     /// - Parameter query: The request to subscribe or unsubscribe to a particular streaming timeline.
+    /// - Throws: Any thrown errors from `TootEncoder/encode()` or `URLSessionWebSocketTask/send()`.
     ///
     /// - SeeAlso: [Mastodon API: WebSocket query parameters](https://docs.joinmastodon.org/methods/streaming/#parameters)
     public func sendQuery(_ query: StreamQuery) async throws {
@@ -60,6 +61,7 @@ extension TootClient {
     ///
     /// - Parameter query: The initial subscription to the streaming API. Additional subscriptions/unsubscriptions can be sent later, over the socket itself. See [Mastodon API: Establishing a WebSocket connection](https://docs.joinmastodon.org/methods/streaming/#parameters)
     /// - Returns: If the server provides a streaming API via ``TootClient/getInstanceInfo()`` and it is alive according to ``TootClient/getStreamingHealth()``, returns a ``TootSocket`` instance representing the connection.
+    /// - Throws: ``TootSDKError/streamingUnsupported`` if the server does not provide a streaming endpoint. ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive. ``TootSDKError/requiredURLNotSet`` if the streaming endpoint URL cannot be parsed as a valid URL.
     public func beginStreaming(_ query: StreamQuery) async throws -> TootSocket {
         // TODO: make sure instance flavor supports streaming
         
