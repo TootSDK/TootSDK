@@ -8,7 +8,7 @@
 import Foundation
 
 /// An event sent by the streaming server.
-struct StreamingEvent: Sendable {
+public struct StreamingEvent: Sendable {
     /// The timeline or category that the event is relevant to.
     var stream: StreamCategory
     /// The content of the event.
@@ -22,7 +22,7 @@ struct StreamingEvent: Sendable {
 }
 
 extension StreamingEvent: Decodable {
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         guard let stream = StreamCategory(rawValue: try values.decode([String].self, forKey: .stream)) else {
             throw TootSDKError.decodingError("stream")

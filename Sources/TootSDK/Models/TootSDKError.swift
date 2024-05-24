@@ -24,6 +24,10 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case internalError(_ description: String)
     /// A specific error message was returned from the server
     case serverError(_ message: String)
+    /// The server does not have a streaming endpoint.
+    case streamingUnsupported
+    /// The streaming API is unhealthy.
+    case streamingEndpointUnhealthy
 
     public var errorDescription: String? {
         switch self {
@@ -52,6 +56,10 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "[TootSDK bug] " + description + "."
         case .serverError(let message):
             return message
+        case .streamingUnsupported:
+            return "The remote instance does not provide a streaming endpoint."
+        case .streamingEndpointUnhealthy:
+            return "The streaming endpoint is not alive."
         }
     }
 }

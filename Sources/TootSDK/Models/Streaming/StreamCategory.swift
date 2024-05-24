@@ -7,10 +7,10 @@
 
 import Foundation
 
-/// The timeline or category that a ``StreamingEvent`` belongs to.
+/// The timeline or category that a ``StreamingEvent`` belongs to, or that we can subscribe to.
 ///
 /// - SeeAlso: [Mastodon API: Streaming timelines/categories](https://docs.joinmastodon.org/methods/streaming/#streams)
-enum StreamCategory: Equatable {
+public enum StreamCategory: Equatable, Sendable {
     /// All public posts known to the server. Analogous to the federated timeline.
     case publicTimeline
     /// All public posts known to the server, filtered for media attachments. Analogous to the federated timeline with "only media" enabled.
@@ -40,7 +40,7 @@ enum StreamCategory: Equatable {
 extension StreamCategory: RawRepresentable {
     typealias rawValue = [String]
     
-    init?(rawValue: [String]) {
+    public init?(rawValue: [String]) {
         switch rawValue.first {
         case "public": self = .publicTimeline
         case "public:media": self = .publicMedia
@@ -64,7 +64,7 @@ extension StreamCategory: RawRepresentable {
         }
     }
     
-    var rawValue: [String] {
+    public var rawValue: [String] {
         switch self {
         case .publicTimeline: ["public"]
         case .publicMedia: ["public:media"]
