@@ -20,7 +20,7 @@ final class StreamingTests: XCTestCase {
         
         // assert
         XCTAssertNotNil(result)
-        XCTAssertEqual(result.stream, .publicTimeline)
+		XCTAssertEqual(result.timeline, .publicTimeline)
         guard case .update(let post) = result.event else {
             XCTFail("Event payload is not of expected type.")
             return
@@ -38,7 +38,7 @@ final class StreamingTests: XCTestCase {
         
         // assert
         XCTAssertNotNil(result)
-        XCTAssertEqual(result.stream, .publicTimeline)
+        XCTAssertEqual(result.timeline, .publicTimeline)
         guard case .delete(let postID) = result.event else {
             XCTFail("Event payload is not of expected type.")
             return
@@ -56,7 +56,7 @@ final class StreamingTests: XCTestCase {
         
         // assert
         XCTAssertNotNil(result)
-        XCTAssertEqual(result.stream, .user)
+        XCTAssertEqual(result.timeline, .user)
         XCTAssertEqual(result.event, .filtersChanged)
     }
 }
