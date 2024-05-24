@@ -16,7 +16,7 @@ public struct StreamQuery: Codable, Sendable, Equatable {
     
     /// The type of action we wish to perform.
     var type: Action
-    /// The stream to watch for events.
+    /// The timeline to watch for events.
     var stream: String
     /// When ``stream`` is set to `list`, specifies the list ID.
     var list: String?

@@ -7,11 +7,14 @@
 
 import Foundation
 
+/// Encapsulates a WebSocket connection to a server for streaming timeline updates.
 public class TootSocket {
+    /// The underlying WebSocket task.
     public let webSocketTask: URLSessionWebSocketTask
     private let encoder = TootEncoder()
     private let decoder = TootDecoder()
     
+    /// Async throwing stream of all ``StreamingEvent``s sent by the server.
     public lazy var stream: AsyncThrowingStream<StreamingEvent, Error> = {
         AsyncThrowingStream<StreamingEvent, Error> { [weak webSocketTask, weak decoder] in
             guard let webSocketTask else { return nil }
@@ -32,6 +35,11 @@ public class TootSocket {
         }
     }()
     
+    /// Send a JSON-encoded request to subscribe to or unsubscribe from a streaming timeline.
+    ///
+    /// - Parameter query: The request to subscribe or unsubscribe to a particular streaming timeline.
+    ///
+    /// - SeeAlso: [Mastodon API: WebSocket query parameters](https://docs.joinmastodon.org/methods/streaming/#parameters)
     public func sendQuery(_ query: StreamQuery) async throws {
         let encodedQuery = try encoder.encode(query)
         try await webSocketTask.send(.data(encodedQuery))
@@ -48,6 +56,10 @@ public class TootSocket {
 }
 
 extension TootClient {
+    /// Opens a WebSocket connection to the server's streaming API, if it is available and alive.
+    ///
+    /// - Parameter query: The initial subscription to the streaming API. Additional subscriptions/unsubscriptions can be sent later, over the socket itself. See [Mastodon API: Establishing a WebSocket connection](https://docs.joinmastodon.org/methods/streaming/#parameters)
+    /// - Returns: If the server provides a streaming API via ``TootClient/getInstanceInfo()`` and it is alive according to ``TootClient/getStreamingHealth()``, returns a ``TootSocket`` instance representing the connection.
     public func beginStreaming(_ query: StreamQuery) async throws -> TootSocket {
         // TODO: make sure instance flavor supports streaming
         
@@ -83,6 +95,12 @@ extension TootClient {
         return response.statusCode == 200
     }
     
+    /// Creates a web socket task with the given query items, and the access token if the client is authenticated.
+    ///
+    /// - Parameters:
+    ///   - urlString: Absolute URL string representing the server's streaming API endpoint.
+    ///   - query: Set of `URLQueryItem` to append to the URL.
+    /// - Returns: The result of calling the client's `session.webSocketTask(with:protocols:)` with the given query items and the access token if available.
     internal func webSocketTask(urlString: String, query: [URLQueryItem]) throws -> URLSessionWebSocketTask {
         guard var components = URLComponents(string: urlString) else {
             throw TootSDKError.requiredURLNotSet
