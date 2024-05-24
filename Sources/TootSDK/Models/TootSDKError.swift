@@ -28,6 +28,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case streamingUnsupported
     /// The streaming API is unhealthy.
     case streamingEndpointUnhealthy
+    /// Cannot start streaming because there are no subscriptions to any streaming timelines.
+    case noSubscriptions
 
     public var errorDescription: String? {
         switch self {
@@ -60,6 +62,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "The remote instance does not provide a streaming endpoint."
         case .streamingEndpointUnhealthy:
             return "The streaming endpoint is not alive."
+        case .noSubscriptions:
+            return "Cannot start streaming because there are no subscriptions to any streaming timelines."
         }
     }
 }

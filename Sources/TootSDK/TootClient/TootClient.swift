@@ -27,6 +27,8 @@ public class TootClient: @unchecked Sendable {
     public let scopes: [String]
     /// Data streams that the client can subscribe to
     public lazy var data = TootDataStream(client: self)
+    /// WebSocket streaming API.
+    public lazy var streaming = StreamingClient(client: self)
     /// The clientName the client was initialized with
     public let clientName: String
 

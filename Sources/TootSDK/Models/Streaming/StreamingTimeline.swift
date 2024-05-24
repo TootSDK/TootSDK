@@ -10,7 +10,7 @@ import Foundation
 /// The timeline or category that a ``StreamingEvent`` belongs to, or that we can subscribe to.
 ///
 /// - SeeAlso: [Mastodon API: Streaming timelines/categories](https://docs.joinmastodon.org/methods/streaming/#streams)
-public enum StreamingTimeline: Equatable, Sendable {
+public enum StreamingTimeline: Equatable, Sendable, Hashable {
     /// All public posts known to the server. Analogous to the federated timeline.
     case publicTimeline
     /// All public posts known to the server, filtered for media attachments. Analogous to the federated timeline with "only media" enabled.
