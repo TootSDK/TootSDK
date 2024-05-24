@@ -94,6 +94,7 @@ extension TootClient {
         }
         
         if let accessToken {
+            // It's undocumented, but the Mastodon streaming API passes the access token using the `protocols` field.
             return session.webSocketTask(with: url, protocols: [accessToken])
         } else {
             return session.webSocketTask(with: url)
