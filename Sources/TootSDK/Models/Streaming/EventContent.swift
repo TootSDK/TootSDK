@@ -1,5 +1,5 @@
 //
-//  EventPayload.swift
+//  EventContent.swift
 //
 //
 //  Created by Dale Price on 5/23/24.
@@ -10,7 +10,7 @@ import Foundation
 /// An event received from the streaming service with associated content.
 ///
 /// - SeeAlso: [Mastodon API: Event types and payloads](https://docs.joinmastodon.org/methods/streaming/#events)
-public enum EventPayload: Sendable, Equatable {
+public enum EventContent: Sendable, Equatable {
     /// A new post has appeared.
     case update(Post)
     /// The post with the associated ID has been deleted.
@@ -33,7 +33,7 @@ public enum EventPayload: Sendable, Equatable {
     case encryptedMessage
 }
 
-extension EventPayload {
+extension EventContent {
     /// Attempt to initialize from the "event" and "payload" properties of the JSON returned by the streaming server.
     internal init?(_ event: String, payload: String?) {
         switch event {

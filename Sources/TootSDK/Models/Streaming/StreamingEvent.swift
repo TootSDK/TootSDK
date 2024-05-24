@@ -12,7 +12,7 @@ public struct StreamingEvent: Sendable {
     /// The timeline or category that the event is relevant to.
     var stream: StreamCategory
     /// The content of the event.
-    var event: EventPayload
+    var event: EventContent
     
     enum CodingKeys: String, CodingKey {
         case stream
@@ -31,7 +31,7 @@ extension StreamingEvent: Decodable {
         
         let eventName = try values.decode(String.self, forKey: .event)
         let payload = try values.decodeIfPresent(String.self, forKey: .payload)
-        guard let event = EventPayload(eventName, payload: payload) else {
+        guard let event = EventContent(eventName, payload: payload) else {
             throw TootSDKError.decodingError("event or payload")
         }
         self.event = event
