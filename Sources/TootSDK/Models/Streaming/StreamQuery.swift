@@ -30,9 +30,9 @@ public struct StreamQuery: Codable, Sendable, Equatable {
         self.tag = tag
     }
     
-    public init(_ action: Action, stream: StreamCategory) {
+    public init(_ action: Action, timeline: StreamingTimeline) {
         self.type = action
-        let streamParams = stream.rawValue
+        let streamParams = timeline.rawValue
         self.stream = streamParams[0]
         if (self.stream == "hashtag" || self.stream == "hashtag:local") && streamParams.count == 2 {
             self.tag = streamParams[1]

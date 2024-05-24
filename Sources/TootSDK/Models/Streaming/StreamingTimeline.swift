@@ -1,5 +1,5 @@
 //
-//  StreamCategory.swift
+//  StreamingTimeline.swift
 //
 //
 //  Created by Dale Price on 5/23/24.
@@ -10,7 +10,7 @@ import Foundation
 /// The timeline or category that a ``StreamingEvent`` belongs to, or that we can subscribe to.
 ///
 /// - SeeAlso: [Mastodon API: Streaming timelines/categories](https://docs.joinmastodon.org/methods/streaming/#streams)
-public enum StreamCategory: Equatable, Sendable {
+public enum StreamingTimeline: Equatable, Sendable {
     /// All public posts known to the server. Analogous to the federated timeline.
     case publicTimeline
     /// All public posts known to the server, filtered for media attachments. Analogous to the federated timeline with "only media" enabled.
@@ -37,7 +37,7 @@ public enum StreamCategory: Equatable, Sendable {
     case direct
 }
 
-extension StreamCategory: RawRepresentable {
+extension StreamingTimeline: RawRepresentable {
     typealias rawValue = [String]
     
     public init?(rawValue: [String]) {
