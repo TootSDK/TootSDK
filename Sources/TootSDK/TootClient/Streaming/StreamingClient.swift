@@ -115,11 +115,8 @@ public actor StreamingClient {
     /// Start a connection, notify the server of all our subscriptions, and send the resulting events to each subscriber who subscribed to that timeline.
     private func connect(client: TootClient) async throws {
         let subscriptions = subscribers.map({ $0.timeline })
-        guard let initialSubscription = subscribers.first?.timeline else {
-            throw TootSDKError.noSubscriptions
-        }
         
-        let socket = try await client.beginStreaming(.init(.subscribe, timeline: initialSubscription))
+        let socket = try await client.beginStreaming()
         self.connection = socket
         
         // Close connection when finished.
@@ -129,7 +126,7 @@ public actor StreamingClient {
         }
         
         // Send subscription request for all existing subscribers
-        for subscription in subscriptions.dropFirst() {
+        for subscription in subscriptions {
             try await socket.sendQuery(.init(.subscribe, timeline: subscription))
         }
         

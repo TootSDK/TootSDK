@@ -43,7 +43,11 @@ public class TootSocket {
     /// - SeeAlso: [Mastodon API: WebSocket query parameters](https://docs.joinmastodon.org/methods/streaming/#parameters)
     public func sendQuery(_ query: StreamQuery) async throws {
         let encodedQuery = try encoder.encode(query)
-        try await webSocketTask.send(.data(encodedQuery))
+        // In theory we can just send the encoded Data over the websocket. In practice, Mastodon has an undocumented requirement to only send strings or it will immediately terminate the connection. So we have to recast the data we just encoded to a string.
+        guard let encodedString = String(data: encodedQuery, encoding: .utf8) else {
+            throw TootSDKError.internalError("Unable to read UTF-8 string from encoded JSON.")
+        }
+        try await webSocketTask.send(.string(encodedString))
     }
     
     internal init(webSocketTask: URLSessionWebSocketTask) {
@@ -59,10 +63,9 @@ public class TootSocket {
 extension TootClient {
     /// Opens a WebSocket connection to the server's streaming API, if it is available and alive.
     ///
-    /// - Parameter query: The initial subscription to the streaming API. Additional subscriptions/unsubscriptions can be sent later, over the socket itself. See [Mastodon API: Establishing a WebSocket connection](https://docs.joinmastodon.org/methods/streaming/#parameters)
     /// - Returns: If the server provides a streaming API via ``TootClient/getInstanceInfo()`` and it is alive according to ``TootClient/getStreamingHealth()``, returns a ``TootSocket`` instance representing the connection.
-    /// - Throws: ``TootSDKError/streamingUnsupported`` if the server does not provide a streaming endpoint. ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive. ``TootSDKError/requiredURLNotSet`` if the streaming endpoint URL cannot be parsed as a valid URL.
-    public func beginStreaming(_ query: StreamQuery) async throws -> TootSocket {
+    /// - Throws: ``TootSDKError/streamingUnsupported`` if the server does not provide a valid URL for the streaming endpoint. ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive.
+    public func beginStreaming() async throws -> TootSocket {
         // TODO: make sure instance flavor supports streaming
         
         // get streaming endpoint URL from instance info
@@ -77,11 +80,8 @@ extension TootClient {
             throw TootSDKError.streamingEndpointUnhealthy
         }
         
-        var queryItems: [URLQueryItem] = [.init(name: "stream", value: query.stream)]
-        if let list = query.list { queryItems.append(.init(name: "list", value: list)) }
-        if let tag = query.tag { queryItems.append(.init(name: "tag", value: tag)) }
+        let task = webSocketTask(streamingAPI: streamingURL)
         
-        let task = try webSocketTask(urlString: streamingURL.absoluteString, query: queryItems)
         return TootSocket(webSocketTask: task)
     }
     
@@ -100,17 +100,13 @@ extension TootClient {
     /// Creates a web socket task with the given query items, and the access token if the client is authenticated.
     ///
     /// - Parameters:
-    ///   - urlString: Absolute URL string representing the server's streaming API endpoint.
-    ///   - query: Set of `URLQueryItem` to append to the URL.
+    ///   - streamingAPI: The URL of the streaming API.
     /// - Returns: The result of calling the client's `session.webSocketTask(with:protocols:)` with the given query items and the access token if available.
-    internal func webSocketTask(urlString: String, query: [URLQueryItem]) throws -> URLSessionWebSocketTask {
-        guard var components = URLComponents(string: urlString) else {
-            throw TootSDKError.requiredURLNotSet
-        }
-        components.queryItems = query
-        
-        guard let url = components.url else {
-            throw TootSDKError.internalError("Unable to create streaming URL with query.")
+    internal func webSocketTask(streamingAPI: URL) -> URLSessionWebSocketTask {
+        let path = ["api", "v1", "streaming"]
+        var url = streamingAPI
+        for component in path {
+            url.appendPathComponent(component)
         }
         
         if let accessToken {

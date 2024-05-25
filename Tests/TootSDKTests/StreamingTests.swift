@@ -20,7 +20,7 @@ final class StreamingTests: XCTestCase {
         
         // assert
         XCTAssertNotNil(result)
-		XCTAssertEqual(result.timeline, .publicTimeline)
+        XCTAssertEqual(result.timeline, .publicTimeline)
         guard case .update(let post) = result.event else {
             XCTFail("Event payload is not of expected type.")
             return
@@ -58,5 +58,17 @@ final class StreamingTests: XCTestCase {
         XCTAssertNotNil(result)
         XCTAssertEqual(result.timeline, .user)
         XCTAssertEqual(result.event, .filtersChanged)
+    }
+    
+    func testEncodingQuery() throws {
+        let target = "{\"type\":\"subscribe\",\"stream\":\"user\"}"
+        let alternateTarget = "{\"stream\":\"user\",\"type\":\"subscribe\"}"
+        let encoder = TootEncoder()
+        
+        let result = try encoder.encode(StreamQuery(.subscribe, timeline: .user))
+        let resultString = String(data: result, encoding: .utf8)
+        
+        XCTAssertNotNil(resultString)
+        XCTAssertTrue(resultString == target || resultString == alternateTarget)
     }
 }
