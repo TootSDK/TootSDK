@@ -16,6 +16,14 @@ extension TootClient {
         }
         return url
     }
+    
+    internal func getURL(base: URL, appendingComponents components: [String]) -> URL {
+        var url = base
+        for component in components {
+            url.appendPathComponent(component)
+        }
+        return url
+    }
 
     internal func getQueryParams(
         _ pageInfo: PagedInfo? = nil,

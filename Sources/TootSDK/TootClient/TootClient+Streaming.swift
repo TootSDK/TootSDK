@@ -80,7 +80,11 @@ extension TootClient {
             throw TootSDKError.streamingEndpointUnhealthy
         }
         
-        let task = webSocketTask(streamingAPI: streamingURL)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(base: streamingURL, appendingComponents: ["api", "v1", "streaming"])
+        }
+        
+        let task = try webSocketTask(req)
         
         return TootSocket(webSocketTask: task)
     }
@@ -99,21 +103,23 @@ extension TootClient {
     
     /// Creates a web socket task with the given query items, and the access token if the client is authenticated.
     ///
+    /// Analogous to `TootClient.fetch(req:)`, but for a WebSocket connection.
+    ///
     /// - Parameters:
-    ///   - streamingAPI: The URL of the streaming API.
+    ///   - req: an `HTTPRequestBuilder` configured with a URL that can accept WebSocket connections.
+    ///
     /// - Returns: The result of calling the client's `session.webSocketTask(with:protocols:)` with the given query items and the access token if available.
-    internal func webSocketTask(streamingAPI: URL) -> URLSessionWebSocketTask {
-        let path = ["api", "v1", "streaming"]
-        var url = streamingAPI
-        for component in path {
-            url.appendPathComponent(component)
+    internal func webSocketTask(_ req: HTTPRequestBuilder) throws -> URLSessionWebSocketTask {
+        if req.headers.index(forKey: "User-Agent") == nil {
+            req.headers["User-Agent"] = "TootSDK"
         }
         
         if let accessToken {
-            // It's undocumented, but the Mastodon streaming API passes the access token using the `protocols` field.
-            return session.webSocketTask(with: url, protocols: [accessToken])
-        } else {
-            return session.webSocketTask(with: url)
+            // This is undocumented, but the Mastodon streaming API allows passing the access token using the protocol header.
+            // This is slightly more secure than the documented method of putting the access token in plain text in the query string.
+            req.headers["Sec-WebSocket-Protocol"] = accessToken
         }
+        
+        return session.webSocketTask(with: try req.build())
     }
 }
