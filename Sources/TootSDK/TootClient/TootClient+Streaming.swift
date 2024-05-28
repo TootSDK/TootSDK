@@ -66,7 +66,7 @@ extension TootClient {
     /// - Returns: If the server provides a streaming API via ``TootClient/getInstanceInfo()`` and it is alive according to ``TootClient/getStreamingHealth()``, returns a ``TootSocket`` instance representing the connection.
     /// - Throws: ``TootSDKError/streamingUnsupported`` if the server does not provide a valid URL for the streaming endpoint. ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive.
     public func beginStreaming() async throws -> TootSocket {
-        // TODO: make sure instance flavor supports streaming
+        try requireFeature(.streaming)
         
         // get streaming endpoint URL from instance info
         async let streamingEndpoint = getInstanceInfo().urls?.streamingApi
@@ -122,4 +122,11 @@ extension TootClient {
         
         return session.webSocketTask(with: try req.build())
     }
+}
+
+extension TootFeature {
+    
+    /// Ability to stream incoming events via WebSocket
+    ///
+    public static let streaming = TootFeature(supportedFlavours: [.mastodon, .pleroma, .akkoma])
 }

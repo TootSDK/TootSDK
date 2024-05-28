@@ -35,6 +35,8 @@ public enum StreamingTimeline: Equatable, Sendable, Hashable {
     case list(listID: String)
     /// Updates to direct conversations.
     case direct
+    
+    // TODO: support Pleroma-specific event types described at https://docs-develop.pleroma.social/backend/development/API/differences_in_mastoapi_responses/#streaming
 }
 
 extension StreamingTimeline: RawRepresentable {
