@@ -52,6 +52,23 @@ public class TootSocket {
         try await webSocketTask.send(.string(encodedString))
     }
     
+    /// Send a ping to the streaming server asynchronously. Returns when a pong is received back from the server.
+    ///
+    /// If called multiple times, returns in the order that it was called.
+    ///
+    /// - Throws: `NSError` if the connection is lost or any other problem occurs.
+    public func sendPing() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            webSocketTask.sendPing { error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+    
     /// Close the connection.
     /// - Parameters:
     ///   - closeCode: The reason for closing the connection.

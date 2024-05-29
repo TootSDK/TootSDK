@@ -154,6 +154,11 @@ public actor StreamingClient {
             try await socket.sendQuery(.init(.subscribe, timeline: subscription))
         }
         
+        // If we haven't sent any subscription requests, send a ping to the server to verify that the connection is alive.
+        if subscribedTimelines.isEmpty {
+            try await socket.sendPing()
+        }
+        
         unsuccessfulConnectionAttempts = 0
         
         for try await event in socket.stream {
