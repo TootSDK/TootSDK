@@ -11,6 +11,8 @@ import Foundation
 ///
 /// To get server-sent events for a timeline, call ``subscribe(to:)`` to get an AsyncStream of ``EventContent`` corresponding to that timeline. When finished, simply cancel the task. The client will automatically send the server an unsubscribe request when all tasks requesting a particular timeline have been cancelled.
 ///
+/// Automatically retries with exponential backoff after failed connections, and limits retries to a configurable maximum amount (``maxRetries`` for subsequent unsuccessful attempts; ``maxConnectionAttempts`` for all attempts).
+///
 /// All streams will finish when ``StreamingClient/maxRetries`` unsuccessful connection attempts have been made or you call ``StreamingClient/disconnect()``.
 public actor StreamingClient {
     public typealias Stream = AsyncStream<EventContent>
