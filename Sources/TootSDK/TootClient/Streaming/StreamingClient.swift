@@ -61,6 +61,11 @@ public actor StreamingClient {
     /// This limit attempts to prevent excessive handshakes if the connection is available but unreliable.
     public var maxConnectionAttempts = 10
     
+    /// Is the connection currently active?
+    ///
+    /// The state of this property matches ``Event/connectionUp`` and ``Event/connectionDown`` events being sent to subscribers.
+    public private(set) var isConnectionUp: Bool = false
+    
     private var subscribers: Set<Subscriber> = []
     private var connection: TootSocket? = nil
     private var connectionTask: Task<Void, Error>? = nil
@@ -164,6 +169,7 @@ public actor StreamingClient {
         defer {
             socket.close(with: .normalClosure)
             self.connection = nil
+            self.isConnectionUp = false
             // notify subscribers that the connection has closed
             for subscriber in subscribers {
                 subscriber.continuation.yield(.connectionDown)
@@ -184,6 +190,7 @@ public actor StreamingClient {
         unsuccessfulConnectionAttempts = 0
         
         // Notify subscribers that the connection is up and we are listening for events
+        self.isConnectionUp = true
         for subscriber in subscribers {
             subscriber.continuation.yield(.connectionUp)
         }
