@@ -15,17 +15,15 @@ import Foundation
 public actor StreamingClient {
     public typealias Stream = AsyncStream<EventContent>
     
-    internal class Subscriber: Hashable {
+    internal class Subscriber: Hashable, Identifiable {
         static func == (lhs: StreamingClient.Subscriber, rhs: StreamingClient.Subscriber) -> Bool {
             return lhs.timeline == rhs.timeline && lhs.id == rhs.id
         }
         
         let timeline: StreamingTimeline
-        let id: UUID
         var continuation: Stream.Continuation
         
         fileprivate init(timeline: StreamingTimeline, continuation: Stream.Continuation) {
-            self.id = .init()
             self.timeline = timeline
             self.continuation = continuation
         }
