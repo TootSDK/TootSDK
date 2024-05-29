@@ -7,15 +7,32 @@
 
 import Foundation
 
-/// Automatically attempts to maintain a WebSocket connection to the server, allows any number of consumers to subscribe to any number of ``StreamingTimeline`` over the socket.
+/// Automatically attempts to maintain a WebSocket connection to the server, allows any number of consumers to subscribe to any number of ``StreamingTimeline`` over the socket. Handles connection issues in a way that is as transparent to subscribers as possible.
 ///
-/// To get server-sent events for a timeline, call ``subscribe(to:)`` to get an AsyncStream of ``EventContent`` corresponding to that timeline. When finished, simply cancel the task. The client will automatically send the server an unsubscribe request when all tasks requesting a particular timeline have been cancelled.
+/// To get server-sent events for a timeline, call ``subscribe(to:)`` to get an AsyncStream of ``StreamingClient/Event`` corresponding to that timeline. When finished, simply cancel the task. The client will automatically send the server an unsubscribe request when all tasks requesting a particular timeline have been cancelled.
 ///
 /// Automatically retries with exponential backoff after failed connections, and limits retries to a configurable maximum amount (``maxRetries`` for subsequent unsuccessful attempts; ``maxConnectionAttempts`` for all attempts).
 ///
 /// All streams will finish when ``StreamingClient/maxRetries`` unsuccessful connection attempts have been made or you call ``StreamingClient/disconnect()``.
 public actor StreamingClient {
-    public typealias Stream = AsyncStream<EventContent>
+    
+    /// A change in the status of the streaming connection, or an event received from the server.
+    public enum Event {
+        /// Streaming connection has been established successfully.
+        case connectionUp
+        
+        /// Streaming connection is down.
+        ///
+        /// To avoid missing posts, switch to using the HTTP API when you receive this event.
+        ///
+        /// This condition may be temporary or indefinite depending on ``StreamingClient/maxRetries`` and ``StreamingClient/maxConnectionAttempts``.
+        case connectionDown
+        
+        /// Received an event from the server on the timeline that you're subscribed to.
+        case receivedEvent(EventContent)
+    }
+    
+    public typealias Stream = AsyncStream<Event>
     
     internal class Subscriber: Hashable, Identifiable {
         static func == (lhs: StreamingClient.Subscriber, rhs: StreamingClient.Subscriber) -> Bool {
@@ -59,7 +76,7 @@ public actor StreamingClient {
     
     /// Subscribe to a stream of events from a ``StreamingTimeline``.
     ///
-    /// Begins a WebSocket connection if there is not already one; otherwise, subscribes to the timeline using the existing connection.
+    /// Begins a WebSocket connection if there is not already one; otherwise, subscribes to the timeline using the existing connection. If the connection is currently down between retry attempts, will wait until the next successful connection to send the subscribe request, unless ``disconnect()`` is called before then.
     public func subscribe(to timeline: StreamingTimeline) async throws -> Stream {
         // Check if we are already subscribed to this timeline
         let isAlreadySubscribed: Bool
@@ -111,7 +128,7 @@ public actor StreamingClient {
     private func distributeToSubscribers(_ event: StreamingEvent) {
         let relevantSubscribers = subscribers.filter({ $0.timeline == event.timeline })
         for subscriber in relevantSubscribers {
-            subscriber.continuation.yield(event.event)
+            subscriber.continuation.yield(.receivedEvent(event.event))
         }
     }
     
@@ -143,10 +160,14 @@ public actor StreamingClient {
         let socket = try await client.beginStreaming()
         self.connection = socket
         
-        // Close connection when finished.
+        // Close socket when finished.
         defer {
             socket.close(with: .normalClosure)
             self.connection = nil
+            // notify subscribers that the connection has closed
+            for subscriber in subscribers {
+                subscriber.continuation.yield(.connectionDown)
+            }
         }
         
         // Send subscription request for the timelines of existing subscribers
@@ -161,6 +182,11 @@ public actor StreamingClient {
         }
         
         unsuccessfulConnectionAttempts = 0
+        
+        // Notify subscribers that the connection is up and we are listening for events
+        for subscriber in subscribers {
+            subscriber.continuation.yield(.connectionUp)
+        }
         
         for try await event in socket.stream {
             distributeToSubscribers(event)
