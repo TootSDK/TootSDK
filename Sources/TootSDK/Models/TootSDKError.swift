@@ -30,7 +30,9 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case streamingEndpointUnhealthy
     /// Cannot start streaming because there are no subscriptions to any streaming timelines.
     case noSubscriptions
-
+    /// Unable to start streaming becasue the parent ``TootClient`` of a ``StreamingClient`` has already been deinitialized. Make sure you aren't storing a reference to the ``StreamingClient`` past the end of the ``TootClient`` lifecycle.
+    case clientDeinited
+    
     public var errorDescription: String? {
         switch self {
         case .decodingError(let description):
@@ -64,6 +66,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "The streaming endpoint is not alive."
         case .noSubscriptions:
             return "Cannot start streaming because there are no subscriptions to any streaming timelines."
+        case .clientDeinited:
+            return "The parent TootClient of the streaming client has already been deinitialized."
         }
     }
 }

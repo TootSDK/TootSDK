@@ -56,6 +56,9 @@ public actor StreamingClient {
         self.maxRetries = maxRetries
     }
     
+    /// Subscribe to a stream of events from a ``StreamingTimeline``.
+    ///
+    /// Begins a WebSocket connection if there is not already one; otherwise, subscribes to the timeline using the existing connection.
     public func subscribe(to timeline: StreamingTimeline) async throws -> Stream {
         // Check if we are already subscribed to this timeline
         let isAlreadySubscribed: Bool
@@ -77,24 +80,37 @@ public actor StreamingClient {
             }
         }
         
-        // If there is an existing connection and we are not already subscribed, send subscribe request. Otherwise, attempt to start a connection.
+        // If there is an existing connection and we are not already subscribed, send subscribe request. Otherwise, attempt to start a connection if necessary.
         if let connection {
             if !isAlreadySubscribed {
                 try await connection.sendQuery(.init(.subscribe, timeline: timeline))
             }
-        } else if connectionTask?.isCancelled ?? true, let client {
+        } else if connectionTask?.isCancelled ?? true {
+            // if there is not an existing connection task or the existing task is cancelled, start a new connection
+            guard let client else {
+                throw TootSDKError.clientDeinited
+            }
             startConnection(client: client)
         }
         
         return stream
     }
     
+    /// Remove a subscriber. If there are no remaining subscribers to its ``StreamingTimeline`` and there is an active connection, unsubscribe from that timeline.
     fileprivate func unsubscribe(_ subscriber: Subscriber) async throws {
         subscribers.remove(subscriber)
         
         // If the last subscriber is unsubscribing from this timeline and there is an active connection, send unsubscribe to server
         if !subscribers.contains(where: { $0.timeline == subscriber.timeline }) {
             try await connection?.sendQuery(.init(.unsubscribe, timeline: subscriber.timeline))
+        }
+    }
+    
+    /// For a given ``StreamingEvent``, distribute its ``EventContent`` to all subscribers who subscribe to that timeline.
+    private func distributeToSubscribers(_ event: StreamingEvent) {
+        let relevantSubscribers = subscribers.filter({ $0.timeline == event.timeline })
+        for subscriber in relevantSubscribers {
+            subscriber.continuation.yield(event.event)
         }
     }
     
@@ -107,6 +123,8 @@ public actor StreamingClient {
     }
     
     /// Unless there is already an active connection task, start a new one.
+    ///
+    /// When the connection is successfully opened, will send subscribe requests for any existing subscribers.
     private func startConnection(client: TootClient) {
         guard connectionTask?.isCancelled ?? true else {
             return
@@ -118,9 +136,9 @@ public actor StreamingClient {
     }
     
     /// Start a connection, notify the server of all our subscriptions, and send the resulting events to each subscriber who subscribed to that timeline.
-    private func connect(client: TootClient) async throws {
-        let subscriptions = subscribers.map({ $0.timeline })
-        
+    ///
+    /// Sets `connection` to the active ``TootSocket`` instance for the duration of the connection, then sets `connection` to nil when the connection ends.
+    private func connectAndReceiveEvents(client: TootClient) async throws {
         let socket = try await client.beginStreaming()
         self.connection = socket
         
@@ -130,18 +148,16 @@ public actor StreamingClient {
             self.connection = nil
         }
         
-        // Send subscription request for all existing subscribers
-        for subscription in subscriptions {
+        // Send subscription request for the timelines of existing subscribers
+        let subscribedTimelines = Set(subscribers.map({ $0.timeline }))
+        for subscription in subscribedTimelines {
             try await socket.sendQuery(.init(.subscribe, timeline: subscription))
         }
         
         unsuccessfulConnectionAttempts = 0
         
         for try await event in socket.stream {
-            let relevantSubscribers = subscribers.filter({ $0.timeline == event.timeline })
-            for subscriber in relevantSubscribers {
-                subscriber.continuation.yield(event.event)
-            }
+            distributeToSubscribers(event)
         }
     }
     
@@ -157,12 +173,23 @@ public actor StreamingClient {
         unsuccessfulConnectionAttempts = 0
         totalConnectionAttempts = 0
         repeat {
+            // exponential backoff after multiple failed connection attempts
             if unsuccessfulConnectionAttempts > 0 {
                 try await Task.sleep(nanoseconds: 2_000_000_000 ^ UInt64(unsuccessfulConnectionAttempts))
             }
+            
             unsuccessfulConnectionAttempts += 1
             totalConnectionAttempts += 1
-            try await connect(client: client)
+            
+            do {
+                try await connectAndReceiveEvents(client: client)
+            } catch is CancellationError {
+                // if the task is cancelled, end the loop without trying again
+                return
+            } catch {
+                // if there is any other error, continue to the next iteration of the retry loop
+                continue
+            }
         } while unsuccessfulConnectionAttempts < maxRetries &&
             totalConnectionAttempts < maxConnectionAttempts &&
             !Task.isCancelled
