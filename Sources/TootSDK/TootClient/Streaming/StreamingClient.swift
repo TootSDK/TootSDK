@@ -17,7 +17,7 @@ import Foundation
 public actor StreamingClient {
     
     /// A change in the status of the streaming connection, or an event received from the server.
-    public enum Event {
+    public enum Event: Sendable {
         /// Streaming connection has been established successfully.
         case connectionUp
         
