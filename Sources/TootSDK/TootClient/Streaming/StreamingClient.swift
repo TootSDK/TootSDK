@@ -82,7 +82,12 @@ public actor StreamingClient {
     /// Subscribe to a stream of events from a ``StreamingTimeline``.
     ///
     /// Begins a WebSocket connection if there is not already one; otherwise, subscribes to the timeline using the existing connection. If the connection is currently down between retry attempts, will wait until the next successful connection to send the subscribe request, unless ``disconnect()`` is called before then.
-    public func subscribe(to timeline: StreamingTimeline) async throws -> Stream {
+    ///
+    /// - Parameters:
+    ///   - timeline: A ``StreamingTimeline`` to receive events for.
+    ///   - bufferingPolicy: A `Continuation.BufferingPolicy` value to set the stream’s buffering behavior. By default, the stream buffers an unlimited number of elements. You can also set the policy to buffer a specified number of oldest or newest elements.
+    /// - Returns: An `AsyncStream` of ``Event`` values for connection status changes and events received from the server.
+    public func subscribe(to timeline: StreamingTimeline, bufferingPolicy: Stream.Continuation.BufferingPolicy = .unbounded) async throws -> Stream {
         // Check if we are already subscribed to this timeline
         let isAlreadySubscribed: Bool
         if connection != nil {
@@ -92,7 +97,7 @@ public actor StreamingClient {
         }
         
         // Create an AsyncStream that we can store the continuation and yield values to as we receive them.
-        let stream = Stream { continuation in
+        let stream = Stream(bufferingPolicy: bufferingPolicy) { continuation in
             let subscriber = Subscriber(timeline: timeline, continuation: continuation)
             self.subscribers.insert(subscriber)
             continuation.onTermination = { _ in
