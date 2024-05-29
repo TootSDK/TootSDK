@@ -31,6 +31,10 @@ public enum EventContent: Sendable, Equatable {
     case postUpdate(Post)
     /// An encrypted message has been received.
     case encryptedMessage
+    /// An event that TootSDK does not support has been received.
+    case unsupportedEvent(event: String, payload: String?)
+    
+    // TODO: support Pleroma-specific event types described at https://docs-develop.pleroma.social/backend/development/API/differences_in_mastoapi_responses/#streaming
 }
 
 extension EventContent {
@@ -72,7 +76,7 @@ extension EventContent {
         case "encrypted_message":
             self = .encryptedMessage
         default:
-            return nil
+            self = .unsupportedEvent(event: event, payload: payload)
         }
     }
 }

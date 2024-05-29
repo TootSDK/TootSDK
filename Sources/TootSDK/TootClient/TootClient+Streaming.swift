@@ -15,10 +15,13 @@ public class TootSocket {
     private let decoder = TootDecoder()
     
     /// Async throwing stream of all ``StreamingEvent``s sent by the server.
+    ///
+    /// > Throws:
+    /// > - ``TootSDKError/decodingError(_:)`` if a received message cannot be decoded as a ``StreamingEvent``.
+    /// > - An `NSError` if the web socket task encounters an error receiving a message.
+    /// > - `CancellationError` if the containing task has been cancelled while waiting for a message.
     public lazy var stream: AsyncThrowingStream<StreamingEvent, Error> = {
-        AsyncThrowingStream<StreamingEvent, Error> { [weak webSocketTask, weak decoder] in
-            guard let webSocketTask else { return nil }
-            
+        AsyncThrowingStream<StreamingEvent, Error> { [webSocketTask, decoder] in
             let message = try await webSocketTask.receive()
             let data = switch message {
             case .data(let data):
@@ -30,7 +33,6 @@ public class TootSocket {
             }
             guard let data else { throw TootSDKError.decodingError("message data") }
             
-            guard let decoder else { return nil }
             return try decoder.decode(StreamingEvent.self, from: data)
         }
     }()
@@ -82,7 +84,9 @@ extension TootClient {
     ///
     /// - Returns: If the server provides a streaming API via ``TootClient/getInstanceInfo()`` and it is alive according to ``TootClient/getStreamingHealth()``, returns a ``TootSocket`` instance representing the connection.
     ///
-    /// - Throws: ``TootSDKError/streamingUnsupported`` if the server does not provide a valid URL for the streaming endpoint. ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive.
+    /// > Throws:
+    /// > - ``TootSDKError/streamingUnsupported`` if the server does not provide a valid URL for the streaming endpoint.
+    /// > - ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive.
     public func beginStreaming() async throws -> TootSocket {
         try requireFeature(.streaming)
         
