@@ -53,9 +53,8 @@ public actor StreamingClient {
     private var totalConnectionAttempts = 0
     weak private var client: TootClient?
     
-    internal init(client: TootClient, maxRetries: Int = 5) {
+    internal init(client: TootClient) {
         self.client = client
-        self.maxRetries = maxRetries
     }
     
     /// Subscribe to a stream of events from a ``StreamingTimeline``.
