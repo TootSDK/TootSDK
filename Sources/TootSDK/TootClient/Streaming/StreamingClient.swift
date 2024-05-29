@@ -39,11 +39,18 @@ public actor StreamingClient {
     /// The maximum number of retries if the connection attempt is unsuccessful.
     public var maxRetries = 5
     
+    /// The maximum number of connection attempts to make, including successful ones.
+    ///
+    /// This limit attempts to prevent excessive handshakes if the connection is available but unreliable.
+    public var maxConnectionAttempts = 10
+    
     private var subscribers: Set<Subscriber> = []
     private var connection: TootSocket? = nil
     private var connectionTask: Task<Void, Error>? = nil
     /// The number of unsuccessful connection attempts that have been made.
-    private var connectionAttempts = 0
+    private var unsuccessfulConnectionAttempts = 0
+    /// The total number of connection attmepts that have been made, including successful ones.
+    private var totalConnectionAttempts = 0
     weak private var client: TootClient?
     
     internal init(client: TootClient, maxRetries: Int = 5) {
@@ -130,7 +137,7 @@ public actor StreamingClient {
             try await socket.sendQuery(.init(.subscribe, timeline: subscription))
         }
         
-        connectionAttempts = 0
+        unsuccessfulConnectionAttempts = 0
         
         for try await event in socket.stream {
             let relevantSubscribers = subscribers.filter({ $0.timeline == event.timeline })
@@ -149,14 +156,18 @@ public actor StreamingClient {
             }
         }
         
-        connectionAttempts = 0
+        unsuccessfulConnectionAttempts = 0
+        totalConnectionAttempts = 0
         repeat {
-            if connectionAttempts > 0 {
-                try await Task.sleep(nanoseconds: 2_000_000_000 ^ UInt64(connectionAttempts))
+            if unsuccessfulConnectionAttempts > 0 {
+                try await Task.sleep(nanoseconds: 2_000_000_000 ^ UInt64(unsuccessfulConnectionAttempts))
             }
-            connectionAttempts += 1
+            unsuccessfulConnectionAttempts += 1
+            totalConnectionAttempts += 1
             try await connect(client: client)
-        } while connectionAttempts < maxRetries && !Task.isCancelled
+        } while unsuccessfulConnectionAttempts < maxRetries &&
+            totalConnectionAttempts < maxConnectionAttempts &&
+            !Task.isCancelled
     }
     
     deinit {
