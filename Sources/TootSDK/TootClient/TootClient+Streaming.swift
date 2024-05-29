@@ -56,7 +56,9 @@ public class TootSocket {
     /// - Parameters:
     ///   - closeCode: The reason for closing the connection.
     public func close(with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) {
-        webSocketTask.cancel(with: closeCode, reason: nil)
+        if webSocketTask.closeCode == .invalid {
+            webSocketTask.cancel(with: closeCode, reason: nil)
+        }
     }
     
     internal init(webSocketTask: URLSessionWebSocketTask) {
