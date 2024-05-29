@@ -10,7 +10,7 @@ import Foundation
 /// Encapsulates a WebSocket connection to a server for streaming timeline updates.
 public class TootSocket {
     /// The underlying WebSocket task.
-    public let webSocketTask: URLSessionWebSocketTask
+    private let webSocketTask: URLSessionWebSocketTask
     private let encoder = TootEncoder()
     private let decoder = TootDecoder()
     
@@ -50,20 +50,38 @@ public class TootSocket {
         try await webSocketTask.send(.string(encodedString))
     }
     
+    /// Close the connection.
+    /// - Parameters:
+    ///   - closeCode: The reason for closing the connection.
+    public func close(with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) {
+        webSocketTask.cancel(with: closeCode, reason: nil)
+    }
+    
     internal init(webSocketTask: URLSessionWebSocketTask) {
         self.webSocketTask = webSocketTask
         self.webSocketTask.resume()
     }
     
     deinit {
-        webSocketTask.cancel(with: .normalClosure, reason: nil)
+        close(with: .normalClosure)
     }
 }
 
 extension TootClient {
-    /// Opens a WebSocket connection to the server's streaming API, if it is available and alive.
+    /// Opens a WebSocket connection to the server's streaming API, after checking that it is available and alive.
+    ///
+    /// This is a lower-level option that provides the ability to handle events and send subscribe/unsubscribe requests to the socket directly. For a higher-level API, see ``TootClient/streaming`` instead.
+    ///
+    /// - Important: If you use this method directly, you are responsible for following best practices to minimize unnecessary load on the server.
+    ///
+    /// To minimize server load, it is recommended to:
+    /// - Only open one streaming connection at a time per account.
+    /// - Reuse a single, long-lived streaming connection instead of opening a new one for each ``StreamingTimeline`` you subscribe to; send ``StreamQuery`` to subscribe/unsubscribe to only the timelines you need.
+    /// - Add an increasing delay between retries if the connection fails.
+    /// - Limit the total number of retries to avoid retrying indefinitely in the event that the connection is unreliable.
     ///
     /// - Returns: If the server provides a streaming API via ``TootClient/getInstanceInfo()`` and it is alive according to ``TootClient/getStreamingHealth()``, returns a ``TootSocket`` instance representing the connection.
+    ///
     /// - Throws: ``TootSDKError/streamingUnsupported`` if the server does not provide a valid URL for the streaming endpoint. ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive.
     public func beginStreaming() async throws -> TootSocket {
         try requireFeature(.streaming)
@@ -109,6 +127,8 @@ extension TootClient {
     ///   - req: an `HTTPRequestBuilder` configured with a URL that can accept WebSocket connections.
     ///
     /// - Returns: The result of calling the client's `session.webSocketTask(with:protocols:)` with the given query items and the access token if available.
+    ///
+    /// - Throws: ``TootSDKError/requiredURLNotSet`` if the request does not have a URL set.
     internal func webSocketTask(_ req: HTTPRequestBuilder) throws -> URLSessionWebSocketTask {
         if req.headers.index(forKey: "User-Agent") == nil {
             req.headers["User-Agent"] = "TootSDK"

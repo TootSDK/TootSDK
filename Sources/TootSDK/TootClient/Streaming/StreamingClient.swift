@@ -121,7 +121,7 @@ public actor StreamingClient {
         
         // Close connection when finished.
         defer {
-            socket.webSocketTask.cancel(with: .normalClosure, reason: nil)
+            socket.close(with: .normalClosure)
             self.connection = nil
         }
         
