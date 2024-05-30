@@ -7,6 +7,10 @@
 
 import Foundation
 
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
 /// Encapsulates a WebSocket connection to a server for streaming timeline updates.
 public class TootSocket {
     /// The underlying WebSocket task.
