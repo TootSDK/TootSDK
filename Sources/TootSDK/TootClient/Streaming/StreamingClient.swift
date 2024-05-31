@@ -90,6 +90,8 @@ public actor StreamingClient {
     ///   - bufferingPolicy: A `Continuation.BufferingPolicy` value to set the stream’s buffering behavior. By default, the stream buffers an unlimited number of elements. You can also set the policy to buffer a specified number of oldest or newest elements.
     ///
     /// - Returns: An `AsyncThrowingStream` of ``Event`` values for connection status changes and events received from the server. This stream throws an error if the connection irrecoverably ends.
+    ///
+    /// - Throws: ``TootSDKError/clientDeinited`` if there is no ``TootClient`` instance available to start a connection on.
     public func subscribe(to timeline: StreamingTimeline, bufferingPolicy: Stream.Continuation.BufferingPolicy = .unbounded) async throws -> Stream {
         // Check if we are already subscribed to this timeline
         let isAlreadySubscribed: Bool
@@ -114,7 +116,8 @@ public actor StreamingClient {
         // If there is an existing connection and we are not already subscribed, send subscribe request. Otherwise, attempt to start a connection if necessary.
         if let connection {
             if !isAlreadySubscribed {
-                try await connection.sendQuery(.init(.subscribe, timeline: timeline))
+                try? await connection.sendQuery(.init(.subscribe, timeline: timeline))
+                // We can ignore any error here because the next connection attempt in `maintainConnection()` will resend the subscribe request if this one fails.
             }
         } else if connectionTask?.isCancelled ?? true {
             // if there is not an existing connection task or the existing task is cancelled, start a new connection
