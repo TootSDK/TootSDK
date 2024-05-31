@@ -110,6 +110,7 @@ extension TootClient {
     /// > Throws:
     /// > - ``TootSDKError/streamingUnsupported`` if the server does not provide a valid URL for the streaming endpoint.
     /// > - ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive.
+    /// > - ``TootSDKError/unsupportedFlavour(current:required:)`` if TootSDK doesn't support streaming to the instance flavour.
     public func beginStreaming() async throws -> TootSocket {
         try requireFeature(.streaming)
         

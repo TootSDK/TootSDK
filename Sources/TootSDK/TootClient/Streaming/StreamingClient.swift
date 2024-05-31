@@ -232,6 +232,9 @@ public actor StreamingClient {
             } catch is CancellationError {
                 // if the task is cancelled, end the loop without trying again
                 return
+            } catch TootSDKError.unsupportedFlavour(current: _, required: _), TootSDKError.streamingUnsupported {
+                // If the instance flavour is unsupported or the instance doesn't provide a streaming API URL, don't retry
+                return
             } catch {
                 // if there is any other error, continue to the next iteration of the retry loop
                 continue
