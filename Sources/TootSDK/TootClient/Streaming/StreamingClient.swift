@@ -9,7 +9,7 @@ import Foundation
 
 /// Automatically attempts to maintain a WebSocket connection to the server, allows any number of consumers to subscribe to any number of ``StreamingTimeline`` over the socket. Handles connection issues in a way that is as transparent to subscribers as possible.
 ///
-/// To get server-sent events for a timeline, call ``subscribe(to:)`` to get an AsyncStream of ``StreamingClient/Event`` corresponding to that timeline. When finished, simply cancel the task. The client will automatically send the server an unsubscribe request when all tasks requesting a particular timeline have been cancelled.
+/// To get server-sent events for a timeline, call ``subscribe(to:)`` to get an AsyncThrowingStream of ``StreamingClient/Event`` corresponding to that timeline. When finished, simply cancel the task. The client will automatically send the server an unsubscribe request when all tasks requesting a particular timeline have been cancelled.
 ///
 /// The WebSocket connection will remain open even after all subscriptions have ended, allowing the same connection to be reused for future subscriptions. If you do not want the connection to remain open, you must either call ``disconnect()`` or dispose of the ``StreamingClient`` instance.
 ///
@@ -34,7 +34,7 @@ public actor StreamingClient {
         case receivedEvent(EventContent)
     }
     
-    public typealias Stream = AsyncStream<Event>
+    public typealias Stream = AsyncThrowingStream<Event, Error>
     
     internal class Subscriber: Hashable, Identifiable {
         static func == (lhs: StreamingClient.Subscriber, rhs: StreamingClient.Subscriber) -> Bool {
@@ -88,7 +88,8 @@ public actor StreamingClient {
     /// - Parameters:
     ///   - timeline: A ``StreamingTimeline`` to receive events for.
     ///   - bufferingPolicy: A `Continuation.BufferingPolicy` value to set the stream’s buffering behavior. By default, the stream buffers an unlimited number of elements. You can also set the policy to buffer a specified number of oldest or newest elements.
-    /// - Returns: An `AsyncStream` of ``Event`` values for connection status changes and events received from the server.
+    ///
+    /// - Returns: An `AsyncThrowingStream` of ``Event`` values for connection status changes and events received from the server. This stream throws an error if the connection irrecoverably ends.
     public func subscribe(to timeline: StreamingTimeline, bufferingPolicy: Stream.Continuation.BufferingPolicy = .unbounded) async throws -> Stream {
         // Check if we are already subscribed to this timeline
         let isAlreadySubscribed: Bool
@@ -141,6 +142,13 @@ public actor StreamingClient {
         let relevantSubscribers = subscribers.filter({ $0.timeline == event.timeline })
         for subscriber in relevantSubscribers {
             subscriber.continuation.yield(.receivedEvent(event.event))
+        }
+    }
+    
+    /// Cause all subscribers' streams to end by throwing the given error.
+    private func throwToSubscribers(_ error: Error) {
+        for subscriber in subscribers {
+            subscriber.continuation.finish(throwing: error)
         }
     }
     
@@ -209,11 +217,12 @@ public actor StreamingClient {
     
     /// Attempt to maintain a connection over time, retrying up to the limit specified by `maxRetries` if the connection is unsuccessful, and backing off exponentially between subsequent retires.
     private func maintainConnection(client: TootClient) async throws {
-        // When finished for any reason, end the stream for all subscribers
+        // When finished for any reason, end the stream for all subscribers, and discard all subscribers since their stream continuations are no longer usable.
         defer {
             for subscriber in subscribers {
                 subscriber.continuation.finish()
             }
+            subscribers.removeAll()
         }
         
         unsuccessfulConnectionAttempts = 0
@@ -232,11 +241,21 @@ public actor StreamingClient {
             } catch is CancellationError {
                 // if the task is cancelled, end the loop without trying again
                 return
-            } catch TootSDKError.unsupportedFlavour(current: _, required: _), TootSDKError.streamingUnsupported {
-                // If the instance flavour is unsupported or the instance doesn't provide a streaming API URL, don't retry
+            } catch TootSDKError.unsupportedFlavour(let current, let required) {
+                // If the instance flavour is unsupported, don't retry.
+                throwToSubscribers(TootSDKError.unsupportedFlavour(current: current, required: required))
+                return
+            } catch TootSDKError.streamingUnsupported {
+                // If the instance doesn't provide a streaming URL, don't retry.
+                throwToSubscribers(TootSDKError.streamingUnsupported)
                 return
             } catch {
-                // if there is any other error, continue to the next iteration of the retry loop
+                // if there is any other error, continue to the next iteration of the retry loop, or throw it to all subscriber streams if there are no more retries left
+                if unsuccessfulConnectionAttempts >= maxRetries {
+                    throwToSubscribers(TootSDKError.streamingClientReachedMaxRetries(lastFailureReason: error.localizedDescription))
+                } else if totalConnectionAttempts >= maxConnectionAttempts {
+                    throwToSubscribers(TootSDKError.streamingClientReachedMaxConnectionAttempts(lastFailureReason: error.localizedDescription))
+                }
                 continue
             }
         } while unsuccessfulConnectionAttempts < maxRetries &&
