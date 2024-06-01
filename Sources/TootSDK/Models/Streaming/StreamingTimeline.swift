@@ -38,7 +38,7 @@ public enum StreamingTimeline: Equatable, Sendable, Hashable {
 }
 
 extension StreamingTimeline: RawRepresentable {
-    typealias rawValue = [String]
+    public typealias RawValue = [String]
 
     public init?(rawValue: [String]) {
         switch rawValue.first {
