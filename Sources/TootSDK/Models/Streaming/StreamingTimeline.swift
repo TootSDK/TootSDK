@@ -39,7 +39,7 @@ public enum StreamingTimeline: Equatable, Sendable, Hashable {
 
 extension StreamingTimeline: RawRepresentable {
     typealias rawValue = [String]
-    
+
     public init?(rawValue: [String]) {
         switch rawValue.first {
         case "public": self = .publicTimeline
@@ -63,7 +63,7 @@ extension StreamingTimeline: RawRepresentable {
         default: return nil
         }
     }
-    
+
     public var rawValue: [String] {
         switch self {
         case .publicTimeline: ["public"]

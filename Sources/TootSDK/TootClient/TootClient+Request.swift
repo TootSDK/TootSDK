@@ -16,7 +16,7 @@ extension TootClient {
         }
         return url
     }
-    
+
     internal func getURL(base: URL, appendingComponents components: [String]) -> URL {
         var url = base
         for component in components {

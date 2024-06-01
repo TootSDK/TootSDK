@@ -1,6 +1,6 @@
 //
 //  StreamingEvent.swift
-//  
+//
 //
 //  Created by Dale Price on 5/23/24.
 //
@@ -13,7 +13,7 @@ public struct StreamingEvent: Sendable {
     var timeline: StreamingTimeline
     /// The content of the event.
     var event: EventContent
-    
+
     enum CodingKeys: String, CodingKey {
         case stream
         case event
@@ -28,7 +28,7 @@ extension StreamingEvent: Decodable {
             throw TootSDKError.decodingError("timeline")
         }
         self.timeline = timeline
-        
+
         let eventName = try values.decode(String.self, forKey: .event)
         let payload = try values.decodeIfPresent(String.self, forKey: .payload)
         guard let event = EventContent(eventName, payload: payload) else {

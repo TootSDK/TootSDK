@@ -13,7 +13,7 @@ public struct StreamQuery: Codable, Sendable, Equatable {
         case subscribe = "subscribe"
         case unsubscribe = "unsubscribe"
     }
-    
+
     /// The type of action we wish to perform.
     var type: Action
     /// The timeline to watch for events.
@@ -22,14 +22,14 @@ public struct StreamQuery: Codable, Sendable, Equatable {
     var list: String?
     /// When ``stream`` is set to `hashtag` or `hashtag:local`, specifies the hashtag name.
     var tag: String?
-    
+
     internal init(type: Action, stream: String, list: String? = nil, tag: String? = nil) {
         self.type = type
         self.stream = stream
         self.list = list
         self.tag = tag
     }
-    
+
     public init(_ action: Action, timeline: StreamingTimeline) {
         self.type = action
         let streamParams = timeline.rawValue

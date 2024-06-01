@@ -34,7 +34,7 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case clientDeinited
     case streamingClientReachedMaxRetries(lastFailureReason: String)
     case streamingClientReachedMaxConnectionAttempts(lastFailureReason: String)
-    
+
     public var errorDescription: String? {
         switch self {
         case .decodingError(let description):

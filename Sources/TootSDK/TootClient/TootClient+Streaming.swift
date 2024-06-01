@@ -8,7 +8,7 @@
 import Foundation
 
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 /// Encapsulates a WebSocket connection to a server for streaming timeline updates.
@@ -17,7 +17,7 @@ public class TootSocket {
     private let webSocketTask: URLSessionWebSocketTask
     private let encoder = TootEncoder()
     private let decoder = TootDecoder()
-    
+
     /// Async throwing stream of all ``StreamingEvent``s sent by the server.
     ///
     /// > Throws:
@@ -27,20 +27,21 @@ public class TootSocket {
     public lazy var stream: AsyncThrowingStream<StreamingEvent, Error> = {
         AsyncThrowingStream<StreamingEvent, Error> { [webSocketTask, decoder] in
             let message = try await webSocketTask.receive()
-            let data = switch message {
-            case .data(let data):
-                data
-            case .string(let string):
-                string.data(using: .utf8)
-            @unknown default:
-                throw TootSDKError.decodingError("message")
-            }
+            let data =
+                switch message {
+                case .data(let data):
+                    data
+                case .string(let string):
+                    string.data(using: .utf8)
+                @unknown default:
+                    throw TootSDKError.decodingError("message")
+                }
             guard let data else { throw TootSDKError.decodingError("message data") }
-            
+
             return try decoder.decode(StreamingEvent.self, from: data)
         }
     }()
-    
+
     /// Send a JSON-encoded request to subscribe to or unsubscribe from a streaming timeline.
     ///
     /// - Parameter query: The request to subscribe or unsubscribe to a particular streaming timeline.
@@ -55,7 +56,7 @@ public class TootSocket {
         }
         try await webSocketTask.send(.string(encodedString))
     }
-    
+
     /// Send a ping to the streaming server asynchronously. Returns when a pong is received back from the server.
     ///
     /// If called multiple times, returns in the order that it was called.
@@ -72,7 +73,7 @@ public class TootSocket {
             }
         }
     }
-    
+
     /// Close the connection.
     /// - Parameters:
     ///   - closeCode: The reason for closing the connection.
@@ -81,12 +82,12 @@ public class TootSocket {
             webSocketTask.cancel(with: closeCode, reason: nil)
         }
     }
-    
+
     internal init(webSocketTask: URLSessionWebSocketTask) {
         self.webSocketTask = webSocketTask
         self.webSocketTask.resume()
     }
-    
+
     deinit {
         close(with: .normalClosure)
     }
@@ -113,28 +114,29 @@ extension TootClient {
     /// > - ``TootSDKError/unsupportedFlavour(current:required:)`` if TootSDK doesn't support streaming to the instance flavour.
     public func beginStreaming() async throws -> TootSocket {
         try requireFeature(.streaming)
-        
+
         // get streaming endpoint URL from instance info
         async let streamingEndpoint = getInstanceInfo().urls?.streamingApi
         async let streamingHealthy = getStreamingHealth()
-        
+
         guard let streamingEndpoint = try await streamingEndpoint,
-              let streamingURL = URL(string: streamingEndpoint) else {
+            let streamingURL = URL(string: streamingEndpoint)
+        else {
             throw TootSDKError.streamingUnsupported
         }
         guard try await streamingHealthy else {
             throw TootSDKError.streamingEndpointUnhealthy
         }
-        
+
         let req = HTTPRequestBuilder {
             $0.url = getURL(base: streamingURL, appendingComponents: ["api", "v1", "streaming"])
         }
-        
+
         let task = try webSocketTask(req)
-        
+
         return TootSocket(webSocketTask: task)
     }
-    
+
     /// Check whether the streaming endpoint is alive.
     ///
     /// - Returns: `true` if the server returns HTTP status code `200`, indicating that the streaming endpoint is alive.
@@ -146,7 +148,7 @@ extension TootClient {
         let (_, response) = try await fetch(req: req)
         return response.statusCode == 200
     }
-    
+
     /// Creates a web socket task with the given query items, and the access token if the client is authenticated.
     ///
     /// Analogous to `TootClient.fetch(req:)`, but for a WebSocket connection.
@@ -161,19 +163,19 @@ extension TootClient {
         if req.headers.index(forKey: "User-Agent") == nil {
             req.headers["User-Agent"] = "TootSDK"
         }
-        
+
         if let accessToken {
             // This is undocumented, but the Mastodon streaming API allows passing the access token using the protocol header.
             // This is slightly more secure than the documented method of putting the access token in plain text in the query string.
             req.headers["Sec-WebSocket-Protocol"] = accessToken
         }
-        
+
         return session.webSocketTask(with: try req.build())
     }
 }
 
 extension TootFeature {
-    
+
     /// Ability to stream incoming events via WebSocket
     ///
     public static let streaming = TootFeature(supportedFlavours: [.mastodon, .pleroma, .akkoma])
