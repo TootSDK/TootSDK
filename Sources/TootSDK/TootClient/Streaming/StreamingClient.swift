@@ -234,7 +234,7 @@ public actor StreamingClient {
             // exponential backoff after multiple failed connection attempts
             if unsuccessfulConnectionAttempts > 0 {
                 let waitSeconds = 2 ^ unsuccessfulConnectionAttempts
-                try await Task.sleep(nanoseconds: 32_000_000_000 * UInt64(waitSeconds))
+                try await Task.sleep(nanoseconds: 1_000_000_000 * UInt64(waitSeconds))
             }
 
             unsuccessfulConnectionAttempts += 1
