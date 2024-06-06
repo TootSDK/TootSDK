@@ -26,19 +26,26 @@ public class TootSocket {
     /// > - `CancellationError` if the containing task has been cancelled while waiting for a message.
     public lazy var stream: AsyncThrowingStream<StreamingEvent, Error> = {
         AsyncThrowingStream<StreamingEvent, Error> { [webSocketTask, decoder] in
-            let message = try await webSocketTask.receive()
-            let data =
-                switch message {
-                case .data(let data):
-                    data
-                case .string(let string):
-                    string.data(using: .utf8)
-                @unknown default:
-                    throw TootSDKError.decodingError("message")
-                }
-            guard let data else { throw TootSDKError.decodingError("message data") }
+            do {
+                let message = try await webSocketTask.receive()
+                let data =
+                    switch message {
+                    case .data(let data):
+                        data
+                    case .string(let string):
+                        string.data(using: .utf8)
+                    @unknown default:
+                        throw TootSDKError.decodingError("message")
+                    }
+                guard let data else { throw TootSDKError.decodingError("message data") }
 
-            return try decoder.decode(StreamingEvent.self, from: data)
+                return try decoder.decode(StreamingEvent.self, from: data)
+            } catch {
+                // URLSessionWebSocketTask.receive() doesn't respond to Task cancellation, so we need to check if the task has already been cancelled at the time that it throws any error.
+                try Task.checkCancellation()
+                // Only throw the underlying error if the task has not been cancelled.
+                throw error
+            }
         }
     }()
 
@@ -132,7 +139,7 @@ extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(base: streamingURL, appendingComponents: ["api", "v1", "streaming"])
         }
-        
+
         try Task.checkCancellation()
         let task = try webSocketTask(req)
 

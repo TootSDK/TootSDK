@@ -80,7 +80,7 @@ public actor StreamingClient {
     /// The total number of connection attmepts that have been made, including successful ones.
     private var totalConnectionAttempts = 0
     weak private var client: TootClient?
-    
+
     #if canImport(OSLog)
         static private let logger = Logger(subsystem: "TootSDK", category: "StreamingClient")
     #endif
@@ -145,6 +145,7 @@ public actor StreamingClient {
     fileprivate func unsubscribe(_ subscriber: Subscriber) async throws {
         subscribers.remove(subscriber)
 
+        try Task.checkCancellation()
         // If the last subscriber is unsubscribing from this timeline and there is an active connection, send unsubscribe to server
         if !subscribers.contains(where: { $0.timeline == subscriber.timeline }) {
             #if canImport(OSLog)
@@ -176,6 +177,12 @@ public actor StreamingClient {
                 Self.logger.info("`disconnect()` called, cancelling current streaming connection task.")
             #endif
             connectionTask.cancel()
+            self.connection = nil
+            self.isConnectionUp = false
+            // notify subscribers that the connection has closed
+            for subscriber in subscribers {
+                subscriber.continuation.yield(.connectionDown)
+            }
             self.connectionTask = nil
         }
     }
@@ -186,11 +193,12 @@ public actor StreamingClient {
     private func startConnection(client: TootClient) {
         guard connectionTask?.isCancelled ?? true else {
             #if canImport(OSLog)
-                Self.logger.warning("`startConnection(client:)` called but there is already an active connection task. Leaving existing connection task in place.")
+                Self.logger.warning(
+                    "`startConnection(client:)` called but there is already an active connection task. Leaving existing connection task in place.")
             #endif
             return
         }
-        
+
         #if canImport(OSLog)
             Self.logger.notice("Starting new streaming connection task.")
         #endif
@@ -215,45 +223,53 @@ public actor StreamingClient {
                 Self.logger.info("Streaming connection ended.")
             #endif
             socket.close(with: .normalClosure)
-            self.connection = nil
-            self.isConnectionUp = false
-            // notify subscribers that the connection has closed
-            for subscriber in subscribers {
-                subscriber.continuation.yield(.connectionDown)
+            if self.connection === socket {
+                self.connection = nil
+                self.isConnectionUp = false
+                // notify subscribers that the connection has closed
+                for subscriber in subscribers {
+                    subscriber.continuation.yield(.connectionDown)
+                }
             }
         }
 
-        // Send subscription request for the timelines of existing subscribers
-        let subscribedTimelines = Set(subscribers.map({ $0.timeline }))
-        #if canImport(OSLog)
-        Self.logger.debug("Sending subscribe queries for \(subscribedTimelines.count) timelines on behalf of existing subscribers.")
-        #endif
-        for subscription in subscribedTimelines {
-            try await socket.sendQuery(.init(.subscribe, timeline: subscription))
-        }
-
-        // If we haven't sent any subscription requests, send a ping to the server to verify that the connection is alive.
-        if subscribedTimelines.isEmpty {
-            try await socket.sendPing()
-        }
-        
-        #if canImport(OSLog)
-            Self.logger.info("Streaming connection opened successfully.")
-        #endif
-
-        unsuccessfulConnectionAttempts = 0
-
-        // Notify subscribers that the connection is up and we are listening for events
-        self.isConnectionUp = true
-        for subscriber in subscribers {
-            subscriber.continuation.yield(.connectionUp)
-        }
-
-        for try await event in socket.stream {
+        try await withTaskCancellationHandler {
+            // Send subscription request for the timelines of existing subscribers
+            let subscribedTimelines = Set(subscribers.map({ $0.timeline }))
             #if canImport(OSLog)
-                Self.logger.debug("Received streaming event for timeline \(event.timeline.rawValue).")
+                Self.logger.debug("Sending subscribe queries for \(subscribedTimelines.count) timelines on behalf of existing subscribers.")
             #endif
-            distributeToSubscribers(event)
+            for subscription in subscribedTimelines {
+                try Task.checkCancellation()
+                try await socket.sendQuery(.init(.subscribe, timeline: subscription))
+            }
+
+            // If we haven't sent any subscription requests, send a ping to the server to verify that the connection is alive.
+            if subscribedTimelines.isEmpty {
+                try Task.checkCancellation()
+                try await socket.sendPing()
+            }
+
+            #if canImport(OSLog)
+                Self.logger.info("Streaming connection opened successfully.")
+            #endif
+
+            unsuccessfulConnectionAttempts = 0
+
+            // Notify subscribers that the connection is up and we are listening for events
+            self.isConnectionUp = true
+            for subscriber in subscribers {
+                subscriber.continuation.yield(.connectionUp)
+            }
+
+            for try await event in socket.stream {
+                #if canImport(OSLog)
+                    Self.logger.debug("Received streaming event for timeline \(event.timeline.rawValue).")
+                #endif
+                distributeToSubscribers(event)
+            }
+        } onCancel: {
+            socket.close(with: .normalClosure)
         }
     }
 
@@ -278,9 +294,11 @@ public actor StreamingClient {
                 #endif
                 try await Task.sleep(nanoseconds: 1_000_000_000 * UInt64(waitSeconds))
             }
-            
+
             #if canImport(OSLog)
-                Self.logger.notice("Attempting streaming connection. Failed attempts: \(self.unsuccessfulConnectionAttempts, align: .right(columns: 2))/\(self.maxRetries), Total attempts: \(self.totalConnectionAttempts, align: .right(columns: 2))/\(self.maxConnectionAttempts)")
+                Self.logger.notice(
+                    "Attempting streaming connection. Failed attempts: \(self.unsuccessfulConnectionAttempts, align: .right(columns: 2))/\(self.maxRetries), Total attempts: \(self.totalConnectionAttempts, align: .right(columns: 2))/\(self.maxConnectionAttempts)"
+                )
             #endif
 
             unsuccessfulConnectionAttempts += 1
@@ -320,7 +338,9 @@ public actor StreamingClient {
                     throwToSubscribers(TootSDKError.streamingClientReachedMaxRetries(lastFailureReason: error.localizedDescription))
                 } else if totalConnectionAttempts >= maxConnectionAttempts {
                     #if canImport(OSLog)
-                        Self.logger.notice("Reached limit for streaming connection attempts (\(self.maxConnectionAttempts)), will not automatically attempt to reconnect.")
+                        Self.logger.notice(
+                            "Reached limit for streaming connection attempts (\(self.maxConnectionAttempts)), will not automatically attempt to reconnect."
+                        )
                     #endif
                     throwToSubscribers(TootSDKError.streamingClientReachedMaxConnectionAttempts(lastFailureReason: error.localizedDescription))
                 }
