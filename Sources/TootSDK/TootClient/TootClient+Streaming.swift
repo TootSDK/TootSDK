@@ -17,6 +17,7 @@ public class TootSocket {
     private let webSocketTask: URLSessionWebSocketTask
     private let encoder = TootEncoder()
     private let decoder = TootDecoder()
+    public private(set) var isClosed = false
 
     /// Async throwing stream of all ``StreamingEvent``s sent by the server.
     ///
@@ -85,9 +86,13 @@ public class TootSocket {
     /// - Parameters:
     ///   - closeCode: The reason for closing the connection.
     public func close(with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) {
+        guard !isClosed else {
+            return
+        }
         if webSocketTask.closeCode == .invalid {
             webSocketTask.cancel(with: closeCode, reason: nil)
         }
+        isClosed = true
     }
 
     internal init(webSocketTask: URLSessionWebSocketTask) {
