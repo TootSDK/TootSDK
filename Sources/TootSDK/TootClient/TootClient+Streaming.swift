@@ -112,6 +112,7 @@ extension TootClient {
     /// > - ``TootSDKError/streamingUnsupported`` if the server does not provide a valid URL for the streaming endpoint.
     /// > - ``TootSDKError/streamingEndpointUnhealthy`` if the server does not affirm that the streaming API is alive.
     /// > - ``TootSDKError/unsupportedFlavour(current:required:)`` if TootSDK doesn't support streaming to the instance flavour.
+    /// > - `CancellationError` if the task is cancelled prior to creating the socket.
     public func beginStreaming() async throws -> TootSocket {
         try requireFeature(.streaming)
 
@@ -131,7 +132,8 @@ extension TootClient {
         let req = HTTPRequestBuilder {
             $0.url = getURL(base: streamingURL, appendingComponents: ["api", "v1", "streaming"])
         }
-
+        
+        try Task.checkCancellation()
         let task = try webSocketTask(req)
 
         return TootSocket(webSocketTask: task)

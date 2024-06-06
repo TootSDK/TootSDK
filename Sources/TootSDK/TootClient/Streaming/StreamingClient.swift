@@ -7,6 +7,10 @@
 
 import Foundation
 
+#if canImport(OSLog)
+    import OSLog
+#endif
+
 /// Automatically attempts to maintain a WebSocket connection to the server, allows any number of consumers to subscribe to any number of ``StreamingTimeline`` over the socket. Handles connection issues in a way that is as transparent to subscribers as possible.
 ///
 /// To get server-sent events for a timeline, call ``subscribe(to:)`` to get an AsyncThrowingStream of ``StreamingClient/Event`` corresponding to that timeline. When finished, simply cancel the task. The client will automatically send the server an unsubscribe request when all tasks requesting a particular timeline have been cancelled.
@@ -76,6 +80,10 @@ public actor StreamingClient {
     /// The total number of connection attmepts that have been made, including successful ones.
     private var totalConnectionAttempts = 0
     weak private var client: TootClient?
+    
+    #if canImport(OSLog)
+        static private let logger = Logger(subsystem: "TootSDK", category: "StreamingClient")
+    #endif
 
     internal init(client: TootClient) {
         self.client = client
@@ -116,6 +124,9 @@ public actor StreamingClient {
         // If there is an existing connection and we are not already subscribed, send subscribe request. Otherwise, attempt to start a connection if necessary.
         if let connection {
             if !isAlreadySubscribed {
+                #if canImport(OSLog)
+                    Self.logger.debug("Sending subscribe query for new subscriber to timeline \(timeline.rawValue).")
+                #endif
                 try? await connection.sendQuery(.init(.subscribe, timeline: timeline))
                 // We can ignore any error here because the next connection attempt in `maintainConnection()` will resend the subscribe request if this one fails.
             }
@@ -136,6 +147,9 @@ public actor StreamingClient {
 
         // If the last subscriber is unsubscribing from this timeline and there is an active connection, send unsubscribe to server
         if !subscribers.contains(where: { $0.timeline == subscriber.timeline }) {
+            #if canImport(OSLog)
+                Self.logger.debug("Sending unsubscribe query for timeline \(subscriber.timeline.rawValue) because last subscriber unsubscribed.")
+            #endif
             try await connection?.sendQuery(.init(.unsubscribe, timeline: subscriber.timeline))
         }
     }
@@ -158,6 +172,9 @@ public actor StreamingClient {
     /// End the active connection if there is one, and end all subscribed streams.
     public func disconnect() {
         if let connectionTask {
+            #if canImport(OSLog)
+                Self.logger.info("`disconnect()` called, cancelling current streaming connection task.")
+            #endif
             connectionTask.cancel()
             self.connectionTask = nil
         }
@@ -168,9 +185,15 @@ public actor StreamingClient {
     /// When the connection is successfully opened, will send subscribe requests for any existing subscribers.
     private func startConnection(client: TootClient) {
         guard connectionTask?.isCancelled ?? true else {
+            #if canImport(OSLog)
+                Self.logger.warning("`startConnection(client:)` called but there is already an active connection task. Leaving existing connection task in place.")
+            #endif
             return
         }
-
+        
+        #if canImport(OSLog)
+            Self.logger.notice("Starting new streaming connection task.")
+        #endif
         self.connectionTask = Task.detached { [weak self] in
             try await self?.maintainConnection(client: client)
         }
@@ -180,11 +203,17 @@ public actor StreamingClient {
     ///
     /// Sets `connection` to the active ``TootSocket`` instance for the duration of the connection, then sets `connection` to nil when the connection ends.
     private func connectAndReceiveEvents(client: TootClient) async throws {
+        #if canImport(OSLog)
+            Self.logger.info("Opening streaming connection.")
+        #endif
         let socket = try await client.beginStreaming()
         self.connection = socket
 
         // Close socket when finished.
         defer {
+            #if canImport(OSLog)
+                Self.logger.info("Streaming connection ended.")
+            #endif
             socket.close(with: .normalClosure)
             self.connection = nil
             self.isConnectionUp = false
@@ -196,6 +225,9 @@ public actor StreamingClient {
 
         // Send subscription request for the timelines of existing subscribers
         let subscribedTimelines = Set(subscribers.map({ $0.timeline }))
+        #if canImport(OSLog)
+        Self.logger.debug("Sending subscribe queries for \(subscribedTimelines.count) timelines on behalf of existing subscribers.")
+        #endif
         for subscription in subscribedTimelines {
             try await socket.sendQuery(.init(.subscribe, timeline: subscription))
         }
@@ -204,6 +236,10 @@ public actor StreamingClient {
         if subscribedTimelines.isEmpty {
             try await socket.sendPing()
         }
+        
+        #if canImport(OSLog)
+            Self.logger.info("Streaming connection opened successfully.")
+        #endif
 
         unsuccessfulConnectionAttempts = 0
 
@@ -214,6 +250,9 @@ public actor StreamingClient {
         }
 
         for try await event in socket.stream {
+            #if canImport(OSLog)
+                Self.logger.debug("Received streaming event for timeline \(event.timeline.rawValue).")
+            #endif
             distributeToSubscribers(event)
         }
     }
@@ -234,8 +273,15 @@ public actor StreamingClient {
             // exponential backoff after multiple failed connection attempts
             if unsuccessfulConnectionAttempts > 0 {
                 let waitSeconds = 2 ^ unsuccessfulConnectionAttempts
+                #if canImport(OSLog)
+                    Self.logger.notice("Waiting \(waitSeconds) seconds to retry streaming connection.")
+                #endif
                 try await Task.sleep(nanoseconds: 1_000_000_000 * UInt64(waitSeconds))
             }
+            
+            #if canImport(OSLog)
+                Self.logger.notice("Attempting streaming connection. Failed attempts: \(self.unsuccessfulConnectionAttempts, align: .right(columns: 2))/\(self.maxRetries), Total attempts: \(self.totalConnectionAttempts, align: .right(columns: 2))/\(self.maxConnectionAttempts)")
+            #endif
 
             unsuccessfulConnectionAttempts += 1
             totalConnectionAttempts += 1
@@ -244,20 +290,38 @@ public actor StreamingClient {
                 try await connectAndReceiveEvents(client: client)
             } catch is CancellationError {
                 // if the task is cancelled, end the loop without trying again
+                #if canImport(OSLog)
+                    Self.logger.notice("Streaming connection cancelled.")
+                #endif
                 return
             } catch TootSDKError.unsupportedFlavour(let current, let required) {
                 // If the instance flavour is unsupported, don't retry.
+                #if canImport(OSLog)
+                    Self.logger.notice("Instance flavour '\(current.rawValue)' does not support streaming.")
+                #endif
                 throwToSubscribers(TootSDKError.unsupportedFlavour(current: current, required: required))
                 return
             } catch TootSDKError.streamingUnsupported {
                 // If the instance doesn't provide a streaming URL, don't retry.
+                #if canImport(OSLog)
+                    Self.logger.notice("Instance does not provide a valid URL for its streaming API.")
+                #endif
                 throwToSubscribers(TootSDKError.streamingUnsupported)
                 return
             } catch {
                 // if there is any other error, continue to the next iteration of the retry loop, or throw it to all subscriber streams if there are no more retries left
+                #if canImport(OSLog)
+                    Self.logger.notice("Streaming connection threw error: \(error.localizedDescription)")
+                #endif
                 if unsuccessfulConnectionAttempts >= maxRetries {
+                    #if canImport(OSLog)
+                        Self.logger.notice("Reached streaming retry limit (\(self.maxRetries)), will not automatically attempt to reconnect.")
+                    #endif
                     throwToSubscribers(TootSDKError.streamingClientReachedMaxRetries(lastFailureReason: error.localizedDescription))
                 } else if totalConnectionAttempts >= maxConnectionAttempts {
+                    #if canImport(OSLog)
+                        Self.logger.notice("Reached limit for streaming connection attempts (\(self.maxConnectionAttempts)), will not automatically attempt to reconnect.")
+                    #endif
                     throwToSubscribers(TootSDKError.streamingClientReachedMaxConnectionAttempts(lastFailureReason: error.localizedDescription))
                 }
                 continue
