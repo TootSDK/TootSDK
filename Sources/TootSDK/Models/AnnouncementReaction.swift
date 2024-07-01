@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents an emoji reaction to an Announcement.
-public struct AnnouncementReaction: Codable, Hashable {
+public struct AnnouncementReaction: Codable, Hashable, Sendable {
     public init(name: String, count: Int, me: Bool, url: String? = nil, staticUrl: String? = nil) {
         self.name = name
         self.count = count
