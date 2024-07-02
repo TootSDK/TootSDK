@@ -4,7 +4,7 @@
 import Foundation
 
 public struct Filter: Codable, Hashable, Identifiable {
-    public enum Context: String, Codable {
+    public enum Context: String, Codable, Sendable {
         /// home timeline and lists
         case home
         /// notifications timeline
@@ -17,7 +17,7 @@ public struct Filter: Codable, Hashable, Identifiable {
         case account
     }
 
-    public enum Action: String, Codable {
+    public enum Action: String, Codable, Sendable {
         /// show a warning that identifies the matching filter by title, and allow the user to expand the filtered post. This is the default (and unknown values should be treated as equivalent to warn).
         case warn
         /// do not show this post if it is received

@@ -62,6 +62,21 @@ extension TootClient {
         }
         return try await fetch(Filter.self, req)
     }
+    
+    /// Update a filter.
+    ///
+    /// - Parameter params: Parameters of filter update.
+    /// - Returns: The updated filter.
+    @discardableResult
+    public func updateFilter(_ params: UpdateFilterParams) async throws -> Filter {
+        try requireFeature(.filtersV2)
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v2", "filters", params.id])
+            $0.method = .put
+            $0.body = try .form(queryItems: params.queryItems)
+        }
+        return try await fetch(Filter.self, req)
+    }
 }
 
 extension TootFeature {

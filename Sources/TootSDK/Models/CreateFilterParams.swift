@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Parameters to create a new filter
+/// Parameters to create a new filter.
 public struct CreateFilterParams: Sendable {
     let title: String
     let context: Set<Filter.Context>
@@ -38,7 +38,7 @@ public struct CreateFilterParams: Sendable {
     }
     
     /// Keyword added to created filter.
-    public struct Keyword {
+    public struct Keyword: Sendable {
         let keyword: String
         let wholeWord: Bool
         
