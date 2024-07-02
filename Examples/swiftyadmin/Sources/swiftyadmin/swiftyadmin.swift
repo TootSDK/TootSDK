@@ -44,5 +44,8 @@ struct SwiftyAdmin: AsyncParsableCommand {
             GetPushSubscription.self,
             DeletePushSubscription.self,
             FollowAccount.self,
+            GetFilters.self,
+            CreateFilter.self,
+            UpdateFilter.self,
         ])
 }
