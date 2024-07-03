@@ -8,16 +8,25 @@
 import Foundation
 
 /// Parameters to update an existing filter.
-public struct UpdateFilterParams: Sendable {
-    let id: String
-    let title: String?
-    let context: Set<Filter.Context>?
-    let action: Filter.Action?
-    let expiry: Expiry?
-    let keywords: [KeywordChange]
-
-    public enum Expiry: Sendable {
+public struct UpdateFilterParams: Sendable, Hashable {
+    /// The id of filter to update.
+    public let id: String
+    /// New name for the filter.
+    public let title: String?
+    /// New contexts for the filter.
+    public let context: Set<Filter.Context>?
+    /// New action of the filter.
+    public let action: Filter.Action?
+    /// New expiry time of the filter.
+    public let expiry: Expiry?
+    /// Keyword changes to perform.
+    public let keywords: [KeywordChange]
+    
+    /// When a filter should expire.
+    public enum Expiry: Sendable, Hashable {
+        /// Filter does not expire.
         case never
+        /// Filter will expire in number of seconds.
         case seconds(Int)
     }
     
@@ -47,12 +56,16 @@ public struct UpdateFilterParams: Sendable {
     }
     
     /// Change to perform on a keyword.
-    public struct KeywordChange: Sendable {
-        let id: String?
-        let keyword: String?
-        let wholeWord: Bool?
-        let destroy: Bool
-        
+    public struct KeywordChange: Sendable, Hashable {
+        /// Id of keyword to delete. If `nil` a new keyword will be created.
+        public let id: String?
+        /// New keyword text.
+        public let keyword: String?
+        /// Whether the keyword should consider word boundaries.
+        public let wholeWord: Bool?
+        /// Whether the keyword should be deleted
+        public let destroy: Bool
+
         /// Delete a keyword with the given `id`.
         ///
         /// - Parameter id: Id of keyword to delete.
