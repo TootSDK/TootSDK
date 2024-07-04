@@ -47,7 +47,7 @@ extension TootClient {
         }
         _ = try await fetch(req: req)
     }
-    
+
     /// Create a filter.
     ///
     /// - Parameter params: Parameters of filter to create.
@@ -62,7 +62,7 @@ extension TootClient {
         }
         return try await fetch(Filter.self, req)
     }
-    
+
     /// Update a filter.
     ///
     /// - Parameter params: Parameters of filter update.

@@ -1,6 +1,6 @@
 //
 //  CreateFilterParams.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 01/07/2024.
 //
@@ -14,7 +14,7 @@ public struct CreateFilterParams: Sendable {
     let action: Filter.Action
     let expiresInSeconds: Int?
     let keywords: [Keyword]
-    
+
     /// Creates an object to create a new filter with.
     ///
     /// - Parameters:
@@ -36,12 +36,12 @@ public struct CreateFilterParams: Sendable {
         self.expiresInSeconds = expiresInSeconds
         self.keywords = keywords
     }
-    
+
     /// Keyword added to created filter.
     public struct Keyword: Sendable {
         let keyword: String
         let wholeWord: Bool
-        
+
         /// Creates a keyword for newly created filter.
         ///
         /// - Parameters:

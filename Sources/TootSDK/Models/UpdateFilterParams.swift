@@ -21,7 +21,7 @@ public struct UpdateFilterParams: Sendable, Hashable {
     public let expiry: Expiry?
     /// Keyword changes to perform.
     public let keywords: [KeywordChange]
-    
+
     /// When a filter should expire.
     public enum Expiry: Sendable, Hashable {
         /// Filter does not expire.
@@ -29,7 +29,7 @@ public struct UpdateFilterParams: Sendable, Hashable {
         /// Filter will expire in number of seconds.
         case seconds(Int)
     }
-    
+
     /// Creates an object to update an existing filter with.
     ///
     /// - Parameters:
@@ -54,7 +54,7 @@ public struct UpdateFilterParams: Sendable, Hashable {
         self.expiry = expiry
         self.keywords = keywords
     }
-    
+
     /// Change to perform on a keyword.
     public struct KeywordChange: Sendable, Hashable {
         /// Id of keyword to delete. If `nil` a new keyword will be created.
@@ -77,7 +77,7 @@ public struct UpdateFilterParams: Sendable, Hashable {
                 destroy: true
             )
         }
-        
+
         /// Change parameters of a keyword with the given `id`.
         ///
         /// - Parameters:
@@ -96,7 +96,7 @@ public struct UpdateFilterParams: Sendable, Hashable {
                 destroy: false
             )
         }
-        
+
         /// Add a new keyword.
         ///
         /// - Parameters:
