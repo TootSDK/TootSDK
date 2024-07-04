@@ -83,5 +83,5 @@ extension TootFeature {
 
     /// Ability to  view/edit/create filters.
     ///
-    public static let filtersV2 = TootFeature(supportedFlavours: [.mastodon])
+    public static let filtersV2 = TootFeature(supportedFlavours: [.mastodon, .goToSocial])
 }

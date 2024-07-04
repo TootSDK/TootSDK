@@ -192,5 +192,5 @@ extension TootFeature {
 
     /// Ability to stream incoming events via WebSocket
     ///
-    public static let streaming = TootFeature(supportedFlavours: [.mastodon, .pleroma, .akkoma])
+    public static let streaming = TootFeature(supportedFlavours: [.mastodon, .pleroma, .akkoma, .goToSocial])
 }

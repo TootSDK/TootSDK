@@ -273,5 +273,5 @@ extension TootFeature {
 
     /// Ability to set a private note for an account
     ///
-    public static let privateNote = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica])
+    public static let privateNote = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .friendica, .goToSocial])
 }

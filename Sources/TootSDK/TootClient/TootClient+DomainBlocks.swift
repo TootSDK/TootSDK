@@ -12,7 +12,7 @@ extension TootClient {
     /// Show information about all blocked domains.
     /// - Returns: array of blocked domains
     public func adminGetDomainBlocks() async throws -> [DomainBlock] {
-        try requireFeature(.domainBlocks)
+        try requireFeature(.adminDomainBlocks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .get
@@ -26,7 +26,7 @@ extension TootClient {
     /// - Parameter id: The ID of the DomainBlock in the instance's database
     /// - Returns: DomainBlock (optional)
     public func adminGetDomainBlock(id: String) async throws -> DomainBlock? {
-        try requireFeature(.domainBlocks)
+        try requireFeature(.adminDomainBlocks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", id])
             $0.method = .get
@@ -43,7 +43,7 @@ extension TootClient {
     ///
     /// Note that the call will be successful even if the domain is already blocked, or if the domain does not exist, or if the domain is not a domain.
     public func adminBlockDomain(params: BlockDomainParams) async throws -> DomainBlock {
-        try requireFeature(.domainBlocks)
+        try requireFeature(.adminDomainBlocks)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
             $0.method = .post
@@ -57,7 +57,7 @@ extension TootClient {
     /// Note that the call will be successful even if the domain was not previously blocked.
     /// - Parameter domain: The ID of the DomainAllow in the database.
     public func adminUnblockDomain(domain: String) async throws {
-        try requireFeature(.domainBlocks)
+        try requireFeature(.adminDomainBlocks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", domain])
             $0.method = .delete
@@ -132,4 +132,7 @@ extension TootFeature {
     ///
     /// Not on Friendica
     public static let domainBlocks = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .sharkey])
+
+    /// Ability to block domains as an admin.
+    public static let adminDomainBlocks = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .sharkey, .goToSocial])
 }

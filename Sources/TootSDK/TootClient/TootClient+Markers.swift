@@ -59,5 +59,5 @@ extension TootClient {
 
 extension TootFeature {
     /// Ability to save timeline positions.
-    public static let markers = TootFeature(supportedFlavours: [.mastodon, .pleroma, .friendica, .akkoma])
+    public static let markers = TootFeature(supportedFlavours: [.mastodon, .pleroma, .friendica, .akkoma, .goToSocial])
 }
