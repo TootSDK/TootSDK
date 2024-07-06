@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "enableGlobalTimeline": true,
+    "enableGuestTimeline": false,
+    "enableLocalTimeline": true,
+    "enableRecommendedTimeline": false,
+    "maintainer": {
+      "email": "info@calckey.world",
+      "name": "@admin"
+    },
+    "nodeDescription": "A generic ~~Calckey~~ FireFish server for anyone to use.",
+    "nodeName": "Calckey.world",
+    "repositoryUrl": "https://firefish.dev/firefish/firefish",
+    "themeColor": "#31748f"
+  },
+  "openRegistrations": true,
+  "protocols": [
+    "activitypub"
+  ],
+  "services": {
+    "inbound": [],
+    "outbound": [
+      "atom1.0",
+      "rss2.0"
+    ]
+  },
+  "software": {
+    "homepage": "https://firefish.dev/firefish/firefish",
+    "name": "firefish",
+    "repository": "https://firefish.dev/firefish/firefish",
+    "version": "20240523"
+  },
+  "usage": {
+    "localPosts": 30828,
+    "users": {
+      "activeHalfyear": 257,
+      "activeMonth": 69,
+      "total": 714
+    }
+  },
+  "version": "2.1"
+}

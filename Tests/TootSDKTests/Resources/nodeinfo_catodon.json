@@ -1,0 +1,56 @@
+{
+  "version": "2.1",
+  "software": {
+    "name": "catodon",
+    "version": "24.04-dev.2",
+    "repository": "https://codeberg.org/catodon/catodon",
+    "homepage": "https://codeberg.org/catodon/catodon"
+  },
+  "protocols": [
+    "activitypub"
+  ],
+  "services": {
+    "inbound": [],
+    "outbound": [
+      "atom1.0",
+      "rss2.0"
+    ]
+  },
+  "openRegistrations": true,
+  "usage": {
+    "users": {
+      "total": 298,
+      "activeHalfyear": 266,
+      "activeMonth": 105
+    },
+    "localPosts": 26893,
+    "localComments": 0
+  },
+  "metadata": {
+    "nodeName": "Catodon Social",
+    "nodeDescription": "🌎 Home of Catodon, a new platform for fedi communities, initially based on Iceshrimp/Firefish/Misskey. Be aware that our first release is not out yet, so things are still experimental.",
+    "maintainer": {
+      "name": "admin",
+      "email": "nmkj@duck.com"
+    },
+    "langs": [],
+    "tosUrl": "https://catodon.social/@admin/pages/tos",
+    "repositoryUrl": "https://codeberg.org/catodon/catodon",
+    "feedbackUrl": "https://codeberg.org/catodon/catodon/issues",
+    "disableRegistration": false,
+    "disableLocalTimeline": false,
+    "disableRecommendedTimeline": true,
+    "disableGlobalTimeline": false,
+    "emailRequiredForSignup": true,
+    "postEditing": true,
+    "postImports": false,
+    "enableHcaptcha": true,
+    "enableRecaptcha": false,
+    "maxNoteTextLength": 8000,
+    "maxCaptionTextLength": 1500,
+    "enableGithubIntegration": false,
+    "enableDiscordIntegration": false,
+    "enableEmail": true,
+    "themeColor": "#31748f"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "version": "2.1",
+  "software": {
+    "name": "iceshrimp",
+    "version": "2023.12.7",
+    "repository": "https://codeberg.org/firefish/firefish",
+    "homepage": "https://iceshrimp.dev/"
+  },
+  "protocols": [
+    "activitypub"
+  ],
+  "services": {
+    "inbound": [],
+    "outbound": [
+      "atom1.0",
+      "rss2.0"
+    ]
+  },
+  "openRegistrations": true,
+  "usage": {
+    "users": {
+      "total": 185,
+      "activeHalfyear": 140,
+      "activeMonth": 62
+    },
+    "localPosts": 13748,
+    "localComments": 0
+  },
+  "metadata": {
+    "nodeName": "Iceshrimp.social",
+    "nodeDescription": "Iceshrimp.social is a general-purpose Iceshrimp instance open to everyone interested!",
+    "maintainer": {
+      "name": "@alyx",
+      "email": "contact@iceshrimp.social"
+    },
+    "langs": [],
+    "tosUrl": "https://meta.iceshrimp.social/moderation/rules/",
+    "repositoryUrl": "https://codeberg.org/firefish/firefish",
+    "feedbackUrl": "https://codeberg.org/firefish/firefish/issues",
+    "disableRegistration": false,
+    "disableLocalTimeline": false,
+    "disableRecommendedTimeline": false,
+    "disableGlobalTimeline": false,
+    "emailRequiredForSignup": true,
+    "postEditing": true,
+    "postImports": false,
+    "enableHcaptcha": false,
+    "enableRecaptcha": false,
+    "maxNoteTextLength": 6000,
+    "maxCaptionTextLength": 1500,
+    "enableGithubIntegration": false,
+    "enableDiscordIntegration": false,
+    "enableEmail": true,
+    "themeColor": "#31748f"
+  }
+}

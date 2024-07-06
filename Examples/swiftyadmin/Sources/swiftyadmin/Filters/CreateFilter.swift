@@ -1,12 +1,12 @@
 //
 //  CreateFilter.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 02/07/2024.
 //
 
-import Foundation
 import ArgumentParser
+import Foundation
 import TootSDK
 
 struct CreateFilter: AsyncParsableCommand {

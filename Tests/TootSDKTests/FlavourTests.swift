@@ -7,6 +7,8 @@ import XCTest
 @testable import TootSDK
 
 final class FlavourTests: XCTestCase {
+    // MARK: - Instance flavour detection
+
     func testDetectsMastodon4() throws {
         let instance = try localObject(Instance.self, "mastodon")
         XCTAssertEqual(instance.flavour, .mastodon)
@@ -50,5 +52,52 @@ final class FlavourTests: XCTestCase {
     func testDetectsSharkey() throws {
         let instance = try localObject(Instance.self, "instance_sharkey_contact_removed")
         XCTAssertEqual(instance.flavour, .sharkey)
+    }
+
+    // MARK: - NodeInfo flavour detection
+
+    func testDetectsNodeInfoAkkoma() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_akkoma")
+        XCTAssertEqual(nodeInfo.flavour, .akkoma)
+    }
+
+    func testDetectsNodeInfoCatodon() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_catodon")
+        XCTAssertEqual(nodeInfo.flavour, .firefish)
+    }
+
+    func testDetectsNodeInfoFirefish() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_firefish")
+        XCTAssertEqual(nodeInfo.flavour, .firefish)
+    }
+
+    func testDetectsNodeInfoFriendica() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_friendica")
+        XCTAssertEqual(nodeInfo.flavour, .friendica)
+    }
+
+    func testDetectsNodeInfoIceshrimp() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_iceshrimp")
+        XCTAssertEqual(nodeInfo.flavour, .firefish)
+    }
+
+    func testDetectsNodeInfoMastodon() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_mastodon")
+        XCTAssertEqual(nodeInfo.flavour, .mastodon)
+    }
+
+    func testDetectsNodeInfoPixelfed() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_pixelfed")
+        XCTAssertEqual(nodeInfo.flavour, .pixelfed)
+    }
+
+    func testDetectsNodeInfoPleroma() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_pleroma")
+        XCTAssertEqual(nodeInfo.flavour, .pleroma)
+    }
+
+    func testDetectsNodeInfoSharkey() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_sharkey")
+        XCTAssertEqual(nodeInfo.flavour, .sharkey)
     }
 }
