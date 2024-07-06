@@ -1,0 +1,63 @@
+{
+  "version": "2.1",
+  "software": {
+    "name": "sharkey",
+    "version": "2024.2.0-beta.12",
+    "homepage": "https://activitypub.software/TransFem-org/Sharkey"
+  },
+  "protocols": [
+    "activitypub"
+  ],
+  "services": {
+    "inbound": [],
+    "outbound": [
+      "atom1.0",
+      "rss2.0"
+    ]
+  },
+  "openRegistrations": true,
+  "usage": {
+    "users": {
+      "total": 1912,
+      "activeHalfyear": null,
+      "activeMonth": null
+    },
+    "localPosts": 209466,
+    "localComments": 0
+  },
+  "metadata": {
+    "nodeName": "Blåhaj Zone",
+    "nodeDescription": "Are you a friend of Blåhaj? blahaj.zone is open for registrations for queer folk and their allies. We're a small instance, running on #Sharkey (a fork of #Misskey). \n\nIf you're trans, gender diverse, or just really like plushy sharks, come and join us! We are accepting new members, but remember Blåhaj is a friend and ally to all LGBTQ+ folk! ",
+    "nodeAdmins": [
+      {
+        "name": "Blåhaj",
+        "email": "admin@blahaj.zone"
+      }
+    ],
+    "maintainer": {
+      "name": "Blåhaj",
+      "email": "admin@blahaj.zone"
+    },
+    "langs": [],
+    "tosUrl": "https://blahaj.zone/@blahaj/pages/1683119155731",
+    "privacyPolicyUrl": null,
+    "impressumUrl": null,
+    "donationUrl": "https://ko-fi.com/blahajzone",
+    "repositoryUrl": "https://activitypub.software/TransFem-org/Sharkey",
+    "feedbackUrl": null,
+    "disableRegistration": false,
+    "disableLocalTimeline": false,
+    "disableGlobalTimeline": false,
+    "disableBubbleTimeline": false,
+    "emailRequiredForSignup": true,
+    "enableHcaptcha": true,
+    "enableRecaptcha": false,
+    "enableMcaptcha": false,
+    "enableTurnstile": false,
+    "maxNoteTextLength": 8000,
+    "enableEmail": true,
+    "enableServiceWorker": true,
+    "proxyAccountName": "relay.actor",
+    "themeColor": "#5688D0"
+  }
+}

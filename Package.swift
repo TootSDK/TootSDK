@@ -88,6 +88,15 @@ let package = Package(
                 .copy("Resources/translation_attachment.json"),
                 .copy("Resources/translation_poll.json"),
                 .copy("Resources/encrypted_push_notification.base64"),
+                .copy("Resources/nodeinfo_akkoma.json"),
+                .copy("Resources/nodeinfo_catodon.json"),
+                .copy("Resources/nodeinfo_firefish.json"),
+                .copy("Resources/nodeinfo_friendica.json"),
+                .copy("Resources/nodeinfo_iceshrimp.json"),
+                .copy("Resources/nodeinfo_mastodon.json"),
+                .copy("Resources/nodeinfo_pixelfed.json"),
+                .copy("Resources/nodeinfo_pleroma.json"),
+                .copy("Resources/nodeinfo_sharkey.json"),
             ]),
     ]
 )

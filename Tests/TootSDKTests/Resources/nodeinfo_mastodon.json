@@ -1,0 +1,27 @@
+{
+  "version": "2.0",
+  "software": {
+    "name": "mastodon",
+    "version": "4.3.0-nightly.2024-07-05-security"
+  },
+  "protocols": [
+    "activitypub"
+  ],
+  "services": {
+    "outbound": [],
+    "inbound": []
+  },
+  "usage": {
+    "users": {
+      "total": 2001387,
+      "activeMonth": 229393,
+      "activeHalfyear": 586512
+    },
+    "localPosts": 96286820
+  },
+  "openRegistrations": true,
+  "metadata": {
+    "nodeName": "Mastodon",
+    "nodeDescription": "The original server operated by the Mastodon gGmbH non-profit"
+  }
+}

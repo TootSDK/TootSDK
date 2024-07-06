@@ -1,0 +1,34 @@
+{
+    "version": "2.0",
+    "software": {
+        "name": "friendica",
+        "version": "2024.03-1557"
+    },
+    "protocols": [
+        "dfrn",
+        "activitypub",
+        "diaspora",
+        "ostatus"
+    ],
+    "services": {
+        "inbound": [
+            "bluesky",
+            "atom1.0",
+            "rss2.0"
+        ],
+        "outbound": [
+            "bluesky",
+            "smtp",
+            "twitter",
+            "atom1.0"
+        ]
+    },
+    "usage": {
+        "users": {}
+    },
+    "openRegistrations": true,
+    "metadata": {
+        "nodeName": "Social Gibiris (The #Friendica Edition)",
+        "explicitContent": false
+    }
+}

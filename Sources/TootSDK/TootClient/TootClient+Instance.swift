@@ -44,6 +44,23 @@ extension TootClient {
         }
         return try await fetch([String: [String]].self, req)
     }
+    
+    /// Get node info.
+    public func getNodeInfo() async throws -> NodeInfo {
+        let wellKnownReq = HTTPRequestBuilder {
+            $0.url = getURL([".well-known", "nodeinfo"])
+            $0.method = .get
+        }
+        let wellKnown = try await fetch(WellKnownNodeInfo.self, wellKnownReq)
+        guard let nodeInfo = wellKnown.nodeInfo else {
+            throw TootSDKError.nodeInfoUnsupported
+        }
+        let req = HTTPRequestBuilder {
+            $0.url = URL(string: nodeInfo)
+            $0.method = .get
+        }
+        return try await fetch(NodeInfo.self, req)
+    }
 }
 
 extension TootFeature {

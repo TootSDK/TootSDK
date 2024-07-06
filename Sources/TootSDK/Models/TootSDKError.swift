@@ -34,6 +34,7 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case clientDeinited
     case streamingClientReachedMaxRetries(lastFailureReason: String)
     case streamingClientReachedMaxConnectionAttempts(lastFailureReason: String)
+    case nodeInfoUnsupported
 
     public var errorDescription: String? {
         switch self {
@@ -74,6 +75,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "Streaming client reached retry limit. Most recent attempt failed with reason: \(lastFailureReason)"
         case .streamingClientReachedMaxConnectionAttempts(let lastFailureReason):
             return "Streaming client reached connection attempt limit. Most recent connection failed with reason: \(lastFailureReason)"
+        case .nodeInfoUnsupported:
+            return "The remote instance doesn't support nodeinfo endpoint."
         }
     }
 }
