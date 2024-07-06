@@ -1,6 +1,6 @@
 //
 //  NodeInfo.swift
-//  
+//
 //
 //  Created by Łukasz Rutkowski on 06/07/2024.
 //

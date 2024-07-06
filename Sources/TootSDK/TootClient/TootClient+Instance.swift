@@ -44,7 +44,7 @@ extension TootClient {
         }
         return try await fetch([String: [String]].self, req)
     }
-    
+
     /// Get node info.
     public func getNodeInfo() async throws -> NodeInfo {
         let wellKnownReq = HTTPRequestBuilder {
