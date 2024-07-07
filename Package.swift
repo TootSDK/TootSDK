@@ -92,6 +92,7 @@ let package = Package(
                 .copy("Resources/nodeinfo_catodon.json"),
                 .copy("Resources/nodeinfo_firefish.json"),
                 .copy("Resources/nodeinfo_friendica.json"),
+                .copy("Resources/nodeinfo_gotosocial.json"),
                 .copy("Resources/nodeinfo_iceshrimp.json"),
                 .copy("Resources/nodeinfo_mastodon.json"),
                 .copy("Resources/nodeinfo_pixelfed.json"),
