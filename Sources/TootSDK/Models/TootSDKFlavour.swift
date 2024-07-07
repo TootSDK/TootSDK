@@ -24,4 +24,7 @@ public enum TootSDKFlavour: String, Codable, Sendable, CaseIterable {
 
     /// Sharkey server. Source at https://git.joinsharkey.org/Sharkey/Sharkey
     case sharkey
+
+    /// GoToSocial server. API Documentation can be found at https://docs.gotosocial.org/en/latest/api/swagger/
+    case goToSocial
 }

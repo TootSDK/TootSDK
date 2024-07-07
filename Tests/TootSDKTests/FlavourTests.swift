@@ -100,4 +100,9 @@ final class FlavourTests: XCTestCase {
         let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_sharkey")
         XCTAssertEqual(nodeInfo.flavour, .sharkey)
     }
+
+    func testDetectsNodeInfoGoToSocial() throws {
+        let instance = try localObject(NodeInfo.self, "nodeinfo_gotosocial")
+        XCTAssertEqual(instance.flavour, .goToSocial)
+    }
 }
