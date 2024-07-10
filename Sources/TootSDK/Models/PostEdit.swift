@@ -5,7 +5,7 @@
 //  Created by dave on 4/12/22.
 //
 
-@preconcurrency import struct Foundation.Date
+import struct Foundation.Date
 
 public struct PostEdit: Codable, Hashable, Sendable {
     ///  The content of the post at this revision.
@@ -15,7 +15,7 @@ public struct PostEdit: Codable, Hashable, Sendable {
     /// Whether the post was marked sensitive at this revision
     public var sensitive: Bool
     /// The timestamp of when the revision was published
-    public var createdAt: Date?
+    public var createdAt: Date
     /// The account that published this revision
     public var account: Account
     /// The current state of the poll options at this revision
@@ -26,8 +26,14 @@ public struct PostEdit: Codable, Hashable, Sendable {
     public var emojis: [Emoji]
 
     public init(
-        content: String, spoilerText: String, sensitive: Bool, createdAt: Date? = nil, account: Account, poll: Poll? = nil,
-        mediaAttachments: [MediaAttachment], emojis: [Emoji]
+        content: String,
+        spoilerText: String,
+        sensitive: Bool,
+        createdAt: Date,
+        account: Account,
+        poll: Poll? = nil,
+        mediaAttachments: [MediaAttachment],
+        emojis: [Emoji]
     ) {
         self.content = content
         self.spoilerText = spoilerText
@@ -39,4 +45,23 @@ public struct PostEdit: Codable, Hashable, Sendable {
         self.emojis = emojis
     }
 
+    /// The current state of the poll options at this revision.
+    public struct Poll: Codable, Hashable, Sendable {
+        /// The poll options at this revision.
+        public let options: [Option]
+
+        public init(options: [Option]) {
+            self.options = options
+        }
+
+        /// The poll option at this revision.
+        public struct Option: Codable, Hashable, Sendable {
+            /// The text for a poll option.
+            public let title: String
+
+            public init(title: String) {
+                self.title = title
+            }
+        }
+    }
 }
