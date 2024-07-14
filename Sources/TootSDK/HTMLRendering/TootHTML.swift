@@ -15,6 +15,9 @@ public struct TootHTML {
         let linebreak = "|tootsdk-linebreak|"
 
         html = html.replacingOccurrences(of: "<p>", with: "")
+        if html.hasSuffix("</p>") {
+            html.removeLast("</p>".count)
+        }
         html = html.replacingOccurrences(of: "</p>", with: linebreak)
         html = html.replacingOccurrences(of: "<br />", with: linebreak)
         html = html.replacingOccurrences(of: "<br>", with: linebreak)
