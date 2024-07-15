@@ -5,8 +5,8 @@
 //  Created by Łukasz Rutkowski on 14/07/2024.
 //
 
-import XCTest
 import TootSDK
+import XCTest
 
 final class HTMLRenderingTests: XCTestCase {
 
