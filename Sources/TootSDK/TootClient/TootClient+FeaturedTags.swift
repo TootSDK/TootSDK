@@ -84,5 +84,5 @@ extension TootFeature {
 
     /// Ability to promote hashtags on user profiles.
     ///
-    public static let featuredTags = TootFeature(supportedFlavours: [.mastodon, .goToSocial])
+    public static let featuredTags = TootFeature(supportedFlavours: [.mastodon])
 }
