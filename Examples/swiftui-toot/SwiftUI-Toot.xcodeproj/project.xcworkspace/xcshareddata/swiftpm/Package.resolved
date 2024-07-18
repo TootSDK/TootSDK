@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/karwa/swift-url.git",
       "state" : {
-        "revision" : "a04b0e57f148698d091c90392901ce92fd0c5623",
-        "version" : "0.4.1"
+        "revision" : "9306a962396a50d7d88e924afcd7ec67226763db",
+        "version" : "0.4.2"
       }
     },
     {
