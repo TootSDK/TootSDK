@@ -55,7 +55,6 @@
                 Hey fellow #Swift devs 👋!
                 As some of you may know, @konstantin and @davidgarywood have been working on an open-source swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨!
                 The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.
-
                 """
 
             // just a sanity check on the expected mutable string
@@ -123,7 +122,6 @@
                 🟩🟩🟩⬛🟩
                 🟩🟩🟩⬛🟩
                 🟩🟩🟩⬛🟩
-
                 """
 
             // act
