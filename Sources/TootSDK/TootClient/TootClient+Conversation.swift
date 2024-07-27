@@ -51,6 +51,6 @@ extension TootFeature {
     /// Ability to retrieve conversations.
     ///
     public static let conversations = TootFeature(supportedFlavours: [
-        .mastodon, .pleroma, .friendica, .akkoma, .pixelfed, .firefish, .sharkey, .goToSocial,
+        .mastodon, .pleroma, .friendica, .akkoma, .pixelfed, .firefish, .sharkey, .goToSocial, .catodon, .iceshrimp,
     ])
 }

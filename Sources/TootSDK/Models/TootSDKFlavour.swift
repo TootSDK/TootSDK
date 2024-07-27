@@ -22,6 +22,12 @@ public enum TootSDKFlavour: String, Codable, Sendable, CaseIterable {
     /// Firefish server. Source at https://git.joinfirefish.org/firefish/firefish
     case firefish
 
+    /// Catodon server. Source at https://codeberg.org/catodon/catodon
+    case catodon
+
+    /// Iceshrimpt server. Source at https://iceshrimp.dev/iceshrimp
+    case iceshrimp
+
     /// Sharkey server. Source at https://git.joinsharkey.org/Sharkey/Sharkey
     case sharkey
 

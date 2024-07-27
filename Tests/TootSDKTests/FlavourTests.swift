@@ -39,14 +39,14 @@ final class FlavourTests: XCTestCase {
         XCTAssertEqual(instance.flavour, .firefish)
     }
 
-    func testDetectsCatodonAsFirefish() throws {
+    func testDetectsCatodon() throws {
         let instance = try localObject(Instance.self, "instance_catodon_contact_removed")
-        XCTAssertEqual(instance.flavour, .firefish)
+        XCTAssertEqual(instance.flavour, .catodon)
     }
 
-    func testDetectsIceshrimpAsFirefish() throws {
+    func testDetectsIceshrimp() throws {
         let instance = try localObject(Instance.self, "instance_iceshrimp_contact_removed")
-        XCTAssertEqual(instance.flavour, .firefish)
+        XCTAssertEqual(instance.flavour, .iceshrimp)
     }
 
     func testDetectsSharkey() throws {
@@ -63,7 +63,7 @@ final class FlavourTests: XCTestCase {
 
     func testDetectsNodeInfoCatodon() throws {
         let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_catodon")
-        XCTAssertEqual(nodeInfo.flavour, .firefish)
+        XCTAssertEqual(nodeInfo.flavour, .catodon)
     }
 
     func testDetectsNodeInfoFirefish() throws {
@@ -78,7 +78,7 @@ final class FlavourTests: XCTestCase {
 
     func testDetectsNodeInfoIceshrimp() throws {
         let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_iceshrimp")
-        XCTAssertEqual(nodeInfo.flavour, .firefish)
+        XCTAssertEqual(nodeInfo.flavour, .iceshrimp)
     }
 
     func testDetectsNodeInfoMastodon() throws {

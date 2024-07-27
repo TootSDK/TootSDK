@@ -66,14 +66,14 @@ extension TootFeature {
     @available(*, deprecated)
     /// Ability to query trends
     ///
-    public static let trends = TootFeature(supportedFlavours: [.mastodon, .firefish])
+    public static let trends = TootFeature(supportedFlavours: [.mastodon, .firefish, .catodon, .iceshrimp])
 }
 
 extension TootFeature {
 
     /// Ability to query trending posts
     ///
-    public static let trendingPosts = TootFeature(supportedFlavours: [.mastodon, .firefish])
+    public static let trendingPosts = TootFeature(supportedFlavours: [.mastodon, .firefish, .catodon, .iceshrimp])
 }
 
 extension TootFeature {
