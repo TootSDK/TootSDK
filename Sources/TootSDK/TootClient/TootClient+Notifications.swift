@@ -202,5 +202,7 @@ extension TootFeature {
 
     /// Ability to dismiss (or mark as read) a single notification
     ///
-    public static let dismissNotification = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish, .catodon, .iceshrimp])
+    public static let dismissNotification = TootFeature(supportedFlavours: [
+        .mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish, .catodon, .iceshrimp,
+    ])
 }
