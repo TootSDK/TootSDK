@@ -260,14 +260,14 @@ extension TootFeature {
 
     /// Ability to bookmark posts
     ///
-    public static let bookmark = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish, .goToSocial])
+    public static let bookmark = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish, .goToSocial, .catodon, .iceshrimp])
 }
 
 extension TootFeature {
 
     /// Ability to mute a conversation that mentions you
     ///
-    public static let mutePost = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish, .goToSocial])
+    public static let mutePost = TootFeature(supportedFlavours: [.mastodon, .akkoma, .pleroma, .pixelfed, .friendica, .firefish, .goToSocial, .catodon, .iceshrimp])
 }
 
 extension TootFeature {

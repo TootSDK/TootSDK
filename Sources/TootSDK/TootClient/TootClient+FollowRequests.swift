@@ -76,6 +76,6 @@ extension TootFeature {
 
     /// Ability to view and manage follow requests.
     public static let followRequests = TootFeature(supportedFlavours: [
-        .mastodon, .pleroma, .pixelfed, .friendica, .akkoma, .firefish, .sharkey, .goToSocial,
+        .mastodon, .pleroma, .pixelfed, .friendica, .akkoma, .firefish, .sharkey, .goToSocial, .catodon, .iceshrimp,
     ])
 }

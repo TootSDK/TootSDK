@@ -39,5 +39,5 @@ extension TootFeature {
 
     /// Ability to query and remove suggestions
     ///
-    public static let suggestions = TootFeature(supportedFlavours: [.mastodon, .firefish, .sharkey])
+    public static let suggestions = TootFeature(supportedFlavours: [.mastodon, .firefish, .sharkey, .catodon, .iceshrimp])
 }

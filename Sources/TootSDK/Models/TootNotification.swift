@@ -73,7 +73,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 return [.follow, .mention, .repost, .favourite, .poll]
             case .pixelfed:
                 return [.follow, .mention, .repost, .favourite]
-            case .firefish:
+            case .firefish, .catodon, .iceshrimp:
                 return [.follow, .mention, .repost, .poll, .followRequest]
             case .goToSocial:
                 return [.follow, .followRequest, .mention, .repost, .favourite, .poll, .post, .adminSignUp]
@@ -87,7 +87,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 return Set(allCases)
             case .pleroma, .akkoma, .friendica, .sharkey:
                 return [.follow, .mention, .repost, .favourite, .poll]
-            case .pixelfed, .firefish, .goToSocial:
+            case .pixelfed, .firefish, .goToSocial, .catodon, .iceshrimp:
                 return []
             }
         }

@@ -42,7 +42,9 @@ extension NodeInfo {
         case "pixelfed": return .pixelfed
         case "friendica": return .friendica
         case "akkoma": return .akkoma
-        case "firefish", "catodon", "iceshrimp": return .firefish
+        case "firefish": return .firefish
+        case "catodon": return .catodon
+        case "iceshrimp": return .iceshrimp
         case "sharkey": return .sharkey
         case "gotosocial": return .goToSocial
         default: return .mastodon

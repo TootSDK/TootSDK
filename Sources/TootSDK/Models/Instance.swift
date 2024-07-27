@@ -224,11 +224,20 @@ extension Instance {
             return .akkoma
         }
         // 3.0.0 (compatible; Firefish 1.0.4-dev5)
-        // 4.2.1 (compatible; Iceshrimp 2023.12-pre3)
-        // 4.2.1 (compatible; Catodon 24.01-dev)
-        if version.lowercased().contains("firefish") || version.lowercased().contains("catodon") || version.lowercased().contains("iceshrimp") {
+        if version.lowercased().contains("firefish") {
             return .firefish
         }
+
+        // 4.2.1 (compatible; Iceshrimp 2023.12-pre3)
+        if version.lowercased().contains("iceshrimp") {
+            return .iceshrimp
+        }
+
+        // 4.2.1 (compatible; Catodon 24.01-dev)
+        if version.lowercased().contains("catodon") {
+            return .catodon
+        }
+
         // 3.0.0 (compatible; Sharkey 2023.12.0.beta3)
         if version.lowercased().contains("sharkey") {
             return .sharkey
