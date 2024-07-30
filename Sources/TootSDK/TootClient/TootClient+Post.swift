@@ -22,16 +22,53 @@ extension TootClient {
     }
 
     /// Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
-    /// - Parameter id: the ID of the psot to be changed
-    /// - Parameter params: the updated content of the post to be posted
-    /// - Returns: the post after the update
+    ///
+    /// - Note: For Pixelfed this will first attempt to update media descriptions and then update rest of post details.
+    /// If an error is thrown it is possible for some of the media descriptions to be already successfully updated.
+    ///
+    /// - Parameter id: The ID of the post to be changed.
+    /// - Parameter params: The updated content of the post to be posted.
+    /// - Returns: The post after the update.
     public func editPost(id: String, _ params: EditPostParams) async throws -> Post {
+        if flavour == .pixelfed {
+            // Media attributes change must be sent separately
+            try await updateMediaAttributes(params.mediaAttributes ?? [])
+        }
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
             $0.method = .put
-            $0.body = try .multipart(params, boundary: UUID().uuidString)
+            if flavour == .pixelfed {
+                var params = params
+                params.mediaAttributes = nil
+                $0.body = try .json(params)
+            } else {
+                $0.body = try .multipart(params, boundary: UUID().uuidString)
+            }
+        }
+        if flavour == .pixelfed {
+            _ = try await fetch(req: req)
+            // Pixelfed doesn't return edited post, simulate behavior of Mastodon by manually getting post
+            return try await getPost(id: id)
         }
         return try await fetch(Post.self, req)
+    }
+
+    private func updateMediaAttributes(_ mediaAttributes: [EditPostParams.MediaAttribute]) async throws {
+        guard !mediaAttributes.isEmpty else { return }
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for mediaAttribute in mediaAttributes {
+                group.addTask {
+                    try await self.updateMedia(
+                        id: mediaAttribute.id,
+                        .init(
+                            description: mediaAttribute.description,
+                            focus: mediaAttribute.focus
+                        )
+                    )
+                }
+            }
+            try await group.waitForAll()
+        }
     }
 
     /// Gets a single post

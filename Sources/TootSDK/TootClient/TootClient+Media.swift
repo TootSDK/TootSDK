@@ -67,13 +67,17 @@ extension TootClient {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .put
 
-            let parts = mediaParts(
-                description: params.description,
-                focus: params.focus,
-                thumbnail: params.thumbnail,
-                mimeType: params.thumbnailMimeType
-            )
-            $0.body = try .multipart(parts, boundary: UUID().uuidString)
+            if flavour == .pixelfed {
+                $0.body = try .json(params)
+            } else {
+                let parts = mediaParts(
+                    description: params.description,
+                    focus: params.focus,
+                    thumbnail: params.thumbnail,
+                    mimeType: params.thumbnailMimeType
+                )
+                $0.body = try .multipart(parts, boundary: UUID().uuidString)
+            }
         }
         return try await fetch(MediaAttachment.self, req)
     }
