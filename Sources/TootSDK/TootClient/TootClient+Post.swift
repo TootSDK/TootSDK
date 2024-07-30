@@ -230,8 +230,6 @@ extension TootClient {
 
     /// Obtain the source properties for a post so that it can be edited.
     public func getPostSource(id: String) async throws -> PostSource {
-        try requireFlavour(otherThan: [.friendica])
-
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "source"])
             $0.method = .get
