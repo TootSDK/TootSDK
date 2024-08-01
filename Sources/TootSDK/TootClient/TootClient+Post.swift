@@ -38,7 +38,7 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
             $0.method = .put
-                var params = params
+            var params = params
             if updateMediaSeparately {
                 params.mediaAttributes = nil
             }
