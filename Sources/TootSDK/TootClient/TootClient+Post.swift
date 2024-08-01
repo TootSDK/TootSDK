@@ -30,20 +30,19 @@ extension TootClient {
     /// - Parameter params: The updated content of the post to be posted.
     /// - Returns: The post after the update.
     public func editPost(id: String, _ params: EditPostParams) async throws -> Post {
-        if flavour == .pixelfed {
-            // Media attributes change must be sent separately
+        let updateMediaSeparately = [.pixelfed, .pleroma, .akkoma, .firefish, .catodon, .iceshrimp].contains(flavour)
+        if updateMediaSeparately {
             try await updateMediaAttributes(params.mediaAttributes ?? [])
         }
+
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
             $0.method = .put
-            if flavour == .pixelfed {
                 var params = params
+            if updateMediaSeparately {
                 params.mediaAttributes = nil
-                $0.body = try .json(params)
-            } else {
-                $0.body = try .multipart(params, boundary: UUID().uuidString)
             }
+            $0.body = try .json(params)
         }
         if flavour == .pixelfed {
             _ = try await fetch(req: req)
