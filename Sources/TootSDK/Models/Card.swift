@@ -9,7 +9,7 @@ public struct Card: Codable, Hashable, Sendable {
         url: String,
         title: String,
         description: String,
-        language: String?,
+        language: String? = nil,
         type: Card.CardType,
         authorName: String? = nil,
         authorUrl: String? = nil,
