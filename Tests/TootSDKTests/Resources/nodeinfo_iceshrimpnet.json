@@ -1,0 +1,58 @@
+{
+  "version": "2.1",
+  "software": {
+    "name": "Iceshrimp.NET",
+    "version": "2024.1-beta2.security3+e1d25a9231",
+    "codename": "phenidate",
+    "edition": "enterprise",
+    "homepage": "https://iceshrimp.dev/iceshrimp/Iceshrimp.NET",
+    "repository": "https://iceshrimp.dev/iceshrimp/Iceshrimp.NET"
+  },
+  "protocols": [
+    "activitypub"
+  ],
+  "services": {
+    "inbound": [],
+    "outbound": [
+      "atom1.0",
+      "rss2.0"
+    ]
+  },
+  "usage": {
+    "users": {
+      "total": 2,
+      "activeHalfyear": 2,
+      "activeMonth": 2
+    },
+    "localPosts": 45,
+    "localComments": 0
+  },
+  "metadata": {
+    "nodeName": "Iceshrimp.NET",
+    "nodeDescription": "An Iceshrimp.NET instance",
+    "maintainer": {
+      "name": "todo",
+      "email": "todo"
+    },
+    "langs": [],
+    "tosUrl": "todo",
+    "repositoryUrl": "https://iceshrimp.dev/iceshrimp/Iceshrimp.NET",
+    "feedbackUrl": "https://issues.iceshrimp.dev",
+    "themeColor": "#000000",
+    "disableRegistration": true,
+    "disableLocalTimeline": false,
+    "disableRecommendedTimeline": false,
+    "disableGlobalTimeline": false,
+    "emailRequiredForSignup": false,
+    "postEditing": false,
+    "postImports": false,
+    "enableHcaptcha": false,
+    "enableRecaptcha": false,
+    "maxNoteTextLength": 0,
+    "maxCaptionTextLength": 0,
+    "enableGithubIntegration": false,
+    "enableDiscordIntegration": false,
+    "enableEmail": false
+  },
+  "openRegistrations": false
+}

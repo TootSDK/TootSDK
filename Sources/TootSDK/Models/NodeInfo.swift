@@ -37,14 +37,14 @@ public struct WellKnownNodeInfo: Codable {
 
 extension NodeInfo {
     public var flavour: TootSDKFlavour {
-        switch software.name {
+        switch software.name.lowercased() {
         case "pleroma": return .pleroma
         case "pixelfed": return .pixelfed
         case "friendica": return .friendica
         case "akkoma": return .akkoma
         case "firefish": return .firefish
         case "catodon": return .catodon
-        case "iceshrimp": return .iceshrimp
+        case "iceshrimp", "iceshrimp.net": return .iceshrimp
         case "sharkey": return .sharkey
         case "gotosocial": return .goToSocial
         default: return .mastodon
