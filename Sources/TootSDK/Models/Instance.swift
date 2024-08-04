@@ -229,6 +229,7 @@ extension Instance {
         }
 
         // 4.2.1 (compatible; Iceshrimp 2023.12-pre3)
+        // 4.2.1 (compatible; Iceshrimp.NET/2024.1-beta2.security3+e1d25a9231)
         if version.lowercased().contains("iceshrimp") {
             return .iceshrimp
         }

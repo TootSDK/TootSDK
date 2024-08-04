@@ -49,6 +49,11 @@ final class FlavourTests: XCTestCase {
         XCTAssertEqual(instance.flavour, .iceshrimp)
     }
 
+    func testDetectsIceshrimpNet() throws {
+        let instance = try localObject(Instance.self, "instance_iceshrimpnet")
+        XCTAssertEqual(instance.flavour, .iceshrimp)
+    }
+
     func testDetectsSharkey() throws {
         let instance = try localObject(Instance.self, "instance_sharkey_contact_removed")
         XCTAssertEqual(instance.flavour, .sharkey)
@@ -78,6 +83,11 @@ final class FlavourTests: XCTestCase {
 
     func testDetectsNodeInfoIceshrimp() throws {
         let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_iceshrimp")
+        XCTAssertEqual(nodeInfo.flavour, .iceshrimp)
+    }
+
+    func testDetectsNodeInfoIceshrimpNet() throws {
+        let nodeInfo = try localObject(NodeInfo.self, "nodeinfo_iceshrimpnet")
         XCTAssertEqual(nodeInfo.flavour, .iceshrimp)
     }
 

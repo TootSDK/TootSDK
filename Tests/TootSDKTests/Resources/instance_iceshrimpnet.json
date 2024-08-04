@@ -1,0 +1,84 @@
+{
+  "stats": {
+    "user_count": 2,
+    "status_count": 45,
+    "domain_count": 1521
+  },
+  "version": "4.2.1 (compatible; Iceshrimp.NET/2024.1-beta2.security3+e1d25a9231)",
+  "max_toot_chars": 8192,
+  "uri": "example.com",
+  "title": "example.com",
+  "email": "unset@example.org",
+  "short_description": "This Iceshrimp.NET instance does not appear to have a description",
+  "description": "This Iceshrimp.NET instance does not appear to have a description",
+  "registrations": false,
+  "invites_enabled": false,
+  "approval_required": true,
+  "urls": {
+    "streaming_api": "wss://example.com"
+  },
+  "configuration": {
+    "accounts": {
+      "max_featured_tags": 20
+    },
+    "statuses": {
+      "supported_mime_types": [
+        "text/x.misskeymarkdown"
+      ],
+      "max_characters": 8192,
+      "max_media_attachments": 16,
+      "characters_reserved_per_url": 23
+    },
+    "media_attachments": {
+      "supported_mime_types": [
+        "image/png",
+        "image/gif",
+        "image/jpeg",
+        "image/webp",
+        "image/apng",
+        "image/bmp",
+        "image/tiff",
+        "image/x-icon",
+        "image/avif",
+        "audio/opus",
+        "video/ogg",
+        "audio/ogg",
+        "application/ogg",
+        "video/quicktime",
+        "video/mp4",
+        "video/vnd.avi",
+        "audio/mp4",
+        "video/x-m4v",
+        "audio/x-m4a",
+        "video/3gpp",
+        "video/3gpp2",
+        "video/3gp2",
+        "audio/3gpp",
+        "audio/3gpp2",
+        "audio/3gp2",
+        "video/mpeg",
+        "audio/mpeg",
+        "video/webm",
+        "audio/webm",
+        "audio/aac",
+        "audio/x-flac",
+        "audio/flac",
+        "audio/vnd.wave"
+      ],
+      "image_size_limit": 10485760,
+      "image_matrix_limit": 16777216,
+      "video_size_limit": 41943040,
+      "video_frame_limit": 60,
+      "video_matrix_limit": 2304000
+    },
+    "polls": {
+      "max_options": 10,
+      "max_characters_per_option": 50,
+      "min_expiration": 50,
+      "max_expiration": 2629746
+    },
+    "reactions": {
+      "max_reactions": 1
+    }
+  }
+}
