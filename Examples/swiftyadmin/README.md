@@ -2,6 +2,10 @@
 
 An example command line utility to interact with and control a server using TootSDK.
 
+```shell
+swift build && ./.build/debug/swiftyadmin get-instance -u https://the-url-of-your-server
+```
+
 Since most commands require authentication, you can first login to obtain an access token. The login command demonstrates obtaining a token without a user interface (using the command line).
 
 ```shell
