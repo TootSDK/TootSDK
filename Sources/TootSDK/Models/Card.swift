@@ -45,7 +45,7 @@ public struct Card: Codable, Hashable, Sendable {
         self.blurhash = blurhash
     }
 
-    public enum CardType: String, Codable, Hashable {
+    public enum CardType: String, Codable, Hashable, Sendable {
         case link, photo, video, rich
     }
 
