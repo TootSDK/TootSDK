@@ -21,4 +21,24 @@ final class InstanceTests: XCTestCase {
         XCTAssertEqual(result.invitesEnabled, false)
         XCTAssertEqual(result.registrations, true)
     }
+
+    func testPixelfed12CountsAreStringsWeHandleGracefully() throws {
+        // arrange
+        let json = localContent("instance_pixelfed")
+        let decoder = TootDecoder()
+
+        // act
+        let result = try decoder.decode(Instance.self, from: json)
+
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.languages, ["en"])
+        XCTAssertEqual(result.version, "3.5.3 (compatible; Pixelfed 0.12.3)")
+        XCTAssertEqual(result.uri, "pixelfed.social")
+        XCTAssertEqual(result.title, "pixelfed")
+        XCTAssertEqual(result.registrations, true)
+        XCTAssertEqual(result.stats.domainCount, 26576)
+        XCTAssertEqual(result.stats.userCount, 119267)
+        XCTAssertEqual(result.stats.postCount, 29_662_653)
+    }
 }
