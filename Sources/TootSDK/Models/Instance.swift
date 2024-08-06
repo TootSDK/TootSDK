@@ -92,6 +92,38 @@ public struct Instance: Codable, Hashable {
             case postCount = "statusCount"
             case domainCount
         }
+
+        public init(from decoder: Decoder) throws {
+            // Custom decoder handles the possibility for count values to be provided as String
+            // e.g. Pixelfed in v0.12.3 https://github.com/TootSDK/TootSDK/issues/300
+
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            // userCount
+            if let intValue = try? container.decode(Int.self, forKey: .userCount) {
+                self.userCount = intValue
+            } else if let stringValue = try? container.decode(String.self, forKey: .userCount) {
+                self.userCount = Int(stringValue)
+            } else {
+                self.userCount = nil
+            }
+            // postCount
+            if let intValue = try? container.decode(Int.self, forKey: .postCount) {
+                self.postCount = intValue
+            } else if let stringValue = try? container.decode(String.self, forKey: .postCount) {
+                self.postCount = Int(stringValue)
+            } else {
+                self.postCount = nil
+            }
+
+            // domainCount
+            if let intValue = try? container.decode(Int.self, forKey: .domainCount) {
+                self.domainCount = intValue
+            } else if let stringValue = try? container.decode(String.self, forKey: .domainCount) {
+                self.domainCount = Int(stringValue)
+            } else {
+                self.domainCount = nil
+            }
+        }
     }
 
     public struct Configuration: Codable, Hashable {

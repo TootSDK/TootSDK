@@ -24,6 +24,11 @@ final class FlavourTests: XCTestCase {
         XCTAssertEqual(instance.flavour, .pixelfed)
     }
 
+    func testDetectsPixelfed12() throws {
+        let instance = try localObject(Instance.self, "instance_pixelfed")
+        XCTAssertEqual(instance.flavour, .pixelfed)
+    }
+
     func testDetectsFriendica() throws {
         let instance = try localObject(Instance.self, "instance_friendica_nocontact")
         XCTAssertEqual(instance.flavour, .friendica)
