@@ -67,6 +67,13 @@ public actor StreamingClient {
     /// This limit attempts to prevent excessive handshakes if the connection is available but unreliable.
     public var maxConnectionAttempts = 10
 
+    /// Whether to automatically reconnect or retry after failure if there are no subscribers at the time the connection fails.
+    ///
+    /// If `false`, StreamingClient will only try to reconnect if there are active subscribers (i.e. awaiting values from a stream returned by ``subscribe(to:bufferingPolicy:)``) when a connection fails.
+    ///
+    /// If `true`, it will automatically attempt to reconnect (if allowed by ``maxRetries`` and ``maxConnectionAttempts``) even if the connection is currently unused at the time.
+    public var retryIfNoSubscribers = false
+
     /// Is the connection currently active?
     ///
     /// The state of this property matches ``Event/connectionUp`` and ``Event/connectionDown`` events being sent to subscribers.
@@ -347,6 +354,7 @@ public actor StreamingClient {
                 continue
             }
         } while unsuccessfulConnectionAttempts < maxRetries && totalConnectionAttempts < maxConnectionAttempts && !Task.isCancelled
+            && (retryIfNoSubscribers || !subscribers.isEmpty)
     }
 
     deinit {
