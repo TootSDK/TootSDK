@@ -14,8 +14,8 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Search results.
     public func search(params: SearchParams, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> Search {
-        if params.excludeUnreviewed != nil && flavour != .mastodon {
-            try requireFlavour([.mastodon])
+        if params.excludeUnreviewed != nil {
+            try requireFeature(.searchExcludeUnreviewed)
         }
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "search"])
@@ -24,4 +24,9 @@ extension TootClient {
         }
         return try await fetch(Search.self, req)
     }
+}
+
+extension TootFeature {
+    /// The ability to use the `exclude_unreviewed` search parameter.
+    public static let searchExcludeUnreviewed = TootFeature(supportedFlavours: [.mastodon])
 }
