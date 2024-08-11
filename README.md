@@ -250,10 +250,9 @@ let token = try await client.registerAccount(params: params)
 ## Further Documentation 📖
 
 - Reference documentation is available [here](https://tootsdk.github.io/TootDocs/?v=2)
-- Example apps:
-  - [swiftui-toot](https://github.com/TootSDK/TootSDK/tree/main/Examples/swiftui-toot/) - a SwiftUI app that shows authorization, a user's feed, posting and account operations
+- Examples:
   - [swiftyadmin](https://github.com/TootSDK/TootSDK/tree/main/Examples/swiftyadmin) - a command line utility to interact with and control a server using TootSDK
-  - [vaportoot](https://github.com/TootSDK/TootSDK/tree/main/Examples/vaportoot) - a web app in Vapor, that shows how to sign in and view a user's feed
+  - [tootsdk-release](https://github.com/TootSDK/TootSDK/tree/main/Examples/tootsdk-release) - Example GitHub action to publish a post when a new release is published.
 
 ## Contributing
 
@@ -274,7 +273,7 @@ This is a permissive license which allows for any type of use, provided the copy
 - We hat-tip top Metatext's source for some guidance on what's where: https://github.com/metabolist/metatext
 - [Kris Slazinski](https://mastodon.social/@kslazinski) for our TootSDK logo 🤩
 
-## Built with TootSDK ##
+## Built with TootSDK
 
 - [Fedicat](https://fedicat.com/)
 - [Pipilo](https://apps.apple.com/pl/app/pipilo/id1584544719)

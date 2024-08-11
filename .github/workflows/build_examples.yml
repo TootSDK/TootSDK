@@ -15,21 +15,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - name: Build example Vapor
-        run: cd ./Examples/vaportoot && swift build -v
-      - name: Run Vapor tests
-        run: cd ./Examples/vaportoot && swift test -v
       - name: Build swiftyadmin
         run: cd ./Examples/swiftyadmin && swift build -v
       - name: Build tootsdk-release
         run: cd ./Examples/tootsdk-release && swift build -v
-  buildapps:
-    strategy:
-      matrix:
-        os: [macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build SwiftUI-Toot
-        run: make buildswiftexample
