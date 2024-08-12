@@ -190,34 +190,35 @@ You can learn more about how pagination works for Fediverse servers using a Mast
 <details>
 <summary>Streaming timelines</summary>
 
-In TootSDK it is possible to subscribe to some types of content with AsyncSequences, a concept we've wrapped up in our `TootStream` object.
+In TootSDK 4.0, experimental support for streaming timelines was introduced. It allows an app to subscribe for one or more available timelines in order to receive events as they happen instead of polling the server.
 
 ```swift
-for posts in try await client.data.stream(.home) {
-    print(posts)
+// open a socket to a specific timeline
+let stream = try! await client.streaming.subscribe(to: .userNotification)
+
+do {
+    // listen for events
+    for try await event in stream {
+        print("got event")
+        switch event {
+        case .connectionUp:
+            //...
+        case .connectionDown:
+            //...
+        case .receivedEvent(let eventContent):
+            //...
+        }
+    }
+} catch {
+    print(String(describing: error))
 }
 ```
 
-Underneath the hood, this uses our Paging mechanism. This means that when you ask the client to refresh that stream, it will deliver you new results, from after the ones you requested.
+An example of subscribing to a timeline is available in [StreamEvents](Examples/swiftyadmin/Sources/swiftyadmin/Streams/StreamEvents.swift)
 
-```swift
-client.data.refresh(.home)
-```
+You can learn more about Streaminng event support for Mastodon [here](https://docs.joinmastodon.org/methods/streaming/).
 
-You can also pass an initial PagedInfo value to the stream call. For example, to start steaming all posts from the user's home timeline that are newer than post ID 100:
-
-```swift
-for posts in try await client.data.stream(.home, PagedInfo(minId: 100) {
-```
-
-Some timelines require associated query parameters to configure. Luckily these are associated values that their timeline enumeration require when creating - so you can't miss them!
-
-```swift
-
-for posts in try await client.data.stream(HashtagTimelineQuery(tag: "iOSDev") {
-    print(posts)
-}
-```
+You can learn more about Pleroma's implementation of streaming [here](https://api.pleroma.social/#operation/WebsocketHandler.streaming).
 
 </details>
 

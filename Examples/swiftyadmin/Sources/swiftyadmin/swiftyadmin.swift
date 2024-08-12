@@ -48,5 +48,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
             CreateFilter.self,
             UpdateFilter.self,
             GetNodeInfo.self,
+            StreamEvents.self,
         ])
 }
