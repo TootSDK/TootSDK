@@ -19,6 +19,9 @@ public class TootSocket {
     private let decoder = TootDecoder()
     public private(set) var isClosed = false
 
+    /// Set this to `true` to see a `print()` of socket message payloads. The value is inherited from the TootClient instance used to create the socket.
+    public var debugResponses: Bool = false
+
     /// Async throwing stream of all ``StreamingEvent``s sent by the server.
     ///
     /// > Throws:
@@ -26,7 +29,8 @@ public class TootSocket {
     /// > - An `NSError` if the web socket task encounters an error receiving a message.
     /// > - `CancellationError` if the containing task has been cancelled while waiting for a message.
     public lazy var stream: AsyncThrowingStream<StreamingEvent, Error> = {
-        AsyncThrowingStream<StreamingEvent, Error> { [webSocketTask, decoder] in
+        let printResponse = debugResponses
+        return AsyncThrowingStream<StreamingEvent, Error> { [webSocketTask, decoder] in
             do {
                 let message = try await webSocketTask.receive()
                 let data =
@@ -40,6 +44,9 @@ public class TootSocket {
                     }
                 guard let data else { throw TootSDKError.decodingError("message data") }
 
+                if printResponse {
+                    print("⬅️ 🔌", data.prettyPrintedJSONString ?? String(data: data, encoding: .utf8) ?? "Undecodable")
+                }
                 return try decoder.decode(StreamingEvent.self, from: data)
             } catch {
                 // URLSessionWebSocketTask.receive() doesn't respond to Task cancellation, so we need to check if the task has already been cancelled at the time that it throws any error.
@@ -148,7 +155,9 @@ extension TootClient {
         try Task.checkCancellation()
         let task = try webSocketTask(req)
 
-        return TootSocket(webSocketTask: task)
+        let socket = TootSocket(webSocketTask: task)
+        socket.debugResponses = self.debugResponses
+        return socket
     }
 
     /// Check whether the streaming endpoint is alive.
@@ -175,7 +184,7 @@ extension TootClient {
     /// - Throws: ``TootSDKError/requiredURLNotSet`` if the request does not have a URL set.
     internal func webSocketTask(_ req: HTTPRequestBuilder) throws -> URLSessionWebSocketTask {
         if req.headers.index(forKey: "User-Agent") == nil {
-            req.headers["User-Agent"] = "TootSDK"
+            req.headers["User-Agent"] = clientName
         }
 
         if let accessToken {

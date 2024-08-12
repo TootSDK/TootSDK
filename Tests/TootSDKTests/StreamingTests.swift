@@ -60,6 +60,17 @@ final class StreamingTests: XCTestCase {
         XCTAssertEqual(result.event, .filtersChanged)
     }
 
+    func testDecodingServerError() throws {
+        // arrange
+        let json = localContent("streaming_error")
+        let decoder = TootDecoder()
+
+        // act
+        XCTAssertThrowsError(try decoder.decode(StreamingEvent.self, from: json)) { error in
+            XCTAssertEqual(error as! TootSDKError, TootSDKError.streamingError(status: 400, error: "Something went wrong"))
+        }
+    }
+
     func testEncodingQuery() throws {
         let target = "{\"type\":\"subscribe\",\"stream\":\"user\"}"
         let alternateTarget = "{\"stream\":\"user\",\"type\":\"subscribe\"}"

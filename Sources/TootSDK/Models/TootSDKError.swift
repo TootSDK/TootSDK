@@ -69,7 +69,7 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "The remote instance does not provide a streaming endpoint."
         case .streamingEndpointUnhealthy:
             return "The streaming endpoint is not alive."
-            case .streamingError(status: let status, error: let error):
+        case .streamingError(let status, let error):
             return "The streaming event could not be decoded, status: \(status), error: \(error)."
         case .noSubscriptions:
             return "Cannot start streaming because there are no subscriptions to any streaming timelines."

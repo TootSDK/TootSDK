@@ -26,23 +26,21 @@ public struct StreamingEvent: Sendable {
 extension StreamingEvent: Decodable {
     public init(from decoder: any Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         func throwStreamingError(_ fallback: String) -> TootSDKError {
             let error = try? values.decodeIfPresent(String.self, forKey: .error)
             if let status = try? values.decodeIfPresent(Int.self, forKey: .status) {
                 return TootSDKError.streamingError(status: status, error: error ?? "Unknwon")
-            }
-            else if let error = error {
+            } else if let error = error {
                 return TootSDKError.streamingError(status: 400, error: error)
-            }
-            else {
+            } else {
                 return TootSDKError.decodingError(fallback)
             }
         }
-        
+
         guard let stream = try values.decodeIfPresent([String].self, forKey: .stream),
-              let timeline = StreamingTimeline(rawValue: stream) else
-        {
+            let timeline = StreamingTimeline(rawValue: stream)
+        else {
             throw throwStreamingError("timeline")
         }
         self.timeline = timeline
@@ -52,8 +50,7 @@ extension StreamingEvent: Decodable {
         do {
             eventName = try values.decode(String.self, forKey: .event)
             payload = try values.decodeIfPresent(String.self, forKey: .payload)
-        }
-        catch {
+        } catch {
             throw throwStreamingError("event or payload")
         }
         guard let event = EventContent(eventName, payload: payload) else {
