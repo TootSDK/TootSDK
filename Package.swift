@@ -86,6 +86,7 @@ let package = Package(
                 .copy("Resources/streaming_delete.json"),
                 .copy("Resources/streaming_filters_changed.json"),
                 .copy("Resources/streaming_update.json"),
+                .copy("Resources/streaming_error.json"),
                 .copy("Resources/tag.json"),
                 .copy("Resources/translation_attachment.json"),
                 .copy("Resources/translation_poll.json"),
