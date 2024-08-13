@@ -75,7 +75,7 @@ extension StreamingTimeline: RawRepresentable {
         case .hashtag(let tag): ["hashtag", tag]
         case .localHashtag(let tag): ["hashtag:local", tag]
         case .user: ["user"]
-        case .userNotification: ["userNotification"]
+        case .userNotification: ["user:notification"]
         case .list(let listID): ["list", listID]
         case .direct: ["direct"]
         }
