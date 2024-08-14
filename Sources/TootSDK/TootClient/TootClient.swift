@@ -178,7 +178,7 @@ extension TootClient {
         }
 
         if req.headers.index(forKey: "User-Agent") == nil {
-            req.headers["User-Agent"] = "TootSDK"
+            req.headers["User-Agent"] = clientName
         }
 
         if let accessToken = accessToken {
