@@ -184,7 +184,7 @@ extension TootClient {
     /// - Throws: ``TootSDKError/requiredURLNotSet`` if the request does not have a URL set.
     internal func webSocketTask(_ req: HTTPRequestBuilder) throws -> URLSessionWebSocketTask {
         if req.headers.index(forKey: "User-Agent") == nil {
-            req.headers["User-Agent"] = clientName
+            req.headers["User-Agent"] = httpUserAgent
         }
 
         if let accessToken {

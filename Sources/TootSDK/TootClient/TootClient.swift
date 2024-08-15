@@ -29,8 +29,20 @@ public class TootClient: @unchecked Sendable {
     public lazy var data = TootDataStream(client: self)
     /// WebSocket streaming API.
     public lazy var streaming = StreamingClient(client: self)
+
     /// The clientName the client was initialized with
+    ///
+    /// The clientName becomes the name of the app used during authentication and also becomes visible in the timeline when users post toots.
+    /// Changing the value of clientName after authentication will result in your authentication token being invalidated.
     public let clientName: String
+
+    /// The User-Agent header string used in outgoing HTTP requests.
+    ///
+    /// Use this to identify the app, its version number, and its host operating system for example.
+    /// Changing this is optional, but recommended.
+    ///
+    /// https://developer.mozilla.org/en-US/docs/Glossary/User_agent
+    public let httpUserAgent: String
 
     // MARK: - Internal properties
     internal var decoder: JSONDecoder = TootDecoder()
@@ -58,13 +70,15 @@ public class TootClient: @unchecked Sendable {
         session: URLSession = URLSession.shared,
         instanceURL: URL,
         accessToken: String? = nil,
-        scopes: [String] = ["read", "write", "follow", "push"]
+        scopes: [String] = ["read", "write", "follow", "push"],
+        httpUserAgent: String? = nil
     ) {
         self.session = session
         self.instanceURL = instanceURL
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
+        self.httpUserAgent = httpUserAgent ?? clientName
     }
 
     /// Initialize and connect a new instance of `TootClient`.
@@ -81,13 +95,15 @@ public class TootClient: @unchecked Sendable {
         clientName: String = "TootSDK",
         session: URLSession = URLSession.shared,
         accessToken: String? = nil,
-        scopes: [String] = ["read", "write", "follow", "push"]
+        scopes: [String] = ["read", "write", "follow", "push"],
+        httpUserAgent: String? = nil
     ) async throws {
         self.session = session
         self.instanceURL = instanceURL
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
+        self.httpUserAgent = httpUserAgent ?? clientName
         try await connect()
     }
 
@@ -178,7 +194,7 @@ extension TootClient {
         }
 
         if req.headers.index(forKey: "User-Agent") == nil {
-            req.headers["User-Agent"] = clientName
+            req.headers["User-Agent"] = httpUserAgent
         }
 
         if let accessToken = accessToken {
