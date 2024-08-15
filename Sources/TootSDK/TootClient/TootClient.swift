@@ -38,7 +38,7 @@ public class TootClient: @unchecked Sendable {
 
     /// The User-Agent header string used in outgoing HTTP requests.
     ///
-    /// Use this to identify the app, its version number, and its host operating system for example.
+    /// Use this to identify the app, its version number, and its host operating system, for example.
     /// Changing this is optional, but recommended.
     ///
     /// https://developer.mozilla.org/en-US/docs/Glossary/User_agent
