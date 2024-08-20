@@ -34,7 +34,7 @@ extension TootClient {
     /// - Parameter params: The updated content of the post to be posted.
     /// - Returns: The post after the update.
     public func editPost(id: String, _ params: EditPostParams) async throws -> Post {
-        let updateMediaSeparately = [.pixelfed, .pleroma, .akkoma, .firefish, .catodon, .iceshrimp].contains(flavour)
+        let updateMediaSeparately = [.pixelfed, .pleroma, .akkoma, .firefish, .catodon, .iceshrimp, .sharkey].contains(flavour)
         if updateMediaSeparately {
             try await updateMediaAttributes(params.mediaAttributes ?? [])
         }
