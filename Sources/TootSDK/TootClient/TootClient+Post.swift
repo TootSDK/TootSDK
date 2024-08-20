@@ -16,7 +16,11 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses"])
             $0.method = .post
-            $0.body = try .multipart(params, boundary: UUID().uuidString)
+            if flavour == .sharkey {
+                $0.body = try .json(params, encoder: encoder)
+            } else {
+                $0.body = try .multipart(params, boundary: UUID().uuidString)
+            }
         }
         return try await fetch(Post.self, req)
     }
