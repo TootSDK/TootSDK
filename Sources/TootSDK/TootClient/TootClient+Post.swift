@@ -16,7 +16,11 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses"])
             $0.method = .post
-            $0.body = try .multipart(params, boundary: UUID().uuidString)
+            if flavour == .sharkey {
+                $0.body = try .json(params, encoder: encoder)
+            } else {
+                $0.body = try .multipart(params, boundary: UUID().uuidString)
+            }
         }
         return try await fetch(Post.self, req)
     }
@@ -30,7 +34,7 @@ extension TootClient {
     /// - Parameter params: The updated content of the post to be posted.
     /// - Returns: The post after the update.
     public func editPost(id: String, _ params: EditPostParams) async throws -> Post {
-        let updateMediaSeparately = [.pixelfed, .pleroma, .akkoma, .firefish, .catodon, .iceshrimp].contains(flavour)
+        let updateMediaSeparately = [.pixelfed, .pleroma, .akkoma, .firefish, .catodon, .iceshrimp, .sharkey].contains(flavour)
         if updateMediaSeparately {
             try await updateMediaAttributes(params.mediaAttributes ?? [])
         }
