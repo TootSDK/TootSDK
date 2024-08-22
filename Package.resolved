@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "multipart-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/multipart-kit",
+      "state" : {
+        "revision" : "12ee56f25bd3fc4c2d09c2aa16e69de61dc786e8",
+        "version" : "4.6.0"
+      }
+    },
+    {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-atomics.git",
