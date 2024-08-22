@@ -2,7 +2,7 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
-import MultipartKitTootSDK
+import MultipartKit
 import NIOCore
 
 internal struct HTTPBody {
