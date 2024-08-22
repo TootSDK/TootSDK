@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  MultipartKit+ConvenienceInits.swift
+//
 //
 //  Created by Dave Wood on 22/08/2024.
 //
