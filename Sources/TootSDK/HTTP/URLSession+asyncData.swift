@@ -17,14 +17,17 @@ extension URLSession {
 }
 
 extension URLSession {
+    private class TaskHandle: @unchecked Sendable {
+        weak var dataTask: URLSessionDataTask?
+    }
+    
     func data(for request: URLRequest) async throws -> (Data, URLResponse) {
-        var dataTask: URLSessionDataTask?
-        let onCancel = { dataTask?.cancel() }
+        let taskHandle = TaskHandle()
 
         try Task.checkCancellation()
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
-                dataTask = self.dataTask(with: request) { data, response, error in
+                taskHandle.dataTask = self.dataTask(with: request) { data, response, error in
                     guard let data = data, let response = response else {
                         let error = error ?? URLError(.badServerResponse)
                         return continuation.resume(throwing: error)
@@ -32,10 +35,10 @@ extension URLSession {
                     continuation.resume(returning: (data, response))
                 }
 
-                dataTask?.resume()
+                taskHandle.dataTask?.resume()
             }
         } onCancel: {
-            onCancel()
+            taskHandle.dataTask?.cancel()
         }
 
     }
