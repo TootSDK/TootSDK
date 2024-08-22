@@ -1,7 +1,7 @@
 // Created by konstantin on 04/12/2022.
 // Copyright (c) 2022. All rights reserved.
 
-@preconcurrency import struct Foundation.Date
+import struct Foundation.Date
 
 /// Represents a post that will be published at a future scheduled date.
 public struct ScheduledPost: Codable, Equatable, Hashable, Identifiable, Sendable {

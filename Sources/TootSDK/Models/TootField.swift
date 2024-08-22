@@ -1,7 +1,7 @@
 // Created by konstantin on 02/11/2022.
 // Copyright (c) 2022. All rights reserved.
 
-@preconcurrency import struct Foundation.Date
+import struct Foundation.Date
 
 /// Represents a profile field as a name-value pair with optional verification.
 public struct TootField: Codable, Hashable, Sendable {
