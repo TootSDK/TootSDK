@@ -52,10 +52,6 @@ public class TootClient: @unchecked Sendable {
     /// The current accessToken in use
     internal var accessToken: String?
 
-    #if canImport(AuthenticationServices) && !os(tvOS) && !os(watchOS)
-        internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
-    #endif
-
     /// Initialize a new instance of `TootClient` by optionally providing an access token for authentication.
     ///
     /// After initializing, you need to manually call ``TootClient/connect()`` in order to obtain the correct flavour of the server.
