@@ -38,35 +38,119 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
     /// Summary of the event that caused follow relationships to be severed. Attached when type of the notification is ``NotificationType/severedRelationships``.
     public var relationshipSeveranceEvent: RelationshipSeveranceEvent?
 
-    public enum NotificationType: String, Codable, Sendable, CaseIterable {
+    public enum NotificationType: Codable, Hashable, Sendable, CaseIterable, RawRepresentable {
         /// Someone followed you
         case follow
         /// Someone mentioned you in their post
         case mention
         /// Someone reposted one of your posts
-        case repost = "reblog"
+        case repost
         /// Someone favourited one of your posts
         case favourite
         /// A poll you have voted in or created has ended
         case poll
         /// Someone requested to follow you
-        case followRequest = "follow_request"
+        case followRequest
         /// Someone you enabled notifications for has posted a post
-        case post = "status"
+        case post
         /// A post you interacted with has been edited
-        case update = "update"
+        case update
         /// Someone signed up
-        case adminSignUp = "admin.sign_up"
+        case adminSignUp
         /// A new report has been filed
-        case adminReport = "admin.report"
+        case adminReport
         /// Some of your follow relationships have been severed as a result of a moderation or block event
-        case severedRelationships = "severed_relationships"
+        case severedRelationships
+        /// Someone reacted with emoji to one of your posts
+        case emojiReaction
+
+        /// An unsupported notification type was received. If you encounter this please update TootSDK by adding support for received type.
+        case unknown(String)
+
+        public init(from decoder: any Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let rawValue = try container.decode(String.self)
+            self = NotificationType(rawValue: rawValue)
+        }
+
+        public func encode(to encoder: any Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode(rawValue)
+        }
+
+        public init(rawValue: String) {
+            switch rawValue {
+            case "follow":
+                self = .follow
+            case "mention":
+                self = .mention
+            case "reblog":
+                self = .repost
+            case "favourite":
+                self = .favourite
+            case "poll":
+                self = .poll
+            case "follow_request":
+                self = .followRequest
+            case "status":
+                self = .post
+            case "update":
+                self = .update
+            case "admin.sign_up":
+                self = .adminSignUp
+            case "admin.report":
+                self = .adminReport
+            case "severed_relationships":
+                self = .severedRelationships
+            case "emoji_reaction":
+                self = .emojiReaction
+            default:
+                self = .unknown(rawValue)
+            }
+        }
+
+        public var rawValue: String {
+            switch self {
+            case .follow: return "follow"
+            case .mention: return "mention"
+            case .repost: return "reblog"
+            case .favourite: return "favourite"
+            case .poll: return "poll"
+            case .followRequest: return "follow_request"
+            case .post: return "status"
+            case .update: return "update"
+            case .adminSignUp: return "admin.sign_up"
+            case .adminReport: return "admin.report"
+            case .severedRelationships: return "severed_relationships"
+            case .emojiReaction: return "emoji_reaction"
+            case .unknown(let rawValue): return rawValue
+            }
+        }
+
+        public static var allCases: [TootNotification.NotificationType] {
+            return [
+                .follow,
+                .mention,
+                .repost,
+                .favourite,
+                .poll,
+                .followRequest,
+                .post,
+                .update,
+                .adminSignUp,
+                .adminReport,
+                .severedRelationships,
+                .emojiReaction,
+            ]
+        }
 
         /// Returns notification types supported by the given `flavour`.
         public static func supported(by flavour: TootSDKFlavour) -> Set<NotificationType> {
             switch flavour {
-            case .mastodon, .sharkey:
-                return Set(allCases)
+            case .mastodon:
+                return [
+                    .follow, .mention, .repost, .favourite, .poll, .followRequest, .post, .update, .adminSignUp, .adminReport, .severedRelationships,
+                ]
             case .pleroma, .akkoma:
                 return [.follow, .mention, .repost, .favourite, .poll, .followRequest, .update]
             case .friendica:
@@ -77,6 +161,11 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 return [.follow, .mention, .repost, .poll, .followRequest]
             case .goToSocial:
                 return [.follow, .followRequest, .mention, .repost, .favourite, .poll, .post, .adminSignUp]
+            case .sharkey:
+                return [
+                    .follow, .mention, .repost, .favourite, .poll, .followRequest, .post, .update, .adminSignUp, .adminReport, .severedRelationships,
+                    .emojiReaction,
+                ]
             }
         }
 
