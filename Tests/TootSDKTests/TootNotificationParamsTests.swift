@@ -83,7 +83,7 @@ final class TootNotificationParamsTests: XCTestCase {
         }
     }
 
-    func testFriendicaSharkeyQueryParams() throws {
+    func testFriendicaQueryParams() throws {
         let flavour = TootSDKFlavour.friendica
         let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
         client.flavour = flavour
@@ -100,7 +100,7 @@ final class TootNotificationParamsTests: XCTestCase {
             ], "Incorrect params for \(flavour)")
     }
 
-    func testFriendicaQueryParams() throws {
+    func testSharkeyQueryParams() throws {
         let flavour = TootSDKFlavour.sharkey
         let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
         client.flavour = flavour
@@ -112,6 +112,7 @@ final class TootNotificationParamsTests: XCTestCase {
             [
                 URLQueryItem(name: "exclude_types[]", value: "admin.report"),
                 URLQueryItem(name: "exclude_types[]", value: "admin.sign_up"),
+                URLQueryItem(name: "exclude_types[]", value: "emoji_reaction"),
                 URLQueryItem(name: "exclude_types[]", value: "follow"),
                 URLQueryItem(name: "exclude_types[]", value: "follow_request"),
                 URLQueryItem(name: "exclude_types[]", value: "mention"),
