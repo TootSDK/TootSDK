@@ -26,7 +26,7 @@ extension TootClient {
             // So we use that to then retrieve the relationship
             let account = try await pleromaFollowAccountURI(by: uri)
 
-            if let relationship = try await getRelationships(by: [account.id]).first {
+            if let accountId = account.id, let relationship = try await getRelationships(by: [accountId]).first {
                 return relationship
             } else {
                 throw TootSDKError.unexpectedError("Unable to retrieve relationship")
