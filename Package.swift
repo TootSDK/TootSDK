@@ -79,6 +79,7 @@ let package = Package(
                 .copy("Resources/mastodon.json"),
                 .copy("Resources/pleroma.json"),
                 .copy("Resources/relationship.json"),
+                .copy("Resources/relationship_sharkey.json"),
                 .copy("Resources/scheduled_post_sensitive.json"),
                 .copy("Resources/scheduled_post_attachment.json"),
                 .copy("Resources/scheduled_post_multiple_attachments.json"),

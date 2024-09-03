@@ -33,6 +33,26 @@ final class RelationshipTests: XCTestCase {
         XCTAssertEqual(result.showingReposts, false)
         XCTAssertEqual(result.endorsed, false)
         XCTAssertEqual(result.note, "")
+    }
 
+    func testSharkeyRelationshipDecode() throws {
+        let json = localContent("relationship_sharkey")
+        let decoder = TootDecoder()
+
+        let result = try decoder.decode(Relationship.self, from: json)
+
+        XCTAssertEqual(result.id, nil)
+        XCTAssertEqual(result.following, nil)
+        XCTAssertEqual(result.requested, nil)
+        XCTAssertEqual(result.endorsed, false)
+        XCTAssertEqual(result.followedBy, nil)
+        XCTAssertEqual(result.muting, nil)
+        XCTAssertEqual(result.mutingNotifications, false)
+        XCTAssertEqual(result.showingReposts, true)
+        XCTAssertEqual(result.notifying, false)
+        XCTAssertEqual(result.blocking, nil)
+        XCTAssertEqual(result.domainBlocking, false)
+        XCTAssertEqual(result.blockedBy, nil)
+        XCTAssertEqual(result.note, nil)
     }
 }
