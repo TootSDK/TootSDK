@@ -36,6 +36,11 @@ public class TootClient: @unchecked Sendable {
     /// Changing the value of clientName after authentication will result in your authentication token being invalidated.
     public let clientName: String
 
+    /// The URL of the client's website.
+    ///
+    /// This URL is used as the hyperlink of the clientName in the details of a toot.
+    public let clientWebsite: String
+
     /// The User-Agent header string used in outgoing HTTP requests.
     ///
     /// Use this to identify the app, its version number, and its host operating system, for example.
@@ -61,12 +66,14 @@ public class TootClient: @unchecked Sendable {
     /// After initializing, you need to manually call ``TootClient/connect()`` in order to obtain the correct flavour of the server.
     /// - Parameters:
     ///   - clientName: Name of the client to be used in outgoing HTTP requests. Defaults to `TootSDK`
+    ///   - clientWebsite: A URL to the homepage of your client. Defaults to an empty string.
     ///   - session: the URLSession being used internally, defaults to shared
     ///   - instanceURL: the instance you are connecting to
     ///   - accessToken: the existing access token; if you already have one
     ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
     public init(
         clientName: String = "TootSDK",
+        clientWebsite: String = "",
         session: URLSession = URLSession.shared,
         instanceURL: URL,
         accessToken: String? = nil,
@@ -78,6 +85,7 @@ public class TootClient: @unchecked Sendable {
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
+        self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
     }
 
@@ -87,12 +95,14 @@ public class TootClient: @unchecked Sendable {
     /// - Parameters:
     ///   - instanceURL: the instance you are connecting to
     ///   - clientName: Name of the client to be used in outgoing HTTP requests. Defaults to `TootSDK`
+    ///   - clientWebsite: A URL to the homepage of your client. Defaults to an empty string.
     ///   - session: the URLSession being used internally, defaults to shared
     ///   - accessToken: the existing access token; if you already have one
     ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
     public init(
         connect instanceURL: URL,
         clientName: String = "TootSDK",
+        clientWebsite: String = "",
         session: URLSession = URLSession.shared,
         accessToken: String? = nil,
         scopes: [String] = ["read", "write", "follow", "push"],
@@ -103,6 +113,7 @@ public class TootClient: @unchecked Sendable {
         self.accessToken = accessToken
         self.scopes = scopes
         self.clientName = clientName
+        self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
         try await connect()
     }
