@@ -39,7 +39,7 @@ public class TootClient: @unchecked Sendable {
     /// The URL of the client's website.
     ///
     /// This URL is used as the hyperlink of the clientName in the details of a toot.
-    public let clientWebsite: String
+    public let clientWebsite: String?
 
     /// The User-Agent header string used in outgoing HTTP requests.
     ///
@@ -73,7 +73,7 @@ public class TootClient: @unchecked Sendable {
     ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
     public init(
         clientName: String = "TootSDK",
-        clientWebsite: String = "",
+        clientWebsite: String? = nil,
         session: URLSession = URLSession.shared,
         instanceURL: URL,
         accessToken: String? = nil,
@@ -102,7 +102,7 @@ public class TootClient: @unchecked Sendable {
     public init(
         connect instanceURL: URL,
         clientName: String = "TootSDK",
-        clientWebsite: String = "",
+        clientWebsite: String? = nil,
         session: URLSession = URLSession.shared,
         accessToken: String? = nil,
         scopes: [String] = ["read", "write", "follow", "push"],

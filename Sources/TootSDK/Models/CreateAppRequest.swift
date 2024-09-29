@@ -7,5 +7,5 @@ struct CreateAppRequest: Hashable, Codable {
     let clientName: String
     let redirectUris: String
     let scopes: String
-    let website: String
+    let website: String?
 }
