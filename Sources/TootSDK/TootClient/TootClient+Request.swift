@@ -64,14 +64,14 @@ extension TootClient {
     internal func getAuthorizationInfo(
         callbackURI: String,
         scopes: [String],
-        website: String = "",
         responseType: String = "code"
     ) async throws -> CallbackInfo {
 
         let createAppData = CreateAppRequest(
             clientName: clientName,
             redirectUris: callbackURI,
-            scopes: scopes.joined(separator: " "), website: website)
+            scopes: scopes.joined(separator: " "),
+            website: clientWebsite)
 
         let registerAppReq = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "apps"])
