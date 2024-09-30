@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MultipartKitTootSDK
+import MultipartKit
 
 extension TootClient {
 
@@ -40,7 +40,7 @@ extension TootClient {
     /// Update the user’s display and preferences.
     /// - Returns: The user’s own Account with source attribute
     public func updateCredentials(params: UpdateCredentialsParams) async throws -> Account {
-        try requireFeature(.updateCredentials)
+        try await requireFeature(.updateCredentials)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "update_credentials"])
             if self.flavour == .pixelfed {
@@ -282,6 +282,8 @@ extension TootFeature {
 
     /// Ability to edit your profile
     ///
+
+    @MainActor
     public static let updateCredentials = TootFeature(supportedFlavours: [
         .mastodon, .akkoma, .pleroma, .pixelfed, .firefish, .sharkey, .goToSocial, .catodon, .iceshrimp,
     ])

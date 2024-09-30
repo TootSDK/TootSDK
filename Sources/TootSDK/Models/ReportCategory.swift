@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ReportCategory: String, CaseIterable, Codable {
+public enum ReportCategory: String, CaseIterable, Codable, Sendable {
     case spam
     /// Content that is illegal in the user's or the instance's country.
     case legal

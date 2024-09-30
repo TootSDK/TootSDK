@@ -40,13 +40,14 @@ public actor StreamingClient {
 
     public typealias Stream = AsyncThrowingStream<Event, Error>
 
-    internal class Subscriber: Hashable, Identifiable {
+    internal class Subscriber: Hashable, Identifiable, Sendable {
         static func == (lhs: StreamingClient.Subscriber, rhs: StreamingClient.Subscriber) -> Bool {
             return lhs.timeline == rhs.timeline && lhs.id == rhs.id
         }
 
         let timeline: StreamingTimeline
-        var continuation: Stream.Continuation
+        
+        let continuation: Stream.Continuation
 
         fileprivate init(timeline: StreamingTimeline, continuation: Stream.Continuation) {
             self.timeline = timeline
@@ -226,16 +227,21 @@ public actor StreamingClient {
 
         // Close socket when finished.
         defer {
-            #if canImport(OSLog)
-                Self.logger.info("Streaming connection ended.")
-            #endif
-            socket.close(with: .normalClosure)
-            if self.connection === socket {
-                self.connection = nil
-                self.isConnectionUp = false
-                // notify subscribers that the connection has closed
-                for subscriber in subscribers {
-                    subscriber.continuation.yield(.connectionDown)
+            Task {
+                
+                #if canImport(OSLog)
+                    Self.logger.info("Streaming connection ended.")
+                #endif
+                
+                await socket.close(with: .normalClosure)
+                
+                if self.connection === socket {
+                    self.connection = nil
+                    self.isConnectionUp = false
+                    // notify subscribers that the connection has closed
+                    for subscriber in subscribers {
+                        subscriber.continuation.yield(.connectionDown)
+                    }
                 }
             }
         }
@@ -269,14 +275,16 @@ public actor StreamingClient {
                 subscriber.continuation.yield(.connectionUp)
             }
 
-            for try await event in socket.stream {
+            for try await event in await socket.stream {
                 #if canImport(OSLog)
                     Self.logger.debug("Received streaming event for timeline \(event.timeline.rawValue).")
                 #endif
                 distributeToSubscribers(event)
             }
         } onCancel: {
-            socket.close(with: .normalClosure)
+            Task {
+                await socket.close(with: .normalClosure)
+            }
         }
     }
 
