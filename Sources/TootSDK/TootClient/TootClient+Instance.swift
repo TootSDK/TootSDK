@@ -11,6 +11,7 @@ extension TootClient {
     /// Obtain general information about the server.
     public func getInstanceInfo() async throws -> any Instance {
 		do {
+			try requireFeature(.instancev2)
 			return try await getInstanceV2()
 		} catch TootSDKError.unsupportedFlavour(_, _) {
 			return try await getInstanceV1()
@@ -26,7 +27,6 @@ extension TootClient {
 	}
 	
 	public func getInstanceV2() async throws -> InstanceV2 {
-		try requireFeature(.instancev2)
 		let req = HTTPRequestBuilder {
 			$0.url = getURL(["api", "v2", "instance"])
 			$0.method = .get
