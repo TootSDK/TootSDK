@@ -77,7 +77,7 @@ public struct InstanceV1: Codable, Hashable {
     public typealias Configuration = InstanceConfiguration
     public typealias InstanceURLs = InstanceConfiguration.URLs
 
-    public struct Stats: Codable, Hashable {
+    public struct Stats: Codable, Hashable, Sendable {
         /// Users registered on this instance. Number.
         public var userCount: Int?
         /// Posts authored by users on instance. Number.

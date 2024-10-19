@@ -1,4 +1,4 @@
-public struct InstanceConfiguration: Codable, Hashable {
+public struct InstanceConfiguration: Codable, Hashable, Sendable {
     /// URLs of interest for client apps.
     ///
     /// Only populated by v2 instance API. See ``InstanceV1/urls`` for the same values from the v1 API.
@@ -22,18 +22,20 @@ public struct InstanceConfiguration: Codable, Hashable {
 
     enum CodingKeys: String, CodingKey {
         case urls
+        case vapid
         case accounts
         case posts = "statuses"
         case mediaAttachments
         case polls
+        case translation
     }
 
-    public struct URLs: Codable, Hashable {
+    public struct URLs: Codable, Hashable, Sendable {
         /// Websockets address for push streaming. String (URL).
         public var streamingApi: String?
     }
 
-    public struct Accounts: Codable, Hashable {
+    public struct Accounts: Codable, Hashable, Sendable {
         /// The maximum number of featured tags allowed for each account.
         public var maxFeaturedTags: Int?
         /// The maximum number of pinned posts for each account.
@@ -41,11 +43,11 @@ public struct InstanceConfiguration: Codable, Hashable {
 
         enum CodingKeys: String, CodingKey {
             case maxFeaturedTags
-            case maxPinnedPosts = "max_pinned_statuses"
+            case maxPinnedPosts = "maxPinnedStatuses"
         }
     }
 
-    public struct Posts: Codable, Hashable {
+    public struct Posts: Codable, Hashable, Sendable {
         /// The maximum number of allowed characters per post.
         public var maxCharacters: Int?
         /// The maximum number of media attachments that can be added to a post.
@@ -54,7 +56,7 @@ public struct InstanceConfiguration: Codable, Hashable {
         public var charactersReservedPerUrl: Int?
     }
 
-    public struct MediaAttachments: Codable, Hashable {
+    public struct MediaAttachments: Codable, Hashable, Sendable {
         /// Contains MIME types that can be uploaded.
         public var supportedMimeTypes: [String]?
         /// The maximum size of any uploaded image, in bytes.
@@ -69,7 +71,7 @@ public struct InstanceConfiguration: Codable, Hashable {
         public var videoMatrixLimit: Int?
     }
 
-    public struct Polls: Codable, Hashable {
+    public struct Polls: Codable, Hashable, Sendable {
         /// Each poll is allowed to have up to this many options.
         public var maxOptions: Int?
         /// Each poll option is allowed to have this many characters.
@@ -80,12 +82,12 @@ public struct InstanceConfiguration: Codable, Hashable {
         public var maxExpiration: Int?
     }
 
-    public struct Translation: Codable, Hashable {
+    public struct Translation: Codable, Hashable, Sendable {
         /// Whether the translation API is available on this instance.
         public var enabled: Bool?
     }
 
-    public struct VAPID: Codable, Hashable {
+    public struct VAPID: Codable, Hashable, Sendable {
         /// The instance's VAPID public key, used for push notifications.
         ///
         /// > SeeAlso: This is the same as ``PushSubscription/serverKey``.

@@ -7,7 +7,7 @@ import XCTest
 @testable import TootSDK
 
 final class FlavourTests: XCTestCase {
-    // MARK: - Instance flavour detection
+    // MARK: - Instance v1 flavour detection
 
     func testDetectsMastodon4() throws {
         let instance = try localObject(InstanceV1.self, "mastodon")
@@ -62,6 +62,13 @@ final class FlavourTests: XCTestCase {
     func testDetectsSharkey() throws {
         let instance = try localObject(InstanceV1.self, "instance_sharkey_contact_removed")
         XCTAssertEqual(instance.flavour, .sharkey)
+    }
+
+    // MARK: - Instance v2 flavour detection
+
+    func testDetectsV2Mastodon() throws {
+        let instance = try localObject(InstanceV2.self, "instancev2_mastodon")
+        XCTAssertEqual(instance.flavour, .mastodon)
     }
 
     // MARK: - NodeInfo flavour detection
