@@ -71,6 +71,26 @@ final class FlavourTests: XCTestCase {
         XCTAssertEqual(instance.flavour, .mastodon)
     }
 
+    func testDetectsV2Firefish() throws {
+        let instance = try localObject(InstanceV2.self, "instancev2_firefish")
+        XCTAssertEqual(instance.flavour, .firefish)
+    }
+
+    func testDetectsV2Friendica() throws {
+        let instance = try localObject(InstanceV2.self, "instancev2_friendica")
+        XCTAssertEqual(instance.flavour, .friendica)
+    }
+
+    func testDetectsV2Pixelfed() throws {
+        let instance = try localObject(InstanceV2.self, "instancev2_pixelfed")
+        XCTAssertEqual(instance.flavour, .pixelfed)
+    }
+
+    func testDetectsV2Pleroma() throws {
+        let instance = try localObject(InstanceV2.self, "instancev2_pleroma")
+        XCTAssertEqual(instance.flavour, .pleroma)
+    }
+
     // MARK: - NodeInfo flavour detection
 
     func testDetectsNodeInfoAkkoma() throws {
