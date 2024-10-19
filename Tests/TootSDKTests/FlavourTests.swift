@@ -10,57 +10,57 @@ final class FlavourTests: XCTestCase {
     // MARK: - Instance flavour detection
 
     func testDetectsMastodon4() throws {
-        let instance = try localObject(Instance.self, "mastodon")
+        let instance = try localObject(InstanceV1.self, "mastodon")
         XCTAssertEqual(instance.flavour, .mastodon)
     }
 
     func testDetectsPleroma() throws {
-        let instance = try localObject(Instance.self, "pleroma")
+        let instance = try localObject(InstanceV1.self, "pleroma")
         XCTAssertEqual(instance.flavour, .pleroma)
     }
 
     func testDetectsPixelfed() throws {
-        let instance = try localObject(Instance.self, "pixelfed")
+        let instance = try localObject(InstanceV1.self, "pixelfed")
         XCTAssertEqual(instance.flavour, .pixelfed)
     }
 
     func testDetectsPixelfed12() throws {
-        let instance = try localObject(Instance.self, "instance_pixelfed")
+        let instance = try localObject(InstanceV1.self, "instance_pixelfed")
         XCTAssertEqual(instance.flavour, .pixelfed)
     }
 
     func testDetectsFriendica() throws {
-        let instance = try localObject(Instance.self, "instance_friendica_nocontact")
+        let instance = try localObject(InstanceV1.self, "instance_friendica_nocontact")
         XCTAssertEqual(instance.flavour, .friendica)
     }
 
     func testDetectsAkkoma() throws {
-        let instance = try localObject(Instance.self, "instance_akkoma")
+        let instance = try localObject(InstanceV1.self, "instance_akkoma")
         XCTAssertEqual(instance.flavour, .akkoma)
     }
 
     func testDetectsFirefish() throws {
-        let instance = try localObject(Instance.self, "instance_firefish_contact_removed")
+        let instance = try localObject(InstanceV1.self, "instance_firefish_contact_removed")
         XCTAssertEqual(instance.flavour, .firefish)
     }
 
     func testDetectsCatodon() throws {
-        let instance = try localObject(Instance.self, "instance_catodon_contact_removed")
+        let instance = try localObject(InstanceV1.self, "instance_catodon_contact_removed")
         XCTAssertEqual(instance.flavour, .catodon)
     }
 
     func testDetectsIceshrimp() throws {
-        let instance = try localObject(Instance.self, "instance_iceshrimp_contact_removed")
+        let instance = try localObject(InstanceV1.self, "instance_iceshrimp_contact_removed")
         XCTAssertEqual(instance.flavour, .iceshrimp)
     }
 
     func testDetectsIceshrimpNet() throws {
-        let instance = try localObject(Instance.self, "instance_iceshrimpnet")
+        let instance = try localObject(InstanceV1.self, "instance_iceshrimpnet")
         XCTAssertEqual(instance.flavour, .iceshrimp)
     }
 
     func testDetectsSharkey() throws {
-        let instance = try localObject(Instance.self, "instance_sharkey_contact_removed")
+        let instance = try localObject(InstanceV1.self, "instance_sharkey_contact_removed")
         XCTAssertEqual(instance.flavour, .sharkey)
     }
 

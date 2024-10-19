@@ -42,7 +42,7 @@ public struct InstanceV1: Codable, Hashable {
     }
 
     /// The domain name of the instance.
-	public var uri: String?
+    public var uri: String?
     /// The title of the website.
     public var title: String?
     /// Admin-defined description of the Fediverse site.
@@ -73,10 +73,10 @@ public struct InstanceV1: Codable, Hashable {
     public var contactAccount: Account?
     /// An itemized list of rules for users of the instance.
     public var rules: [InstanceRule]?
-	
-	public typealias Configuration = InstanceConfiguration
-	public typealias InstanceURLs = InstanceConfiguration.URLs
-	
+
+    public typealias Configuration = InstanceConfiguration
+    public typealias InstanceURLs = InstanceConfiguration.URLs
+
     public struct Stats: Codable, Hashable {
         /// Users registered on this instance. Number.
         public var userCount: Int?
@@ -124,8 +124,6 @@ public struct InstanceV1: Codable, Hashable {
         }
     }
 
-    
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.uri = try? container.decodeIfPresent(String.self, forKey: .uri)
@@ -149,9 +147,9 @@ public struct InstanceV1: Codable, Hashable {
 }
 
 extension InstanceV1: Instance {
-	public var domain: String? { uri }
-	public var thumbnailURL: String? { thumbnail }
-	public var registrationsEnabled: Bool? { registrations }
+    public var domain: String? { uri }
+    public var thumbnailURL: String? { thumbnail }
+    public var registrationsEnabled: Bool? { registrations }
 }
 
 extension InstanceV1 {

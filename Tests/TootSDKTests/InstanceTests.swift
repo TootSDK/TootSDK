@@ -9,7 +9,7 @@ final class InstanceTests: XCTestCase {
         let decoder = TootDecoder()
 
         // act
-        let result = try decoder.decode(Instance.self, from: json)
+        let result = try decoder.decode(InstanceV1.self, from: json)
 
         // assert
         XCTAssertNotNil(result)
@@ -28,7 +28,7 @@ final class InstanceTests: XCTestCase {
         let decoder = TootDecoder()
 
         // act
-        let result = try decoder.decode(Instance.self, from: json)
+        let result = try decoder.decode(InstanceV1.self, from: json)
 
         // assert
         XCTAssertNotNil(result)
