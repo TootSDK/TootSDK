@@ -8,14 +8,31 @@ import Foundation
 #endif
 
 extension TootClient {
-    /// Obtain general information about the server
-    public func getInstanceInfo() async throws -> Instance {
-        let req = HTTPRequestBuilder {
-            $0.url = getURL(["api", "v1", "instance"])
-            $0.method = .get
-        }
-        return try await fetch(Instance.self, req)
+    /// Obtain general information about the server.
+    public func getInstanceInfo() async throws -> any Instance {
+		do {
+			return try await getInstanceV2()
+		} catch TootSDKError.unsupportedFlavour(_, _) {
+			return try await getInstanceV1()
+		}
     }
+	
+	public func getInstanceV1() async throws -> InstanceV1 {
+		let req = HTTPRequestBuilder {
+			$0.url = getURL(["api", "v1", "instance"])
+			$0.method = .get
+		}
+		return try await fetch(InstanceV1.self, req)
+	}
+	
+	public func getInstanceV2() async throws -> InstanceV2 {
+		try requireFeature(.instancev2)
+		let req = HTTPRequestBuilder {
+			$0.url = getURL(["api", "v2", "instance"])
+			$0.method = .get
+		}
+		return try await fetch(InstanceV2.self, req)
+	}
 
     public func getInstanceRules() async throws -> [InstanceRule] {
         let req = HTTPRequestBuilder {
