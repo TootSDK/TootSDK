@@ -4,7 +4,7 @@ import Foundation
 ///
 /// Contains properties that are common to both ``InstanceV1`` and ``InstanceV2``. Properties where there is a conflict between each version's implementation are left out of this protocol.
 ///
-/// For example, in V1, `description` contains the extended description, but in V2 `description` contains the short description, so this is left out of the protocol. The idea here is that you can use this protocol's properties safely and predictably regardless of which version of the endpoint is used.
+/// For example, in V1, `description` contains the extended description, but in V2 `description` contains the short description, so the `description` property is left out of this protocol. The idea here is that you can use this protocol's properties safely and predictably regardless of which version of the endpoint is used.
 public protocol Instance: Codable, Hashable, Sendable {
 	/// The domain name of the instance.
 	var domain: String? { get }

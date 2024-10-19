@@ -20,7 +20,9 @@ public struct InstanceV2: Codable, Hashable, Sendable {
 	/// An image used to represent this instance.
 	public var thumbnail: Thumbnail
 	/// The list of available size variants for this instance's configured icon.
-	public var icon: [Icon]?
+	///
+	/// Dictionary keys are String in the form of `12x34`, where `12` is the width and `34` is the height of the icon. Values are the URLs corresponding to the image for that size of icon.
+	public var icon: [String: String]?
 	/// Primary languages of the website and its staff as ISO 639-1 two-letter codes.
 	public var languages: [String]?
 	public var configuration: InstanceConfiguration?
@@ -61,15 +63,6 @@ public struct InstanceV2: Codable, Hashable, Sendable {
 		public var blurhash: String?
 		/// Scaled resolution versions of the image intended for various DPI screens.
 		public var versions: Versions?
-	}
-	
-	public struct Icon: Codable, Hashable, Sendable {
-		/// The URL of this version of the icon.
-		public var src: String
-		/// The size of this version of the icon.
-		///
-		/// In the form of `12x34`, where `12` is the width and `34` is the height of the icon.
-		public var size: String
 	}
 	
 	public struct Registrations: Codable, Hashable, Sendable {
