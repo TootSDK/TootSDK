@@ -10,7 +10,7 @@ import Foundation
 extension TootClient {
     /// Obtain general information about the server from the latest supported API version.
     ///
-    /// If the server is known to support it, returns an ``InstanceV2``; otherwise, returns an ``InstanceV1``.
+    /// If the server is known to be a flavour that supports the V2 Instance API, returns an ``InstanceV2``; otherwise, returns an ``InstanceV1``.
     ///
     /// If you require information that is only provided by a specific version of the Instance API, use ``getInstanceInfoV1()`` or ``getInstanceInfoV2()``.
     public func getInstanceInfo() async throws -> any Instance {
