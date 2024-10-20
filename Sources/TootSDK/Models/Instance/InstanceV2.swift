@@ -16,9 +16,9 @@ public struct InstanceV2: Codable, Hashable, Sendable {
     public var sourceURL: String?
     public var description: String?
     /// Usage data for this instance.
-    public var usage: Usage
+    public var usage: Usage?
     /// An image used to represent this instance.
-    public var thumbnail: Thumbnail
+    public var thumbnail: Thumbnail?
     /// The list of available size variants for this instance's configured icon.
     public var icon: [Icon]?
     /// Primary languages of the website and its staff as ISO 639-1 two-letter codes.
@@ -32,6 +32,38 @@ public struct InstanceV2: Codable, Hashable, Sendable {
     public var contact: ContactInfo?
     /// An itemized list of rules for this instance.
     public var rules: [InstanceRule]?
+
+    public init(
+        domain: String? = nil,
+        title: String? = nil,
+        version: String,
+        sourceURL: String? = nil,
+        description: String? = nil,
+        usage: Usage? = nil,
+        thumbnail: Thumbnail? = nil,
+        icon: [Icon]? = nil,
+        languages: [String]? = nil,
+        configuration: InstanceConfiguration? = nil,
+        registrations: Registrations,
+        apiVersions: APIVersions? = nil,
+        contact: ContactInfo? = nil,
+        rules: [InstanceRule]? = nil
+    ) {
+        self.domain = domain
+        self.title = title
+        self.version = version
+        self.sourceURL = sourceURL
+        self.description = description
+        self.usage = usage
+        self.thumbnail = thumbnail
+        self.icon = icon
+        self.languages = languages
+        self.configuration = configuration
+        self.registrations = registrations
+        self.apiVersions = apiVersions
+        self.contact = contact
+        self.rules = rules
+    }
 
     enum CodingKeys: String, CodingKey {
         case domain
@@ -119,12 +151,14 @@ public struct InstanceV2: Codable, Hashable, Sendable {
 }
 
 extension InstanceV2: Instance {
-    public var thumbnailURL: String? { thumbnail.url }
+    public var thumbnailURL: String? { thumbnail?.url }
     public var urls: InstanceConfiguration.URLs? { configuration?.urls }
     public var registrationsEnabled: Bool? { registrations.enabled }
     public var approvalRequired: Bool? { registrations.approvalRequired }
     public var email: String? { contact?.email }
     public var contactAccount: Account? { contact?.account }
+
+    public func v2Representation() -> InstanceV2 { self }
 }
 
 extension TootFeature {

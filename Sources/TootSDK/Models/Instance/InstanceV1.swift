@@ -153,31 +153,51 @@ extension InstanceV1: Instance {
 }
 
 extension InstanceV1 {
-    public var majorVersion: Int? {
-        guard let majorVersionString = version.split(separator: ".").first else { return nil }
+    /// Get the instance's information in the format of an ``InstanceV2``.
+    ///
+    /// Because ``InstanceV1`` does not contain all of the information that ``InstanceV2`` does, v2-exclusive fields will be left as `nil`.
+    ///
+    /// Information that is only present in v1, such as ``invitesEnabled`` and ``Stats-swift.struct``, will not be present in the v2 representation.
+    ///
+    /// Information that is represented differently between versions will be converted to the v2 format.
+    public func v2Representation() -> InstanceV2 {
+        let v2Thumbnail: InstanceV2.Thumbnail?
+        if let thumbnail {
+            v2Thumbnail = .init(url: thumbnail)
+        } else {
+            v2Thumbnail = nil
+        }
 
-        return Int(majorVersionString)
-    }
+        // V2 configuration combines properties from v1 configuration and other v1 properties
+        var v2Configuration: InstanceConfiguration?
+        if let configuration {
+            var config = configuration
+            config.urls = self.urls
+            v2Configuration = config
+        } else if let urls {
+            v2Configuration = .init(urls: urls)
+        } else {
+            v2Configuration = nil
+        }
 
-    public var minorVersion: Int? {
-        let versionComponents = version.split(separator: ".")
-
-        guard versionComponents.count > 1 else { return nil }
-
-        return Int(versionComponents[1])
-    }
-
-    public var patchVersion: String? {
-        let versionComponents = version.split(separator: ".")
-
-        guard versionComponents.count > 2 else { return nil }
-
-        return String(versionComponents[2])
-    }
-
-    public var canShowProfileDirectory: Bool {
-        guard let majorVersion = majorVersion else { return false }
-
-        return majorVersion >= 3
+        return InstanceV2(
+            domain: uri,
+            title: title,
+            version: version,
+            sourceURL: nil,
+            description: shortDescription,
+            usage: nil,
+            thumbnail: v2Thumbnail,
+            icon: nil,
+            languages: languages,
+            configuration: v2Configuration,
+            registrations: .init(
+                enabled: registrationsEnabled,
+                approvalRequired: approvalRequired
+            ),
+            apiVersions: nil,
+            contact: .init(email: email, account: contactAccount),
+            rules: rules
+        )
     }
 }

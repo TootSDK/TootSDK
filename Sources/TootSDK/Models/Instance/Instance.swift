@@ -2,9 +2,13 @@ import Foundation
 
 /// General information about an instance across all versions of the Instance API.
 ///
-/// Contains properties that are common to both ``InstanceV1`` and ``InstanceV2``. Properties where there is a conflict between each version's implementation are left out of this protocol.
+/// Contains properties that are common to both ``InstanceV1`` and ``InstanceV2``. Properties where there is a conflict between each version's implementation are left out of this protocol. The intention is that you can use this protocol's properties safely and predictably regardless of which version of the endpoint is used.
 ///
-/// For example, in V1, `description` contains the extended description, but in V2 `description` contains the short description, so the `description` property is left out of this protocol. The idea here is that you can use this protocol's properties safely and predictably regardless of which version of the endpoint is used.
+/// For example, in V1, `description` contains the extended description, but in V2 `description` contains the short description, so the `description` property is left out of this protocol.
+///
+/// Also, `configuration` is left out of the protocol because it contains different sets of information in V1 and V2.
+///
+/// If you need all available information about an instance that the V2 API makes available, ``v2Representation`` gives you an ``InstanceV2`` struct regardless of which concrete type you are working with.
 public protocol Instance: Codable, Hashable, Sendable {
     /// The domain name of the instance.
     var domain: String? { get }
@@ -25,9 +29,6 @@ public protocol Instance: Codable, Hashable, Sendable {
 
     var urls: InstanceConfiguration.URLs? { get }
 
-    /// Configured values and limits for this instance.
-    var configuration: InstanceConfiguration? { get }
-
     /// Whether registrations are enabled.
     var registrationsEnabled: Bool? { get }
 
@@ -42,6 +43,9 @@ public protocol Instance: Codable, Hashable, Sendable {
 
     /// An itemized list of rules for users of the instance.
     var rules: [InstanceRule]? { get }
+
+    /// Get the instance's information as an ``InstanceV2``.
+    func v2Representation() -> InstanceV2
 }
 
 extension Instance {
@@ -83,5 +87,35 @@ extension Instance {
             return .sharkey
         }
         return .mastodon
+    }
+}
+
+extension Instance {
+    public var majorVersion: Int? {
+        guard let majorVersionString = version.split(separator: ".").first else { return nil }
+
+        return Int(majorVersionString)
+    }
+
+    public var minorVersion: Int? {
+        let versionComponents = version.split(separator: ".")
+
+        guard versionComponents.count > 1 else { return nil }
+
+        return Int(versionComponents[1])
+    }
+
+    public var patchVersion: String? {
+        let versionComponents = version.split(separator: ".")
+
+        guard versionComponents.count > 2 else { return nil }
+
+        return String(versionComponents[2])
+    }
+
+    public var canShowProfileDirectory: Bool {
+        guard let majorVersion = majorVersion else { return false }
+
+        return majorVersion >= 3
     }
 }
