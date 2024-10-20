@@ -8,17 +8,24 @@ import Foundation
 #endif
 
 extension TootClient {
-    /// Obtain general information about the server.
+    /// Obtain general information about the server from the latest supported API version.
+    ///
+    /// If the server is known to support it, returns an ``InstanceV2``; otherwise, returns an ``InstanceV1``.
+    ///
+    /// If you require information that is only provided by a specific version of the Instance API, use ``getInstanceInfoV1()`` or ``getInstanceInfoV2()``.
     public func getInstanceInfo() async throws -> any Instance {
         do {
-            try requireFeature(.instancev2)
-            return try await getInstanceV2()
+            try requireFeature(.instanceV2)
+            return try await getInstanceInfoV2()
         } catch TootSDKError.unsupportedFlavour(_, _) {
-            return try await getInstanceV1()
+            return try await getInstanceInfoV1()
         }
     }
 
-    public func getInstanceV1() async throws -> InstanceV1 {
+    /// Obtain general information about the server from the V1 API.
+    ///
+    /// This API version was deprecated by Mastodon, but may be used by other instance flavours.
+    public func getInstanceInfoV1() async throws -> InstanceV1 {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "instance"])
             $0.method = .get
@@ -26,7 +33,10 @@ extension TootClient {
         return try await fetch(InstanceV1.self, req)
     }
 
-    public func getInstanceV2() async throws -> InstanceV2 {
+    /// Obtain general information about the server from the V2 API.
+    ///
+    /// > Important: Not all instance flavours support the V2 API; see ``TootFeature/instanceV2``. Consider checking for support using ``supportsFeature(_:)`` before calling this, otherwise it may fail.
+    public func getInstanceInfoV2() async throws -> InstanceV2 {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "instance"])
             $0.method = .get

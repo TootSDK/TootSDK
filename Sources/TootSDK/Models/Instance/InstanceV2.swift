@@ -162,7 +162,8 @@ extension InstanceV2: Instance {
 }
 
 extension TootFeature {
-    public static let instancev2 = TootFeature(supportedFlavours: [
+    /// The ability to query the V2 Instance API.
+    public static let instanceV2 = TootFeature(supportedFlavours: [
         .mastodon,
         .pixelfed,
         .pleroma,
