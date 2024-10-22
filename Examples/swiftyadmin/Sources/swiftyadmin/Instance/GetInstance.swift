@@ -9,6 +9,7 @@ struct GetInstance: AsyncParsableCommand {
 
     mutating func run() async throws {
         let client = TootClient(instanceURL: URL(string: url)!)
+        try await client.connect()
         let instance = try await client.getInstanceInfo()
         print(instance)
     }
