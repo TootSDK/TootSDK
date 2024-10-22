@@ -88,6 +88,14 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         public struct Users: Codable, Hashable, Sendable {
             /// The number of active users on this instance in the past four weeks.
             public var activeMonth: Int
+
+            public init(activeMonth: Int) {
+                self.activeMonth = activeMonth
+            }
+        }
+
+        public init(users: Users) {
+            self.users = users
         }
 
         /// Data related to users on this instance.
@@ -103,10 +111,21 @@ public struct InstanceV2: Codable, Hashable, Sendable {
             /// URL for the thumbnail at 2x resolution.
             public var at2x: String?
 
+            public init(at1x: String? = nil, at2x: String? = nil) {
+                self.at1x = at1x
+                self.at2x = at2x
+            }
+
             enum CodingKeys: String, CodingKey {
                 case at1x = "@1x"
                 case at2x = "@2x"
             }
+        }
+
+        public init(url: String, blurhash: String? = nil, versions: Versions? = nil) {
+            self.url = url
+            self.blurhash = blurhash
+            self.versions = versions
         }
 
         /// URL for the thumbnail image.
@@ -124,6 +143,11 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         ///
         /// In the form of `12x34`, where `12` is the width and `34` is the height of the icon.
         public var size: String
+
+        public init(src: String, size: String) {
+            self.src = src
+            self.size = size
+        }
     }
 
     public struct Registrations: Codable, Hashable, Sendable {
@@ -133,6 +157,12 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         public var approvalRequired: Bool?
         /// An optional custom message to be shown when registrations are closed.
         public var message: String?
+
+        public init(enabled: Bool? = nil, approvalRequired: Bool? = nil, message: String? = nil) {
+            self.enabled = enabled
+            self.approvalRequired = approvalRequired
+            self.message = message
+        }
     }
 
     public struct APIVersions: Codable, Hashable, Sendable {
@@ -140,6 +170,10 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         ///
         /// Starting from Mastodon v4.3.0, API changes will come with a version number, which clients can check against this value.
         public var mastodon: Int?
+
+        public init(mastodon: Int? = nil) {
+            self.mastodon = mastodon
+        }
     }
 
     public struct ContactInfo: Codable, Hashable, Sendable {
@@ -147,6 +181,11 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         public var email: String?
         /// An optional account that can be contacted natively over the network regarding inquiries or issues.
         public var account: Account?
+
+        public init(email: String? = nil, account: Account? = nil) {
+            self.email = email
+            self.account = account
+        }
     }
 }
 
