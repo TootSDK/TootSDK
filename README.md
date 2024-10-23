@@ -282,3 +282,7 @@ This is a permissive license which allows for any type of use, provided the copy
 - [Topiary](https://lightbeamapps.com/topiary/)
 - [TootLater](https://tootlater.kruschel.dev/)
 - [Oxpecker](https://oxpecker.social)
+
+## Related Works
+
+- [TootSDK fork by technicat](https://codeberg.org/technicat/tootsdk)
