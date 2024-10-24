@@ -4,7 +4,7 @@
 import Foundation
 
 /// General information about an instance
-public struct Instance: Codable, Hashable {
+public struct InstanceV1: Codable, Hashable {
     public init(
         uri: String? = nil,
         title: String? = nil,
@@ -16,8 +16,8 @@ public struct Instance: Codable, Hashable {
         registrations: Bool? = nil,
         approvalRequired: Bool? = nil,
         invitesEnabled: Bool? = nil,
-        urls: Instance.InstanceURLs,
-        stats: Instance.Stats,
+        urls: InstanceV1.InstanceURLs,
+        stats: InstanceV1.Stats,
         thumbnail: String? = nil,
         configuration: Configuration? = nil,
         contactAccount: Account? = nil,
@@ -74,12 +74,10 @@ public struct Instance: Codable, Hashable {
     /// An itemized list of rules for users of the instance.
     public var rules: [InstanceRule]?
 
-    public struct InstanceURLs: Codable, Hashable {
-        /// Websockets address for push streaming. String (URL).
-        public var streamingApi: String?
-    }
+    public typealias Configuration = InstanceConfiguration
+    public typealias InstanceURLs = InstanceConfiguration.URLs
 
-    public struct Stats: Codable, Hashable {
+    public struct Stats: Codable, Hashable, Sendable {
         /// Users registered on this instance. Number.
         public var userCount: Int?
         /// Posts authored by users on instance. Number.
@@ -126,65 +124,6 @@ public struct Instance: Codable, Hashable {
         }
     }
 
-    public struct Configuration: Codable, Hashable {
-        /// Limits related to accounts.
-        public var accounts: Accounts?
-        /// Limits related to authoring posts.
-        public var posts: Posts?
-        /// Hints for which attachments will be accepted.
-        public var mediaAttachments: MediaAttachments?
-        /// Limits related to polls.
-        public var polls: Polls?
-
-        enum CodingKeys: String, CodingKey {
-            case accounts
-            case posts = "statuses"
-            case mediaAttachments
-            case polls
-        }
-
-        public struct Accounts: Codable, Hashable {
-            /// The maximum number of featured tags allowed for each account.
-            public var maxFeaturedTags: Int?
-        }
-
-        public struct Posts: Codable, Hashable {
-            /// The maximum number of allowed characters per post.
-            public var maxCharacters: Int?
-            /// The maximum number of media attachments that can be added to a post.
-            public var maxMediaAttachments: Int?
-            /// Each URL in a post will be assumed to be exactly this many characters.
-            public var charactersReservedPerUrl: Int?
-        }
-
-        public struct MediaAttachments: Codable, Hashable {
-            /// Contains MIME types that can be uploaded.
-            public var supportedMimeTypes: [String]?
-            /// The maximum size of any uploaded image, in bytes.
-            public var imageSizeLimit: Int?
-            /// The maximum number of pixels (width times height) for image uploads.
-            public var imageMatrixLimit: Int?
-            /// The maximum size of any uploaded video, in bytes.
-            public var videoSizeLimit: Int?
-            /// The maximum frame rate for any uploaded video.
-            public var videoFrameRateLimit: Int?
-            /// The maximum number of pixels (width times height) for video uploads.
-            public var videoMatrixLimit: Int?
-        }
-
-        public struct Polls: Codable, Hashable {
-            /// Each poll is allowed to have up to this many options.
-            public var maxOptions: Int?
-            /// Each poll option is allowed to have this many characters.
-            public var maxCharactersPerOption: Int?
-            /// The shortest allowed poll duration, in seconds.
-            public var minExpiration: Int?
-            /// The longest allowed poll duration, in seconds.
-            public var maxExpiration: Int?
-        }
-
-    }
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.uri = try? container.decodeIfPresent(String.self, forKey: .uri)
@@ -197,7 +136,7 @@ public struct Instance: Codable, Hashable {
         self.registrations = try? container.decodeIfPresent(Bool.self, forKey: .registrations)
         self.approvalRequired = try? container.decodeIfPresent(Bool.self, forKey: .approvalRequired)
         self.invitesEnabled = try? container.decodeIfPresent(Bool.self, forKey: .invitesEnabled)
-        self.urls = try? container.decodeIfPresent(Instance.InstanceURLs.self, forKey: .urls)
+        self.urls = try? container.decodeIfPresent(InstanceV1.InstanceURLs.self, forKey: .urls)
         self.stats = try container.decode(Stats.self, forKey: .stats)
         self.thumbnail = try? container.decodeIfPresent(String.self, forKey: .thumbnail)
         self.configuration = try? container.decodeIfPresent(Configuration.self, forKey: .configuration)
@@ -207,74 +146,58 @@ public struct Instance: Codable, Hashable {
     }
 }
 
-extension Instance {
-    public var majorVersion: Int? {
-        guard let majorVersionString = version.split(separator: ".").first else { return nil }
-
-        return Int(majorVersionString)
-    }
-
-    public var minorVersion: Int? {
-        let versionComponents = version.split(separator: ".")
-
-        guard versionComponents.count > 1 else { return nil }
-
-        return Int(versionComponents[1])
-    }
-
-    public var patchVersion: String? {
-        let versionComponents = version.split(separator: ".")
-
-        guard versionComponents.count > 2 else { return nil }
-
-        return String(versionComponents[2])
-    }
-
-    public var canShowProfileDirectory: Bool {
-        guard let majorVersion = majorVersion else { return false }
-
-        return majorVersion >= 3
-    }
+extension InstanceV1: Instance {
+    public var domain: String? { uri }
+    public var thumbnailURL: String? { thumbnail }
+    public var registrationsEnabled: Bool? { registrations }
 }
 
-extension Instance {
-    public var flavour: TootSDKFlavour {
-        // 2.7.2 (compatible; Pleroma 2.5.0)
-        if version.lowercased().contains("pleroma") {
-            return .pleroma
-        }
-        // 2.7.2 (compatible; Pixelfed 0.11.9)
-        if version.lowercased().contains("pixelfed") {
-            return .pixelfed
-        }
-        // 2.8.0 (compatible; Friendica 2023.05)
-        if version.lowercased().contains("friendica") {
-            return .friendica
-        }
-        // 2.7.2 (compatible; Akkoma 3.10.4-0-gebfb617)
-        if version.lowercased().contains("akkoma") {
-            return .akkoma
-        }
-        // 3.0.0 (compatible; Firefish 1.0.4-dev5)
-        if version.lowercased().contains("firefish") {
-            return .firefish
+extension InstanceV1 {
+    /// Get the instance's information in the format of an ``InstanceV2``.
+    ///
+    /// Because ``InstanceV1`` does not contain all of the information that ``InstanceV2`` does, v2-exclusive fields will be left as `nil`.
+    ///
+    /// Information that is only present in v1, such as ``invitesEnabled`` and ``Stats-swift.struct``, will not be present in the v2 representation.
+    ///
+    /// Information that is represented differently between versions will be converted to the v2 format.
+    public func v2Representation() -> InstanceV2 {
+        let v2Thumbnail: InstanceV2.Thumbnail?
+        if let thumbnail {
+            v2Thumbnail = .init(url: thumbnail)
+        } else {
+            v2Thumbnail = nil
         }
 
-        // 4.2.1 (compatible; Iceshrimp 2023.12-pre3)
-        // 4.2.1 (compatible; Iceshrimp.NET/2024.1-beta2.security3+e1d25a9231)
-        if version.lowercased().contains("iceshrimp") {
-            return .iceshrimp
+        // V2 configuration combines properties from v1 configuration and other v1 properties
+        var v2Configuration: InstanceConfiguration?
+        if let configuration {
+            var config = configuration
+            config.urls = self.urls
+            v2Configuration = config
+        } else if let urls {
+            v2Configuration = .init(urls: urls)
+        } else {
+            v2Configuration = nil
         }
 
-        // 4.2.1 (compatible; Catodon 24.01-dev)
-        if version.lowercased().contains("catodon") {
-            return .catodon
-        }
-
-        // 3.0.0 (compatible; Sharkey 2023.12.0.beta3)
-        if version.lowercased().contains("sharkey") {
-            return .sharkey
-        }
-        return .mastodon
+        return InstanceV2(
+            domain: uri,
+            title: title,
+            version: version,
+            sourceURL: nil,
+            description: shortDescription,
+            usage: nil,
+            thumbnail: v2Thumbnail,
+            icon: nil,
+            languages: languages,
+            configuration: v2Configuration,
+            registrations: .init(
+                enabled: registrationsEnabled,
+                approvalRequired: approvalRequired
+            ),
+            apiVersions: nil,
+            contact: .init(email: email, account: contactAccount),
+            rules: rules
+        )
     }
 }

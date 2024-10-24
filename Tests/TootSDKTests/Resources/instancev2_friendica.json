@@ -1,0 +1,353 @@
+{
+    "domain": "friendica.me",
+    "title": "Friendica.me",
+    "version": "2.8.0 (compatible; Friendica 2024.08)",
+    "source_url": "https://git.friendi.ca/friendica/friendica",
+    "description": "friendica.me is hosted in Germany.  Like other nodes, we welcome anyone with good intentions.  You can freely invite your friends and interact with other social networks.",
+    "usage": {
+        "users": {
+            "active_month": 19
+        }
+    },
+    "thumbnail": {
+        "url": "https://friendica.me/images/friendica-banner.jpg"
+    },
+    "languages": [
+        "en"
+    ],
+    "configuration": {
+        "accounts": {
+            "max_featured_tags": 0
+        },
+        "statuses": {
+            "max_characters": 200000,
+            "max_media_attachments": 99,
+            "characters_reserved_per_url": 23
+        },
+        "media_attachments": {
+            "supported_mime_types": [
+                "image/webp",
+                "image/png",
+                "image/jpeg",
+                "image/gif",
+                "image/bmp",
+                "audio/aac",
+                "audio/flac",
+                "audio/mpeg",
+                "audio/mp4",
+                "audio/ogg",
+                "audio/wav",
+                "audio/webm",
+                "video/mp4",
+                "video/ogg",
+                "video/webm"
+            ],
+            "image_size_limit": 10485760,
+            "image_matrix_limit": 33177600,
+            "video_size_limit": 10485760,
+            "video_frame_rate_limit": 60,
+            "video_matrix_limit": 33177600
+        },
+        "polls": {
+            "max_options": 0,
+            "max_characters_per_option": 0,
+            "min_expiration": 0,
+            "max_expiration": 0
+        }
+    },
+    "registrations": {
+        "enabled": false,
+        "approval_required": false,
+        "message": null,
+        "url": null
+    },
+    "contact": {
+        "email": "admin@example.com",
+        "account": {
+            "id": "66240",
+            "username": "placeholder",
+            "acct": "placeholder",
+            "display_name": "Placeholder",
+            "locked": true,
+            "bot": false,
+            "discoverable": false,
+            "group": false,
+            "created_at": "2022-01-1T01:01:01.000Z",
+            "note": "",
+            "url": "https://example.com",
+            "avatar": "https://example.com",
+            "avatar_static": "https://example.com",
+            "header": "https://example.com",
+            "header_static": "https://example.com",
+            "followers_count": 100,
+            "following_count": 100,
+            "statuses_count": 100,
+            "last_status_at": "2024-01-1T01:01:01.000Z",
+            "emojis": [],
+            "fields": []
+        }
+    },
+    "rules": [
+        {
+            "id": "1",
+            "text": "friendica.me - Terms of Service"
+        },
+        {
+            "id": "2",
+            "text": "friendica.me is a free, decentralised social network, using free software produced by the Friendica project (https://friendi.ca) (\"friendica\", \"the software\", \"the project\")."
+        },
+        {
+            "id": "3",
+            "text": "The service (\"the service\", \"friendica.me\") is a single instance of the friendica software, and is provided to you (\"the user\", \"you\"), including hosting space , by redacted (\"me\", \"I\", \"we\", \"us\", \"our\").  The service is provided to you free of charge.  The following terms (\"Terms of Service\", \"Terms\") apply to your use of friendica.me and you agree to these terms when creating an account and using the service."
+        },
+        {
+            "id": "4",
+            "text": "1. Applicability"
+        },
+        {
+            "id": "5",
+            "text": "1.1 These Terms of Service govern the use of the service. By using the service you agree to be bound by the"
+        },
+        {
+            "id": "6",
+            "text": "Terms of Service and any additional policies that apply to it."
+        },
+        {
+            "id": "7",
+            "text": "1.2 While the service does allow connection to other web-based services, use of those services is entirely optional and may require you, the user,  to agree to the terms and conditions, notice and take down policies and/or"
+        },
+        {
+            "id": "8",
+            "text": "privacy and cookie policies may apply. friendica.me is not responsible for these services, terms and/or policies."
+        },
+        {
+            "id": "9",
+            "text": "1.3 We may amend these Terms of Use from time to time. We recommend that you review these Terms of Service periodically. By continuing to use the service you accept any change made to the Terms of Service."
+        },
+        {
+            "id": "10",
+            "text": "1.4 These Terms of Service supersede any and all prior oral and written quotations, terms, communications, agreements and understandings between you and us."
+        },
+        {
+            "id": "11",
+            "text": "2. Registration and Basic Usage"
+        },
+        {
+            "id": "12",
+            "text": "2.1 friendica.me is provided free of charge."
+        },
+        {
+            "id": "13",
+            "text": "2.2 Account creation on friendica.me is permitted only by our approval. By registering to create an account on friendica.me, you agree to these terms."
+        },
+        {
+            "id": "14",
+            "text": "2.3 We may, at our sole discretion, refuse to approve the registration of an account."
+        },
+        {
+            "id": "15",
+            "text": "2.4 friendica.me provides the possibility to publish digital files, share content and send messages (collectively, \"post data\", \"post\", \"data\", \"content\") and generally make that data available to other users.  We make no warranty as to the availability of the service, the security of the data you upload, or the reliability of the service."
+        },
+        {
+            "id": "16",
+            "text": "2.5 Textual content (i.e. \"Posts\") are stored and available on friendica.me for a limited period of time and will expire automatically after. That period is currently 2 years. You will not be notified of the expiration of such data.  You can, however, adjust the expiration period in your user settings."
+        },
+        {
+            "id": "17",
+            "text": "2.6 After the expiry period mentioned in clause 2.5, friendica.me will permanently delete any expired posts. These posts will no longer be available or retrievable."
+        },
+        {
+            "id": "18",
+            "text": "3. Migration and Cancellation"
+        },
+        {
+            "id": "19",
+            "text": "3.1 You are free to migrate your profile to another instance of the friendica software hosted elsewhere.  No guarantee is made by us as to the security or integrity of your data, or the security or reliability of its transference."
+        },
+        {
+            "id": "20",
+            "text": "3.2 You can delete your account at any time on this friendica instance (friendica.me).  Deletion is irrevocable: all your data will be deleted and purged from any back-ups we may hold."
+        },
+        {
+            "id": "21",
+            "text": "3.3. We offer no service to restore your profile from back-up.  If you delete your account, it is final."
+        },
+        {
+            "id": "22",
+            "text": "4. Privacy & Confidentiality"
+        },
+        {
+            "id": "23",
+            "text": "4.1 Any file or data you upload is treated confidentially. We never routinely look at data uploaded by any user."
+        },
+        {
+            "id": "24",
+            "text": "4.2 Any file or data you upload may be subject to investigation, should any report be made against you, your conduct or your data."
+        },
+        {
+            "id": "25",
+            "text": "4.3 You have the option to publish any data you upload, provided it does not violate or contravene the restrictions of service (see section 5)."
+        },
+        {
+            "id": "26",
+            "text": "4.4 Any file or data you upload will, by default, not be visible unless by another user logged into the system, in which case the data you opt to share with that user may be visible.  The exception to this is your profile information, which is visible both when users are logged in and logged out of the system (if they access the location of your profile directly)."
+        },
+        {
+            "id": "27",
+            "text": "4.5. Considering clause 4.4, your profile information may be visible to search engines and other indexing systems on the internet."
+        },
+        {
+            "id": "28",
+            "text": "5. Behaviour, Restrictions and Mitigation"
+        },
+        {
+            "id": "29",
+            "text": "5.1 friendica.me is a friendly social network, but there are still rules. Under no circumstances do we endorse, encourage or accept any of the following:"
+        },
+        {
+            "id": "30",
+            "text": "5.1.1  Any content considered illegal in the European Union, USA, United Kingdom, Canada or Commonwealth countries, including any content that violates copyright, trademarks or other \"intellectual property\" law"
+        },
+        {
+            "id": "31",
+            "text": "5.1.2  Racism"
+        },
+        {
+            "id": "32",
+            "text": "5.1.3  Harassment"
+        },
+        {
+            "id": "33",
+            "text": "5.1.4  Hate speech"
+        },
+        {
+            "id": "34",
+            "text": "5.1.5  Discrimination"
+        },
+        {
+            "id": "35",
+            "text": "5.1.6  Xenophobia"
+        },
+        {
+            "id": "36",
+            "text": "5.1.7  Threats or threatening language"
+        },
+        {
+            "id": "37",
+            "text": "5.1.8  Pornography involving minors"
+        },
+        {
+            "id": "38",
+            "text": "5.1.9  Inciting violence"
+        },
+        {
+            "id": "39",
+            "text": "5.1.10 The planning or discussion of criminal acts"
+        },
+        {
+            "id": "40",
+            "text": "5.1.11 Or any other behavior not listed above that is considered inappropriate"
+        },
+        {
+            "id": "41",
+            "text": "5.2 friendica.me will explicitly not permit any trading activity to occur on its platform, including but not limited to the sale or trading of arms, illegal drugs, contraband, people... Basically, if it's illegal then it's not accepted nor welcome."
+        },
+        {
+            "id": "42",
+            "text": "5.3 friendica.me is still a platform that encourages freedom of speech.  You accept that other users may exercise this freedom in ways disagreeable to you. Options to block, ignore, archive or delete any contacts are available to users for the purpose of managing such content that is agreeable or disagreeable to them."
+        },
+        {
+            "id": "43",
+            "text": "5.4 Any reports by users received by us, regarding behvaiour outlined in 5.1, will be investigated."
+        },
+        {
+            "id": "44",
+            "text": "5.5 Only situations that cannot be resolved by users using the options available to them, through the software, will be acted upon by us."
+        },
+        {
+            "id": "45",
+            "text": "5.6 Any user may be banned from friendica.me after contravening these terms.  It is our sole discretion what constitues a contravention of these terms. Our judgement is final in this regard."
+        },
+        {
+            "id": "46",
+            "text": "5.7 Content warnings are required if you are posting content that is erotic, gory, etc. This applies to text, pictures, and videos. If you would not open that picture/video in front of your boss/spouse/kids, please place a warning at the top of the post or in the title, marking it as such (e.g. \"NSFW\" - \"Not Safe For Work\").  Friendica does not have a content filtering system like on mastodon, for example, so users are required to exercise discretion.  Limiting such posts to specific groups is a way to restrict access and visibility of your content."
+        },
+        {
+            "id": "47",
+            "text": "5.8 If you see content that violates our rules, please notify an administrator. Do not engage with users who are being rude or inappropriate. If you don't want to see someone's contributions, you can block/ignore that user and report to us. We'll deal with it."
+        },
+        {
+            "id": "48",
+            "text": "6. Your data - ownership, permissions and responsibility"
+        },
+        {
+            "id": "49",
+            "text": "6.1 You own the contents of the files and data you upload to this service. You are fully and solely responsible and accountable for all data that you upload."
+        },
+        {
+            "id": "50",
+            "text": "6.2 By using our service you guarantee that you have, for each file or item of data including text, all required permissions, including from copyright and other intellectual property rights holders, to distribute, transfer, store and/or make available online as part of our service"
+        },
+        {
+            "id": "51",
+            "text": "6.3 We are not liable to you or any third party for any damages arising out of the content shared by you and its use, reuse, or its modification by you, including but not limited to, copyright protected works and/or trademarks.  If you are unsure whether you should upload and share something, don't."
+        },
+        {
+            "id": "52",
+            "text": "6.4 For the purposes of running a reliable service, we periodically check the performance statistics of the server.  This may include inspecting log files.  As part of running a standard web server, we log access requests to the service as this supplies our statistics data.  You agree that potentially identifying information, such as your IP address, may be logged on our server during your use of the service."
+        },
+        {
+            "id": "53",
+            "text": "6.5 We may also process your personal data for the following purposes:"
+        },
+        {
+            "id": "54",
+            "text": "6.5.1 so we can evaluate how our service is used"
+        },
+        {
+            "id": "55",
+            "text": "6.5.2 during the course of an investigation"
+        },
+        {
+            "id": "56",
+            "text": "6.5.3 for legal reasons (see 7.3)"
+        },
+        {
+            "id": "57",
+            "text": "6.5.4 during the course of operating the service/website"
+        },
+        {
+            "id": "58",
+            "text": "6.5.5 providing technical support when you request it"
+        },
+        {
+            "id": "59",
+            "text": "7. Indemnity and Liability"
+        },
+        {
+            "id": "60",
+            "text": "7.1 You will defend, indemnify and hold harmless redacted, his employees and affiliates, from and against any claims, incidents, liabilities, procedures, damages, losses and expenses, including reasonable legal and accounting fees, arising out of or in any way connected with your access to or use of the service or your violation of these Terms of Service, including any third party claims that files submitted to the service by you or through your account infringe or violate any third party rights."
+        },
+        {
+            "id": "61",
+            "text": "7.2 redacted is not liable for any damage or personal injury resulting from any use of the friendica.me website or service. The limitation of liability referred to in this clause shall not apply if the liability for damage is caused by intent or gross negligence on the part of us."
+        },
+        {
+            "id": "62",
+            "text": "7.3 In so far as necessary, I may use your data in defending myself, my employees or affiliates, in legal proceedings in relation to or as a result of your use of friendica.me, following a court order, abiding by any law, regulation or governmental request, cooperating with law enforcement, cooperating in fraud investigations from third parties, safeguarding national security, defence, public security or public health, and to uphold our Terms."
+        },
+        {
+            "id": "63",
+            "text": "7.4 Any query or dispute regarding these Terms of Service should in the first instance be discussed by email, to redacted."
+        },
+        {
+            "id": "64",
+            "text": "Last updated: 25 March 2022"
+        }
+    ],
+    "friendica": {
+        "version": "2024.08",
+        "codename": "Yellow Archangel",
+        "db_version": 1571
+    }
+}

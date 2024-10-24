@@ -28,7 +28,7 @@ struct RegisterAccount: AsyncParsableCommand {
         let client = TootClient(instanceURL: URL(string: url)!, accessToken: registerToken)
         try await client.connect()
         let instance = try await client.getInstanceInfo()
-        if instance.registrations == false {
+        if instance.v2Representation().registrations.enabled == false {
             print("Instance is not open for registrations")
             return
         }

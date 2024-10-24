@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a rule that server users should follow.
-public struct InstanceRule: Codable, Hashable, Identifiable {
+public struct InstanceRule: Codable, Hashable, Identifiable, Sendable {
     /// Identifier for the rule.
     ///
     /// > Note: Cast from integer, but not guaranteed to be a number.
