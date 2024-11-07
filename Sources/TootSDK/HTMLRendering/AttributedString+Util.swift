@@ -61,6 +61,10 @@ extension AttributedString {
         characters.last?.isNewline == true
     }
 
+    var endsWithDoubleNewline: Bool {
+        characters.count >= 2 && characters.suffix(2).allSatisfy(\.isNewline)
+    }
+
     var string: String {
         String(characters[...])
     }

@@ -48,23 +48,16 @@ public class AttributedStringRenderer {
         var attributedString = AttributedString()
 
         for child in element.getChildNodes() {
-            let isBlock = child.isBlockElement
-            if isBlock && !attributedString.endsWithNewline {
+            if child.isBlockElement && child.previousSibling() != nil && !attributedString.endsWithNewline {
+                // Each block element (including ones following inline elements) should start on new line
                 attributedString += "\n"
             }
             attributedString += renderHTMLNode(child)
-            if isBlock && child.nextSibling() != nil {
-                attributedString += "\n"
-            }
         }
 
         switch element.tagName() {
-        case "br", "p":
+        case "br", "p", "pre":
             attributedString += "\n"
-        case "ul", "ol", "pre", "table":
-            if !attributedString.endsWithNewline {
-                attributedString += "\n"
-            }
         case "a":
             applyLink(from: element, to: &attributedString)
         case "em", "i":
@@ -89,6 +82,11 @@ public class AttributedStringRenderer {
 
         default:
             break
+        }
+
+        if element.isBlockElement && !attributedString.endsWithDoubleNewline {
+            // Insert up to 2 new lines after block elements
+            attributedString += "\n"
         }
 
         return attributedString
