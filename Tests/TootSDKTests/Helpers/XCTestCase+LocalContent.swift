@@ -10,7 +10,6 @@ import XCTest
 
 @testable import TootSDK
 
-//extension XCTestCase {
 // swift-format-ignore: AlwaysUseLowerCamelCase
 func URLForResource(fileName: String, withExtension: String) -> URL {
     return Bundle.module.url(forResource: fileName, withExtension: withExtension)!
@@ -26,4 +25,3 @@ func localObject<T>(_ type: T.Type, _ filename: String) throws -> T where T: Dec
     let decoder = TootDecoder()
     return try decoder.decode(type, from: json)
 }
-//}
