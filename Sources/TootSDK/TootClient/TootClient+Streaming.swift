@@ -136,7 +136,7 @@ extension TootClient {
         try requireFeature(.streaming)
 
         // get streaming endpoint URL from instance info
-        async let streamingEndpoint = getInstanceInfo().urls?.streamingApi
+        async let streamingEndpoint = getInstanceInfo().streamingURL
         async let streamingHealthy = getStreamingHealth()
 
         guard let streamingEndpoint = try await streamingEndpoint,
