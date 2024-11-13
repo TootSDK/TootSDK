@@ -97,9 +97,9 @@
             guard let href = try? element.attr("href") else { return }
 
             if let webURL = WebURL(href), let url = URL(webURL) {
-                attributedString.link = url
+                attributedString.foundation.link = url
             } else if let url = URL(string: href) {
-                attributedString.link = url
+                attributedString.foundation.link = url
             }
         }
 
