@@ -27,7 +27,8 @@ public protocol Instance: Codable, Hashable, Sendable {
     /// Primary languages of the website and its staff as ISO 639-1 two-letter codes.
     var languages: [String]? { get }
 
-    var urls: InstanceConfiguration.URLs? { get }
+    /// Websocket URL for connecting to the streaming API.
+    var streamingURL: String? { get }
 
     /// Whether registrations are enabled.
     var registrationsEnabled: Bool? { get }

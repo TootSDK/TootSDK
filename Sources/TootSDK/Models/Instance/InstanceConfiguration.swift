@@ -1,7 +1,7 @@
 public struct InstanceConfiguration: Codable, Hashable, Sendable {
     /// URLs of interest for client apps.
     ///
-    /// Only populated by v2 instance API. See ``InstanceV1/urls`` for the same values from the v1 API.
+    /// Only populated by v2 instance API. See ``InstanceV1/InstanceURLs`` for the same values from the v1 API.
     public var urls: URLs?
     /// The instance's VAPID configuration.
     ///
@@ -31,8 +31,11 @@ public struct InstanceConfiguration: Codable, Hashable, Sendable {
     }
 
     public struct URLs: Codable, Hashable, Sendable {
-        /// Websockets address for push streaming. String (URL).
-        public var streamingApi: String?
+        /// Websockets address for the streaming API. String (URL).
+        public var streaming: String?
+
+        /// The server status page. String (URL).
+        public var status: String?
     }
 
     public struct Accounts: Codable, Hashable, Sendable {

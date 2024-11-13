@@ -191,7 +191,7 @@ public struct InstanceV2: Codable, Hashable, Sendable {
 
 extension InstanceV2: Instance {
     public var thumbnailURL: String? { thumbnail?.url }
-    public var urls: InstanceConfiguration.URLs? { configuration?.urls }
+    public var streamingURL: String? { configuration?.urls?.streaming }
     public var registrationsEnabled: Bool? { registrations.enabled }
     public var approvalRequired: Bool? { registrations.approvalRequired }
     public var email: String? { contact?.email }

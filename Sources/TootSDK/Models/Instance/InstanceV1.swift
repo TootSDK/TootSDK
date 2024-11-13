@@ -75,7 +75,11 @@ public struct InstanceV1: Codable, Hashable {
     public var rules: [InstanceRule]?
 
     public typealias Configuration = InstanceConfiguration
-    public typealias InstanceURLs = InstanceConfiguration.URLs
+
+    public struct InstanceURLs: Codable, Hashable, Sendable {
+        /// Websockets address for push streaming. String (URL).
+        public var streamingApi: String?
+    }
 
     public struct Stats: Codable, Hashable, Sendable {
         /// Users registered on this instance. Number.
@@ -150,6 +154,7 @@ extension InstanceV1: Instance {
     public var domain: String? { uri }
     public var thumbnailURL: String? { thumbnail }
     public var registrationsEnabled: Bool? { registrations }
+    public var streamingURL: String? { urls?.streamingApi }
 }
 
 extension InstanceV1 {
@@ -172,10 +177,10 @@ extension InstanceV1 {
         var v2Configuration: InstanceConfiguration?
         if let configuration {
             var config = configuration
-            config.urls = self.urls
+            config.urls = .init(streaming: self.urls?.streamingApi)
             v2Configuration = config
         } else if let urls {
-            v2Configuration = .init(urls: urls)
+            v2Configuration = .init(urls: .init(streaming: self.urls?.streamingApi))
         } else {
             v2Configuration = nil
         }
