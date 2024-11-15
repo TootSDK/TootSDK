@@ -59,6 +59,7 @@ let package = Package(
                 .copy("Resources/account_pixelfed.json"),
                 .copy("Resources/account_pixelfed_mutes_blocks.json"),
                 .copy("Resources/activity.json"),
+                .copy("Resources/card_string_size.json"),
                 .copy("Resources/familiar_followers_nofollowers.json"),
                 .copy("Resources/featured_tag.json"),
                 .copy("Resources/featured_tag_unused.json"),
