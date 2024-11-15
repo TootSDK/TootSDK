@@ -11,7 +11,9 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "follow"])
             $0.method = .post
-            $0.body = try .json(params)
+            if let params {
+                $0.body = try .json(params)
+            }
         }
         return try await fetch(Relationship.self, req)
     }
