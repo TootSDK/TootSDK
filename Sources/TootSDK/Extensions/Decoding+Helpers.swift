@@ -29,4 +29,18 @@ extension KeyedDecodingContainerProtocol {
             throw error
         }
     }
+
+    func decodeIntFromStringIfPresent(forKey key: Key) throws -> Int? {
+        do {
+            return try decodeIfPresent(Int.self, forKey: key)
+        } catch {
+            guard let string = try decodeIfPresent(String.self, forKey: key) else {
+                return nil
+            }
+            if let int = Int(string) {
+                return int
+            }
+            throw error
+        }
+    }
 }

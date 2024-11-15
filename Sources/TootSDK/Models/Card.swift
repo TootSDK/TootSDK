@@ -101,4 +101,26 @@ public struct Card: Codable, Hashable, Sendable {
     public var embedUrl: String?
     /// A hash computed by the BlurHash algorithm, for generating colorful preview thumbnails when media has not been downloaded yet.
     public var blurhash: String?
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.url = try container.decode(String.self, forKey: .url)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.language = try container.decodeIfPresent(String.self, forKey: .language)
+        self.type = try container.decode(Card.CardType.self, forKey: .type)
+        self.authorName = try container.decodeIfPresent(String.self, forKey: .authorName)
+        self.authorUrl = try container.decodeIfPresent(String.self, forKey: .authorUrl)
+        self.authors = try container.decodeIfPresent([Card.Author].self, forKey: .authors)
+        self.publishedAt = try container.decodeIfPresent(Date.self, forKey: .publishedAt)
+        self.providerName = try container.decodeIfPresent(String.self, forKey: .providerName)
+        self.providerUrl = try container.decodeIfPresent(String.self, forKey: .providerUrl)
+        self.html = try container.decodeIfPresent(String.self, forKey: .html)
+        self.width = try container.decodeIntFromStringIfPresent(forKey: .width)
+        self.height = try container.decodeIntFromStringIfPresent(forKey: .height)
+        self.image = try container.decodeIfPresent(String.self, forKey: .image)
+        self.imageDescription = try container.decodeIfPresent(String.self, forKey: .imageDescription)
+        self.embedUrl = try container.decodeIfPresent(String.self, forKey: .embedUrl)
+        self.blurhash = try container.decodeIfPresent(String.self, forKey: .blurhash)
+    }
 }
