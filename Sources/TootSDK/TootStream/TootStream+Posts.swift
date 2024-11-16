@@ -29,7 +29,7 @@ extension TootDataStream {
                 newHolder?.internalContinuation?.yield(items.result)
 
                 // Update `PagedInfo` only if a new `minId` is available.
-                if let minId = items.nextPage?.minId {
+                if let minId = items.info.minId {
                     newHolder?.pageInfo = PagedInfo(minId: minId)
                 }
             }

@@ -5,6 +5,7 @@ import Foundation
 
 public struct PagedResult<T: Decodable>: Decodable {
     public let result: T
+    public let info: PagedInfo
 
     /// Returns pagination object for the next page of results if one is available. A next page contains results newer than the current page.
     public let nextPage: PagedInfo?

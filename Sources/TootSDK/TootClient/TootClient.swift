@@ -277,7 +277,12 @@ extension TootClient {
             pagination = Pagination(links: links)
         }
 
-        return PagedResult(result: decoded, nextPage: pagination?.prev, previousPage: pagination?.next)
+        // Pagination in TootSDK is opposite to pagination in Mastodon
+        let nextPage = pagination?.prev
+        let previousPage = pagination?.next
+        let info = PagedInfo(maxId: previousPage?.maxId, minId: nextPage?.minId, sinceId: nextPage?.sinceId)
+
+        return PagedResult(result: decoded, info: info, nextPage: nextPage, previousPage: previousPage)
     }
 
 }
