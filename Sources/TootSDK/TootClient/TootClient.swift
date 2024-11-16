@@ -269,7 +269,6 @@ extension TootClient {
     ///   - req: the HTTP request to execute
     /// - Returns: the fetched paged array and page info
     internal func fetchPagedResult<T: Decodable>(_ req: HTTPRequestBuilder) async throws -> PagedResult<[T]> {
-
         let (data, response) = try await fetch(req: req)
         let decoded = try decode([T].self, from: data)
         var pagination: Pagination?
@@ -278,9 +277,7 @@ extension TootClient {
             pagination = Pagination(links: links)
         }
 
-        let info = PagedInfo(maxId: pagination?.maxId, minId: pagination?.minId, sinceId: pagination?.sinceId)
-
-        return PagedResult(result: decoded, info: info)
+        return PagedResult(result: decoded, nextPage: pagination?.prev, previousPage: pagination?.next)
     }
 
 }
