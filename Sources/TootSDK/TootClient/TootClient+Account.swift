@@ -113,6 +113,15 @@ extension TootClient {
         return try await fetch(Account.self, req)
     }
 
+    /// Get preferences defined by the user in their account settings.
+    public func getPreferences() async throws -> Preferences {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "preferences"])
+            $0.method = .get
+        }
+        return try await fetch(Preferences.self, req)
+    }
+
     func getFieldParts(_ params: UpdateCredentialsParams) -> [MultipartPart] {
         var parts = [MultipartPart]()
         if let fields = params.fieldsAttributes {

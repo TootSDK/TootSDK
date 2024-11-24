@@ -15,6 +15,8 @@ public struct Preferences: Codable, Hashable {
     public var readingExpandMedia: ExpandMedia
     /// Whether CWs should be expanded by default.
     public var readingExpandSpoilers: Bool
+    /// Whether to automatically play animated GIFs.
+    public var readingAutoplayGifs: Bool?
 
     enum CodingKeys: String, CodingKey {
         case postingDefaultVisibility = "posting:default:visibility"
@@ -22,6 +24,7 @@ public struct Preferences: Codable, Hashable {
         case postingDefaultLanguage = "posting:default:language"
         case readingExpandMedia = "reading:expand:media"
         case readingExpandSpoilers = "reading:expand:spoilers"
+        case readingAutoplayGifs = "reading:autoplay:gifs"
     }
 
     public enum ExpandMedia: String, Codable {
