@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a user's preferences.
-public struct Preferences: Codable, Hashable {
+public struct Preferences: Codable, Hashable, Sendable {
     /// Default visibility for new posts. Equivalent to Source#privacy.
     public var postingDefaultVisibility: Post.Visibility
     /// Default sensitivity flag for new posts. Equivalent to Source#sensitive.
@@ -15,6 +15,8 @@ public struct Preferences: Codable, Hashable {
     public var readingExpandMedia: ExpandMedia
     /// Whether CWs should be expanded by default.
     public var readingExpandSpoilers: Bool
+    /// Whether to automatically play animated GIFs.
+    public var readingAutoplayGifs: Bool?
 
     enum CodingKeys: String, CodingKey {
         case postingDefaultVisibility = "posting:default:visibility"
@@ -22,9 +24,10 @@ public struct Preferences: Codable, Hashable {
         case postingDefaultLanguage = "posting:default:language"
         case readingExpandMedia = "reading:expand:media"
         case readingExpandSpoilers = "reading:expand:spoilers"
+        case readingAutoplayGifs = "reading:autoplay:gifs"
     }
 
-    public enum ExpandMedia: String, Codable {
+    public enum ExpandMedia: String, Codable, Sendable {
         /// Hide media marked as sensitive
         case `default`
         /// Always show all media by default, regardless of sensitivity
