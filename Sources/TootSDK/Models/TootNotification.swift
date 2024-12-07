@@ -63,6 +63,8 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         case severedRelationships
         /// Someone reacted with emoji to one of your posts
         case emojiReaction
+        /// Annual report is available
+        case annualReport
 
         /// An unsupported notification type was received. If you encounter this please update TootSDK by adding support for received type.
         case unknown(String)
@@ -104,6 +106,8 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 self = .severedRelationships
             case "emoji_reaction":
                 self = .emojiReaction
+            case "annual_report":
+                self = .annualReport
             default:
                 self = .unknown(rawValue)
             }
@@ -123,6 +127,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
             case .adminReport: return "admin.report"
             case .severedRelationships: return "severed_relationships"
             case .emojiReaction: return "emoji_reaction"
+            case .annualReport: return "annual_report"
             case .unknown(let rawValue): return rawValue
             }
         }
@@ -141,6 +146,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 .adminReport,
                 .severedRelationships,
                 .emojiReaction,
+                .annualReport,
             ]
         }
 
@@ -150,6 +156,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
             case .mastodon:
                 return [
                     .follow, .mention, .repost, .favourite, .poll, .followRequest, .post, .update, .adminSignUp, .adminReport, .severedRelationships,
+                    .annualReport,
                 ]
             case .pleroma, .akkoma:
                 return [.follow, .mention, .repost, .favourite, .poll, .followRequest, .update]
