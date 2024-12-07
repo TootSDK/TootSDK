@@ -7,6 +7,7 @@
 
 import Foundation
 import XCTest
+
 @testable import TootSDK
 
 final class CardTests: XCTestCase {
