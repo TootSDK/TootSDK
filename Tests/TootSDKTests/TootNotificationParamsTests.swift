@@ -41,7 +41,7 @@ import Testing
         let flavour = TootSDKFlavour.sharkey
         let params = TootNotificationParams(types: [.mention]).corrected(for: flavour)
         #expect(
-            params.excludeTypes == Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+            params.excludeTypes == TootNotification.NotificationType.supported(by: flavour).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
         #expect(params.types == nil, "Incorrect types for \(flavour)")
     }
 
@@ -56,7 +56,7 @@ import Testing
         let flavour = TootSDKFlavour.sharkey
         let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention]).corrected(for: flavour)
         #expect(
-            params.excludeTypes == Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+            params.excludeTypes == TootNotification.NotificationType.supported(by: flavour).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
         #expect(params.types == nil, "Incorrect types for \(flavour)")
     }
 
@@ -71,7 +71,7 @@ import Testing
         let flavour = TootSDKFlavour.sharkey
         let params = TootNotificationParams(excludeTypes: [.favourite], types: [.mention, .favourite]).corrected(for: flavour)
         #expect(
-            params.excludeTypes == Set(TootNotification.NotificationType.allCases).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
+            params.excludeTypes == TootNotification.NotificationType.supported(by: flavour).subtracting([.mention]), "Incorrect exclude types for \(flavour)")
         #expect(params.types == nil, "Incorrect types for \(flavour)")
     }
 
