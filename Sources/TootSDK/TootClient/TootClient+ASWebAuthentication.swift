@@ -21,9 +21,7 @@
             prefersEphemeralWebBrowserSession: Bool = true,
             presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil
         ) async throws -> String {
-
-            let presentationContextProvider = presentationContextProvider ?? self.defaultPresentationAnchor
-
+            
             guard
                 let callbackURLScheme: String = URL(string: callbackURI)?.scheme
             else {
@@ -45,8 +43,6 @@
                             "There was a problem authenticating the user: no URL was returned from the first authentication step."))
                 }
 
-                authSession.presentationContextProvider = presentationContextProvider
-
                 authSession.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
                 authSession.start()
             }
@@ -54,14 +50,6 @@
             return try await collectToken(
                 returnUrl: returnedUrl,
                 callbackURI: callbackURI)
-        }
-    }
-
-    // via: https://www.andyibanez.com/posts/using-aswebauthenticationaession-swiftui/
-    public class TootPresentationAnchor: NSObject, ASWebAuthenticationPresentationContextProviding {
-
-        public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-            return ASPresentationAnchor()
         }
     }
 

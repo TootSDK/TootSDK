@@ -12,7 +12,7 @@ import Foundation
 #endif
 
 /// Encapsulates a WebSocket connection to a server for streaming timeline updates.
-public class TootSocket {
+public actor TootSocket: Sendable {
     /// The underlying WebSocket task.
     private let webSocketTask: URLSessionWebSocketTask
     private let encoder = TootEncoder()
@@ -92,7 +92,7 @@ public class TootSocket {
     /// Close the connection.
     /// - Parameters:
     ///   - closeCode: The reason for closing the connection.
-    public func close(with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) {
+    public func close(with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) async {
         guard !isClosed else {
             return
         }
@@ -108,7 +108,15 @@ public class TootSocket {
     }
 
     deinit {
-        close(with: .normalClosure)
+        Task {
+            await close(with: .normalClosure)
+        }
+    }
+}
+
+extension TootSocket {
+    func setDebugResponses(_ value: Bool) async {
+        self.debugResponses = value
     }
 }
 
@@ -156,7 +164,7 @@ extension TootClient {
         let task = try webSocketTask(req)
 
         let socket = TootSocket(webSocketTask: task)
-        socket.debugResponses = self.debugResponses
+        await socket.setDebugResponses(self.debugResponses)
         return socket
     }
 

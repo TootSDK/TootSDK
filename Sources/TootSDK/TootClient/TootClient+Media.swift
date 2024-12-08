@@ -2,7 +2,7 @@
 // Copyright (c) 2023. All rights reserved.
 
 import Foundation
-import MultipartKitTootSDK
+import MultipartKit
 
 extension TootClient {
     /// Uploads a media to the server so it can be used when publishing posts
