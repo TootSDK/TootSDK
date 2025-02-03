@@ -1,14 +1,14 @@
 // Created by konstantin on 05/11/2022.
 // Copyright (c) 2022. All rights reserved.
 
-import XCTest
+import Testing
 
 @testable import TootSDK
 
-final class PaginationTests: XCTestCase {
+@Suite struct PaginationTests {
     let serverUrl: String = "https://m.iamkonstantin.eu"
 
-    func testPaginationWithInvalidNextAndPrevious() {
+    @Test func paginationWithInvalidNextAndPrevious() {
         let links = [
             "<\(serverUrl)/api/v1/timelines/home?max_id=420>; rel=\"\"",
             "this is not a valid URL; rel=\"next\"",
@@ -16,12 +16,11 @@ final class PaginationTests: XCTestCase {
 
         let pagination = Pagination(links: links)
 
-        XCTAssertNil(pagination.sinceId)
-        XCTAssertNil(pagination.minId)
-        XCTAssertNil(pagination.maxId)
+        #expect(pagination.prev == nil)
+        #expect(pagination.next == nil)
     }
 
-    func testPaginationWithValidNext() {
+    @Test func paginationWithValidNext() {
         let links = [
             "<\(serverUrl)/api/v1/timelines/home?limit=42&max_id=420>; rel=\"next\"",
             "this is not a valid URL; rel=\"prev\"",
@@ -29,12 +28,14 @@ final class PaginationTests: XCTestCase {
 
         let pagination = Pagination(links: links)
 
-        XCTAssertNil(pagination.sinceId)
-        XCTAssertNil(pagination.minId)
-        XCTAssertEqual(pagination.maxId, "420")
+        #expect(pagination.prev == nil)
+
+        #expect(pagination.next?.minId == nil)
+        #expect(pagination.next?.sinceId == nil)
+        #expect(pagination.next?.maxId == "420")
     }
 
-    func testPaginationWithValidPrevious() {
+    @Test func paginationWithValidPrevious() {
         let links = [
             "<\(serverUrl)/api/v1/timelines/home?limit=42&since_id=420>; rel=\"prev\"",
             "this is not a valid URL; rel=\"next\"",
@@ -42,12 +43,14 @@ final class PaginationTests: XCTestCase {
 
         let pagination = Pagination(links: links)
 
-        XCTAssertEqual(pagination.sinceId, "420")
-        XCTAssertNil(pagination.minId)
-        XCTAssertNil(pagination.maxId, "420")
+        #expect(pagination.prev?.minId == nil)
+        #expect(pagination.prev?.sinceId == "420")
+        #expect(pagination.prev?.maxId == nil)
+
+        #expect(pagination.next == nil)
     }
 
-    func testPaginationWithValidNextAndPrevious() {
+    @Test func paginationWithValidNextAndPrevious() {
         let links = [
             "<\(serverUrl)/api/v1/timelines/home?limit=42&since_id=123>; rel=\"prev\"",
             "<\(serverUrl)/api/v1/timelines/home?limit=52&max_id=321>; rel=\"next\"",
@@ -55,20 +58,43 @@ final class PaginationTests: XCTestCase {
 
         let pagination = Pagination(links: links)
 
-        XCTAssertEqual(pagination.sinceId, "123")
-        XCTAssertNil(pagination.minId)
-        XCTAssertEqual(pagination.maxId, "321")
+        #expect(pagination.prev?.minId == nil)
+        #expect(pagination.prev?.sinceId == "123")
+        #expect(pagination.prev?.maxId == nil)
+
+        #expect(pagination.next?.minId == nil)
+        #expect(pagination.next?.sinceId == nil)
+        #expect(pagination.next?.maxId == "321")
     }
 
-    func testPaginationTolleratesSpacesAndNewLines() {
+    @Test func paginationTolleratesSpacesAndNewLines() {
         let links: String = [
             "\n <https://m.iamkonstantin.eu/api/v1/notifications?limit=20&max_id=15223&offset=0&types[]=mention>; rel=\"next\"\n "
         ].joined(separator: ",")
 
         let pagination = Pagination(links: links)
 
-        XCTAssertNil(pagination.sinceId)
-        XCTAssertNil(pagination.minId)
-        XCTAssertEqual(pagination.maxId, "15223")
+        #expect(pagination.prev == nil)
+
+        #expect(pagination.next?.minId == nil)
+        #expect(pagination.next?.sinceId == nil)
+        #expect(pagination.next?.maxId == "15223")
+    }
+
+    @Test func paginationWithSameParameterNamesInNextAndPrevious() {
+        let links = [
+            "<\(serverUrl)/api/v1/timelines/home?limit=42&since_id=123&min_id=456&max_id=789>; rel=\"prev\"",
+            "<\(serverUrl)/api/v1/timelines/home?limit=52&max_id=321&min_id=654&since_id=987>; rel=\"next\"",
+        ].joined(separator: ",")
+
+        let pagination = Pagination(links: links)
+
+        #expect(pagination.prev?.minId == "456")
+        #expect(pagination.prev?.sinceId == "123")
+        #expect(pagination.prev?.maxId == "789")
+
+        #expect(pagination.next?.minId == "654")
+        #expect(pagination.next?.sinceId == "987")
+        #expect(pagination.next?.maxId == "321")
     }
 }

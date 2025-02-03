@@ -5,9 +5,8 @@ import Foundation
 import WebURL
 
 public struct Pagination {
-    public var maxId: String?
-    public var minId: String?
-    public var sinceId: String?
+    public var prev: PagedInfo?
+    public var next: PagedInfo?
 }
 
 extension Pagination {
@@ -18,7 +17,7 @@ extension Pagination {
             $0.trimmingCharacters(in: .whitespacesAndNewlines)
         })
 
-        let paginationQueryItems: [URLQueryItem] = links.compactMap({ link in
+        let paginationItems: [(String, PagedInfo)] = links.compactMap { link in
             let segments =
                 link
                 .condensed()
@@ -31,40 +30,45 @@ extension Pagination {
 
             guard let validURL = url else {
                 print("TootSDK: invalid pagination Link (url): '\(link)'")
-                return []
+                return nil
             }
 
             guard let referenceKey = rel?.first else {
                 print("TootSDK: invalid pagination Link (referenceKey): '\(link)'")
-                return []
+                return nil
             }
 
             guard let referenceValue = rel?.last else {
                 print("TootSDK: invalid pagination Link (referenceValue): '\(link)'")
-                return []
+                return nil
             }
 
             guard referenceKey == "rel" else {
                 print("TootSDK: invalid pagination Link (rel): '\(link)'")
-                return []
+                return nil
             }
 
             guard Self.paginationTypes.contains(referenceValue) else {
                 print("TootSDK: invalid pagination Link (paginationType): '\(link)'")
-                return []
+                return nil
             }
 
             guard let webURL = WebURL(validURL) else {
                 print("TootSDK: invalid pagination Link (query): '\(link)'")
-                return []
+                return nil
             }
 
-            return webURL.formParams.allKeyValuePairs.map({ URLQueryItem(name: $0.0, value: $0.1) })
-        }).reduce([], +)
+            let params = webURL.formParams
+            let pagedInfo = PagedInfo(
+                maxId: params.get("max_id"),
+                minId: params.get("min_id"),
+                sinceId: params.get("since_id")
+            )
+            return (referenceValue, pagedInfo)
+        }
 
-        minId = paginationQueryItems.first { $0.name == "min_id" }?.value
-        maxId = paginationQueryItems.first { $0.name == "max_id" }?.value
-        sinceId = paginationQueryItems.first { $0.name == "since_id" }?.value
+        prev = paginationItems.first(where: { $0.0 == "prev" })?.1
+        next = paginationItems.first(where: { $0.0 == "next" })?.1
     }
 }
 
