@@ -36,6 +36,8 @@ struct SwiftyAdmin: AsyncParsableCommand {
             GetPostContext.self,
             GetConversations.self,
             GetInstance.self,
+            GetInstancePrivacyPolicy.self,
+            GetInstanceTermsOfService.self,
             GetMarkers.self,
             UpdateMarkers.self,
             GetPendingFollowRequests.self,
