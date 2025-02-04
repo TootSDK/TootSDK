@@ -4,7 +4,7 @@
 import Foundation
 
 /// Params to change a list of users
-public struct ListParams: Codable {
+public struct ListParams: Codable, Sendable {
     /// The user-defined title of the list.
     public var title: String
     /// The user-defined title of the list.
