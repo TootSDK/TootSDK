@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a list of some users that the authenticated user follows.
-public struct List: Codable, Hashable, Identifiable {
+public struct List: Codable, Hashable, Identifiable, Sendable {
 
     /// The internal database ID of the list.
     public var id: String
@@ -26,7 +26,7 @@ public struct List: Codable, Hashable, Identifiable {
     }
 }
 
-public enum ListRepliesPolicy: String, Hashable, Codable {
+public enum ListRepliesPolicy: String, Hashable, Codable, Sendable {
     /// Show replies to any followed user
     case followed
     /// Show replies to members of the list
