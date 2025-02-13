@@ -62,6 +62,28 @@ extension TootClient {
         return try await fetch(ExtendedDescription.self, req)
     }
 
+    /// Obtain the content of this server's privacy policy.
+    /// - Returns: A ``PrivacyPolicy`` instance containing the content of the privacy policy.
+    public func getPrivacyPolicy() async throws -> PrivacyPolicy {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "privacy_policy"])
+            $0.method = .get
+        }
+        return try await fetch(PrivacyPolicy.self, req)
+    }
+
+    /// Obtain the content of this server's terms of service, if configured.
+    /// - Returns: A ``PrivacyPolicy`` instance representing the terms of service.
+    ///
+    /// Expected to return `404` if the instance has not configured its optional terms of service, even if it supports this endpoint.
+    public func getTermsOfService() async throws -> PrivacyPolicy {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "terms_of_service"])
+            $0.method = .get
+        }
+        return try await fetch(PrivacyPolicy.self, req)
+    }
+
     /// Translation language pairs supported by the translation engine used by the server.
     public func getTranslationLanguages() async throws -> [String: [String]] {
         try requireFeature(.translatePost)
