@@ -23,7 +23,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.2.0"),
         .package(url: "https://github.com/apple/swift-collections.git", from: "1.0.2"),
-        .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.4.3"),
+        .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.7.7"),
         .package(url: "https://github.com/karwa/swift-url.git", from: "0.4.2"),
         .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0"..<"4.0.0"),
     ],

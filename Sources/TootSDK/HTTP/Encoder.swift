@@ -3,7 +3,7 @@
 
 import Foundation
 
-public final class TootEncoder: JSONEncoder {
+public final class TootEncoder: JSONEncoder, @unchecked Sendable {
     public override init() {
         super.init()
 
