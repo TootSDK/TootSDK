@@ -35,7 +35,10 @@ extension TootClient {
 
     private func pixelfedReport(_ params: ReportParams) async throws {
         guard ReportCategory.pixelfedSupported.contains(params.category) else {
-            throw TootSDKError.invalidParameter(parameterName: "category")
+            throw TootSDKError.invalidParameter(
+                parameterName: "category",
+                reason: "Unsupported category."
+            )
         }
         let postId = params.postIds.first
         let pixelfedParams = PixelfedReportParams(
