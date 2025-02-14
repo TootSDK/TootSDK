@@ -14,7 +14,7 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case invalidStatusCode(data: Data, response: HTTPURLResponse)
     case requiredURLNotSet
     case missingParameter(parameterName: String)
-    case invalidParameter(parameterName: String)
+    case invalidParameter(parameterName: String, reason: String)
     /// The requested operation is not supported by the current server flavour.
     case unsupportedFlavour(current: TootSDKFlavour, required: Set<TootSDKFlavour>)
     case unexpectedError(_ description: String)
