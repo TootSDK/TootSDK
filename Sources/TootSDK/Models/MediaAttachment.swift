@@ -7,7 +7,8 @@ import Foundation
 public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
 
     public init(
-        id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, meta: AttachmentMeta? = nil,
+        id: String, type: AttachmentType, url: String, remoteUrl: String? = nil, previewUrl: String? = nil, previewRemoteUrl: String? = nil,
+        meta: AttachmentMeta? = nil,
         description: String? = nil, blurhash: String? = nil
     ) {
         self.id = id
@@ -15,6 +16,7 @@ public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
         self.url = url
         self.remoteUrl = remoteUrl
         self.previewUrl = previewUrl
+        self.previewRemoteUrl = previewRemoteUrl
         self.meta = meta
         self.description = description
         self.blurhash = blurhash
@@ -30,6 +32,8 @@ public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
     public var remoteUrl: String?
     /// The location of a scaled-down preview of the attachment.
     public var previewUrl: String?
+    /// The location of a scaled-down preview of the attachment on the remote website.
+    public var previewRemoteUrl: String?
     /// Metadata returned by Paperclip, only `original`, `small` and `focus` are serialized.
     public var meta: AttachmentMeta?
     /// Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.
@@ -56,6 +60,8 @@ public struct AttachmentMeta: Codable, Hashable, Sendable {
     public var original: AttachmentMetaInfo?
     public var small: AttachmentMetaInfo?
     public var focus: AttachmentMetaFocus?
+    /// For ``AttachmentType/audio`` attachments, contains colors matching the artwork (thumbnail) associated with the audio file.
+    public var colors: AttachmentMetaColors?
 }
 
 public struct AttachmentMetaInfo: Codable, Hashable, Sendable {
@@ -92,6 +98,22 @@ public struct AttachmentMetaFocus: Codable, Hashable, Sendable {
 
 extension AttachmentMetaFocus {
     public static let `default` = Self(x: 0, y: 0)
+}
+
+/// The color theme of the audio player for ``AttachmentType/audio`` attachments.
+public struct AttachmentMetaColors: Codable, Hashable, Sendable {
+    /// Hex color code for the most frequent color close to the edge of the artwork.
+    public var background: String?
+    /// Hex color code for a frequent color in the image that is the most different from the background, *not* the most saturated, and passes the W3C contrast requirement of 3.0.
+    public var foreground: String?
+    /// Hex color code for a frequent color in the image that is the most saturated, most different from the background, and passes the W3C contrast requirement of 3.0.
+    public var accent: String?
+
+    public init(background: String? = nil, foreground: String? = nil, accent: String? = nil) {
+        self.background = background
+        self.foreground = foreground
+        self.accent = accent
+    }
 }
 
 public struct UploadedMediaAttachment: Identifiable, Sendable {
