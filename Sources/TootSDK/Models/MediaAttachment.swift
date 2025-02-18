@@ -60,7 +60,7 @@ public struct AttachmentMeta: Codable, Hashable, Sendable {
     public var original: AttachmentMetaInfo?
     public var small: AttachmentMetaInfo?
     public var focus: AttachmentMetaFocus?
-    /// For ``AttachmentType/audio`` attachments, contains colors extracted from the thumbnail.
+    /// For ``AttachmentType/audio`` attachments, contains colors matching the artwork (thumbnail) associated with the audio file.
     public var colors: AttachmentMetaColors?
 }
 
