@@ -3,7 +3,16 @@
 
 import Foundation
 
+#if canImport(OSLog)
+    import OSLog
+#endif
+
 public final class TootDecoder: JSONDecoder, @unchecked Sendable {
+
+    #if canImport(OSLog)
+        static let logger = Logger(subsystem: "TootSDK", category: "Decoding")
+    #endif
+
     internal override init() {
         super.init()
 

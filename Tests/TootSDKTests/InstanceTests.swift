@@ -217,4 +217,11 @@ final class InstanceTests: XCTestCase {
             result.configuration?.vapid?.publicKey, "BFMwLYtsJ1yccxjC4bhxGfV0SQMH-fcrmeQF7p0CUw16C9W6M6Xe3xLiU_bLwA5OKHBUhG9GluqPUfsLMbj74l8")
         XCTAssertEqual(result.configuration?.translation, nil)
     }
+
+    func testMissingThumbnailUrl() throws {
+        let json = localContent("instancev2_missing_thumbnail_url")
+        let decoder = TootDecoder()
+        let result = try decoder.decode(InstanceV2.self, from: json)
+        XCTAssertEqual(result.thumbnail, nil)
+    }
 }

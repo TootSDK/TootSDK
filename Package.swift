@@ -72,6 +72,7 @@ let package = Package(
                 .copy("Resources/instance_sharkey_contact_removed.json"),
                 .copy("Resources/instance_pixelfed.json"),
                 .copy("Resources/instancev2_mastodon.json"),
+                .copy("Resources/instancev2_missing_thumbnail_url.json"),
                 .copy("Resources/instancev2_firefish.json"),
                 .copy("Resources/instancev2_friendica.json"),
                 .copy("Resources/instancev2_gotosocial.json"),
