@@ -12,10 +12,7 @@ public final class TootDecoder: JSONDecoder, @unchecked Sendable {
             let container = try decoder.singleValueContainer()
             let dateString = try container.decode(String.self)
 
-            guard
-                let date = Self.dateFormatter.date(from: dateString) ?? Self.dateFormatterWithoutFractionalSeconds.date(from: dateString)
-                    ?? Self.dateFormatterWithFullDate.date(from: dateString)
-            else {
+            guard let date = Self.decodeDate(dateString) else {
                 throw DecodingError.dataCorruptedError(
                     in: container,
                     debugDescription:
@@ -45,4 +42,21 @@ extension TootDecoder {
         dateFormatter.formatOptions = [.withFullDate]
         return dateFormatter
     }()
+
+    private static func decodeDate(_ dateString: String) -> Date? {
+        let dateFromString =
+            Self.dateFormatter.date(from: dateString)
+            ?? Self.dateFormatterWithoutFractionalSeconds.date(from: dateString)
+            ?? Self.dateFormatterWithFullDate.date(from: dateString)
+
+        if let dateFromString {
+            return dateFromString
+        }
+
+        if let seconds = TimeInterval(dateString) {
+            return Date(timeIntervalSince1970: seconds)
+        }
+
+        return nil
+    }
 }

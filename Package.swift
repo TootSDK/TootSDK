@@ -78,6 +78,7 @@ let package = Package(
                 .copy("Resources/instancev2_pixelfed.json"),
                 .copy("Resources/instancev2_pleroma.json"),
                 .copy("Resources/list.json"),
+                .copy("Resources/markers_unix_timestamp.json"),
                 .copy("Resources/post_edited.json"),
                 .copy("Resources/post no emojis.json"),
                 .copy("Resources/post with emojis and attachments.json"),
