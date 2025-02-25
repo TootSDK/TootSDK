@@ -65,6 +65,31 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         self.rules = rules
     }
 
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.domain = try container.decodeIfPresent(String.self, forKey: .domain)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title)
+        self.version = try container.decode(String.self, forKey: .version)
+        self.sourceURL = try container.decodeIfPresent(String.self, forKey: .sourceURL)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
+        self.usage = try container.decodeIfPresent(InstanceV2.Usage.self, forKey: .usage)
+        do {
+            self.thumbnail = try container.decodeIfPresent(InstanceV2.Thumbnail.self, forKey: .thumbnail)
+        } catch {
+            #if canImport(OSLog)
+                TootDecoder.logger.debug("Setting thumbnail to nil due to decoding error: \(error)")
+            #endif
+            self.thumbnail = nil
+        }
+        self.icon = try container.decodeIfPresent([InstanceV2.Icon].self, forKey: .icon)
+        self.languages = try container.decodeIfPresent([String].self, forKey: .languages)
+        self.configuration = try container.decodeIfPresent(InstanceConfiguration.self, forKey: .configuration)
+        self.registrations = try container.decode(InstanceV2.Registrations.self, forKey: .registrations)
+        self.apiVersions = try container.decodeIfPresent(InstanceV2.APIVersions.self, forKey: .apiVersions)
+        self.contact = try container.decodeIfPresent(InstanceV2.ContactInfo.self, forKey: .contact)
+        self.rules = try container.decodeIfPresent([InstanceRule].self, forKey: .rules)
+    }
+
     enum CodingKeys: String, CodingKey {
         case domain
         case title
