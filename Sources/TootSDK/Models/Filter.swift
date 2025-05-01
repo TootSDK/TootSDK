@@ -22,6 +22,8 @@ public struct Filter: Codable, Hashable, Identifiable {
         case warn
         /// do not show this post if it is received
         case hide
+        /// hide/blur media attachments with a warning identifying the matching filter by ``Filter/title``
+        case blur
     }
 
     /// The ID of the Filter in the database.
