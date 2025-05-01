@@ -94,6 +94,15 @@ extension TootClient {
         return try await fetch([String: [String]].self, req)
     }
 
+    /// Get the human-readable names of the instance's supported languages, localized to the instance's primary language.
+    public func getLanguages() async throws -> [InstanceLanguage] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "languages"])
+            $0.method = .get
+        }
+        return try await fetch([InstanceLanguage].self, req)
+    }
+
     /// Get node info.
     public func getNodeInfo() async throws -> NodeInfo {
         let wellKnownReq = HTTPRequestBuilder {
