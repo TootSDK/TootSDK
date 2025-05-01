@@ -10,7 +10,7 @@ import Foundation
 public struct RegisterAccountParams: Codable, Sendable {
     public init(
         username: String, email: String, password: String, agreement: Bool, locale: String,
-        reason: String? = nil, token: String? = nil, fullname: String? = nil,
+        reason: String? = nil, dateOfBirth: String? = nil, token: String? = nil, fullname: String? = nil,
         captchaSolution: String? = nil, captchaToken: String? = nil, captchaAnswerData: String? = nil
     ) {
         self.username = username
@@ -19,6 +19,28 @@ public struct RegisterAccountParams: Codable, Sendable {
         self.agreement = agreement
         self.locale = locale
         self.reason = reason
+        self.dateOfBirth = dateOfBirth
+        self.token = token
+        self.fullname = fullname
+        self.captchaSolution = captchaSolution
+        self.captchaToken = captchaToken
+        self.captchaAnswerData = captchaAnswerData
+    }
+
+    public init(
+        username: String, email: String, password: String, agreement: Bool, locale: String,
+        reason: String? = nil, dateOfBirth: Date? = nil, token: String? = nil, fullname: String? = nil,
+        captchaSolution: String? = nil, captchaToken: String? = nil, captchaAnswerData: String? = nil
+    ) {
+        self.username = username
+        self.email = email
+        self.password = password
+        self.agreement = agreement
+        self.locale = locale
+        self.reason = reason
+        if let dateOfBirth {
+            self.dateOfBirth = TootEncoder.dateFormatterWithFullDate.string(from: dateOfBirth)
+        }
         self.token = token
         self.fullname = fullname
         self.captchaSolution = captchaSolution
@@ -42,7 +64,12 @@ public struct RegisterAccountParams: Codable, Sendable {
     public var locale: String
 
     /// If registrations require manual approval, this text will be reviewed by moderators.
+    ///
+    /// ``InstanceV2/Registrations-swift.struct/reasonRequired`` specifies whether this field is required.
     public var reason: String?
+
+    /// String in `YYYY-MM-DD` format; required if the server specifies a minimum age requirement using ``InstanceV2/Registrations-swift.struct/minAge``.
+    public var dateOfBirth: String?
 
     /// Invite token required when the registrations aren't public. Only supported by Pleroma and Akkoma
     public var token: String?

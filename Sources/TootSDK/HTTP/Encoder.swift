@@ -32,4 +32,10 @@ extension TootEncoder {
 
         return dateFormatter
     }()
+
+    static let dateFormatterWithFullDate: ISO8601DateFormatter = {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withFullDate]
+        return dateFormatter
+    }()
 }
