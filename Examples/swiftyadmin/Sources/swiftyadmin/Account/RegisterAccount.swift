@@ -19,6 +19,12 @@ struct RegisterAccount: AsyncParsableCommand {
     @Option(name: .short, help: "Password")
     var password: String
 
+    @Option(name: .short, help: "Reason")
+    var reason: String?
+
+    @Option(name: .short, help: "Date of Birth (YYYY-MM-DD)")
+    var dateOfBirth: String?
+
     mutating func run() async throws {
         guard let registerToken = try await login() else {
             return
@@ -33,10 +39,18 @@ struct RegisterAccount: AsyncParsableCommand {
             return
         }
 
+        if instance.v2Representation().registrations.reasonRequired == true && (reason == nil || reason!.isEmpty) {
+            print("Registration requires a reason, please provide one")
+        }
+
+        if instance.v2Representation().registrations.minAge != nil && dateOfBirth == nil {
+            print("Registration requires date of birth (YYYY-MM-DD)")
+        }
+
         print("register account")
         client.debugOn()
         let params = RegisterAccountParams(
-            username: name, email: email, password: password, agreement: true, locale: "en")
+            username: name, email: email, password: password, agreement: true, locale: "en", reason: reason, dateOfBirth: dateOfBirth)
         let token = try await client.registerAccount(params: params)
         print("Registration success, access token: (\(token.accessToken ?? "nil"))")
     }

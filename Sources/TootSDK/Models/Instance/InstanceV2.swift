@@ -182,11 +182,17 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         public var approvalRequired: Bool?
         /// An optional custom message to be shown when registrations are closed.
         public var message: String?
+        /// A minimum age required to register, if configured.
+        public var minAge: Int?
+        /// Whether registrations require the user to provide a reason for joining. Only applicable when ``approvalRequired`` is `true`.
+        public var reasonRequired: Bool?
 
-        public init(enabled: Bool? = nil, approvalRequired: Bool? = nil, message: String? = nil) {
+        public init(enabled: Bool? = nil, approvalRequired: Bool? = nil, message: String? = nil, minAge: Int? = nil, reasonRequired: Bool? = nil) {
             self.enabled = enabled
             self.approvalRequired = approvalRequired
             self.message = message
+            self.minAge = minAge
+            self.reasonRequired = reasonRequired
         }
     }
 

@@ -36,6 +36,25 @@ public struct InstanceConfiguration: Codable, Hashable, Sendable {
 
         /// The server status page. String (URL).
         public var status: String?
+
+        /// The server's about page. String (URL).
+        public var about: String?
+
+        /// The server's privacy policy webpage. String (URL).
+        public var privacyPolicy: String?
+
+        /// The server's terms of service webpage. String (URL).
+        public var termsOfService: String?
+
+        public init(
+            streaming: String? = nil, status: String? = nil, about: String? = nil, privacyPolicy: String? = nil, termsOfService: String? = nil
+        ) {
+            self.streaming = streaming
+            self.status = status
+            self.about = about
+            self.privacyPolicy = privacyPolicy
+            self.termsOfService = termsOfService
+        }
     }
 
     public struct Accounts: Codable, Hashable, Sendable {
