@@ -23,7 +23,9 @@ final class ScheduledPostTests: XCTestCase {
 
         // act
         XCTAssertThrowsError(try ScheduledPostRequest(from: params)) { error in
-            XCTAssertEqual(error as? TootSDKError, TootSDKError.invalidParameter(parameterName: "scheduledAt", reason: "The scheduled date must be at least 5 minutes into the future."))
+            XCTAssertEqual(
+                error as? TootSDKError,
+                TootSDKError.invalidParameter(parameterName: "scheduledAt", reason: "The scheduled date must be at least 5 minutes into the future."))
         }
     }
 

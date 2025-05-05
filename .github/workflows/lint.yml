@@ -11,12 +11,12 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Get swift version
+        run: swift --version
       - name: Install swift-format
         run: |
-          VERSION=509.0.0
+          VERSION=601.0.0
           git clone https://github.com/apple/swift-format.git
           cd swift-format
           git checkout "tags/$VERSION"
