@@ -31,8 +31,8 @@ public struct Preferences: Codable, Hashable, Sendable {
         /// Hide media marked as sensitive
         case `default`
         /// Always show all media by default, regardless of sensitivity
-        case showAll
+        case showAll = "show_all"
         /// Always hide all media by default, regardless of sensitivity
-        case hideAll
+        case hideAll = "hide_all"
     }
 }
