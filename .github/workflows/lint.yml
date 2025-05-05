@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Setup Swift
-        uses: swift-actions/setup-swift@682457186b71c25a884c45c06f859febbe259240
       - name: Get swift version
         run: swift --version
       - name: Install swift-format
