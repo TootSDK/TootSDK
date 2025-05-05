@@ -263,7 +263,7 @@ extension UInt8 {
 
     /*
      See https://tools.ietf.org/html/rfc1341#page-6 and https://tools.ietf.org/html/rfc822#section-3.2
-
+    
         field-name  = token
         token       = 1*<any CHAR except CTLs or tspecials>
         CTL         = <any US-ASCII control character (octets 0 - 31) and DEL (127)>
