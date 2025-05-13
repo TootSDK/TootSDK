@@ -116,6 +116,8 @@ extension TootClient {
     }
 
     /// Obtain a list of domains that have been blocked.
+    ///
+    /// Expected to return `401` if the admin has chosen to require authorization and none is provided, or `404` if the admin has chosen to hide domain blocks entirely.
     public func getDomainBlocks() async throws -> [InstanceDomainBlock] {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "instance", "domain_blocks"])
