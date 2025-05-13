@@ -103,6 +103,27 @@ extension TootClient {
         return try await fetch([InstanceLanguage].self, req)
     }
 
+    /// Get the list of domains that this instance is aware of.
+    /// - Returns: Array of domains.
+    ///
+    /// Expected to return `401` if called without a user token if the instance is in limited federation mode.
+    public func getPeers() async throws -> [String] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "peers"])
+            $0.method = .get
+        }
+        return try await fetch([String].self, req)
+    }
+
+    /// Obtain a list of domains that have been blocked.
+    public func getDomainBlocks() async throws -> [InstanceDomainBlock] {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "domain_blocks"])
+            $0.method = .get
+        }
+        return try await fetch([InstanceDomainBlock].self, req)
+    }
+
     /// Get node info.
     public func getNodeInfo() async throws -> NodeInfo {
         let wellKnownReq = HTTPRequestBuilder {
