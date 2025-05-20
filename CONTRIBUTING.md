@@ -42,8 +42,8 @@ Optionally, you may consider extending one of the examples in order to showcase 
 
 We'd love it if you'd talk to us over on the Fediverse! Current maintainers and admins for TootSDK are:
 
-- [Konstantin](https://social.headbright.eu/@konstantin)
-- [David Gary Wood](https://social.davidgarywood.com/@davidgarywood)
+- [Konstantin](https://mastodon.social/@iamkonstantin)
+- [David Gary Wood](https://mastodon.social/@davelightbeam)
 
 ### No AI-generated Pull Requests
 
