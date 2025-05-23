@@ -1,6 +1,6 @@
 import Foundation
 
-/// The privacy policy or terms of service of an instance.
+/// The privacy policy of an instance.
 public struct PrivacyPolicy: Codable, Hashable, Sendable {
 
     /// A timestamp of when the policy was last updated.
