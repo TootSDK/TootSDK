@@ -72,16 +72,30 @@ extension TootClient {
         return try await fetch(PrivacyPolicy.self, req)
     }
 
-    /// Obtain the content of this server's terms of service, if configured.
-    /// - Returns: A ``PrivacyPolicy`` instance representing the terms of service.
+    /// Obtain the content of this server's most current terms of service, if configured.
+    /// - Returns: A ``TermsOfService`` instance representing the most recent effective terms of service, or the most recent version that exists if there is no currently effective version.
     ///
     /// Expected to return `404` if the instance has not configured its optional terms of service, even if it supports this endpoint.
-    public func getTermsOfService() async throws -> PrivacyPolicy {
+    public func getTermsOfService() async throws -> TermsOfService {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "instance", "terms_of_service"])
             $0.method = .get
         }
-        return try await fetch(PrivacyPolicy.self, req)
+        return try await fetch(TermsOfService.self, req)
+    }
+
+    /// Obtain a specific dated version of this server's terms of service.
+    /// - Returns: A ``TermsOfService`` instance with the effective date specified by the `effectiveAsOf` parameter.
+    ///
+    /// Expected to return `404` if there is no terms of service with the exact effective date specified, or if the instance has not configured its optional terms of service.
+    public func getTermsOfService(effectiveAsOf effectiveDate: Date) async throws -> TermsOfService {
+        let encodedDate = TootEncoder.dateFormatterWithFullDate.string(from: effectiveDate)
+
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "instance", "terms_of_service", encodedDate])
+            $0.method = .get
+        }
+        return try await fetch(TermsOfService.self, req)
     }
 
     /// Translation language pairs supported by the translation engine used by the server.
