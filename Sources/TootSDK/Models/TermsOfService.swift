@@ -10,6 +10,8 @@ public struct TermsOfService: Codable, Hashable, Sendable {
     public var effective: Bool
 
     /// If there are newer terms of service, their effective date.
+    ///
+    /// You can get the newer version by passing this date as the parameter for ``TootClient/getTermsOfService(effectiveAsOf:)``.
     public var succeededBy: Date?
 
     /// The rendered HTML content of the terms of service.
