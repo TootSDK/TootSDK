@@ -13,7 +13,7 @@ public struct List: Codable, Hashable, Identifiable, Sendable {
     public var title: String
 
     /// Which replies should be shown in the list.
-    public var repliesPolicy: ListRepliesPolicy?
+    public var repliesPolicy: OpenEnum<ListRepliesPolicy>?
 
     /// Whether members of this list need to get removed from the “Home” feed.
     public var exclusive: Bool?
@@ -21,7 +21,7 @@ public struct List: Codable, Hashable, Identifiable, Sendable {
     public init(id: String, title: String, repliesPolicy: ListRepliesPolicy, exclusive: Bool? = nil) {
         self.id = id
         self.title = title
-        self.repliesPolicy = repliesPolicy
+        self.repliesPolicy = .some(repliesPolicy)
         self.exclusive = exclusive
     }
 }

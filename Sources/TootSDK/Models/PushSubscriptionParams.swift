@@ -62,11 +62,11 @@ public struct PushSubscriptionParams: Codable, Sendable {
         /// Specify which alerts should be received.
         public var alerts: Alerts?
         /// Specify whether to receive push notifications from all, followed, follower, or none users.
-        public var policy: PushSubscriptionPolicy?
+        public var policy: OpenEnum<PushSubscriptionPolicy>?
 
         public init(alerts: Alerts? = nil, policy: PushSubscriptionPolicy? = nil) {
             self.alerts = alerts
-            self.policy = policy
+            self.policy = .optional(policy)
         }
     }
 

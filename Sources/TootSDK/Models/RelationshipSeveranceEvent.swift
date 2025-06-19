@@ -9,7 +9,7 @@ import Foundation
 
 public struct RelationshipSeveranceEvent: Codable, Sendable, Hashable, Identifiable {
     public let id: String
-    public let type: EventType
+    public let type: OpenEnum<EventType>
     public let purged: Bool
     public let targetName: String
     public let relationshipsCount: Int?

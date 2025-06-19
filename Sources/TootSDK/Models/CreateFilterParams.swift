@@ -10,8 +10,8 @@ import Foundation
 /// Parameters to create a new filter.
 public struct CreateFilterParams: Sendable {
     let title: String
-    let context: Set<Filter.Context>
-    let action: Filter.Action
+    let context: Set<OpenEnum<Filter.Context>>
+    let action: OpenEnum<Filter.Action>
     let expiresInSeconds: Int?
     let keywords: [Keyword]
 
@@ -31,8 +31,8 @@ public struct CreateFilterParams: Sendable {
         keywords: [Keyword]
     ) {
         self.title = title
-        self.context = context
-        self.action = action
+        self.context = Set(context.map { OpenEnum.some($0) })
+        self.action = .some(action)
         self.expiresInSeconds = expiresInSeconds
         self.keywords = keywords
     }

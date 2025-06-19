@@ -29,7 +29,7 @@ public struct Card: Codable, Hashable, Sendable {
         self.title = title
         self.description = description
         self.language = language
-        self.type = type
+        self.type = .some(type)
         self.authorName = authorName
         self.authorUrl = authorUrl
         self.authors = authors
@@ -74,7 +74,7 @@ public struct Card: Codable, Hashable, Sendable {
     /// The language code of the linked resource.
     public var language: String?
     /// The type of preview card.
-    public var type: CardType
+    public var type: OpenEnum<CardType>
     /// The author of the original resource.
     public var authorName: String?
     /// A link to the author of the original resource.
@@ -108,7 +108,7 @@ public struct Card: Codable, Hashable, Sendable {
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)
         self.language = try container.decodeIfPresent(String.self, forKey: .language)
-        self.type = try container.decode(Card.CardType.self, forKey: .type)
+        self.type = try container.decode(OpenEnum<Card.CardType>.self, forKey: .type)
         self.authorName = try container.decodeIfPresent(String.self, forKey: .authorName)
         self.authorUrl = try container.decodeIfPresent(String.self, forKey: .authorUrl)
         self.authors = try container.decodeIfPresent([Card.Author].self, forKey: .authors)

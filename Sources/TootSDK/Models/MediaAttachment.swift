@@ -12,7 +12,7 @@ public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
         description: String? = nil, blurhash: String? = nil
     ) {
         self.id = id
-        self.type = type
+        self.type = .some(type)
         self.url = url
         self.remoteUrl = remoteUrl
         self.previewUrl = previewUrl
@@ -25,7 +25,7 @@ public struct MediaAttachment: Codable, Hashable, Identifiable, Sendable {
     /// The ID of the attachment in the database.
     public var id: String
     /// The type of the attachment.
-    public var type: AttachmentType
+    public var type: OpenEnum<AttachmentType>
     /// The location of the original full-size attachment.
     public var url: String
     /// The location of the full-size original attachment on the remote website.

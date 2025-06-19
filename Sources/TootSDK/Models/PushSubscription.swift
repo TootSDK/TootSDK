@@ -9,7 +9,7 @@ public struct PushSubscription: Codable, Sendable {
         self.endpoint = endpoint
         self.alerts = alerts
         self.serverKey = serverKey
-        self.policy = policy
+        self.policy = .some(policy)
     }
 
     /// Where push alerts will be sent to.
@@ -19,5 +19,5 @@ public struct PushSubscription: Codable, Sendable {
     /// The streaming server's VAPID key.
     public var serverKey: String
     /// From who to receive push notifications.
-    public var policy: PushSubscriptionPolicy?
+    public var policy: OpenEnum<PushSubscriptionPolicy>?
 }

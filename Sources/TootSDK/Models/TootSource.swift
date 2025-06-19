@@ -11,7 +11,7 @@ public struct TootSource: Codable, Hashable, Sendable {
     ) {
         self.note = note
         self.fields = fields
-        self.privacy = privacy
+        self.privacy = .optional(privacy)
         self.sensitive = sensitive
         self.language = language
         self.followRequestsCount = followRequestsCount
@@ -25,7 +25,7 @@ public struct TootSource: Codable, Hashable, Sendable {
     /// Metadata about the account.
     public var fields: [TootField]
     /// The default post privacy to be used for new posts.
-    public var privacy: Post.Visibility?
+    public var privacy: OpenEnum<Post.Visibility>?
     /// Whether new posts should be marked sensitive by default.
     public var sensitive: Bool?
     ///  The default posting language for new posts.

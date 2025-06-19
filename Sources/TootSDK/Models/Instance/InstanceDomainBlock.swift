@@ -14,14 +14,14 @@ public struct InstanceDomainBlock: Codable, Hashable, Sendable {
     /// The SHA256 hash digest of the domain string.
     public var digest: String?
     /// The level to which the domain is blocked.
-    public var severity: DomainBlockSeverity
+    public var severity: OpenEnum<DomainBlockSeverity>
     /// An optional reason for the domain block.
     public var comment: String?
 
     public init(domain: String, digest: String? = nil, severity: DomainBlockSeverity, comment: String? = nil) {
         self.domain = domain
         self.digest = digest
-        self.severity = severity
+        self.severity = .some(severity)
         self.comment = comment
     }
 }

@@ -33,7 +33,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
         self.mediaIds = mediaIds
         self.sensitive = sensitive
         self.spoilerText = spoilerText
-        self.visibility = visibility
+        self.visibility = .some(visibility)
         self.language = language
         self.scheduledAt = scheduledAt
         self.poll = poll
@@ -52,7 +52,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
     /// Mark post and attached media as sensitive? Defaults to false.
     public var spoilerText: String?
     /// Sets the visibility of the posted post to public, unlisted, private, direct.
-    public var visibility: Post.Visibility
+    public var visibility: OpenEnum<Post.Visibility>
     /// ISO 639 language code for this post.
     public var language: String?
     /// UTC Datetime at which to schedule a post.
@@ -98,7 +98,7 @@ public struct ScheduledPostParams: Codable, Equatable, Hashable, Sendable {
         // Mastodon incorrectly returns sensitive as a string
         self.sensitive = try? container.decodeBoolFromString(forKey: .sensitive)
         self.spoilerText = try? container.decodeIfPresent(String.self, forKey: .spoilerText)
-        self.visibility = try container.decode(Post.Visibility.self, forKey: .visibility)
+        self.visibility = try container.decode(OpenEnum<Post.Visibility>.self, forKey: .visibility)
         self.language = try? container.decodeIfPresent(String.self, forKey: .language)
         self.idempotency = try? container.decodeIfPresent(String.self, forKey: .idempotency)
         self.scheduledAt = try? container.decodeIfPresent(Date.self, forKey: .scheduledAt)

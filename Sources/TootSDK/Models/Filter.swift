@@ -31,11 +31,11 @@ public struct Filter: Codable, Hashable, Identifiable {
     /// A title given by the user to name the filter.
     public var title: String
     /// The contexts in which the filter should be applied.
-    public var context: [Context]
+    public var context: [OpenEnum<Context>]
     /// When the filter should no longer be applied.
     public var expiresAt: Date?
     /// The action to be taken when a post matches this filter.
-    public var filterAction: Action
+    public var filterAction: OpenEnum<Action>
     /// The keywords grouped under this filter.
     public var keywords: [FilterKeyword]
     /// The posts grouped under this filter.
@@ -55,9 +55,9 @@ public struct Filter: Codable, Hashable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
-        self.context = try container.decode([Context].self, forKey: .context)
+        self.context = try container.decode([OpenEnum<Context>].self, forKey: .context)
         self.expiresAt = try? container.decodeIfPresent(Date.self, forKey: .expiresAt)
-        self.filterAction = try container.decode(Action.self, forKey: .filterAction)
+        self.filterAction = try container.decode(OpenEnum<Action>.self, forKey: .filterAction)
         // not returned when part of FilterResult
         self.keywords = (try? container.decodeIfPresent([FilterKeyword].self, forKey: .keywords)) ?? []
         // not returned when part of FilterResult

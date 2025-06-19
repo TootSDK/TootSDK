@@ -10,7 +10,7 @@ public struct BlockDomainParams: Codable {
     public var domain: String
 
     /// Whether to apply a silence, suspend, or noop to the domain. Defaults to silence
-    public var severity: DomainBlockSeverity?
+    public var severity: OpenEnum<DomainBlockSeverity>?
 
     /// Whether media attachments should be rejected. Defaults to false
     public var rejectMedia: Bool?
@@ -40,7 +40,7 @@ public struct BlockDomainParams: Codable {
         publicComment: String? = nil, obfuscate: Bool? = nil
     ) {
         self.domain = domain
-        self.severity = severity
+        self.severity = .optional(severity)
         self.rejectMedia = rejectMedia
         self.rejectReports = rejectReports
         self.privateComment = privateComment

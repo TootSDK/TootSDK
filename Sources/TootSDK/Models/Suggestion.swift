@@ -10,12 +10,12 @@ import Foundation
 /// An account suggested by the server.
 public struct Suggestion: Codable, Hashable, Sendable {
     public init(source: Source, account: Account) {
-        self.source = source
+        self.source = .some(source)
         self.account = account
     }
 
     /// The reason this account is being suggested.
-    public var source: Source
+    public var source: OpenEnum<Source>
     /// The account being recommended to follow.
     public var account: Account
 
