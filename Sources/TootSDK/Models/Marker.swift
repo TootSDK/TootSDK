@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents the last read position within a user's timelines.
-public struct Marker: Codable, Hashable {
+public struct Marker: Codable, Hashable, Sendable {
     public init(lastReadId: String, updatedAt: Date, version: Int) {
         self.lastReadId = lastReadId
         self.updatedAt = updatedAt
@@ -19,7 +19,7 @@ public struct Marker: Codable, Hashable {
     public var version: Int
 
     /// Identifies a timeline for which a position can be saved.
-    public enum Timeline: String, Hashable, Codable, CodingKeyRepresentable {
+    public enum Timeline: String, Hashable, Codable, CodingKeyRepresentable, Sendable {
         /// Information about the user's position in the home timeline.
         case home
         /// Information about the user's position in their notifications.
