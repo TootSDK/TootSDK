@@ -11,7 +11,7 @@
     <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
 </p>
 
-TootSDK is a framework for Mastodon and the Fediverse, for iOS. It provides a toolkit for authorizing a user with an instance, and interacting with their posts.
+TootSDK is a framework for Mastodon and the Fediverse, for iOS, macOS and other Swift platforms. It provides a toolkit for authorizing a user with an instance, and interacting with their posts.
 
 TootSDK is a community developed SDK for Mastodon and the Fediverse.
 It is designed to work with all major servers (Mastodon, Pleroma, PixelFed etc).
@@ -30,7 +30,7 @@ TootSDK is a shared Swift Package that any client app can be built on.
 
 ## Key Principles ⚙️
 
-- Async/Await based. All asynchronous functions are defined as Async ones that you can use with Async/Await code
+- Async/Await based. All asynchronous functions are defined as Async ones that you can use with Async/Await code (Note: full concurrency support is coming with Swift 6.2)
 - Internal consistency and standardization of model property names
 - Standardization across all supported Fediverse APIs
 - Platform agnostic (TootSDK shouldn't care if it's on iOS, macOS or Linux!)
