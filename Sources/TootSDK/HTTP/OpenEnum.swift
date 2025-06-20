@@ -111,3 +111,25 @@ extension OpenEnum: Equatable where Wrapped: Equatable, Wrapped.RawValue: Equata
 
 extension OpenEnum: Hashable where Wrapped: Hashable, Wrapped.RawValue: Hashable {
 }
+
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 8.5, *)
+extension OpenEnum: CodingKeyRepresentable where Wrapped: CodingKeyRepresentable, Wrapped.RawValue: CodingKeyRepresentable {
+    public var codingKey: any CodingKey {
+        switch self {
+        case .some(let wrapped):
+            return wrapped.codingKey
+        case .unparsedByTootSDK(let rawValue):
+            return rawValue.codingKey
+        }
+    }
+
+    public init?(codingKey: some CodingKey) {
+        if let wrapped = Wrapped(codingKey: codingKey) {
+            self = .some(wrapped)
+        } else if let rawValue = Wrapped.RawValue(codingKey: codingKey) {
+            self = .unparsedByTootSDK(rawValue: rawValue)
+        } else {
+            return nil
+        }
+    }
+}
