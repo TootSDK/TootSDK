@@ -8,6 +8,49 @@
 import Foundation
 
 /// A generic enum that wraps a known `RawRepresentable` value or an unknown value encountered during decoding.
+///
+/// This is used to model server-provided values that may include new or custom cases not yet known to TootSDK.
+///
+/// Use `OpenEnum` as a property wrapper for enums with a raw value, allowing you to safely decode and handle unknown values from the server.
+///
+/// - Note: This approach ensures forward compatibility with new enum values returned by the server.
+///
+/// Example:
+/// ```swift
+/// enum Visibility: String, Codable, CaseIterable, Sendable {
+///     case `public`, unlisted, `private`, direct
+/// }
+///
+/// struct Post: Codable {
+///     var visibility: OpenEnum<Visibility>
+/// }
+///
+/// let post = Post(visibility: .public)
+/// // Setting a known value
+/// post.visibility = .some(.private)
+/// // Handling an unknown value from the server
+/// let unknown = OpenEnum<Visibility>.unparsedByTootSDK(rawValue: "custom")
+/// post.visibility = unknown
+/// // Reading the value
+/// switch post.visibility {
+/// case .some(let vis):
+///     print("Known visibility: \(vis)")
+/// case .unparsedByTootSDK(let raw):
+///     print("Unknown visibility: \(raw)")
+/// }
+/// ```
+///
+/// The `OpenEnum` type enables the handling of cases that are not explicitly defined in the enum,
+/// by providing a raw value initializer and a way to access the unparsed value.
+///
+/// Conforming to `OpenEnum` requires implementing the `init?(rawValue:)` initializer and the
+/// `var rawValue: String { get }` property. The `rawValue` should be of the same type as the enum's
+/// raw value type, and the initializer should attempt to create an instance of the enum from the
+/// given raw value, falling back to a case for unparsed values if necessary.
+///
+/// In the example, the `Visibility` enum conforms to `OpenEnum` with a `String` raw value type.
+/// The case `unparsedByTootSDK` is used to represent any unknown visibility value received from the
+/// server that is not explicitly handled by the enum cases.
 @frozen public enum OpenEnum<Wrapped: RawRepresentable & Sendable>: Sendable where Wrapped.RawValue: Sendable {
     /// Represents a known, successfully parsed value.
     case some(Wrapped)
