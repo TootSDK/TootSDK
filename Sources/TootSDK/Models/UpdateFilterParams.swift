@@ -14,9 +14,9 @@ public struct UpdateFilterParams: Sendable, Hashable {
     /// New name for the filter.
     public let title: String?
     /// New contexts for the filter.
-    public let context: Set<Filter.Context>?
+    public let context: Set<OpenEnum<Filter.Context>>?
     /// New action of the filter.
-    public let action: Filter.Action?
+    public let action: OpenEnum<Filter.Action>?
     /// New expiry time of the filter.
     public let expiry: Expiry?
     /// Keyword changes to perform.
@@ -49,8 +49,10 @@ public struct UpdateFilterParams: Sendable, Hashable {
     ) {
         self.id = id
         self.title = title
-        self.context = context
-        self.action = action
+        self.context = context.map { context in
+            Set(context.map { OpenEnum.some($0) })
+        }
+        self.action = .optional(action)
         self.expiry = expiry
         self.keywords = keywords
     }

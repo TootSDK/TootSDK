@@ -70,12 +70,12 @@ public struct UpdateCredentialsParams: Codable {
 
     public struct Source: Codable, Hashable, Sendable {
         public init(privacy: Post.Visibility? = nil, sensitive: Bool? = nil, language: String? = nil) {
-            self.privacy = privacy
+            self.privacy = .optional(privacy)
             self.sensitive = sensitive
             self.language = language
         }
         /// The default post privacy to be used for new posts.
-        public var privacy: Post.Visibility?
+        public var privacy: OpenEnum<Post.Visibility>?
         /// Whether new posts should be marked sensitive by default.
         public var sensitive: Bool?
         ///  The default posting language for new posts.

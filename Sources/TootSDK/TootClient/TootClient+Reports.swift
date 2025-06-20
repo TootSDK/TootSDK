@@ -34,7 +34,7 @@ extension TootClient {
     }
 
     private func pixelfedReport(_ params: ReportParams) async throws {
-        guard ReportCategory.pixelfedSupported.contains(params.category) else {
+        guard let category = params.category.value, ReportCategory.pixelfedSupported.contains(category) else {
             throw TootSDKError.invalidParameter(
                 parameterName: "category",
                 reason: "Unsupported category."
@@ -42,7 +42,7 @@ extension TootClient {
         }
         let postId = params.postIds.first
         let pixelfedParams = PixelfedReportParams(
-            objectType: postId != nil ? .post : .user,
+            objectType: .some(postId != nil ? .post : .user),
             objectId: postId ?? params.accountId,
             type: params.category
         )
@@ -69,7 +69,7 @@ extension TootClient {
         if let forward = params.forward {
             queryItems.append(.init(name: "forward", value: String(forward).lowercased()))
         }
-        if ReportCategory.mastodonSupported.contains(params.category) {
+        if let category = params.category.value, ReportCategory.mastodonSupported.contains(category) {
             queryItems.append(.init(name: "category", value: params.category.rawValue))
         }
         for ruleId in params.ruleIds {

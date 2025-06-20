@@ -26,7 +26,7 @@ public struct DomainBlock: Codable, Hashable, Sendable {
     public var createdAt: Date?
 
     /// The policy to be applied by this domain block.
-    public var severity: DomainBlockSeverity?
+    public var severity: OpenEnum<DomainBlockSeverity>?
 
     /// Whether to reject media attachments from this domain
     public var rejectMedia: Bool?
@@ -67,7 +67,7 @@ public struct DomainBlock: Codable, Hashable, Sendable {
         self.id = id
         self.domain = domain
         self.createdAt = createdAt
-        self.severity = severity
+        self.severity = .optional(severity)
         self.rejectMedia = rejectMedia
         self.rejectReports = rejectReports
         self.privateComment = privateComment

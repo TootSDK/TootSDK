@@ -42,7 +42,7 @@ final class PostTests: XCTestCase {
         XCTAssertNotNil(result.url)
         XCTAssertEqual(result.spoilerText, "")
         XCTAssertEqual(result.language, "en")
-        XCTAssertEqual(result.visibility, .public)
+        XCTAssertEqual(result.visibility, .some(.public))
         XCTAssertEqual(result.pinned, false)
         XCTAssertEqual(result.muted, false)
         XCTAssertEqual(result.favouritesCount, 1)

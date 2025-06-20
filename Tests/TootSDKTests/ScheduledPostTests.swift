@@ -61,7 +61,7 @@ final class ScheduledPostTests: XCTestCase {
         XCTAssertNil(result.params.idempotency)
         XCTAssertEqual(result.params.spoilerText, "Warn")
         XCTAssertEqual(result.params.language, "en")
-        XCTAssertEqual(result.params.visibility, .direct)
+        XCTAssertEqual(result.params.visibility, .some(.direct))
     }
 
     func testScheduledPostMediaIds() throws {
@@ -87,7 +87,7 @@ final class ScheduledPostTests: XCTestCase {
         XCTAssertNil(result.params.idempotency)
         XCTAssertNil(result.params.spoilerText)
         XCTAssertEqual(result.params.language, "en")
-        XCTAssertEqual(result.params.visibility, .private)
+        XCTAssertEqual(result.params.visibility, .some(.private))
     }
 
     func testScheduledPostMultipleMedias() throws {
@@ -113,7 +113,7 @@ final class ScheduledPostTests: XCTestCase {
         XCTAssertNil(result.params.idempotency)
         XCTAssertNil(result.params.spoilerText)
         XCTAssertEqual(result.params.language, "en")
-        XCTAssertEqual(result.params.visibility, .private)
+        XCTAssertEqual(result.params.visibility, .some(.private))
         XCTAssertEqual(result.params.mediaIds, ["111892073708535727", "111892073823106369"])
         XCTAssertEqual(result.params.mediaIds, result.mediaAttachments.map(\.id))
     }
@@ -141,6 +141,6 @@ final class ScheduledPostTests: XCTestCase {
         XCTAssertNil(result.params.idempotency)
         XCTAssertNil(result.params.spoilerText)
         XCTAssertEqual(result.params.language, "en")
-        XCTAssertEqual(result.params.visibility, .unlisted)
+        XCTAssertEqual(result.params.visibility, .some(.unlisted))
     }
 }

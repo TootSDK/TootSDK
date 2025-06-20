@@ -116,7 +116,7 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(result.source?.sensitive, false)
         XCTAssertEqual(result.source?.note, "Lorem ipsum")
         XCTAssertEqual(result.source?.indexable, true)
-        XCTAssertEqual(result.source?.privacy, .public)
+        XCTAssertEqual(result.source?.privacy, .some(.public))
         XCTAssertEqual(result.source?.hideCollections, true)
         XCTAssertEqual(result.source?.language, "en")
         XCTAssertEqual(result.source?.followRequestsCount, 0)

@@ -22,7 +22,7 @@ public struct ReportParams {
     public var forward: Bool?
 
     /// Specify if the report is due to spam, violation of enumerated instance rules, or some other reason. Will be set to `violation` if `ruleIds` is provided (regardless of any category value you provide).
-    public var category: ReportCategory
+    public var category: OpenEnum<ReportCategory>
 
     /// For violation category reports, specify the ID of the exact rules broken.
     public var ruleIds: [Int]
@@ -39,7 +39,7 @@ public struct ReportParams {
         self.postIds = postIds
         self.comment = comment
         self.forward = forward
-        self.category = category
+        self.category = .some(category)
         self.ruleIds = ruleIds
     }
 }

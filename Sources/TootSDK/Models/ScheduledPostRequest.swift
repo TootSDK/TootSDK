@@ -14,7 +14,7 @@ internal struct ScheduledPostRequest: Codable {
     /// Mark post and attached media as sensitive? Defaults to false.
     public var spoilerText: String?
     /// Sets the visibility of the posted post to public, unlisted, private, direct.
-    public var visibility: Post.Visibility
+    public var visibility: OpenEnum<Post.Visibility>
     /// ISO 639 language code for this post.
     public var language: String?
     /// UTC Datetime at which to schedule a post in ISO 8601 format

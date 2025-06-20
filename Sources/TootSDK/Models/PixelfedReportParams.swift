@@ -8,9 +8,9 @@
 import Foundation
 
 struct PixelfedReportParams: Codable {
-    var objectType: ObjectType
+    var objectType: OpenEnum<ObjectType>
     var objectId: String
-    var type: ReportCategory
+    var type: OpenEnum<ReportCategory>
 
     enum ObjectType: String, Codable {
         case post

@@ -43,7 +43,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         self.createdAt = createdAt
         self.account = account
         self.content = content
-        self.visibility = visibility
+        self.visibility = .some(visibility)
         self.sensitive = sensitive
         self.spoilerText = spoilerText
         self.mediaAttachments = mediaAttachments
@@ -82,7 +82,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     /// HTML-encoded post content.
     public var content: String?
     /// Visibility of this post.
-    public var visibility: Visibility
+    public var visibility: OpenEnum<Visibility>
     /// Is this post marked as sensitive content?
     public var sensitive: Bool
     /// Subject or summary line, below which post content is collapsed until expanded.
