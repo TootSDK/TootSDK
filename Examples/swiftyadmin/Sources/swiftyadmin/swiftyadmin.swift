@@ -53,5 +53,9 @@ struct SwiftyAdmin: AsyncParsableCommand {
             GetNodeInfo.self,
             GetPreferences.self,
             StreamEvents.self,
+            GetEndorsements.self,
+            GetOwnAccountEndorsements.self,
+            EndorseAccount.self,
+            UnendorseAccount.self,
         ])
 }
