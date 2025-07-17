@@ -36,7 +36,8 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         muted: Bool? = nil,
         bookmarked: Bool? = nil,
         pinned: Bool? = nil,
-        filtered: [FilterResult]? = nil
+        filtered: [FilterResult]? = nil,
+        quote: Quote? = nil,
     ) {
         self.id = id
         self.uri = uri
@@ -69,6 +70,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         self.bookmarked = bookmarked
         self.pinned = pinned
         self.filtered = filtered
+        self.quote = quote
     }
 
     /// ID of the post in the database.
@@ -135,6 +137,8 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public var pinned: Bool?
     /// If the current token has an authorized user: The filter and keywords that matched this post.
     public var filtered: [FilterResult]?
+    /// Information about the post being quoted, if any.
+    public var quote: Quote?
 
     public enum Visibility: String, Codable, CaseIterable, Sendable {
         /// Visible to everyone, shown in public timelines.
@@ -179,6 +183,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case bookmarked
         case pinned
         case filtered
+        case quote
     }
 }
 
@@ -215,6 +220,7 @@ extension Post: Hashable {
             && lhs.bookmarked == rhs.bookmarked
             && lhs.pinned == rhs.pinned
             && lhs.filtered == rhs.filtered
+            && lhs.quote == rhs.quote
     }
 
     public func hash(into hasher: inout Hasher) {
@@ -249,6 +255,7 @@ extension Post: Hashable {
         hasher.combine(bookmarked)
         hasher.combine(pinned)
         hasher.combine(filtered)
+        hasher.combine(quote)
     }
 }
 
