@@ -41,13 +41,13 @@ public struct Quote: Codable, Sendable, Hashable {
     /// The state of the quote.
     public var state: OpenEnum<QuoteState>
 
-    /// The status or status ID being quoted, if the quote has been accepted. This should be `nil`, unless the ``state`` is ``QuoteState/accepted``.
+    /// The status or status ID being quoted, if the quote has been accepted. This is expected to be `nil`, unless the ``state`` is ``QuoteState/accepted``.
     public var quotedPost: QuotedContent?
 
     enum CodingKeys: String, CodingKey {
         case state
-        case quotedStatus
-        case quotedStatusID
+        case quotedPost = "quotedStatus"
+        case quotedPostID = "quotedStatusId"
     }
 
     /// Mastodon returns either a `Quote` entity containing the `quoted_status` property or `ShallowQuote` containing `quoted_status_id`, either of which may be nil, but `Quote` and `ShallowQuote` are otherwise identical. This handles decoding either one as a ``Quote`` struct.
@@ -55,9 +55,9 @@ public struct Quote: Codable, Sendable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         state = try container.decode(OpenEnum<QuoteState>.self, forKey: .state)
 
-        if let quotedPost = try container.decodeIfPresent(Post.self, forKey: .quotedStatus) {
+        if let quotedPost = try container.decodeIfPresent(Post.self, forKey: .quotedPost) {
             self.quotedPost = .post(quotedPost)
-        } else if let quotedPostID = try container.decodeIfPresent(String.self, forKey: .quotedStatusID) {
+        } else if let quotedPostID = try container.decodeIfPresent(String.self, forKey: .quotedPostID) {
             self.quotedPost = .postID(quotedPostID)
         } else {
             self.quotedPost = nil
@@ -65,14 +65,14 @@ public struct Quote: Codable, Sendable, Hashable {
     }
 
     public func encode(to encoder: any Encoder) throws {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encode(state.rawValue, forKey: .state)
         switch quotedPost {
         case .post(let post):
-            try container.encode(post, forKey: .quotedStatus)
+            try container.encode(post, forKey: .quotedPost)
         case .postID(let id):
-            try container.encode(id, forKey: .quotedStatusID)
+            try container.encode(id, forKey: .quotedPostID)
         case nil:
             break
         }
