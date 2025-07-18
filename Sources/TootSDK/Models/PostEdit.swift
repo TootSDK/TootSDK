@@ -36,7 +36,7 @@ public struct PostEdit: Codable, Hashable, Sendable {
         poll: Poll? = nil,
         mediaAttachments: [MediaAttachment],
         emojis: [Emoji],
-        quote: Quote? = nil,
+        quote: Quote? = nil
     ) {
         self.content = content
         self.spoilerText = spoilerText

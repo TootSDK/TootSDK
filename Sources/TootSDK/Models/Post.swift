@@ -37,7 +37,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         bookmarked: Bool? = nil,
         pinned: Bool? = nil,
         filtered: [FilterResult]? = nil,
-        quote: Quote? = nil,
+        quote: Quote? = nil
     ) {
         self.id = id
         self.uri = uri
