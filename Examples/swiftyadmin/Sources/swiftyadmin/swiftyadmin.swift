@@ -57,5 +57,6 @@ struct SwiftyAdmin: AsyncParsableCommand {
             GetOwnAccountEndorsements.self,
             EndorseAccount.self,
             UnendorseAccount.self,
+            VerifyCredentials.self,
         ])
 }
