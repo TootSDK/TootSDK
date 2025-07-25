@@ -56,6 +56,20 @@ extension TootClient {
         return try decode(MediaAttachment.self, from: data)
     }
 
+    /// Delete a media attachment that is not currently attached to a status.
+    ///
+    /// Only supported if ``InstanceV2/apiVersions-swift.property`` includes ``InstanceV2/APIVersions-swift.struct/mastodon`` API version 4 or higher.
+    ///
+    /// - Parameter id: The ID of the ``MediaAttachment`` in the database.
+    public func deleteMedia(id: String) async throws {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "media", id])
+            $0.method = .delete
+        }
+
+        try await fetch(req: req)
+    }
+
     /// Update media parameters, before it is posted.
     ///
     /// - Parameter id: the ID of the media attachment to be changed.

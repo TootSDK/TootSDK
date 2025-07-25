@@ -101,11 +101,15 @@ extension TootClient {
 
     /// Deletes a single post
     /// - Parameter id: the ID of the post to be deleted
+    /// - Parameter deleteMedia: Whether to immediately delete the post's media attachments. Only supported if ``InstanceV2/apiVersions-swift.property`` includes ``InstanceV2/APIVersions-swift.struct/mastodon`` API version 4 or higher. If supported and this parameter is `nil` or `false`, media attachents may be kept for approximately 24 hours so they can be reused in a new post.
     /// - Returns: the post deleted (for delete and redraft), if successful, throws an error if not
-    public func deletePost(id: String) async throws -> Post {
+    public func deletePost(id: String, deleteMedia: Bool? = nil) async throws -> Post {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id])
             $0.method = .delete
+            if let deleteMedia {
+                $0.addQueryParameter(name: "delete_media", value: String(deleteMedia))
+            }
         }
         return try await fetch(Post.self, req)
     }
