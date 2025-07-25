@@ -172,6 +172,9 @@ extension TootClient {
     }
 
     /// Add the given account to the user’s featured profiles. (Featured profiles are currently shown on the user’s own public profile.)
+    ///
+    /// - Warning: Deprecated in Mastodon 4.4 and later in favor of ``endorseAccount(by:)``.
+    ///
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func pinAccount(by id: String) async throws -> Relationship {
@@ -184,6 +187,9 @@ extension TootClient {
     }
 
     /// Remove the given account from the user’s featured profiles.
+    ///
+    /// - Warning: Deprecated in Mastodon 4.4 and later in favor of ``unendorseAccount(by:)``.
+    ///
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func unpinAccount(by id: String) async throws -> Relationship {
@@ -195,7 +201,7 @@ extension TootClient {
         return try await fetch(Relationship.self, req)
     }
 
-    /// Accounts that the user is currently featuring on their profile.
+    /// Get accounts that the authenticated user is currently featuring on their own profile.
     /// - Parameters:
     ///     - pageInfo: PagedInfo object for max/min/since
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
@@ -208,6 +214,53 @@ extension TootClient {
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
         return try await fetchPagedResult(req)
+    }
+
+    /// Get accounts that a user is currently featuring on their profile.
+    ///
+    /// Only supported in Mastodon 4.4 and later.
+    ///
+    /// - Parameters:
+    ///     - id: The ID of the account.
+    ///     - pageInfo: PagedInfo object for max/min/since
+    ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
+    /// - Returns: the accounts requested
+    public func getEndorsements(forAccount id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
+        try requireFeature(.endorsements)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "endorsements"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+        return try await fetchPagedResult(req)
+    }
+
+    /// Add a given account to the authorized user's featured profiles.
+    ///
+    /// Only supported in Mastodon 4.4 and later.
+    ///
+    /// - Returns: the new ``Relationship``.
+    public func endorseAccount(by id: String) async throws -> Relationship {
+        try requireFeature(.endorsements)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "endorse"])
+            $0.method = .post
+        }
+        return try await fetch(Relationship.self, req)
+    }
+
+    /// Remove a given account from the authorized user's featured profiles.
+    ///
+    /// Only supported in Mastodon 4.4 and later.
+    ///
+    /// - Returns: the new ``Relationship``.
+    public func unendorseAccount(by id: String) async throws -> Relationship {
+        try requireFeature(.endorsements)
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "accounts", id, "unendorse"])
+            $0.method = .post
+        }
+        return try await fetch(Relationship.self, req)
     }
 
     /// Sets a private note on a user.
