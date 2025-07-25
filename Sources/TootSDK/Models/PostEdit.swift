@@ -24,6 +24,8 @@ public struct PostEdit: Codable, Hashable, Sendable {
     public var mediaAttachments: [MediaAttachment]
     /// Any custom emoji that are used in the current revision
     public var emojis: [Emoji]
+    /// Information about the status being quoted, if any
+    public var quote: Quote?
 
     public init(
         content: String,
@@ -33,7 +35,8 @@ public struct PostEdit: Codable, Hashable, Sendable {
         account: Account,
         poll: Poll? = nil,
         mediaAttachments: [MediaAttachment],
-        emojis: [Emoji]
+        emojis: [Emoji],
+        quote: Quote? = nil
     ) {
         self.content = content
         self.spoilerText = spoilerText
@@ -43,6 +46,7 @@ public struct PostEdit: Codable, Hashable, Sendable {
         self.poll = poll
         self.mediaAttachments = mediaAttachments
         self.emojis = emojis
+        self.quote = quote
     }
 
     /// The current state of the poll options at this revision.
