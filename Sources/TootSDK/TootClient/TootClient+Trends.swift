@@ -16,6 +16,17 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``Tag``.
     public func getTrendingTags(limit: Int? = nil, offset: Int? = nil) async throws -> [Tag] {
+        let response = try await getTrendingTagsRaw(limit: limit, offset: offset)
+        return response.data
+    }
+
+    /// Get trending tags with HTTP response metadata
+    ///
+    /// - Parameters:
+    ///   - limit: Maximum number of results to return. Defaults to 10, max 20.
+    ///   - offset: Skip the first n results.
+    /// - Returns: TootResponse containing array of Tags and HTTP metadata
+    public func getTrendingTagsRaw(limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<[Tag]> {
         try requireFeature(.trendingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "tags"])
@@ -23,7 +34,7 @@ extension TootClient {
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
 
-        return try await fetch([Tag].self, req)
+        return try await fetchRaw([Tag].self, req)
     }
 
     /// Get trending posts
@@ -33,6 +44,17 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``Post``.
     public func getTrendingPosts(limit: Int? = nil, offset: Int? = nil) async throws -> [Post] {
+        let response = try await getTrendingPostsRaw(limit: limit, offset: offset)
+        return response.data
+    }
+
+    /// Get trending posts with HTTP response metadata
+    ///
+    /// - Parameters:
+    ///   - limit: Maximum number of results to return. Defaults to 20, max 40.
+    ///   - offset: Skip the first n results.
+    /// - Returns: TootResponse containing array of Posts and HTTP metadata
+    public func getTrendingPostsRaw(limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<[Post]> {
         try requireFeature(.trendingPosts)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "statuses"])
@@ -40,7 +62,7 @@ extension TootClient {
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
 
-        return try await fetch([Post].self, req)
+        return try await fetchRaw([Post].self, req)
     }
 
     /// Get trending links
@@ -50,6 +72,17 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: Array of ``TrendingLink``.
     public func getTrendingLinks(limit: Int? = nil, offset: Int? = nil) async throws -> [TrendingLink] {
+        let response = try await getTrendingLinksRaw(limit: limit, offset: offset)
+        return response.data
+    }
+
+    /// Get trending links with HTTP response metadata
+    ///
+    /// - Parameters:
+    ///   - limit: Maximum number of results to return. Defaults to 10, max 20.
+    ///   - offset: Skip the first n results.
+    /// - Returns: TootResponse containing array of TrendingLinks and HTTP metadata
+    public func getTrendingLinksRaw(limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<[TrendingLink]> {
         try requireFeature(.trendingLinks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "links"])
@@ -57,7 +90,7 @@ extension TootClient {
             $0.query = getQueryParams(limit: limit, offset: offset)
         }
 
-        return try await fetch([TrendingLink].self, req)
+        return try await fetchRaw([TrendingLink].self, req)
     }
 }
 

@@ -12,13 +12,22 @@ extension TootClient {
     ///
     /// - Parameter timelines: The timeline(s) for which markers should be fetched.
     public func getMarkers(for timelines: Set<Marker.Timeline>) async throws -> [OpenEnum<Marker.Timeline>: Marker] {
+        let response = try await getMarkersRaw(for: timelines)
+        return response.data
+    }
+
+    /// Get saved timeline positions with HTTP response metadata
+    ///
+    /// - Parameter timelines: The timeline(s) for which markers should be fetched.
+    /// - Returns: TootResponse containing the markers and HTTP metadata
+    public func getMarkersRaw(for timelines: Set<Marker.Timeline>) async throws -> TootResponse<[OpenEnum<Marker.Timeline>: Marker]> {
         try requireFeature(.markers)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "markers"])
             $0.method = .get
             $0.query = createQuery(timelines: timelines)
         }
-        return try await fetch([OpenEnum<Marker.Timeline>: Marker].self, req)
+        return try await fetchRaw([OpenEnum<Marker.Timeline>: Marker].self, req)
     }
 
     /// Save your position in a timeline
@@ -31,6 +40,21 @@ extension TootClient {
         homeLastReadId: String? = nil,
         notificationsLastReadId: String? = nil
     ) async throws -> [OpenEnum<Marker.Timeline>: Marker] {
+        let response = try await updateMarkersRaw(homeLastReadId: homeLastReadId, notificationsLastReadId: notificationsLastReadId)
+        return response.data
+    }
+
+    /// Save your position in a timeline with HTTP response metadata
+    ///
+    /// - Parameters:
+    ///   - homeLastReadId: ID of the last status read in the home timeline.
+    ///   - notificationsLastReadId: ID of the last notification read.
+    /// - Returns: TootResponse containing the updated markers and HTTP metadata
+    @discardableResult
+    public func updateMarkersRaw(
+        homeLastReadId: String? = nil,
+        notificationsLastReadId: String? = nil
+    ) async throws -> TootResponse<[OpenEnum<Marker.Timeline>: Marker]> {
         try requireFeature(.markers)
         var queryItems: [URLQueryItem] = []
         if let homeLastReadId {
@@ -45,7 +69,7 @@ extension TootClient {
             $0.body = try .form(queryItems: queryItems)
         }
 
-        return try await fetch([OpenEnum<Marker.Timeline>: Marker].self, req)
+        return try await fetchRaw([OpenEnum<Marker.Timeline>: Marker].self, req)
     }
 
     private func createQuery(timelines: Set<Marker.Timeline>) -> [URLQueryItem] {

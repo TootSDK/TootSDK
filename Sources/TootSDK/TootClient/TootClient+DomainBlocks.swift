@@ -12,6 +12,13 @@ extension TootClient {
     /// Show information about all blocked domains.
     /// - Returns: array of blocked domains
     public func adminGetDomainBlocks() async throws -> [DomainBlock] {
+        let response = try await adminGetDomainBlocksRaw()
+        return response.data
+    }
+
+    /// Show information about all blocked domains with HTTP response metadata
+    /// - Returns: TootResponse containing array of blocked domains and HTTP metadata
+    public func adminGetDomainBlocksRaw() async throws -> TootResponse<[DomainBlock]> {
         try requireFeature(.adminDomainBlocks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
@@ -19,20 +26,28 @@ extension TootClient {
 
         }
 
-        return try await fetch([DomainBlock].self, req)
+        return try await fetchRaw([DomainBlock].self, req)
     }
 
     /// Show information about a single blocked domain.
     /// - Parameter id: The ID of the DomainBlock in the instance's database
     /// - Returns: DomainBlock (optional)
     public func adminGetDomainBlock(id: String) async throws -> DomainBlock? {
+        let response = try? await adminGetDomainBlockRaw(id: id)
+        return response?.data
+    }
+
+    /// Show information about a single blocked domain with HTTP response metadata
+    /// - Parameter id: The ID of the DomainBlock in the instance's database
+    /// - Returns: TootResponse containing DomainBlock and HTTP metadata
+    public func adminGetDomainBlockRaw(id: String) async throws -> TootResponse<DomainBlock> {
         try requireFeature(.adminDomainBlocks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks", id])
             $0.method = .get
         }
 
-        return try? await fetch(DomainBlock.self, req)
+        return try await fetchRaw(DomainBlock.self, req)
     }
 
     /// Blocks a domain on the current instance.
@@ -43,6 +58,19 @@ extension TootClient {
     ///
     /// Note that the call will be successful even if the domain is already blocked, or if the domain does not exist, or if the domain is not a domain.
     public func adminBlockDomain(params: BlockDomainParams) async throws -> DomainBlock {
+        let response = try await adminBlockDomainRaw(params: params)
+        return response.data
+    }
+
+    /// Blocks a domain on the current instance with HTTP response metadata
+    /// * hide all public posts from it
+    /// * hide all notifications from it
+    /// * remove all followers from it
+    /// * prevent following new users from it (but does not remove existing follows)
+    ///
+    /// Note that the call will be successful even if the domain is already blocked, or if the domain does not exist, or if the domain is not a domain.
+    /// - Returns: TootResponse containing the blocked domain and HTTP metadata
+    public func adminBlockDomainRaw(params: BlockDomainParams) async throws -> TootResponse<DomainBlock> {
         try requireFeature(.adminDomainBlocks)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "admin", "domain_blocks"])
@@ -50,7 +78,7 @@ extension TootClient {
             $0.body = try .multipart(params, boundary: UUID().uuidString)
         }
 
-        return try await fetch(DomainBlock.self, req)
+        return try await fetchRaw(DomainBlock.self, req)
     }
 
     /// Lift a block against a domain.
@@ -75,13 +103,23 @@ extension TootClient {
     ///   - limit: Maximum number of results to return. Defaults to 40.
     /// - Returns: Paginated response with an array of sttrings
     public func userGetDomainBlocks(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[String]> {
+        let response = try await userGetDomainBlocksRaw(pageInfo, limit: limit)
+        return response.data
+    }
+
+    /// View domains the user has blocked with HTTP response metadata
+    /// - Parameters:
+    ///   - pageInfo: PagedInfo object for max/min/since ids
+    ///   - limit: Maximum number of results to return. Defaults to 40.
+    /// - Returns: TootResponse containing paginated response with an array of strings and HTTP metadata
+    public func userGetDomainBlocksRaw(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[String]>> {
         try requireFeature(.domainBlocks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "domain_blocks"])
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
-        return try await fetchPagedResult(req)
+        return try await fetchPagedResultRaw(req)
     }
 
     /// Blocks a domain on the current instance.
