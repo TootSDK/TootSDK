@@ -167,6 +167,40 @@ extension TootClient {
         }
     }
 
+    /// Fetch data asynchronously and return both the decoded object and HTTP response metadata.
+    internal func fetchRaw<T: Decodable>(_ decode: T.Type, _ req: HTTPRequestBuilder) async throws -> TootResponse<T> {
+        let (data, response) = try await fetch(req: req)
+
+        let decodedData: T
+        do {
+            decodedData = try decoder.decode(decode, from: data)
+        } catch {
+            let description = fetchError(T.self, data: data)
+
+            if debugResponses {
+                print(description)
+            }
+
+            throw TootSDKError.decodingError(description)
+        }
+
+        // Convert HTTPURLResponse headers to [String: String]
+        var headers: [String: String] = [:]
+        for (key, value) in response.allHeaderFields {
+            if let keyString = key as? String, let valueString = value as? String {
+                headers[keyString] = valueString
+            }
+        }
+
+        return TootResponse(
+            data: decodedData,
+            headers: headers,
+            statusCode: response.statusCode,
+            url: response.url,
+            rawBody: data
+        )
+    }
+
     private func fetchError<T: Decodable>(_ decode: T.Type, data: Data) -> String {
         var description: String = "Unknown decoding error"
 
@@ -283,6 +317,43 @@ extension TootClient {
         let info = PagedInfo(maxId: previousPage?.maxId, minId: nextPage?.minId, sinceId: nextPage?.sinceId)
 
         return PagedResult(result: decoded, info: info, nextPage: nextPage, previousPage: previousPage)
+    }
+
+    /// Performs a request that returns paginated arrays and HTTP response metadata
+    /// - Parameters:
+    ///   - req: the HTTP request to execute
+    /// - Returns: TootResponse containing the fetched paged array, page info, and HTTP metadata
+    internal func fetchPagedResultRaw<T: Decodable>(_ req: HTTPRequestBuilder) async throws -> TootResponse<PagedResult<[T]>> {
+        let (data, response) = try await fetch(req: req)
+        let decoded = try decode([T].self, from: data)
+        var pagination: Pagination?
+
+        if let links = response.value(forHTTPHeaderField: "Link") {
+            pagination = Pagination(links: links)
+        }
+
+        // Pagination in TootSDK is opposite to pagination in Mastodon
+        let nextPage = pagination?.prev
+        let previousPage = pagination?.next
+        let info = PagedInfo(maxId: previousPage?.maxId, minId: nextPage?.minId, sinceId: nextPage?.sinceId)
+
+        let pagedResult = PagedResult(result: decoded, info: info, nextPage: nextPage, previousPage: previousPage)
+
+        // Convert HTTPURLResponse headers to [String: String]
+        var headers: [String: String] = [:]
+        for (key, value) in response.allHeaderFields {
+            if let keyString = key as? String, let valueString = value as? String {
+                headers[keyString] = valueString
+            }
+        }
+
+        return TootResponse(
+            data: pagedResult,
+            headers: headers,
+            statusCode: response.statusCode,
+            url: response.url,
+            rawBody: data
+        )
     }
 
 }

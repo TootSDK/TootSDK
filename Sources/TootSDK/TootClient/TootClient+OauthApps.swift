@@ -10,6 +10,16 @@ extension TootClient {
     /// * This method requires the `admin:write` scope.
     /// * This method requires the pleroma API flavour.
     public func adminGetOauthApps(_ page: Int = 1, params: ListOauthAppsParams? = nil) async throws -> [PleromaOauthApp]? {
+        let response = try await adminGetOauthAppsRaw(page, params: params)
+        return response.data
+    }
+
+    /// Retrieve a list of OAuth applications with HTTP response metadata
+    ///
+    /// * This method requires the `admin:write` scope.
+    /// * This method requires the pleroma API flavour.
+    /// - Returns: TootResponse containing the OAuth applications and HTTP metadata
+    public func adminGetOauthAppsRaw(_ page: Int = 1, params: ListOauthAppsParams? = nil) async throws -> TootResponse<[PleromaOauthApp]?> {
         try requireFlavour([.pleroma])
 
         let req = HTTPRequestBuilder {
@@ -38,8 +48,16 @@ extension TootClient {
             req.addQueryParameter(name: "admin_token", value: "\(adminToken)")
         }
 
-        let response = try await fetch(PleromaOauthAppsResponse.self, req)
-        return response.apps
+        let response = try await fetchRaw(PleromaOauthAppsResponse.self, req)
+        let apps = response.data.apps
+        
+        return TootResponse(
+            data: apps,
+            headers: response.headers,
+            statusCode: response.statusCode,
+            url: response.url,
+            rawBody: response.rawBody
+        )
     }
 
     /// Delete OAuth application

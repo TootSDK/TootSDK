@@ -7,6 +7,13 @@ import MultipartKitTootSDK
 extension TootClient {
     /// Uploads a media to the server so it can be used when publishing posts
     public func uploadMedia(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> UploadedMediaAttachment {
+        let response = try await uploadMediaRaw(params, mimeType: mimeType)
+        return response.data
+    }
+
+    /// Uploads a media to the server with HTTP response metadata
+    /// - Returns: TootResponse containing the uploaded media attachment and HTTP metadata
+    public func uploadMediaRaw(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> TootResponse<UploadedMediaAttachment> {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "media"])
             $0.method = .post
@@ -29,11 +36,19 @@ extension TootClient {
                 ))
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
-        let uploadResponse = try await fetch(UploadMediaAttachmentResponse.self, req)
+        let uploadResponse = try await fetchRaw(UploadMediaAttachmentResponse.self, req)
 
-        return uploadResponse.url != nil
-            ? UploadedMediaAttachment(id: uploadResponse.id, state: .uploaded)
-            : UploadedMediaAttachment(id: uploadResponse.id, state: .serverProcessing)
+        let uploadedMedia = uploadResponse.data.url != nil
+            ? UploadedMediaAttachment(id: uploadResponse.data.id, state: .uploaded)
+            : UploadedMediaAttachment(id: uploadResponse.data.id, state: .serverProcessing)
+        
+        return TootResponse(
+            data: uploadedMedia,
+            headers: uploadResponse.headers,
+            statusCode: uploadResponse.statusCode,
+            url: uploadResponse.url,
+            rawBody: uploadResponse.rawBody
+        )
     }
 
     /// Retrieve the details of a media attachment that corresponds to the given identifier.
@@ -42,6 +57,16 @@ extension TootClient {
     /// - Parameter id: The local ID of the attachment.
     /// - Returns: `Attachment` with a `url` to the media if available. `nil` otherwise.
     public func getMedia(id: String) async throws -> MediaAttachment? {
+        let response = try? await getMediaRaw(id: id)
+        return response?.data
+    }
+
+    /// Retrieve the details of a media attachment with HTTP response metadata
+    ///
+    /// Requests to Mastodon API flavour return `nil` until the attachment has finished processing.
+    /// - Parameter id: The local ID of the attachment.
+    /// - Returns: TootResponse containing the media attachment and HTTP metadata
+    public func getMediaRaw(id: String) async throws -> TootResponse<MediaAttachment> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .get
@@ -50,10 +75,25 @@ extension TootClient {
         let (data, response) = try await fetch(req: req)
 
         if flavour == .mastodon && response.statusCode == 206 {
-            return nil
+            throw TootSDKError.invalidStatusCode(data: data, response: response)
         }
 
-        return try decode(MediaAttachment.self, from: data)
+        let mediaAttachment = try decode(MediaAttachment.self, from: data)
+        
+        var headers: [String: String] = [:]
+        for (key, value) in response.allHeaderFields {
+            if let keyString = key as? String, let valueString = value as? String {
+                headers[keyString] = valueString
+            }
+        }
+        
+        return TootResponse(
+            data: mediaAttachment,
+            headers: headers,
+            statusCode: response.statusCode,
+            url: response.url,
+            rawBody: data
+        )
     }
 
     /// Delete a media attachment that is not currently attached to a status.
@@ -77,6 +117,17 @@ extension TootClient {
     /// - Returns: the media after the update.
     @discardableResult
     public func updateMedia(id: String, _ params: UpdateMediaAttachmentParams) async throws -> MediaAttachment {
+        let response = try await updateMediaRaw(id: id, params)
+        return response.data
+    }
+
+    /// Update media parameters with HTTP response metadata
+    ///
+    /// - Parameter id: the ID of the media attachment to be changed.
+    /// - Parameter params: the updated content of the media.
+    /// - Returns: TootResponse containing the updated media attachment and HTTP metadata
+    @discardableResult
+    public func updateMediaRaw(id: String, _ params: UpdateMediaAttachmentParams) async throws -> TootResponse<MediaAttachment> {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .put
@@ -93,7 +144,7 @@ extension TootClient {
                 $0.body = try .multipart(parts, boundary: UUID().uuidString)
             }
         }
-        return try await fetch(MediaAttachment.self, req)
+        return try await fetchRaw(MediaAttachment.self, req)
     }
 }
 

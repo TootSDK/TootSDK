@@ -13,6 +13,15 @@ extension TootClient {
     ///
     /// Direct conversations with other participants. (Currently, just threads containing a post with "direct" visibility.)
     public func getConversations(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Conversation]> {
+        let response = try await getConversationsRaw(pageInfo, limit: limit)
+        return response.data
+    }
+
+    /// Return all conversations with HTTP response metadata
+    ///
+    /// Direct conversations with other participants. (Currently, just threads containing a post with "direct" visibility.)
+    /// - Returns: TootResponse containing paginated conversations and HTTP metadata
+    public func getConversationsRaw(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[Conversation]>> {
         try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations"])
@@ -20,7 +29,7 @@ extension TootClient {
             $0.query = getQueryParams(pageInfo, limit: limit)
         }
 
-        return try await fetchPagedResult(req)
+        return try await fetchPagedResultRaw(req)
     }
 
     /// Removes a conversation from your list of conversations.
@@ -36,13 +45,20 @@ extension TootClient {
 
     /// Mark a conversation as read
     public func setConversationAsRead(id: String) async throws -> Conversation {
+        let response = try await setConversationAsReadRaw(id: id)
+        return response.data
+    }
+
+    /// Mark a conversation as read with HTTP response metadata
+    /// - Returns: TootResponse containing the updated conversation and HTTP metadata
+    public func setConversationAsReadRaw(id: String) async throws -> TootResponse<Conversation> {
         try requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations", id, "read"])
             $0.method = .post
         }
 
-        return try await fetch(Conversation.self, req)
+        return try await fetchRaw(Conversation.self, req)
     }
 }
 
