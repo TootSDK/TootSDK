@@ -19,19 +19,19 @@ import Foundation
 public struct TootResponse<T> {
     /// The decoded response data (original return type)
     public let data: T
-    
+
     /// HTTP response headers as key-value pairs
     public let headers: [String: String]
-    
+
     /// HTTP status code
     public let statusCode: Int
-    
+
     /// Response URL
     public let url: URL?
-    
+
     /// Raw response body as Data (for debugging/fallback parsing)
     public let rawBody: Data
-    
+
     /// Creates a new TootResponse with the provided data and metadata
     ///
     /// - Parameters:
@@ -56,12 +56,12 @@ extension TootResponse {
     public var rateLimitLimit: Int? {
         headers["X-RateLimit-Limit"].flatMap(Int.init)
     }
-    
+
     /// Rate limit remaining requests in current window (X-RateLimit-Remaining)
     public var rateLimitRemaining: Int? {
         headers["X-RateLimit-Remaining"].flatMap(Int.init)
     }
-    
+
     /// Rate limit window reset time as Unix timestamp (X-RateLimit-Reset)
     public var rateLimitReset: Date? {
         headers["X-RateLimit-Reset"]
@@ -86,12 +86,12 @@ extension TootResponse {
     public var contentType: String? {
         headers["Content-Type"]
     }
-    
+
     /// Response content length (Content-Length)
     public var contentLength: Int? {
         headers["Content-Length"].flatMap(Int.init)
     }
-    
+
     /// Response content encoding (Content-Encoding)
     public var contentEncoding: String? {
         headers["Content-Encoding"]
@@ -105,12 +105,12 @@ extension TootResponse {
     public var cacheControl: String? {
         headers["Cache-Control"]
     }
-    
+
     /// Entity tag for caching (ETag)
     public var etag: String? {
         headers["ETag"]
     }
-    
+
     /// Last modified timestamp (Last-Modified)
     public var lastModified: Date? {
         headers["Last-Modified"].flatMap { dateString in
@@ -129,12 +129,12 @@ extension TootResponse {
     public var server: String? {
         headers["Server"]
     }
-    
+
     /// Request ID for debugging (X-Request-Id, X-Request-ID)
     public var requestId: String? {
         headers["X-Request-Id"] ?? headers["X-Request-ID"]
     }
-    
+
     /// Response time information (X-Response-Time)
     public var responseTime: String? {
         headers["X-Response-Time"]
@@ -148,27 +148,27 @@ extension TootResponse {
     public var mastodonVersion: String? {
         headers["Mastodon-Version"]
     }
-    
+
     /// Instance name (X-Instance-Name)
     public var instanceName: String? {
         headers["X-Instance-Name"]
     }
-    
+
     /// Instance software type (X-Software-Name)
     public var softwareName: String? {
         headers["X-Software-Name"]
     }
-    
+
     /// Instance software version (X-Software-Version)
     public var softwareVersion: String? {
         headers["X-Software-Version"]
     }
-    
+
     /// Deprecated API endpoint warning (Deprecation)
     public var deprecationWarning: String? {
         headers["Deprecation"]
     }
-    
+
     /// Sunset warning for API endpoint (Sunset)
     public var sunsetWarning: String? {
         headers["Sunset"]
@@ -182,17 +182,17 @@ extension TootResponse {
     public var contentSecurityPolicy: String? {
         headers["Content-Security-Policy"]
     }
-    
+
     /// Strict Transport Security (Strict-Transport-Security)
     public var strictTransportSecurity: String? {
         headers["Strict-Transport-Security"]
     }
-    
+
     /// X-Frame-Options header (X-Frame-Options)
     public var xFrameOptions: String? {
         headers["X-Frame-Options"]
     }
-    
+
     /// X-Content-Type-Options header (X-Content-Type-Options)
     public var xContentTypeOptions: String? {
         headers["X-Content-Type-Options"]
@@ -206,22 +206,22 @@ extension TootResponse {
     public var isSuccessful: Bool {
         (200...299).contains(statusCode)
     }
-    
+
     /// Indicates if the response was a redirection (status code 3xx)
     public var isRedirection: Bool {
         (300...399).contains(statusCode)
     }
-    
+
     /// Indicates if the response was a client error (status code 4xx)
     public var isClientError: Bool {
         (400...499).contains(statusCode)
     }
-    
+
     /// Indicates if the response was a server error (status code 5xx)
     public var isServerError: Bool {
         (500...599).contains(statusCode)
     }
-    
+
     /// Get header value with case-insensitive lookup
     ///
     /// - Parameter name: Header name (case-insensitive)
@@ -235,7 +235,7 @@ extension TootResponse {
         }
         return nil
     }
-    
+
     /// Get all headers matching a prefix (case-insensitive)
     ///
     /// - Parameter prefix: Header name prefix (case-insensitive)
@@ -243,13 +243,13 @@ extension TootResponse {
     public func headers(withPrefix prefix: String) -> [String: String] {
         let lowercasePrefix = prefix.lowercased()
         var matchingHeaders: [String: String] = [:]
-        
+
         for (key, value) in headers {
             if key.lowercased().hasPrefix(lowercasePrefix) {
                 matchingHeaders[key] = value
             }
         }
-        
+
         return matchingHeaders
     }
 }

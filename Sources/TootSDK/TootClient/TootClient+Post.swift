@@ -339,7 +339,9 @@ extension TootClient {
     }
 
     /// View who boosted a given post with HTTP response metadata.
-    public func getAccountsBoostedRaw(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[Account]>> {
+    public func getAccountsBoostedRaw(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<
+        PagedResult<[Account]>
+    > {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "reblogged_by"])
             $0.method = .get
@@ -357,7 +359,9 @@ extension TootClient {
     }
 
     /// View who favourited a given post with HTTP response metadata.
-    public func getAccountsFavouritedRaw(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[Account]>> {
+    public func getAccountsFavouritedRaw(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<
+        PagedResult<[Account]>
+    > {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "favourited_by"])
             $0.method = .get

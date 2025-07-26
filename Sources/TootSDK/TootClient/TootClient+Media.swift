@@ -38,10 +38,11 @@ extension TootClient {
         }
         let uploadResponse = try await fetchRaw(UploadMediaAttachmentResponse.self, req)
 
-        let uploadedMedia = uploadResponse.data.url != nil
+        let uploadedMedia =
+            uploadResponse.data.url != nil
             ? UploadedMediaAttachment(id: uploadResponse.data.id, state: .uploaded)
             : UploadedMediaAttachment(id: uploadResponse.data.id, state: .serverProcessing)
-        
+
         return TootResponse(
             data: uploadedMedia,
             headers: uploadResponse.headers,
@@ -79,14 +80,14 @@ extension TootClient {
         }
 
         let mediaAttachment = try decode(MediaAttachment.self, from: data)
-        
+
         var headers: [String: String] = [:]
         for (key, value) in response.allHeaderFields {
             if let keyString = key as? String, let valueString = value as? String {
                 headers[keyString] = valueString
             }
         }
-        
+
         return TootResponse(
             data: mediaAttachment,
             headers: headers,

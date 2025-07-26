@@ -28,7 +28,8 @@ extension TootClient {
     ///   - limit: How many accounts to load. Defaults to 40 accounts. Max 80 accounts.
     ///   - params: Includes order and local parameters.
     /// - Returns: TootResponse containing array of Accounts and HTTP metadata
-    public func getProfileDirectoryRaw(params: ProfileDirectoryParams, offset: Int? = nil, limit: Int? = nil) async throws -> TootResponse<[Account]> {
+    public func getProfileDirectoryRaw(params: ProfileDirectoryParams, offset: Int? = nil, limit: Int? = nil) async throws -> TootResponse<[Account]>
+    {
         try requireFeature(.profileDirectory)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "directory"])

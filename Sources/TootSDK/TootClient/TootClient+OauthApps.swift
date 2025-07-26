@@ -50,7 +50,7 @@ extension TootClient {
 
         let response = try await fetchRaw(PleromaOauthAppsResponse.self, req)
         let apps = response.data.apps
-        
+
         return TootResponse(
             data: apps,
             headers: response.headers,

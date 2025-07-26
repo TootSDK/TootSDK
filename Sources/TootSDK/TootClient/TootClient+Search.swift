@@ -26,7 +26,9 @@ extension TootClient {
     ///   - limit: Maximum number of results to return. Defaults to 40.
     ///   - offset: Skip the first n results.
     /// - Returns: TootResponse containing search results and HTTP metadata
-    public func searchRaw(params: SearchParams, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<Search> {
+    public func searchRaw(params: SearchParams, _ pageInfo: PagedInfo? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<
+        Search
+    > {
         if params.excludeUnreviewed != nil {
             try requireFeature(.searchExcludeUnreviewed)
         }

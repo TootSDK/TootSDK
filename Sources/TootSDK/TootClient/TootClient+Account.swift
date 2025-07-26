@@ -285,7 +285,7 @@ extension TootClient {
         do {
             let (data, response) = try await fetch(req: req)
             let decodedData = try decode(AccessToken.self, from: data)
-            
+
             // Convert HTTPURLResponse headers to [String: String]
             var headers: [String: String] = [:]
             for (key, value) in response.allHeaderFields {
@@ -293,7 +293,7 @@ extension TootClient {
                     headers[keyString] = valueString
                 }
             }
-            
+
             return TootResponse(
                 data: decodedData,
                 headers: headers,
