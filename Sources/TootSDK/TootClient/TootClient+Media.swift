@@ -58,13 +58,21 @@ extension TootClient {
     /// - Parameter id: The local ID of the attachment.
     /// - Returns: `Attachment` with a `url` to the media if available. `nil` otherwise.
     public func getMedia(id: String) async throws -> MediaAttachment? {
-        let response = try? await getMediaRaw(id: id)
-        return response?.data
+        do {
+            let response = try await getMediaRaw(id: id)
+            return response.data
+        } catch TootSDKError.invalidStatusCode(let data, let httpResponse) {
+            // Mastodon returns 206 (Partial Content) when media is still processing
+            if flavour == .mastodon && httpResponse.statusCode == 206 {
+                return nil
+            }
+            // Re-throw for other status codes
+            throw TootSDKError.invalidStatusCode(data: data, response: httpResponse)
+        }
     }
 
     /// Retrieve the details of a media attachment with HTTP response metadata
     ///
-    /// Requests to Mastodon API flavour return `nil` until the attachment has finished processing.
     /// - Parameter id: The local ID of the attachment.
     /// - Returns: TootResponse containing the media attachment and HTTP metadata
     public func getMediaRaw(id: String) async throws -> TootResponse<MediaAttachment> {
@@ -72,29 +80,7 @@ extension TootClient {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .get
         }
-
-        let (data, response) = try await fetch(req: req)
-
-        if flavour == .mastodon && response.statusCode == 206 {
-            throw TootSDKError.invalidStatusCode(data: data, response: response)
-        }
-
-        let mediaAttachment = try decode(MediaAttachment.self, from: data)
-
-        var headers: [String: String] = [:]
-        for (key, value) in response.allHeaderFields {
-            if let keyString = key as? String, let valueString = value as? String {
-                headers[keyString] = valueString
-            }
-        }
-
-        return TootResponse(
-            data: mediaAttachment,
-            headers: headers,
-            statusCode: response.statusCode,
-            url: response.url,
-            rawBody: data
-        )
+        return try await fetchRaw(MediaAttachment.self, req)
     }
 
     /// Delete a media attachment that is not currently attached to a status.
