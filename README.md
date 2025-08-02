@@ -33,6 +33,7 @@ TootSDK is a shared Swift Package that any client app can be built on.
 - Async/Await based. All asynchronous functions are defined as Async ones that you can use with Async/Await code (Note: full concurrency support is coming with Swift 6.2)
 - Internal consistency and standardization of model property names
 - Standardization across all supported Fediverse APIs
+- Multi-server support with automatic flavour detection and version-aware feature handling
 - Platform agnostic (TootSDK shouldn't care if it's on iOS, macOS or Linux!)
 
 Please don't hesitate to open an issue or create a PR for features you need 🙏
@@ -49,6 +50,8 @@ It's easy to get started with TootSDK.
   let instanceURL = URL(string: "social.yourinstance.com")
   let client = try await TootClient(connect: instanceURL, accessToken: "USERACCESSTOKEN")
 ```
+
+The `connect` initializer automatically detects the server type (Mastodon, Pleroma, Pixelfed, etc.) and version, enabling TootSDK to adapt its behavior for optimal compatibility.
 
 ### Signing in (for macOS and iOS):
 
@@ -244,6 +247,117 @@ if instance.registrations == false {
 let params = RegisterAccountParams(
       username: name, email: email, password: password, agreement: true, locale: "en")
 let token = try await client.registerAccount(params: params)
+```
+
+</details>
+
+## Server Flavours and Version Requirements 🌐
+
+TootSDK supports multiple Fediverse server implementations and automatically adapts to their specific APIs and capabilities.
+
+### Supported Server Types
+
+TootSDK automatically detects and supports the following server types:
+
+- **Mastodon** - The original and most widely used server
+- **Pleroma** - Lightweight alternative implementation
+- **Akkoma** - Fork of Pleroma with additional features
+- **Pixelfed** - Instagram-like photo sharing platform
+- **Friendica** - Facebook-like social platform
+- **GoToSocial** - Lightweight ActivityPub server
+- **Firefish** (formerly Calckey) - Feature-rich Misskey fork
+- **Catodon** - Another Misskey variant
+- **Iceshrimp** - Firefish fork focused on stability
+- **Sharkey** - Misskey fork with additional features
+
+### Automatic Detection
+
+When you connect to a server, TootSDK automatically:
+
+1. Detects the server type (flavour)
+2. Parses the server version
+3. Adapts API calls for optimal compatibility
+
+```swift
+let client = try await TootClient(connect: instanceURL)
+print("Connected to \(client.flavour) server")
+print("Version: \(client.versionString ?? "unknown")")
+```
+
+### Feature Detection
+
+Not all features are available on all servers or server versions. TootSDK provides a robust feature detection system:
+
+```swift
+// Check if a feature is supported
+if client.supportsFeature(.deleteMedia) {
+    try await client.deleteMedia(id: mediaId)
+} else {
+    print("This server doesn't support deleting media")
+}
+
+// Features automatically check version requirements
+// For example, deleteMedia requires Mastodon 4.4+
+```
+
+### Version Requirements
+
+Some features require specific minimum versions. TootSDK handles this automatically:
+
+```swift
+// This will throw an error if the server doesn't support the feature
+do {
+    try await client.deleteMedia(id: mediaId)
+} catch TootSDKError.unsupportedFeature {
+    print("This feature requires Mastodon 4.4 or higher")
+}
+```
+
+### Advanced Version Parsing
+
+TootSDK handles various version string formats used by different servers:
+
+- Standard semantic versions: `"4.2.0"`
+- Pre-release versions: `"4.4.0-rc1"`
+- Compatibility strings: `"2.7.2 (compatible; Pixelfed 0.11.4)"`
+- Complex formats: `"3.5.3+glitch"`
+
+The SDK extracts and parses version numbers if possible, or falling back to regex patterns when needed.
+
+### Custom Feature Requirements
+
+You can define custom features with specific server and version requirements:
+
+```swift
+// Feature only for specific servers
+let customFeature = TootFeature(supportedFlavours: [.mastodon, .pleroma])
+
+// Feature with version requirements for specific servers
+let versionedFeature = TootFeature(requirements: [
+    .from(.mastodon, version: "4.0.0"),  // Mastodon 4.0+
+    .any(.pleroma)                       // Any Pleroma version
+])
+
+// Feature supported by ALL servers, but with version requirements for some
+let universalFeature = TootFeature(allExcept: [
+    .from(.mastodon, version: "3.0.0"),  // Mastodon needs 3.0+
+    .from(.pleroma, version: "2.0.0")    // Pleroma needs 2.0+
+    // All other servers support any version
+])
+
+// Feature supported by specific servers, with version requirements for some
+let selectiveFeature = TootFeature(
+    anyExcept: [.friendica, .akkoma],    // These support any version
+    versionRequirements: [
+        .from(.mastodon, version: "3.5.0"),  // Mastodon needs 3.5+
+        .from(.pixelfed, version: "2.0.0")   // Pixelfed needs 2.0+
+    ]
+)
+
+// Check if current server supports it
+if client.supportsFeature(customFeature) {
+    // Use the feature
+}
 ```
 
 </details>

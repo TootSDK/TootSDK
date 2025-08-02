@@ -2,6 +2,7 @@
 // Copyright (c) 2022. All rights reserved.
 
 import Foundation
+import Version
 
 #if canImport(FoundationNetworking)
     import FoundationNetworking
@@ -23,6 +24,10 @@ public class TootClient: @unchecked Sendable {
     public var debugInstance: Bool = false
     /// The preferred fediverse server flavour to use for API calls
     public var flavour: TootSDKFlavour = .mastodon
+    /// The parsed version of the instance we're connected to (used for feature detection)
+    public var version: Version?
+    /// The raw version string from the instance (for debugging/display purposes)
+    public var versionString: String?
     /// The authorization scopes the client was initialized with
     public let scopes: [String]
     /// Data streams that the client can subscribe to
@@ -295,7 +300,9 @@ extension TootClient {
     }
 
     internal func requireFeature(_ feature: TootFeature) throws {
-        try requireFlavour(feature.supportedFlavours)
+        if !feature.isSupported(flavour: flavour, version: version) {
+            throw TootSDKError.unsupportedFeature(feature: feature)
+        }
     }
 
     /// Performs a request that returns paginated arrays
@@ -454,11 +461,26 @@ extension TootClient {
 extension TootClient {
     /// Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.
     public func connect() async throws {
-        if let flavour = await flavourFromNodeInfo() {
-            self.flavour = flavour
+        if let nodeInfo = await getNodeInfoIfAvailable() {
+            self.flavour = nodeInfo.flavour
+            self.versionString = nodeInfo.software.version
+            self.version = TootFeature.parseVersion(from: nodeInfo.software.version)
+            if debugInstance {
+                print("🎨 Detected fediverse instance flavour: \(nodeInfo.flavour), version: \(nodeInfo.software.version)")
+            }
         } else {
-            self.flavour = try await flavourFromInstanceInfo()
+            let instance = try await getInstanceInfo()
+            self.flavour = instance.flavour
+            self.versionString = instance.version
+            self.version = TootFeature.parseVersion(from: instance.version)
+            if debugInstance {
+                print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
+            }
         }
+    }
+
+    private func getNodeInfoIfAvailable() async -> NodeInfo? {
+        return try? await getNodeInfo()
     }
 
     private func flavourFromNodeInfo() async -> TootSDKFlavour? {
@@ -489,6 +511,6 @@ extension TootClient {
     /// - Parameter feature: The feature to check if is supported.
     /// - Returns: `true` if the feature is supported.
     public func supportsFeature(_ feature: TootFeature) -> Bool {
-        return feature.supportedFlavours.contains(flavour)
+        return feature.isSupported(flavour: flavour, version: version)
     }
 }
