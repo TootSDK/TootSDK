@@ -286,7 +286,7 @@ print("Version: \(client.versionString ?? "unknown")")
 
 ### Feature Detection
 
-Not all features are available on all servers or server versions. TootSDK provides a robust feature detection system:
+Not all features are available on all servers or server versions. TootSDK provides a feature detection system:
 
 ```swift
 // Check if a feature is supported
