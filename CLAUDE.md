@@ -100,6 +100,7 @@ TootSDK is a Swift Package Manager library that provides a unified SDK for inter
 - PagedResult<T> for paginated responses with built-in navigation
 - Optional parameters via dedicated parameter structs
 - Comprehensive error handling with TootSDKError types
+- Raw method pattern: Each API method should have a corresponding `*Raw()` variant that returns `TootResponse<T>` containing the decoded data along with HTTP metadata (headers, status code, URL, raw body). The standard method calls the Raw method and returns just the data for backward compatibility. See PR #360 for details.
 
 ### Development Guidelines
 

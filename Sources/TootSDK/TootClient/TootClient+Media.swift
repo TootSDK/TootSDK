@@ -58,29 +58,54 @@ extension TootClient {
     /// - Parameter id: The local ID of the attachment.
     /// - Returns: `Attachment` with a `url` to the media if available. `nil` otherwise.
     public func getMedia(id: String) async throws -> MediaAttachment? {
-        do {
-            let response = try await getMediaRaw(id: id)
-            return response.data
-        } catch TootSDKError.invalidStatusCode(let data, let httpResponse) {
-            // Mastodon returns 206 (Partial Content) when media is still processing
-            if flavour == .mastodon && httpResponse.statusCode == 206 {
-                return nil
-            }
-            // Re-throw for other status codes
-            throw TootSDKError.invalidStatusCode(data: data, response: httpResponse)
-        }
+        let response = try await getMediaRaw(id: id)
+        return response.data
     }
 
     /// Retrieve the details of a media attachment with HTTP response metadata
     ///
     /// - Parameter id: The local ID of the attachment.
     /// - Returns: TootResponse containing the media attachment and HTTP metadata
-    public func getMediaRaw(id: String) async throws -> TootResponse<MediaAttachment> {
+    /// - Note: For Mastodon servers, status code 206 indicates the media is still processing.
+    ///         The response will contain empty/placeholder data in this case.
+    public func getMediaRaw(id: String) async throws -> TootResponse<MediaAttachment?> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .get
         }
-        return try await fetchRaw(MediaAttachment.self, req)
+
+        let (data, response) = try await fetch(req: req)
+
+        // Convert headers to [String: String]
+        var headers: [String: String] = [:]
+        for (key, value) in response.allHeaderFields {
+            if let keyString = key as? String, let valueString = value as? String {
+                headers[keyString] = valueString
+            }
+        }
+
+        // For Mastodon, 206 indicates media is still processing
+        // We need to return a valid response but with placeholder data
+        if flavour == .mastodon && response.statusCode == 206 {
+            return TootResponse(
+                data: nil,
+                headers: headers,
+                statusCode: response.statusCode,
+                url: response.url,
+                rawBody: data
+            )
+        }
+
+        // For all other cases, decode normally
+        let mediaAttachment = try decoder.decode(MediaAttachment.self, from: data)
+
+        return TootResponse(
+            data: mediaAttachment,
+            headers: headers,
+            statusCode: response.statusCode,
+            url: response.url,
+            rawBody: data
+        )
     }
 
     /// Delete a media attachment that is not currently attached to a status.
@@ -89,12 +114,38 @@ extension TootClient {
     ///
     /// - Parameter id: The ID of the ``MediaAttachment`` in the database.
     public func deleteMedia(id: String) async throws {
+        _ = try await deleteMediaRaw(id: id)
+    }
+
+    /// Delete a media attachment with HTTP response metadata
+    ///
+    /// Only supported if ``InstanceV2/apiVersions-swift.property`` includes ``InstanceV2/APIVersions-swift.struct/mastodon`` API version 4 or higher.
+    ///
+    /// - Parameter id: The ID of the ``MediaAttachment`` in the database.
+    /// - Returns: TootResponse containing HTTP metadata (the data field will be Void)
+    public func deleteMediaRaw(id: String) async throws -> TootResponse<Void> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .delete
         }
 
-        try await fetch(req: req)
+        let (data, response) = try await fetch(req: req)
+
+        // Convert headers to [String: String]
+        var headers: [String: String] = [:]
+        for (key, value) in response.allHeaderFields {
+            if let keyString = key as? String, let valueString = value as? String {
+                headers[keyString] = valueString
+            }
+        }
+
+        return TootResponse(
+            data: (),
+            headers: headers,
+            statusCode: response.statusCode,
+            url: response.url,
+            rawBody: data
+        )
     }
 
     /// Update media parameters, before it is posted.
