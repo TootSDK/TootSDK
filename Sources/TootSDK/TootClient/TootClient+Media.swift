@@ -114,7 +114,6 @@ extension TootClient {
     ///
     /// - Parameter id: The ID of the ``MediaAttachment`` in the database.
     public func deleteMedia(id: String) async throws {
-        try requireFeature(.deleteMedia)
         _ = try await deleteMediaRaw(id: id)
     }
 
