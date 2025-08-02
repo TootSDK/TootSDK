@@ -11,6 +11,13 @@ extension TootClient {
 
     /// See all currently active announcements set by admins.
     public func getAnnouncements(params: AnnouncementParams = .init()) async throws -> [Announcement] {
+        let response = try await getAnnouncementsRaw(params: params)
+        return response.data
+    }
+
+    /// See all currently active announcements set by admins with HTTP response metadata
+    /// - Returns: TootResponse containing announcements and HTTP metadata
+    public func getAnnouncementsRaw(params: AnnouncementParams = .init()) async throws -> TootResponse<[Announcement]> {
         try requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements"])
@@ -18,7 +25,7 @@ extension TootClient {
             $0.query = params.queryItems
         }
 
-        return try await fetch([Announcement].self, req)
+        return try await fetchRaw([Announcement].self, req)
     }
 
     /// Dismiss a single notification from the server.

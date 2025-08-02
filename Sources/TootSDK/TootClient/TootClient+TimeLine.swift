@@ -67,6 +67,18 @@ extension TootClient {
     ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
     /// - Returns: a PagedResult containing the posts retrieved
     public func getTimeline(_ timeline: Timeline, pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Post]> {
+        let response = try await getTimelineRaw(timeline, pageInfo: pageInfo, limit: limit)
+        return response.data
+    }
+
+    /// Retrieves a timeline with HTTP response metadata
+    /// - Parameters:
+    ///   - timeline: The timeline being requested
+    ///   - pageInfo: a PageInfo struct that tells the API how to page the response, typically with a minId set of the highest id you last saw
+    ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    /// - Returns: TootResponse containing the paginated posts and HTTP metadata
+    public func getTimelineRaw(_ timeline: Timeline, pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[Post]>>
+    {
         let urlPaths = getURLPaths(timeline: timeline)
         let timelineQuery = getQuery(timeline: timeline)
 
@@ -75,7 +87,7 @@ extension TootClient {
             $0.method = .get
             $0.query = getQueryParams(pageInfo, limit: limit, query: timelineQuery)
         }
-        return try await getPosts(req, pageInfo, limit)
+        return try await fetchPagedResultRaw(req)
     }
 
 }
