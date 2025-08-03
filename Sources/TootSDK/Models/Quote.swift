@@ -39,9 +39,11 @@ public struct Quote: Codable, Sendable, Hashable {
     }
 
     /// The state of the quote.
-    public var state: OpenEnum<QuoteState>
+    ///
+    /// `nil` for flavors that don't provide a quote state.
+    public var state: OpenEnum<QuoteState>?
 
-    /// The status or status ID being quoted, if the quote has been accepted. This is expected to be `nil`, unless the ``state`` is ``QuoteState/accepted``.
+    /// The status or status ID being quoted, if the quote has been accepted. On flavors that support ``state``, this is expected to be `nil`, unless the ``state`` is ``QuoteState/accepted``.
     public var quotedPost: QuotedContent?
 
     enum CodingKeys: String, CodingKey {
@@ -52,22 +54,30 @@ public struct Quote: Codable, Sendable, Hashable {
 
     /// Mastodon returns either a `Quote` entity containing the `quoted_status` property or `ShallowQuote` containing `quoted_status_id`, either of which may be nil, but `Quote` and `ShallowQuote` are otherwise identical. This handles decoding either one as a ``Quote`` struct.
     public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        state = try container.decode(OpenEnum<QuoteState>.self, forKey: .state)
+        do {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            state = try container.decode(OpenEnum<QuoteState>.self, forKey: .state)
 
-        if let quotedPost = try container.decodeIfPresent(Post.self, forKey: .quotedPost) {
-            self.quotedPost = .post(quotedPost)
-        } else if let quotedPostID = try container.decodeIfPresent(String.self, forKey: .quotedPostID) {
-            self.quotedPost = .postID(quotedPostID)
-        } else {
-            self.quotedPost = nil
+            if let quotedPost = try container.decodeIfPresent(Post.self, forKey: .quotedPost) {
+                self.quotedPost = .post(quotedPost)
+            } else if let quotedPostID = try container.decodeIfPresent(String.self, forKey: .quotedPostID) {
+                self.quotedPost = .postID(quotedPostID)
+            } else {
+                self.quotedPost = nil
+            }
+        } catch {
+            // handle Akkoma-style quote post where a `Post` is used instead of a `Quote`
+            let container = try decoder.singleValueContainer()
+            let post = try container.decode(Post.self)
+            state = nil
+            quotedPost = .post(post)
         }
     }
 
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        try container.encode(state.rawValue, forKey: .state)
+        try container.encode(state?.rawValue, forKey: .state)
         switch quotedPost {
         case .post(let post):
             try container.encode(post, forKey: .quotedPost)
