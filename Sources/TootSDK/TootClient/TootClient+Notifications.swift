@@ -170,11 +170,11 @@ extension TootClient {
             case .pleroma, .akkoma: name = "include_types[]"
             default: name = "types[]"
             }
-            queryParameters.append(contentsOf: types.map({ .init(name: name, value: $0.rawValue) }))
+            queryParameters.append(contentsOf: types.map({ .init(name: name, value: $0.rawValue(flavour: flavour)) }))
         }
 
         if let types = params.excludeTypes, !types.isEmpty {
-            queryParameters.append(contentsOf: types.map({ .init(name: "exclude_types[]", value: $0.rawValue) }))
+            queryParameters.append(contentsOf: types.map({ .init(name: "exclude_types[]", value: $0.rawValue(flavour: flavour)) }))
         }
 
         return queryParameters

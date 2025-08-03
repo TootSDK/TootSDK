@@ -67,7 +67,7 @@ extension TootClient {
             if updateMediaSeparately {
                 params.mediaAttributes = nil
             }
-            $0.body = try .json(params)
+            $0.body = try .json(params, encoder: encoder)
         }
         if flavour == .pixelfed {
             _ = try await fetch(req: req)

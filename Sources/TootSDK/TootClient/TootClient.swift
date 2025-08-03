@@ -22,7 +22,11 @@ public class TootClient: @unchecked Sendable {
     /// Set this to `true` to see a `print()` for instance information.
     public var debugInstance: Bool = false
     /// The preferred fediverse server flavour to use for API calls
-    public var flavour: TootSDKFlavour = .mastodon
+    public var flavour: TootSDKFlavour = .mastodon {
+        didSet {
+            encoder.userInfo[.tootSDKFlavour] = flavour
+        }
+    }
     /// The authorization scopes the client was initialized with
     public let scopes: [String]
     /// Data streams that the client can subscribe to

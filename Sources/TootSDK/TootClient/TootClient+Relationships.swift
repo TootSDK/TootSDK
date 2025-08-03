@@ -12,7 +12,7 @@ extension TootClient {
             $0.url = getURL(["api", "v1", "accounts", id, "follow"])
             $0.method = .post
             if let params {
-                $0.body = try .json(params)
+                $0.body = try .json(params, encoder: encoder)
             }
         }
         return try await fetch(Relationship.self, req)
@@ -70,7 +70,7 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follows"])
             $0.method = .post
-            $0.body = try .json(params)
+            $0.body = try .json(params, encoder: encoder)
         }
         return try await fetch(Relationship.self, req)
     }
@@ -141,7 +141,7 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "mute"])
             $0.method = .post
-            $0.body = try .json(params)
+            $0.body = try .json(params, encoder: encoder)
         }
         return try await fetch(Relationship.self, req)
     }
@@ -271,7 +271,7 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "note"])
             $0.method = .post
-            $0.body = try .json(params)
+            $0.body = try .json(params, encoder: encoder)
         }
         return try await fetch(Relationship.self, req)
     }

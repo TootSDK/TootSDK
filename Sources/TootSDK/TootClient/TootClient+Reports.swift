@@ -49,7 +49,7 @@ extension TootClient {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1.1", "report"])
             $0.method = .post
-            $0.body = try .json(pixelfedParams)
+            $0.body = try .json(pixelfedParams, encoder: encoder)
         }
         _ = try await fetch(req: req)
     }
