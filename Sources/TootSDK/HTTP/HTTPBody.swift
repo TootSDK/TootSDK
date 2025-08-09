@@ -14,7 +14,7 @@ extension HTTPBody {
     /// Initialize a new body with an object conform to `Encodable` which will converted to a JSON string.
     ///
     /// - Returns: HTTPBody
-    static func json<T: Encodable>(_ object: T, encoder: JSONEncoder = .init()) throws -> HTTPBody {
+    static func json<T: Encodable>(_ object: T, encoder: JSONEncoder) throws -> HTTPBody {
         let data = try encoder.encode(object)
         let headers = ["Content-Type": "application/json"]
         return HTTPBody(content: data, headers: headers)
