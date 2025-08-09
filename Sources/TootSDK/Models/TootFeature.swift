@@ -7,31 +7,102 @@ public struct TootFeature: Equatable {
     /// Represents a flavour requirement with optional version constraints
     public struct FlavourRequirement: Equatable {
         let flavour: TootSDKFlavour
-        let minVersion: Version?
-        let maxVersion: Version?
+        let minDisplayVersion: Version?
+        let maxDisplayVersion: Version?
+        let minVersion: Int?  // API version minimum
+        let maxVersion: Int?  // API version maximum
 
         /// Create a requirement for any version of a flavour
         public static func any(_ flavour: TootSDKFlavour) -> FlavourRequirement {
-            FlavourRequirement(flavour: flavour, minVersion: nil, maxVersion: nil)
+            FlavourRequirement(flavour: flavour, minDisplayVersion: nil, maxDisplayVersion: nil, minVersion: nil, maxVersion: nil)
         }
 
-        /// Create a requirement for a minimum version
-        public static func from(_ flavour: TootSDKFlavour, version: String) -> FlavourRequirement {
-            FlavourRequirement(flavour: flavour, minVersion: Version(tolerant: version), maxVersion: nil)
+        // MARK: - API Version Requirements (Primary/Default)
+
+        /// Create a requirement for a minimum API version
+        /// - Parameters:
+        ///   - flavour: The server flavour
+        ///   - version: The minimum API version required
+        public static func from(_ flavour: TootSDKFlavour, version: Int) -> FlavourRequirement {
+            FlavourRequirement(flavour: flavour, minDisplayVersion: nil, maxDisplayVersion: nil, minVersion: version, maxVersion: nil)
         }
 
-        /// Create a requirement for a version range
-        public static func range(_ flavour: TootSDKFlavour, from: String, to: String) -> FlavourRequirement {
+        /// Create a requirement for an API version range
+        /// - Parameters:
+        ///   - flavour: The server flavour
+        ///   - version: The minimum API version required
+        ///   - to: The maximum API version supported
+        public static func from(_ flavour: TootSDKFlavour, version: Int, to maxVersion: Int) -> FlavourRequirement {
+            FlavourRequirement(flavour: flavour, minDisplayVersion: nil, maxDisplayVersion: nil, minVersion: version, maxVersion: maxVersion)
+        }
+
+        /// Create a requirement for a maximum API version
+        /// - Parameters:
+        ///   - flavour: The server flavour
+        ///   - version: The maximum API version supported
+        public static func until(_ flavour: TootSDKFlavour, version: Int) -> FlavourRequirement {
+            FlavourRequirement(flavour: flavour, minDisplayVersion: nil, maxDisplayVersion: nil, minVersion: nil, maxVersion: version)
+        }
+
+        // MARK: - Display Version Requirements (Fallback/Legacy)
+
+        /// Create a requirement for a minimum display version
+        /// - Parameters:
+        ///   - flavour: The server flavour
+        ///   - displayVersion: The minimum display version required
+        public static func from(_ flavour: TootSDKFlavour, displayVersion: String) -> FlavourRequirement {
+            FlavourRequirement(
+                flavour: flavour, minDisplayVersion: Version(tolerant: displayVersion), maxDisplayVersion: nil, minVersion: nil, maxVersion: nil)
+        }
+
+        /// Create a requirement for a display version range
+        /// - Parameters:
+        ///   - flavour: The server flavour
+        ///   - displayVersion: The minimum display version required
+        ///   - to: The maximum display version supported
+        public static func from(_ flavour: TootSDKFlavour, displayVersion: String, to maxDisplayVersion: String) -> FlavourRequirement {
             FlavourRequirement(
                 flavour: flavour,
-                minVersion: Version(tolerant: from),
-                maxVersion: Version(tolerant: to)
+                minDisplayVersion: Version(tolerant: displayVersion),
+                maxDisplayVersion: Version(tolerant: maxDisplayVersion),
+                minVersion: nil,
+                maxVersion: nil
             )
         }
 
-        /// Create a requirement for a maximum version
-        public static func until(_ flavour: TootSDKFlavour, version: String) -> FlavourRequirement {
-            FlavourRequirement(flavour: flavour, minVersion: nil, maxVersion: Version(tolerant: version))
+        /// Create a requirement for a maximum display version
+        /// - Parameters:
+        ///   - flavour: The server flavour
+        ///   - displayVersion: The maximum display version supported
+        public static func until(_ flavour: TootSDKFlavour, displayVersion: String) -> FlavourRequirement {
+            FlavourRequirement(
+                flavour: flavour, minDisplayVersion: nil, maxDisplayVersion: Version(tolerant: displayVersion), minVersion: nil, maxVersion: nil)
+        }
+
+        // MARK: - Combined Requirements
+
+        /// Create a requirement with both API version and display version fallback
+        /// - Parameters:
+        ///   - flavour: The server flavour
+        ///   - version: The minimum API version required
+        ///   - fallbackDisplayVersion: The minimum display version to use as fallback when API version is not available
+        public static func from(_ flavour: TootSDKFlavour, version: Int, fallbackDisplayVersion: String) -> FlavourRequirement {
+            FlavourRequirement(
+                flavour: flavour,
+                minDisplayVersion: Version(tolerant: fallbackDisplayVersion),
+                maxDisplayVersion: nil,
+                minVersion: version,
+                maxVersion: nil
+            )
+        }
+
+        // MARK: - Legacy Support (Deprecated)
+
+        /// Create a requirement for a version range (legacy method using display versions)
+        /// - Note: This method is deprecated. Use `from(_:displayVersion:to:)` for display versions or `from(_:version:to:)` for API versions
+        @available(*, deprecated, renamed: "from(_:displayVersion:to:)")
+        public static func range(_ flavour: TootSDKFlavour, from: String, to: String) -> FlavourRequirement {
+            self.from(flavour, displayVersion: from, to: to)
         }
     }
 
@@ -48,15 +119,24 @@ public struct TootFeature: Equatable {
         self.requirements = requirements
     }
 
-    /// Initialize with "any flavour except specific version requirements" pattern
+    /// Initialize with flavours that support any version plus specific version requirements for other flavours
     /// - Parameters:
-    ///   - anyExcept: Flavours that should support any version
-    ///   - versionRequirements: Specific version requirements for certain flavours
-    public init(anyExcept: Set<TootSDKFlavour>, versionRequirements: [FlavourRequirement]) {
+    ///   - anyVersion: Flavours that support any version
+    ///   - requirements: Specific version requirements for certain flavours
+    public init(anyVersion: Set<TootSDKFlavour>, requirements: [FlavourRequirement]) {
         // Create requirements for "any version" flavours
-        let anyRequirements = anyExcept.map { FlavourRequirement.any($0) }
+        let anyRequirements = anyVersion.map { FlavourRequirement.any($0) }
         // Combine with specific version requirements
-        self.requirements = anyRequirements + versionRequirements
+        self.requirements = anyRequirements + requirements
+    }
+
+    /// Deprecated initializer - use init(anyVersion:requirements:) instead
+    /// - Parameters:
+    ///   - anyExcept: Flavours that support any version (confusing parameter name)
+    ///   - versionRequirements: Specific version requirements for certain flavours
+    @available(*, deprecated, renamed: "init(anyVersion:requirements:)")
+    public init(anyExcept: Set<TootSDKFlavour>, versionRequirements: [FlavourRequirement]) {
+        self.init(anyVersion: anyExcept, requirements: versionRequirements)
     }
 
     /// Initialize with default support for all flavours except specific version requirements
@@ -73,9 +153,18 @@ public struct TootFeature: Equatable {
         self.requirements = anyRequirements + versionRequirements
     }
 
-    /// Check if feature is supported by an instance (for testing)
+    /// Check if feature is supported by an instance
     public func isSupported(by instance: any Instance) -> Bool {
-        return isSupported(flavour: instance.flavour, version: instance.version)
+        // Parse version string
+        let versionObj = Self.parseVersion(from: instance.version)
+
+        // For InstanceV2, use the API versions if available
+        if let instanceV2 = instance as? InstanceV2 {
+            return isSupported(flavour: instanceV2.flavour, version: versionObj, apiVersions: instanceV2.apiVersions)
+        }
+
+        // For InstanceV1 or other instances, no API versions available
+        return isSupported(flavour: instance.flavour, version: versionObj, apiVersions: nil)
     }
 
     /// Check if feature is supported by a specific flavour and version string
@@ -91,19 +180,94 @@ public struct TootFeature: Equatable {
             guard req.flavour == flavour else { return false }
 
             if let version = version {
-                if let minVersion = req.minVersion, version < minVersion {
+                if let minVersion = req.minDisplayVersion, version < minVersion {
                     return false
                 }
-                if let maxVersion = req.maxVersion, version > maxVersion {
+                if let maxVersion = req.maxDisplayVersion, version > maxVersion {
                     return false
                 }
-            } else if req.minVersion != nil || req.maxVersion != nil {
+            } else if req.minDisplayVersion != nil || req.maxDisplayVersion != nil {
                 // Version required but not available
                 return false
             }
 
             return true
         }
+    }
+
+    /// Check if feature is supported considering API versions when available
+    /// - Parameters:
+    ///   - flavour: The server flavour
+    ///   - version: The parsed display version
+    ///   - apiVersions: The API versions from InstanceV2 (if available)
+    /// - Returns: true if the feature is supported
+    public func isSupported(flavour: TootSDKFlavour, version: Version?, apiVersions: InstanceV2.APIVersions?) -> Bool {
+        return requirements.contains { req in
+            guard req.flavour == flavour else { return false }
+
+            // Check API version requirements if present
+            if req.minVersion != nil || req.maxVersion != nil {
+                // For Mastodon flavour, check against the Mastodon API version
+                if flavour == .mastodon, let mastodonApiVersion = apiVersions?.mastodon {
+                    if let minVersion = req.minVersion, mastodonApiVersion < minVersion {
+                        return false
+                    }
+                    if let maxVersion = req.maxVersion, mastodonApiVersion > maxVersion {
+                        return false
+                    }
+                    // API version requirements met
+                    return true
+                } else if apiVersions == nil {
+                    // No API version available
+                    // Fall back to display version if one is specified
+                    if req.minDisplayVersion != nil || req.maxDisplayVersion != nil {
+                        return checkDisplayVersion(req: req, version: version)
+                    } else if Self.supportsInstanceV2(flavour) {
+                        // This flavour supports instanceV2 but didn't provide API versions
+                        // The feature is not supported (no fallback)
+                        return false
+                    } else {
+                        // This flavour doesn't support instanceV2, cannot check API version
+                        return false
+                    }
+                } else {
+                    // API versions available but not for this flavour
+                    // Fall back to display version if specified
+                    if req.minDisplayVersion != nil || req.maxDisplayVersion != nil {
+                        return checkDisplayVersion(req: req, version: version)
+                    }
+                    return false
+                }
+            }
+
+            // Check display version requirements if no API version requirement
+            if req.minVersion == nil && req.maxVersion == nil {
+                return checkDisplayVersion(req: req, version: version)
+            }
+
+            // Should not reach here
+            return false
+        }
+    }
+
+    /// Check if a flavour supports instanceV2 API
+    private static func supportsInstanceV2(_ flavour: TootSDKFlavour) -> Bool {
+        return TootFeature.instanceV2.supportedFlavours.contains(flavour)
+    }
+
+    private func checkDisplayVersion(req: FlavourRequirement, version: Version?) -> Bool {
+        if let version = version {
+            if let minVersion = req.minDisplayVersion, version < minVersion {
+                return false
+            }
+            if let maxVersion = req.maxDisplayVersion, version > maxVersion {
+                return false
+            }
+        } else if req.minDisplayVersion != nil || req.maxDisplayVersion != nil {
+            // Version required but not available
+            return false
+        }
+        return true
     }
 
     /// Parse version from string with fallback to regex extraction

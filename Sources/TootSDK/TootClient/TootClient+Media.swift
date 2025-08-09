@@ -227,9 +227,10 @@ extension TootClient {
 }
 
 extension TootFeature {
-    /// Delete media attachment feature - requires Mastodon 4.4+
-    /// Only available on Mastodon (4.4+), not on other servers
+    /// Delete media attachment feature - requires Mastodon API version 4
+    /// This feature requires API version checking from InstanceV2.
+    /// No fallback to display version is provided since Mastodon supports instanceV2.
     public static let deleteMedia = TootFeature(requirements: [
-        .from(.mastodon, version: "4.4.0")
+        .from(.mastodon, version: 4)
     ])
 }

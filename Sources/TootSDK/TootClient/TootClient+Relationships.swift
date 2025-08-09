@@ -312,9 +312,12 @@ extension TootFeature {
 
 extension TootFeature {
 
-    /// Ability to query familiar followers.
+    /// Ability to query familiar followers (followers you also follow).
+    /// Requires Mastodon 3.5.0+
     ///
-    public static let familiarFollowers = TootFeature(supportedFlavours: [.mastodon])
+    public static let familiarFollowers = TootFeature(requirements: [
+        .from(.mastodon, displayVersion: "3.5.0")
+    ])
 }
 
 extension TootFeature {

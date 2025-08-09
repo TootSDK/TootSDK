@@ -28,6 +28,8 @@ public class TootClient: @unchecked Sendable {
     public var version: Version?
     /// The raw version string from the instance (for debugging/display purposes)
     public var versionString: String?
+    /// The API versions supported by the instance (from InstanceV2 response)
+    public var apiVersions: InstanceV2.APIVersions?
     /// The authorization scopes the client was initialized with
     public let scopes: [String]
     /// Data streams that the client can subscribe to
@@ -300,7 +302,7 @@ extension TootClient {
     }
 
     internal func requireFeature(_ feature: TootFeature) throws {
-        if !feature.isSupported(flavour: flavour, version: version) {
+        if !feature.isSupported(flavour: flavour, version: version, apiVersions: apiVersions) {
             throw TootSDKError.unsupportedFeature(feature: feature)
         }
     }
@@ -473,6 +475,15 @@ extension TootClient {
             self.flavour = instance.flavour
             self.versionString = instance.version
             self.version = TootFeature.parseVersion(from: instance.version)
+
+            // Store API versions if this is an InstanceV2
+            if let instanceV2 = instance as? InstanceV2 {
+                self.apiVersions = instanceV2.apiVersions
+                if debugInstance, let apiVersions = instanceV2.apiVersions {
+                    print("🎨 Detected API versions - Mastodon: \(apiVersions.mastodon ?? 0)")
+                }
+            }
+
             if debugInstance {
                 print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
             }
@@ -511,6 +522,6 @@ extension TootClient {
     /// - Parameter feature: The feature to check if is supported.
     /// - Returns: `true` if the feature is supported.
     public func supportsFeature(_ feature: TootFeature) -> Bool {
-        return feature.isSupported(flavour: flavour, version: version)
+        return feature.isSupported(flavour: flavour, version: version, apiVersions: apiVersions)
     }
 }

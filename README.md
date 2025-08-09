@@ -297,21 +297,74 @@ if client.supportsFeature(.deleteMedia) {
 }
 
 // Features automatically check version requirements
-// For example, deleteMedia requires Mastodon 4.4+
+// For example, deleteMedia requires Mastodon API v4+
 ```
 
 ### Version Requirements
 
-Some features require specific minimum versions. TootSDK handles this automatically:
+Some features require specific minimum versions. TootSDK supports two types of version checking:
+
+#### API Version Requirements (Recommended)
+
+For servers that support the InstanceV2 API (like modern Mastodon), TootSDK can check against the API version rather than the display version. This is more reliable as API versions are standardized:
 
 ```swift
-// This will throw an error if the server doesn't support the feature
-do {
-    try await client.deleteMedia(id: mediaId)
-} catch TootSDKError.unsupportedFeature {
-    print("This feature requires Mastodon 4.4 or higher")
-}
+// Define a feature requiring Mastodon API v6 or higher
+let feature = TootFeature(requirements: [
+    .from(.mastodon, version: 6)  // Requires API version 6+
+])
+
+// With version ranges
+let rangedFeature = TootFeature(requirements: [
+    .from(.mastodon, version: 3, to: 5)  // API versions 3-5
+])
+
+// Maximum version constraint
+let deprecatedFeature = TootFeature(requirements: [
+    .until(.mastodon, version: 3)  // Only API versions up to 3
+])
 ```
+
+#### Display Version Requirements (Fallback)
+
+For servers that don't provide API versions or when you need to check against the server's display version:
+
+```swift
+// Define a feature requiring specific display versions
+let feature = TootFeature(requirements: [
+    .from(.mastodon, displayVersion: "4.4.0"),
+    .from(.pleroma, displayVersion: "2.5.0")
+])
+
+// With version ranges
+let rangedFeature = TootFeature(requirements: [
+    .from(.pixelfed, displayVersion: "2.0.0", to: "3.0.0")
+])
+
+// Maximum version constraint
+let legacyFeature = TootFeature(requirements: [
+    .until(.akkoma, displayVersion: "3.0.0")
+])
+```
+
+Please note that display version parsing is not always reliable (especially for servers that return a complex compatibility string).
+
+#### Combined Requirements with Fallback
+
+For very unique circumstances, you can specify both API version and display version fallback:
+
+```swift
+let feature = TootFeature(requirements: [
+    // Prefer API version 4, fallback to display version 4.4.0
+    .from(.mastodon, version: 4, fallbackDisplayVersion: "4.4.0")
+])
+```
+
+This will:
+
+1. Check API version if available (for InstanceV2 servers)
+2. Fall back to display version if API version is not available
+3. Fail if neither requirement is met
 
 ### Advanced Version Parsing
 
@@ -329,28 +382,29 @@ The SDK extracts and parses version numbers if possible, or falling back to rege
 You can define custom features with specific server and version requirements:
 
 ```swift
-// Feature only for specific servers
+// Feature only for specific servers (any version)
 let customFeature = TootFeature(supportedFlavours: [.mastodon, .pleroma])
 
-// Feature with version requirements for specific servers
+// Feature with mixed version requirements
 let versionedFeature = TootFeature(requirements: [
-    .from(.mastodon, version: "4.0.0"),  // Mastodon 4.0+
-    .any(.pleroma)                       // Any Pleroma version
+    .from(.mastodon, version: 4),           // Mastodon API v4+
+    .from(.pleroma, displayVersion: "2.5"), // Pleroma 2.5+ (display version)
+    .any(.akkoma)                            // Any Akkoma version
 ])
 
-// Feature supported by ALL servers, but with version requirements for some
+// Feature supported by ALL servers, with version requirements for some
 let universalFeature = TootFeature(allExcept: [
-    .from(.mastodon, version: "3.0.0"),  // Mastodon needs 3.0+
-    .from(.pleroma, version: "2.0.0")    // Pleroma needs 2.0+
+    .from(.mastodon, version: 3),                    // Mastodon needs API v3+
+    .from(.pleroma, displayVersion: "2.0.0")        // Pleroma needs 2.0+
     // All other servers support any version
 ])
 
 // Feature supported by specific servers, with version requirements for some
 let selectiveFeature = TootFeature(
-    anyExcept: [.friendica, .akkoma],    // These support any version
-    versionRequirements: [
-        .from(.mastodon, version: "3.5.0"),  // Mastodon needs 3.5+
-        .from(.pixelfed, version: "2.0.0")   // Pixelfed needs 2.0+
+    anyVersion: [.friendica, .akkoma],    // Any version of these flavours
+    requirements: [
+        .from(.mastodon, displayVersion: "3.5.0"),  // Mastodon needs 3.5+
+        .from(.pixelfed, displayVersion: "2.0.0")   // Pixelfed needs 2.0+
     ]
 )
 
