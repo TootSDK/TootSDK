@@ -172,7 +172,7 @@ extension TootClient {
             $0.method = .put
 
             if flavour == .pixelfed {
-                $0.body = try .json(params)
+                $0.body = try .json(params, encoder: encoder)
             } else {
                 let parts = mediaParts(
                     description: params.description,

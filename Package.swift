@@ -89,6 +89,7 @@ let package = Package(
                 .copy("Resources/pixelfed.json"),
                 .copy("Resources/mastodon.json"),
                 .copy("Resources/pleroma.json"),
+                .copy("Resources/post_akkoma_quote.json"),
                 .copy("Resources/quote.json"),
                 .copy("Resources/relationship.json"),
                 .copy("Resources/relationship_sharkey.json"),

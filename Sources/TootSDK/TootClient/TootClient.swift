@@ -488,6 +488,9 @@ extension TootClient {
                 print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
             }
         }
+
+        // Set the encoder userInfo after flavour has been determined
+        encoder.userInfo[.tootSDKFlavour] = flavour
     }
 
     private func getNodeInfoIfAvailable() async -> NodeInfo? {
