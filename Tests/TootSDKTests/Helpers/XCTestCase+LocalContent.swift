@@ -12,7 +12,12 @@ import XCTest
 
 // swift-format-ignore: AlwaysUseLowerCamelCase
 func URLForResource(fileName: String, withExtension: String) -> URL {
-    return Bundle.module.url(forResource: fileName, withExtension: withExtension)!
+    return URL(fileURLWithPath: #filePath)
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .appendingPathComponent("Resources")
+        .appendingPathComponent(fileName)
+        .appendingPathExtension(withExtension)
 }
 
 func localContent(_ fileName: String, _ fileExtension: String = "json") -> Data {
