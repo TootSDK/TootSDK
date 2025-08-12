@@ -242,10 +242,10 @@ final class FlavourRequirementTests: XCTestCase {
         XCTAssertFalse(feature.isSupported(flavour: .mastodon, version: "3.5.0"))
     }
 
-    func testDeprecatedRangeMethod() throws {
-        // Test that deprecated range method still works
+    func testDisplayVersionRange() throws {
+        // Test the display version range method
         let feature = TootFeature(requirements: [
-            .range(.mastodon, from: "3.0.0", to: "5.0.0")
+            .from(.mastodon, displayVersion: "3.0.0", to: "5.0.0")
         ])
 
         let version4 = Version(tolerant: "4.0.0")

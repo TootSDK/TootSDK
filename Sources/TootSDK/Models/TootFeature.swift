@@ -85,25 +85,17 @@ public struct TootFeature: Equatable {
         /// - Parameters:
         ///   - flavour: The server flavour
         ///   - version: The minimum API version required
-        ///   - fallbackDisplayVersion: The minimum display version to use as fallback when API version is not available
-        public static func from(_ flavour: TootSDKFlavour, version: Int, fallbackDisplayVersion: String) -> FlavourRequirement {
+        ///   - fallbackDisplayVersion: The minimum display version to use as fallback when API version is not available (optional)
+        public static func from(_ flavour: TootSDKFlavour, version: Int, fallbackDisplayVersion: String? = nil) -> FlavourRequirement {
             FlavourRequirement(
                 flavour: flavour,
-                minDisplayVersion: Version(tolerant: fallbackDisplayVersion),
+                minDisplayVersion: fallbackDisplayVersion.flatMap { Version(tolerant: $0) },
                 maxDisplayVersion: nil,
                 minVersion: version,
                 maxVersion: nil
             )
         }
 
-        // MARK: - Legacy Support (Deprecated)
-
-        /// Create a requirement for a version range (legacy method using display versions)
-        /// - Note: This method is deprecated. Use `from(_:displayVersion:to:)` for display versions or `from(_:version:to:)` for API versions
-        @available(*, deprecated, renamed: "from(_:displayVersion:to:)")
-        public static func range(_ flavour: TootSDKFlavour, from: String, to: String) -> FlavourRequirement {
-            self.from(flavour, displayVersion: from, to: to)
-        }
     }
 
     /// The requirements for this feature
@@ -128,15 +120,6 @@ public struct TootFeature: Equatable {
         let anyRequirements = anyVersion.map { FlavourRequirement.any($0) }
         // Combine with specific version requirements
         self.requirements = anyRequirements + requirements
-    }
-
-    /// Deprecated initializer - use init(anyVersion:requirements:) instead
-    /// - Parameters:
-    ///   - anyExcept: Flavours that support any version (confusing parameter name)
-    ///   - versionRequirements: Specific version requirements for certain flavours
-    @available(*, deprecated, renamed: "init(anyVersion:requirements:)")
-    public init(anyExcept: Set<TootSDKFlavour>, versionRequirements: [FlavourRequirement]) {
-        self.init(anyVersion: anyExcept, requirements: versionRequirements)
     }
 
     /// Initialize with default support for all flavours except specific version requirements
@@ -207,8 +190,9 @@ public struct TootFeature: Equatable {
 
             // Check API version requirements if present
             if req.minVersion != nil || req.maxVersion != nil {
-                // For Mastodon flavour, check against the Mastodon API version
-                if flavour == .mastodon, let mastodonApiVersion = apiVersions?.mastodon {
+                // Check against the Mastodon API version regardless of server flavour
+                // Any server that provides a mastodon API version should be checked against it
+                if req.flavour == .mastodon, let mastodonApiVersion = apiVersions?.mastodon {
                     if let minVersion = req.minVersion, mastodonApiVersion < minVersion {
                         return false
                     }
