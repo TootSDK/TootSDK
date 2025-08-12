@@ -472,11 +472,11 @@ extension TootClient {
         // Store API versions if this is an InstanceV2
         if let instanceV2 = instance as? InstanceV2 {
             self.apiVersions = instanceV2.apiVersions
-            if debugInstance, let apiVersions = instanceV2.apiVersions {
-                print("🎨 Detected API versions - Mastodon: \(apiVersions.mastodon ?? 0)")
-            }
             if debugInstance {
                 print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
+                if let apiVersions = instanceV2.apiVersions {
+                    print("🎨 Detected API versions: \(apiVersions)")
+                }
             }
         } else {
             // Fall back to NodeInfo if InstanceV2 is not available
