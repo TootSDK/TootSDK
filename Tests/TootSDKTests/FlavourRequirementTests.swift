@@ -75,8 +75,8 @@ final class FlavourRequirementTests: XCTestCase {
         let version4 = Version(tolerant: "4.0.0")
         XCTAssertTrue(feature.isSupported(flavour: .mastodon, version: version4))
 
-        let version4_1 = Version(tolerant: "4.1.0")
-        XCTAssertTrue(feature.isSupported(flavour: .mastodon, version: version4_1))
+        let version41 = Version(tolerant: "4.1.0")
+        XCTAssertTrue(feature.isSupported(flavour: .mastodon, version: version41))
     }
 
     func testDisplayVersionRangeRequirement() throws {
@@ -111,8 +111,8 @@ final class FlavourRequirementTests: XCTestCase {
         let version4 = Version(tolerant: "4.0.0")
         XCTAssertTrue(feature.isSupported(flavour: .mastodon, version: version4))
 
-        let version4_1 = Version(tolerant: "4.1.0")
-        XCTAssertFalse(feature.isSupported(flavour: .mastodon, version: version4_1))
+        let version41 = Version(tolerant: "4.1.0")
+        XCTAssertFalse(feature.isSupported(flavour: .mastodon, version: version41))
     }
 
     // MARK: - Combined Requirements Tests
@@ -253,5 +253,48 @@ final class FlavourRequirementTests: XCTestCase {
 
         let version6 = Version(tolerant: "6.0.0")
         XCTAssertFalse(feature.isSupported(flavour: .mastodon, version: version6))
+    }
+
+    // MARK: - Cross-Flavour API Version Support
+
+    func testCrossFlavourApiVersionSupport() throws {
+        // Test that Akkoma server providing Mastodon API version can satisfy Mastodon API requirements
+        let feature = TootFeature(requirements: [
+            .from(.mastodon, version: 4)
+        ])
+
+        // Akkoma server that reports Mastodon API v6 should satisfy requirements for Mastodon API v4+
+        let akkomaApiVersions = InstanceV2.APIVersions(mastodon: 6)
+        XCTAssertTrue(feature.isSupported(flavour: .akkoma, version: nil, apiVersions: akkomaApiVersions))
+
+        // Akkoma server with Mastodon API v3 should NOT satisfy requirements for Mastodon API v4+
+        let akkomaApiVersionsOld = InstanceV2.APIVersions(mastodon: 3)
+        XCTAssertFalse(feature.isSupported(flavour: .akkoma, version: nil, apiVersions: akkomaApiVersionsOld))
+
+        // Pleroma server with Mastodon API support
+        let pleromaApiVersions = InstanceV2.APIVersions(mastodon: 5)
+        XCTAssertTrue(feature.isSupported(flavour: .pleroma, version: nil, apiVersions: pleromaApiVersions))
+
+        // Test with version range requirement
+        let featureWithRange = TootFeature(requirements: [
+            .from(.mastodon, version: 3, to: 5)
+        ])
+
+        let akkomaApiVersionsInRange = InstanceV2.APIVersions(mastodon: 4)
+        XCTAssertTrue(featureWithRange.isSupported(flavour: .akkoma, version: nil, apiVersions: akkomaApiVersionsInRange))
+
+        let akkomaApiVersionsTooHigh = InstanceV2.APIVersions(mastodon: 6)
+        XCTAssertFalse(featureWithRange.isSupported(flavour: .akkoma, version: nil, apiVersions: akkomaApiVersionsTooHigh))
+
+        // Test that non-Mastodon requirements still require exact flavour match
+        let pleromaFeature = TootFeature(requirements: [
+            .from(.pleroma, displayVersion: "2.5.0")
+        ])
+
+        // Akkoma should NOT satisfy Pleroma-specific requirements
+        XCTAssertFalse(pleromaFeature.isSupported(flavour: .akkoma, version: Version(tolerant: "2.5.0")))
+
+        // Only Pleroma should satisfy Pleroma requirements
+        XCTAssertTrue(pleromaFeature.isSupported(flavour: .pleroma, version: Version(tolerant: "2.5.0")))
     }
 }

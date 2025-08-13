@@ -186,12 +186,22 @@ public struct TootFeature: Equatable {
     /// - Returns: true if the feature is supported
     public func isSupported(flavour: TootSDKFlavour, version: Version?, apiVersions: InstanceV2.APIVersions?) -> Bool {
         return requirements.contains { req in
-            guard req.flavour == flavour else { return false }
+            // Allow cross-flavour API version checking:
+            // If a non-Mastodon server (e.g., Akkoma) provides a mastodon API version,
+            // and the requirement is for mastodon API with version constraints,
+            // we should check it even though the flavours don't match
+            let isCrossFlavourApiCheck =
+                req.flavour == .mastodon && flavour != .mastodon && apiVersions?.mastodon != nil && (req.minVersion != nil || req.maxVersion != nil)
+
+            // For cross-flavour checks, skip the flavour match requirement
+            // For all other cases, require flavour match
+            if !isCrossFlavourApiCheck {
+                guard req.flavour == flavour else { return false }
+            }
 
             // Check API version requirements if present
             if req.minVersion != nil || req.maxVersion != nil {
-                // Check against the Mastodon API version regardless of server flavour
-                // Any server that provides a mastodon API version should be checked against it
+                // Check against the Mastodon API version if available
                 if req.flavour == .mastodon, let mastodonApiVersion = apiVersions?.mastodon {
                     if let minVersion = req.minVersion, mastodonApiVersion < minVersion {
                         return false
