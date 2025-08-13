@@ -300,6 +300,25 @@ if client.supportsFeature(.deleteMedia) {
 // For example, deleteMedia requires Mastodon API v4+
 ```
 
+### Cross-Flavour Feature Support
+
+Many Fediverse servers (like Akkoma, Pleroma, and others) implement the Mastodon API alongside their own native APIs. TootSDK automatically handles this cross-flavour compatibility:
+
+```swift
+// A feature requiring Mastodon API v4+
+let feature = TootFeature(requirements: [
+    .from(.mastodon, version: 4)
+])
+
+// This works on any server that reports Mastodon API compatibility,
+// even if it's not a Mastodon server:
+// - Akkoma server with { "mastodon": 6 } ✓ Supported
+// - Pleroma server with { "mastodon": 4 } ✓ Supported  
+// - Firefish server with { "mastodon": 3 } ✗ Not supported
+```
+
+When a server reports support for the Mastodon API (through the InstanceV2 `apiVersions` field), TootSDK will check Mastodon API requirements against that version, regardless of the server's actual flavour. This ensures maximum compatibility across the Fediverse.
+
 ### Version Requirements
 
 Some features require specific minimum versions. TootSDK supports two types of version checking:
