@@ -41,7 +41,11 @@ Please don't hesitate to open an issue or create a PR for features you need 🙏
 
 It's easy to get started with TootSDK.
 
-- Add TootSDK to your project via Swift Package Manager: `https://github.com/TootSDK/TootSDK`
+- Add TootSDK to your project via Swift Package Manager: `https://github.com/TootSDK/TootSDK`. (also available on Codeberg: `https://codeberg.org/TootSDK/TootSDK`):
+
+```swift
+.package(url: "https://github.com/TootSDK/TootSDK.git", from: "18.2.0")
+```
 
 - Instantiate with an instanceURL and accessToken:
 
