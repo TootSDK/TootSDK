@@ -4,9 +4,12 @@
 
 <p><strong>Cross-platform Swift library for the Mastodon API</strong></p>
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FTootSDK%2FTootSDK%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/TootSDK/TootSDK)
+    
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FTootSDK%2FTootSDK%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/TootSDK/TootSDK)
+    
 <p>
-    <a href="https://developer.apple.com/swift/"><img alt="Swift 5.7" src="https://img.shields.io/badge/swift-5.7-orange.svg?style=flat"></a>
-    <a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-blueviolet"></a>
      <a href="https://github.com/TootSDK/TootSDK/blob/main/LICENSE.md"><img alt="BSD 3-clause" src="https://img.shields.io/badge/License-BSD_3--Clause-blue.svg"></a>
     <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
 </p>
