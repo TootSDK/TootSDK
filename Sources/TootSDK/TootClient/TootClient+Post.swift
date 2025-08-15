@@ -466,6 +466,9 @@ extension TootFeature {
 extension TootFeature {
 
     /// Ability to translate a post
+    /// Requires Mastodon 4.0+ (API v2+) with a configured translation backend
     ///
-    public static let translatePost = TootFeature(supportedFlavours: [.mastodon])
+    public static let translatePost = TootFeature(requirements: [
+        .from(.mastodon, version: 2, fallbackDisplayVersion: "4.0.0")
+    ])
 }

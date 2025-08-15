@@ -110,7 +110,7 @@ extension TootClient {
 
     /// Delete a media attachment that is not currently attached to a status.
     ///
-    /// Only supported if ``InstanceV2/apiVersions-swift.property`` includes ``InstanceV2/APIVersions-swift.struct/mastodon`` API version 4 or higher.
+    /// Only supported on Mastodon 4.4 or higher.
     ///
     /// - Parameter id: The ID of the ``MediaAttachment`` in the database.
     public func deleteMedia(id: String) async throws {
@@ -119,11 +119,12 @@ extension TootClient {
 
     /// Delete a media attachment with HTTP response metadata
     ///
-    /// Only supported if ``InstanceV2/apiVersions-swift.property`` includes ``InstanceV2/APIVersions-swift.struct/mastodon`` API version 4 or higher.
+    /// Only supported on Mastodon 4.4 or higher.
     ///
     /// - Parameter id: The ID of the ``MediaAttachment`` in the database.
     /// - Returns: TootResponse containing HTTP metadata (the data field will be Void)
     public func deleteMediaRaw(id: String) async throws -> TootResponse<Void> {
+        try requireFeature(.deleteMedia)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .delete
@@ -223,4 +224,13 @@ extension TootClient {
         }
         return parts
     }
+}
+
+extension TootFeature {
+    /// Delete media attachment feature - requires Mastodon API version 4
+    /// This feature requires API version checking from InstanceV2.
+    /// No fallback to display version is provided since Mastodon supports instanceV2.
+    public static let deleteMedia = TootFeature(requirements: [
+        .from(.mastodon, version: 4)
+    ])
 }

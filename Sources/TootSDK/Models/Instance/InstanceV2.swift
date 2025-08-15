@@ -196,7 +196,7 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         }
     }
 
-    public struct APIVersions: Codable, Hashable, Sendable {
+    public struct APIVersions: Codable, Hashable, Sendable, CustomStringConvertible {
         /// Mastodon API version number that this server implements.
         ///
         /// Starting from Mastodon v4.3.0, API changes will come with a version number, which clients can check against this value.
@@ -204,6 +204,14 @@ public struct InstanceV2: Codable, Hashable, Sendable {
 
         public init(mastodon: Int? = nil) {
             self.mastodon = mastodon
+        }
+
+        public var description: String {
+            var versions: [String] = []
+            if let mastodon = mastodon {
+                versions.append("Mastodon API: \(mastodon)")
+            }
+            return versions.isEmpty ? "No API versions" : versions.joined(separator: ", ")
         }
     }
 
