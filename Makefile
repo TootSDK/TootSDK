@@ -18,6 +18,7 @@ lint: ## Applies all auto-correctable lint issues and reformats all source files
 	@swift-format format -i --configuration ./.swift-format --recursive ./Tests
 	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/swiftyadmin/Sources
 	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/tootsdk-release/Sources
+	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/TootSDKExample
 	@swift-format lint -p --configuration ./.swift-format --recursive ./Sources
 	@swift-format lint -p --configuration ./.swift-format --recursive ./Tests
 	@swift-format lint -p --configuration ./.swift-format --recursive ./Examples/swiftyadmin/Sources

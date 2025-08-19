@@ -5,10 +5,9 @@
 <p><strong>Cross-platform Swift library for the Mastodon API</strong></p>
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FTootSDK%2FTootSDK%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/TootSDK/TootSDK)
-    
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FTootSDK%2FTootSDK%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/TootSDK/TootSDK)
-    
+
 <p>
      <a href="https://github.com/TootSDK/TootSDK/blob/main/LICENSE.md"><img alt="BSD 3-clause" src="https://img.shields.io/badge/License-BSD_3--Clause-blue.svg"></a>
     <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
@@ -73,7 +72,7 @@ When using TootSDK within a macOS target you will need to enable the `com.apple.
 
 </details>
 
-- Instantiate your client without a token:
+- Instantiate your client and obtain access token:
 
 ```swift
 let client = try await TootClient(connect: url)
@@ -93,6 +92,8 @@ guard let accessToken = try await client.presentSignIn(callbackURI: callbackURI)
 That's it 🎉!
 
 We recommend keeping the accessToken somewhere secure, for example the Keychain.
+
+Check out our [tiny app](Examples/TootSDKExample/TootSDKExample/Views/RootView.swift) example too.
 
 ### Signing in (all platforms):
 
