@@ -5,9 +5,10 @@
 //  Created by Łukasz Rutkowski on 03/08/2025.
 //
 
-import Testing
-@testable import TootSDK
 import Foundation
+import Testing
+
+@testable import TootSDK
 
 struct EncodingTests {
 
