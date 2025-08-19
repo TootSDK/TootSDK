@@ -140,6 +140,19 @@ TootSDK returns Posts, Accounts, Lists and DomainBblocks as `PagedResult`. In ou
 </details>
 
 <details>
+    <summary>Formatting posts and user handles</summary>
+
+Fediverse servers support rich content formatting for posts and user handles, as well as custom emojis which can be defined per instance. In TootSDK we handle this using renderers. You can create your own to fit your use case or you can use one ours:
+
+- `AttributedStringRenderer` - convers the content to an attributes string
+
+- `UniversalRenderer` - removes all formatting and attempts to display the content as plain text
+
+We also have `AppKitAttribStringRenderer`/`UIKitAttribStringRenderer` which show how to incorporate custom emojis.
+
+</details>
+
+<details>
 <summary>Paging requests</summary>
 
 Some requests in TootSDK allow pagination in order to request more information. TootSDK can request a specific page using the `PagedInfo` struct and handles paginaged server responses using the `PagedResult` struct.
