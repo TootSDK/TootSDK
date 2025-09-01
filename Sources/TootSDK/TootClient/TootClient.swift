@@ -24,22 +24,22 @@ public class TootClient: @unchecked Sendable {
     public var debugInstance: Bool = false
     /// The server configuration containing flavour, version, and API information
     public private(set) var serverConfiguration: ServerConfiguration = ServerConfiguration()
-    
+
     /// The preferred fediverse server flavour to use for API calls
     public var flavour: TootSDKFlavour {
         serverConfiguration.flavour
     }
-    
+
     /// The parsed version of the instance we're connected to (used for feature detection)
     public var version: Version? {
         serverConfiguration.version
     }
-    
+
     /// The raw version string from the instance (for debugging/display purposes)
     public var versionString: String? {
         serverConfiguration.versionString
     }
-    
+
     /// The API versions supported by the instance (from InstanceV2 response)
     public var apiVersions: InstanceV2.APIVersions? {
         serverConfiguration.apiVersions
@@ -109,7 +109,7 @@ public class TootClient: @unchecked Sendable {
         self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
     }
-    
+
     /// Initialize a new instance of `TootClient` with a pre-configured server configuration.
     ///
     /// This initializer is useful when caching TootClient instances or when you already know the server configuration
@@ -140,7 +140,7 @@ public class TootClient: @unchecked Sendable {
         self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
         self.serverConfiguration = serverConfiguration
-        
+
         // Set the encoder userInfo with the configured flavour
         self.encoder.userInfo[.tootSDKFlavour] = serverConfiguration.flavour
     }
