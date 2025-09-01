@@ -76,7 +76,6 @@ TootSDK is a Swift Package Manager library that provides a unified SDK for inter
 - Test data anonymized (example.com domains, Lorem Ipsum content)
 - Server-specific test cases for API variations
 - Resource files in `Tests/TootSDKTests/Resources/` for realistic server responses
-- New resource files need to be registered in the Package.swift for the test target e.g. `.copy("Resources/account.json")`
 
 ## Code Style and Conventions
 

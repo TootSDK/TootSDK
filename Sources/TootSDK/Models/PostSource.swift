@@ -15,10 +15,13 @@ public struct PostSource: Codable, Identifiable, Sendable {
     public var text: String
     /// The plain text used to compose the post subject or content warning.
     public var spoilerText: String
+    /// The content type of the status source. Available for Pleroma and Akkoma.
+    public var contentType: String?
 
-    public init(id: String, text: String, spoilerText: String) {
+    public init(id: String, text: String, spoilerText: String, contentType: String? = nil) {
         self.id = id
         self.text = text
         self.spoilerText = spoilerText
+        self.contentType = contentType
     }
 }

@@ -4,9 +4,11 @@
 
 <p><strong>Cross-platform Swift library for the Mastodon API</strong></p>
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FTootSDK%2FTootSDK%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/TootSDK/TootSDK)
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FTootSDK%2FTootSDK%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/TootSDK/TootSDK)
+
 <p>
-    <a href="https://developer.apple.com/swift/"><img alt="Swift 5.7" src="https://img.shields.io/badge/swift-5.7-orange.svg?style=flat"></a>
-    <a href="https://developer.apple.com/swift/"><img alt="Platforms" src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-blueviolet"></a>
      <a href="https://github.com/TootSDK/TootSDK/blob/main/LICENSE.md"><img alt="BSD 3-clause" src="https://img.shields.io/badge/License-BSD_3--Clause-blue.svg"></a>
     <a href="https://github.com/TootSDK/TootSDK/actions"><img alt="Build Status" src="https://github.com/TootSDK/TootSDK/actions/workflows/build.yml/badge.svg"></a>
 </p>
@@ -42,7 +44,11 @@ Please don't hesitate to open an issue or create a PR for features you need 🙏
 
 It's easy to get started with TootSDK.
 
-- Add TootSDK to your project via Swift Package Manager: `https://github.com/TootSDK/TootSDK`
+- Add TootSDK to your project via Swift Package Manager: `https://github.com/TootSDK/TootSDK`. (also available on Codeberg: `https://codeberg.org/TootSDK/TootSDK`):
+
+```swift
+.package(url: "https://github.com/TootSDK/TootSDK.git", from: "18.2.0")
+```
 
 - Instantiate with an instanceURL and accessToken:
 
@@ -69,7 +75,7 @@ When using TootSDK within a macOS target you will need to enable the `com.apple.
 
 </details>
 
-- Instantiate your client without a token:
+- Instantiate your client and obtain access token:
 
 ```swift
 let client = try await TootClient(connect: url)
@@ -89,6 +95,8 @@ guard let accessToken = try await client.presentSignIn(callbackURI: callbackURI)
 That's it 🎉!
 
 We recommend keeping the accessToken somewhere secure, for example the Keychain.
+
+Check out our [tiny app](Examples/TootSDKExample/TootSDKExample/Views/RootView.swift) example too.
 
 ### Signing in (all platforms):
 
@@ -131,6 +139,19 @@ let posts = items.result
 ```
 
 TootSDK returns Posts, Accounts, Lists and DomainBblocks as `PagedResult`. In our code, `items` is a PagedResult struct. It contains a property called `result` which will be the type of data request (in this case an array of `Post`).
+
+</details>
+
+<details>
+    <summary>Formatting posts and user handles</summary>
+
+Fediverse servers support rich content formatting for posts and user handles, as well as custom emojis which can be defined per instance. In TootSDK we handle this using renderers. You can create your own to fit your use case or you can use one ours:
+
+- `AttributedStringRenderer` - convers the content to an attributes string
+
+- `UniversalRenderer` - removes all formatting and attempts to display the content as plain text
+
+We also have `AppKitAttribStringRenderer`/`UIKitAttribStringRenderer` which show how to incorporate custom emojis.
 
 </details>
 
