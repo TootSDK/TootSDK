@@ -22,7 +22,6 @@ struct ListOauthApps: AsyncParsableCommand {
     mutating func run() async throws {
         print("Listing OAuth apps:")
         let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
-        client.flavour = .pleroma
 
         let params = ListOauthAppsParams(
             name: name != "" ? name : nil, clientId: clientId != "" ? clientId : nil,
