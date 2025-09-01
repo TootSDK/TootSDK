@@ -334,7 +334,7 @@ let feature = TootFeature(requirements: [
 // This works on any server that reports Mastodon API compatibility,
 // even if it's not a Mastodon server:
 // - Akkoma server with { "mastodon": 6 } ✓ Supported
-// - Pleroma server with { "mastodon": 4 } ✓ Supported  
+// - Pleroma server with { "mastodon": 4 } ✓ Supported
 // - Firefish server with { "mastodon": 3 } ✗ Not supported
 ```
 
@@ -452,6 +452,31 @@ let selectiveFeature = TootFeature(
 if client.supportsFeature(customFeature) {
     // Use the feature
 }
+```
+
+</details>
+
+<details>
+<summary>Saving and Restoring Server Configuration</summary>
+
+In some situations, it may be helpful for your app to cache `TootClient` and restore it without having to repeatedly call `connect()`:
+
+```swift
+// Save server configuration e.g. encoding it as JSON:
+
+let config = client.serverConfiguration
+let data = try JSONEncoder().encode(config)
+
+// Store data in UserDefaults, Keychain, etc.
+// ⚠️ serverConfiguration does NOT include secrets, only version and flavour information of the server
+
+// Restore server configuration
+let savedConfig = try JSONDecoder().decode(ServerConfiguration.self, from: data)
+let client = TootClient(
+    instanceURL: instanceURL,
+    accessToken: accessToken,
+    serverConfiguration: savedConfig
+)
 ```
 
 </details>
