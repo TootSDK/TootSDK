@@ -152,10 +152,10 @@ extension TootClient {
 
 extension TootFeature {
     /// Ability to create Web Push API subscriptions to receive notifications.
-    public static let pushSubscriptions = TootFeature(supportedFlavours: [.mastodon, .akkoma, .friendica, .pleroma])
+    public static let pushSubscriptions = TootFeature(supportedFlavours: [.mastodon, .akkoma, .friendica, .pleroma, .goToSocial])
 
     /// Ability to specify policy for push notifications.
-    public static let pushSubscriptionsPolicy = TootFeature(supportedFlavours: [.mastodon])
+    public static let pushSubscriptionsPolicy = TootFeature(supportedFlavours: [.mastodon, .goToSocial])
 }
 
 extension TootClient {
