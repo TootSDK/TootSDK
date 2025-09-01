@@ -17,6 +17,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
     case invalidParameter(parameterName: String, reason: String)
     /// The requested operation is not supported by the current server flavour.
     case unsupportedFlavour(current: TootSDKFlavour, required: Set<TootSDKFlavour>)
+    /// The requested feature is not supported by the current server flavour or version.
+    case unsupportedFeature(feature: TootFeature)
     case unexpectedError(_ description: String)
     /// The remote instance did not respond with the expected payload during authorization
     case clientAuthorizationFailed
@@ -57,6 +59,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
         case .unsupportedFlavour(let current, let required):
             return
                 "Operation not supported for server flavour \(current), compatible flavours are: \(required.map({"\($0)"}).joined(separator: ", "))."
+        case .unsupportedFeature:
+            return "This feature is not supported by the current server or version."
         case .unexpectedError(let description):
             return "Unexpected error: \(description)"
         case .clientAuthorizationFailed:

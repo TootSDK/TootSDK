@@ -35,6 +35,7 @@ TootSDK is a shared Swift Package that any client app can be built on.
 - Async/Await based. All asynchronous functions are defined as Async ones that you can use with Async/Await code (Note: full concurrency support is coming with Swift 6.2)
 - Internal consistency and standardization of model property names
 - Standardization across all supported Fediverse APIs
+- Multi-server support with automatic flavour detection and version-aware feature handling
 - Platform agnostic (TootSDK shouldn't care if it's on iOS, macOS or Linux!)
 
 Please don't hesitate to open an issue or create a PR for features you need 🙏
@@ -55,6 +56,8 @@ It's easy to get started with TootSDK.
   let instanceURL = URL(string: "social.yourinstance.com")
   let client = try await TootClient(connect: instanceURL, accessToken: "USERACCESSTOKEN")
 ```
+
+The `connect` initializer automatically detects the server type (Mastodon, Pleroma, Pixelfed, etc.) and version, enabling TootSDK to adapt its behavior for optimal compatibility.
 
 ### Signing in (for macOS and iOS):
 
@@ -265,6 +268,190 @@ if instance.registrations == false {
 let params = RegisterAccountParams(
       username: name, email: email, password: password, agreement: true, locale: "en")
 let token = try await client.registerAccount(params: params)
+```
+
+</details>
+
+## Server Flavours and Version Requirements 🌐
+
+TootSDK supports multiple Fediverse server implementations and automatically adapts to their specific APIs and capabilities.
+
+### Supported Server Types
+
+TootSDK automatically detects and supports the following server types:
+
+- **Mastodon** - The original and most widely used server
+- **Pleroma** - Lightweight alternative implementation
+- **Akkoma** - Fork of Pleroma with additional features
+- **Pixelfed** - Instagram-like photo sharing platform
+- **Friendica** - Facebook-like social platform
+- **GoToSocial** - Lightweight ActivityPub server
+- **Firefish** (formerly Calckey) - Feature-rich Misskey fork
+- **Catodon** - Another Misskey variant
+- **Iceshrimp** - Firefish fork focused on stability
+- **Sharkey** - Misskey fork with additional features
+
+### Automatic Detection
+
+When you connect to a server, TootSDK automatically:
+
+1. Detects the server type (flavour)
+2. Parses the server version
+3. Adapts API calls for optimal compatibility
+
+```swift
+let client = try await TootClient(connect: instanceURL)
+print("Connected to \(client.flavour) server")
+print("Version: \(client.versionString ?? "unknown")")
+```
+
+### Feature Detection
+
+Not all features are available on all servers or server versions. TootSDK provides a feature detection system:
+
+```swift
+// Check if a feature is supported
+if client.supportsFeature(.deleteMedia) {
+    try await client.deleteMedia(id: mediaId)
+} else {
+    print("This server doesn't support deleting media")
+}
+
+// Features automatically check version requirements
+// For example, deleteMedia requires Mastodon API v4+
+```
+
+### Cross-Flavour Feature Support
+
+Many Fediverse servers (like Akkoma, Pleroma, and others) implement the Mastodon API alongside their own native APIs. TootSDK automatically handles this cross-flavour compatibility:
+
+```swift
+// A feature requiring Mastodon API v4+
+let feature = TootFeature(requirements: [
+    .from(.mastodon, version: 4)
+])
+
+// This works on any server that reports Mastodon API compatibility,
+// even if it's not a Mastodon server:
+// - Akkoma server with { "mastodon": 6 } ✓ Supported
+// - Pleroma server with { "mastodon": 4 } ✓ Supported  
+// - Firefish server with { "mastodon": 3 } ✗ Not supported
+```
+
+When a server reports support for the Mastodon API (through the InstanceV2 `apiVersions` field), TootSDK will check Mastodon API requirements against that version, regardless of the server's actual flavour. This ensures maximum compatibility across the Fediverse.
+
+### Version Requirements
+
+Some features require specific minimum versions. TootSDK supports two types of version checking:
+
+#### API Version Requirements (Recommended)
+
+For servers that support the InstanceV2 API (like modern Mastodon), TootSDK can check against the API version rather than the display version. This is more reliable as API versions are standardized:
+
+```swift
+// Define a feature requiring Mastodon API v6 or higher
+let feature = TootFeature(requirements: [
+    .from(.mastodon, version: 6)  // Requires API version 6+
+])
+
+// With version ranges
+let rangedFeature = TootFeature(requirements: [
+    .from(.mastodon, version: 3, to: 5)  // API versions 3-5
+])
+
+// Maximum version constraint
+let deprecatedFeature = TootFeature(requirements: [
+    .until(.mastodon, version: 3)  // Only API versions up to 3
+])
+```
+
+#### Display Version Requirements (Fallback)
+
+For servers that don't provide API versions or when you need to check against the server's display version:
+
+```swift
+// Define a feature requiring specific display versions
+let feature = TootFeature(requirements: [
+    .from(.mastodon, displayVersion: "4.4.0"),
+    .from(.pleroma, displayVersion: "2.5.0")
+])
+
+// With version ranges
+let rangedFeature = TootFeature(requirements: [
+    .from(.pixelfed, displayVersion: "2.0.0", to: "3.0.0")
+])
+
+// Maximum version constraint
+let legacyFeature = TootFeature(requirements: [
+    .until(.akkoma, displayVersion: "3.0.0")
+])
+```
+
+Please note that display version parsing is not always reliable (especially for servers that return a complex compatibility string).
+
+#### Combined Requirements with Fallback
+
+For very unique circumstances, you can specify both API version and display version fallback:
+
+```swift
+let feature = TootFeature(requirements: [
+    // Prefer API version 4, fallback to display version 4.4.0
+    .from(.mastodon, version: 4, fallbackDisplayVersion: "4.4.0")
+])
+```
+
+This will:
+
+1. Check API version if available (for InstanceV2 servers)
+2. Fall back to display version if API version is not available
+3. Fail if neither requirement is met
+
+### Advanced Version Parsing
+
+TootSDK handles various version string formats used by different servers:
+
+- Standard semantic versions: `"4.2.0"`
+- Pre-release versions: `"4.4.0-rc1"`
+- Compatibility strings: `"2.7.2 (compatible; Pixelfed 0.11.4)"`
+- Complex formats: `"3.5.3+glitch"`
+
+The SDK extracts and parses version numbers if possible, or falling back to regex patterns when needed.
+
+### Custom Feature Requirements
+
+You can define custom features with specific server and version requirements:
+
+```swift
+// Feature only for specific servers (any version)
+let customFeature = TootFeature(supportedFlavours: [.mastodon, .pleroma])
+
+// Feature with mixed version requirements
+let versionedFeature = TootFeature(requirements: [
+    .from(.mastodon, version: 4),           // Mastodon API v4+
+    .from(.pleroma, displayVersion: "2.5"), // Pleroma 2.5+ (display version)
+    .any(.akkoma)                            // Any Akkoma version
+])
+
+// Feature supported by ALL servers, with version requirements for some
+let universalFeature = TootFeature(allExcept: [
+    .from(.mastodon, version: 3),                    // Mastodon needs API v3+
+    .from(.pleroma, displayVersion: "2.0.0")        // Pleroma needs 2.0+
+    // All other servers support any version
+])
+
+// Feature supported by specific servers, with version requirements for some
+let selectiveFeature = TootFeature(
+    anyVersion: [.friendica, .akkoma],    // Any version of these flavours
+    requirements: [
+        .from(.mastodon, displayVersion: "3.5.0"),  // Mastodon needs 3.5+
+        .from(.pixelfed, displayVersion: "2.0.0")   // Pixelfed needs 2.0+
+    ]
+)
+
+// Check if current server supports it
+if client.supportsFeature(customFeature) {
+    // Use the feature
+}
 ```
 
 </details>
