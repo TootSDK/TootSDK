@@ -12,18 +12,20 @@ import Testing
 
 struct EncodingTests {
 
-    private let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
-
     @Test func generalEncodingOfNotificationType() throws {
-        client.flavour = .mastodon
-        client.encoder.userInfo[.tootSDKFlavour] = client.flavour
+        let client = TootClient(
+            instanceURL: URL(string: "https://mastodon.social")!,
+            serverConfiguration: ServerConfiguration(flavour: .mastodon)
+        )
         let encoded = try client.encoder.encode(TootNotification.NotificationType.emojiReaction)
         #expect(encoded == Data(#""emoji_reaction""#.utf8))
     }
 
     @Test func flavorSpecificEncodingOfNotificationType() throws {
-        client.flavour = .pleroma
-        client.encoder.userInfo[.tootSDKFlavour] = client.flavour
+        let client = TootClient(
+            instanceURL: URL(string: "https://mastodon.social")!,
+            serverConfiguration: ServerConfiguration(flavour: .pleroma)
+        )
         let encoded = try client.encoder.encode(TootNotification.NotificationType.emojiReaction)
         #expect(encoded == Data(#""pleroma:emoji_reaction""#.utf8))
     }

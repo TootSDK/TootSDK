@@ -89,8 +89,10 @@ import Testing
 
     @Test func friendicaQueryParams() throws {
         let flavour = TootSDKFlavour.friendica
-        let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
-        client.flavour = flavour
+        let client = TootClient(
+            instanceURL: URL(string: "https://mastodon.social")!,
+            serverConfiguration: ServerConfiguration(flavour: flavour)
+        )
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
@@ -105,8 +107,10 @@ import Testing
 
     @Test func sharkeyQueryParams() throws {
         let flavour = TootSDKFlavour.sharkey
-        let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
-        client.flavour = flavour
+        let client = TootClient(
+            instanceURL: URL(string: "https://mastodon.social")!,
+            serverConfiguration: ServerConfiguration(flavour: flavour)
+        )
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
@@ -128,8 +132,10 @@ import Testing
 
     @Test func pleromaAkkomaQueryParams() throws {
         for flavour in [TootSDKFlavour.pleroma, .akkoma] {
-            let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
-            client.flavour = flavour
+            let client = TootClient(
+                instanceURL: URL(string: "https://mastodon.social")!,
+                serverConfiguration: ServerConfiguration(flavour: flavour)
+            )
 
             let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
             let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
@@ -142,8 +148,10 @@ import Testing
     }
 
     @Test func mastodonQueryParams() throws {
-        let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
-        client.flavour = .mastodon
+        let client = TootClient(
+            instanceURL: URL(string: "https://mastodon.social")!,
+            serverConfiguration: ServerConfiguration(flavour: .mastodon)
+        )
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
         let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }

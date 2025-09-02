@@ -16,7 +16,6 @@ struct DeleteOauthApp: AsyncParsableCommand {
     mutating func run() async throws {
         print("Deleting app id \(id):")
         let client = TootClient(instanceURL: URL(string: url)!, accessToken: token)
-        client.flavour = .pleroma
         let _ = try await client.adminDeleteOauthApp(appId: id)
     }
 }

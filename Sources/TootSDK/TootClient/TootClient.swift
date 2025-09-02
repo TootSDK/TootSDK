@@ -22,14 +22,28 @@ public class TootClient: @unchecked Sendable {
     public var debugResponses: Bool = false
     /// Set this to `true` to see a `print()` for instance information.
     public var debugInstance: Bool = false
+    /// The server configuration containing flavour, version, and API information
+    public private(set) var serverConfiguration: ServerConfiguration = ServerConfiguration()
+
     /// The preferred fediverse server flavour to use for API calls
-    public var flavour: TootSDKFlavour = .mastodon
+    public var flavour: TootSDKFlavour {
+        serverConfiguration.flavour
+    }
+
     /// The parsed version of the instance we're connected to (used for feature detection)
-    public var version: Version?
+    public var version: Version? {
+        serverConfiguration.version
+    }
+
     /// The raw version string from the instance (for debugging/display purposes)
-    public var versionString: String?
+    public var versionString: String? {
+        serverConfiguration.versionString
+    }
+
     /// The API versions supported by the instance (from InstanceV2 response)
-    public var apiVersions: InstanceV2.APIVersions?
+    public var apiVersions: InstanceV2.APIVersions? {
+        serverConfiguration.apiVersions
+    }
     /// The authorization scopes the client was initialized with
     public let scopes: [String]
     /// Data streams that the client can subscribe to
@@ -94,6 +108,41 @@ public class TootClient: @unchecked Sendable {
         self.clientName = clientName
         self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
+    }
+
+    /// Initialize a new instance of `TootClient` with a pre-configured server configuration.
+    ///
+    /// This initializer is useful when caching TootClient instances or when you already know the server configuration
+    /// and don't need to call ``TootClient/connect()``.
+    /// - Parameters:
+    ///   - clientName: Name of the client to be used in outgoing HTTP requests. Defaults to `TootSDK`
+    ///   - clientWebsite: A URL to the homepage of your client. Defaults to an empty string.
+    ///   - session: the URLSession being used internally, defaults to shared
+    ///   - instanceURL: the instance you are connecting to
+    ///   - accessToken: the existing access token; if you already have one
+    ///   - scopes: An array of authentication scopes, defaults to `"read", "write", "follow", "push"`
+    ///   - serverConfiguration: The pre-configured server configuration containing flavour, version, and API information
+    public init(
+        clientName: String = "TootSDK",
+        clientWebsite: String? = nil,
+        session: URLSession = URLSession.shared,
+        instanceURL: URL,
+        accessToken: String? = nil,
+        scopes: [String] = ["read", "write", "follow", "push"],
+        httpUserAgent: String? = nil,
+        serverConfiguration: ServerConfiguration
+    ) {
+        self.session = session
+        self.instanceURL = instanceURL
+        self.accessToken = accessToken
+        self.scopes = scopes
+        self.clientName = clientName
+        self.clientWebsite = clientWebsite
+        self.httpUserAgent = httpUserAgent ?? clientName
+        self.serverConfiguration = serverConfiguration
+
+        // Set the encoder userInfo with the configured flavour
+        self.encoder.userInfo[.tootSDKFlavour] = serverConfiguration.flavour
     }
 
     /// Initialize and connect a new instance of `TootClient`.
@@ -465,13 +514,14 @@ extension TootClient {
     public func connect() async throws {
         // Try to get InstanceV2 first as it has API version information
         let instance = try await getInstanceInfo()
-        self.flavour = instance.flavour
-        self.versionString = instance.version
-        self.version = TootFeature.parseVersion(from: instance.version)
+        var detectedFlavour = instance.flavour
+        var detectedVersionString = instance.version
+        var detectedVersion = TootFeature.parseVersion(from: instance.version)
+        var detectedApiVersions: InstanceV2.APIVersions? = nil
 
         // Store API versions if this is an InstanceV2
         if let instanceV2 = instance as? InstanceV2 {
-            self.apiVersions = instanceV2.apiVersions
+            detectedApiVersions = instanceV2.apiVersions
             if debugInstance {
                 print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
                 if let apiVersions = instanceV2.apiVersions {
@@ -481,9 +531,9 @@ extension TootClient {
         } else {
             // Fall back to NodeInfo if InstanceV2 is not available
             if let nodeInfo = await getNodeInfoIfAvailable() {
-                self.flavour = nodeInfo.flavour
-                self.versionString = nodeInfo.software.version
-                self.version = TootFeature.parseVersion(from: nodeInfo.software.version)
+                detectedFlavour = nodeInfo.flavour
+                detectedVersionString = nodeInfo.software.version
+                detectedVersion = TootFeature.parseVersion(from: nodeInfo.software.version)
                 if debugInstance {
                     print("🎨 Detected fediverse instance flavour: \(nodeInfo.flavour), version: \(nodeInfo.software.version)")
                 }
@@ -495,8 +545,16 @@ extension TootClient {
             }
         }
 
+        // Create the new server configuration
+        self.serverConfiguration = ServerConfiguration(
+            flavour: detectedFlavour,
+            version: detectedVersion,
+            versionString: detectedVersionString,
+            apiVersions: detectedApiVersions
+        )
+
         // Set the encoder userInfo after flavour has been determined
-        encoder.userInfo[.tootSDKFlavour] = flavour
+        encoder.userInfo[.tootSDKFlavour] = serverConfiguration.flavour
     }
 
     private func getNodeInfoIfAvailable() async -> NodeInfo? {
