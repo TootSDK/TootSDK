@@ -25,7 +25,8 @@ final class WebPushMessageEncryptionTests: XCTestCase {
             privateKey: privateKey,
             serverPublicKey: serverPublicKey,
             auth: auth,
-            salt: salt
+            salt: salt,
+            encoding: .aesgcm
         )
         let decryptedMessage = try XCTUnwrap(String(data: decryptedMessageData, encoding: .utf8))
         XCTAssertEqual(decryptedMessage, "I am the walrus")
@@ -52,7 +53,8 @@ final class WebPushMessageEncryptionTests: XCTestCase {
             privateKey: privateKey,
             serverPublicKey: serverPublicKey,
             auth: auth,
-            salt: salt
+            salt: salt,
+            encoding: .aesgcm
         )
         XCTAssertEqual(pushNotification.accessToken, "c43ecb5528e95f52529ec5fcf03e02966bce3602ff0017bea98a83136df70485")
         XCTAssertEqual(pushNotification.body, "Test")
@@ -72,6 +74,24 @@ final class WebPushMessageEncryptionTests: XCTestCase {
         let keys = PushSubscriptionParams.Keys(encryptionKeys)
         XCTAssertEqual(keys.p256dh, "BCEkBjzL8Z3C-oi2Q7oE5t2Np-p7osjGLg93qUP0wvqRT21EEWyf0cQDQcakQMqz4hQKYOQ3il2nNZct4HgAUQU")
         XCTAssertEqual(keys.auth, urlSafeBase64EncodedAuth)
+    }
+
+    func testDecryptAES128GCM() throws {
+        let encryptedMessage = try decode("DGv6ra1nlYgDCS1FRnbzlwAAEABBBP4z9KsN6nGRTbVYI_c7VJSPQTBtkgcy27mlmlMoZIIgDll6e3vCYLocInmYWAmS6TlzAC8wEqKK6PBru3jl7A_yl95bQpu6cVPTpK4Mqgkf1CXztLVBSt2Ks3oZwbuwXPXLWyouBWLVWGNWQexSgSxsj_Qulcy4a-fN")
+        let privateKeyData = try decode("q1dXpw3UpT5VOmu_cf_v6ih07Aems3njxI-JWgLcM94")
+        let privateKey = try P256.KeyAgreement.PrivateKey(rawRepresentation: privateKeyData)
+        let auth = try decode("BTBZMqHH6r4Tts7J_aSIgg")
+
+        let decryptedMessageData = try WebPushMessageEncryption.decrypt(
+            encryptedMessage,
+            privateKey: privateKey,
+            serverPublicKey: nil,
+            auth: auth,
+            salt: nil,
+            encoding: .aes128gcm
+        )
+        let decryptedMessage = try XCTUnwrap(String(data: decryptedMessageData, encoding: .utf8))
+        XCTAssertEqual(decryptedMessage, "When I grow up, I want to be a watermelon")
     }
 
     private func decode(_ base64UrlEncoded: String) throws -> Data {
