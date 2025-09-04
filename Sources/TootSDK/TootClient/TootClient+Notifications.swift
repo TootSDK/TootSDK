@@ -156,6 +156,9 @@ extension TootFeature {
 
     /// Ability to specify policy for push notifications.
     public static let pushSubscriptionsPolicy = TootFeature(supportedFlavours: [.mastodon, .goToSocial])
+
+    /// Ability to specify whether to use standardized webpush (RFC8030+RFC8291+RFC8292) or legacy webpush (unpublished version, 4th draft of RFC8291 and 1st draft of RFC8292).
+    public static let pushSubscriptionsStandard = TootFeature(requirements: [.from(.mastodon, displayVersion: "4.4.0")])
 }
 
 extension TootClient {
@@ -185,6 +188,9 @@ extension TootClient {
         queryParameters.append(.init(name: "subscription[endpoint]", value: params.subscription.endpoint))
         queryParameters.append(.init(name: "subscription[keys][p256dh]", value: params.subscription.keys.p256dh))
         queryParameters.append(.init(name: "subscription[keys][auth]", value: params.subscription.keys.auth))
+        if let standard = params.subscription.standard {
+            queryParameters.append(.init(name: "subscription[standard]", value: String(standard).lowercased()))
+        }
         queryParameters.append(contentsOf: createQuery(from: params.data))
         return queryParameters
     }
