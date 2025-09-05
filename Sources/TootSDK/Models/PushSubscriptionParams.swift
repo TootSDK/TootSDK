@@ -11,14 +11,17 @@ public struct PushSubscriptionParams: Codable, Sendable {
     public var data: SubscriptionData?
 
     public struct Subscription: Codable, Sendable {
-        public init(endpoint: String, keys: PushSubscriptionParams.Keys) {
+        public init(endpoint: String, keys: PushSubscriptionParams.Keys, standard: Bool? = nil) {
             self.endpoint = endpoint
             self.keys = keys
+            self.standard = standard
         }
 
         /// The endpoint URL that is called when a notification event occurs.
         public var endpoint: String
         public var keys: PushSubscriptionParams.Keys
+        /// Follow standardized webpush (RFC8030+RFC8291+RFC8292) ? Else follow legacy webpush (unpublished version, 4th draft of RFC8291 and 1st draft of RFC8292).
+        public var standard: Bool?
     }
 
     /// Encryption related data of push subscription.
