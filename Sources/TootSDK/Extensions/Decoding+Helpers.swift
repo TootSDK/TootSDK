@@ -43,4 +43,12 @@ extension KeyedDecodingContainerProtocol {
             throw error
         }
     }
+
+    func decodeIntOrString(forKey key: Key) throws -> String {
+        do {
+            return try decode(Int.self, forKey: key).description
+        } catch {
+            return try decode(String.self, forKey: key)
+        }
+    }
 }

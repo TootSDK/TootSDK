@@ -60,7 +60,7 @@ final class WebPushMessageEncryptionTests: XCTestCase {
         XCTAssertEqual(pushNotification.body, "Test")
         XCTAssertEqual(pushNotification.title, "Pipilo Test Account liked your comment on \"Test\"")
         XCTAssertEqual(pushNotification.icon, "")
-        XCTAssertEqual(pushNotification.notificationId, 522903)
+        XCTAssertEqual(pushNotification.notificationId, "522903")
         XCTAssertEqual(pushNotification.notificationType, .favourite)
         XCTAssertEqual(pushNotification.preferredLocale, "en-gb")
     }
@@ -92,6 +92,29 @@ final class WebPushMessageEncryptionTests: XCTestCase {
         )
         let decryptedMessage = try XCTUnwrap(String(data: decryptedMessageData, encoding: .utf8))
         XCTAssertEqual(decryptedMessage, "When I grow up, I want to be a watermelon")
+    }
+
+    func testDecryptAndDecodeAES128GCM() throws {
+        let encryptedMessageString = try XCTUnwrap(String(data: localContent("encrypted_gotosocial_push_notification", "base64"), encoding: .utf8))
+        let encryptedMessage = try decode(encryptedMessageString)
+        let privateKeyData = try decode("mTfSLs_BVddEVcDD4sSbnuK38OKTmjDyKXI4ripudKQ")
+        let privateKey = try P256.KeyAgreement.PrivateKey(rawRepresentation: privateKeyData)
+        let auth = try decode("NZD5cndZM7N4bEja-kP5sA")
+        let pushNotification = try WebPushMessageEncryption.decryptAndDecodePush(
+            encryptedMessage,
+            privateKey: privateKey,
+            serverPublicKey: nil,
+            auth: auth,
+            salt: nil,
+            encoding: .aes128gcm
+        )
+        XCTAssertEqual(pushNotification.accessToken, "ZJE5MTDMNZMTY2MXNS0ZMDVHLTKZM2QTNMMYMGYYNGYWOTLM")
+        XCTAssertEqual(pushNotification.body, "@pipilo@gotosocial.social Test 3")
+        XCTAssertEqual(pushNotification.title, "Pipilo Test Account mentioned you")
+        XCTAssertEqual(pushNotification.icon, "https://gotosocial.social/assets/default_avatars/GoToSocial_icon5.webp")
+        XCTAssertEqual(pushNotification.notificationId, "01K4DG8P2QR2DKXKYAAJHSD0R7")
+        XCTAssertEqual(pushNotification.notificationType, .mention)
+        XCTAssertEqual(pushNotification.preferredLocale, "en")
     }
 
     private func decode(_ base64UrlEncoded: String) throws -> Data {
