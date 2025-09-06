@@ -1,69 +1,78 @@
 {
-    "media_attachments": [],
-    "account": {
-        "id": "AQgIJ44Z2JZzCBG8Yq",
-        "followers_count": 21,
-        "acct": "tootsdk@iosdev.space",
-        "note": "<p>An open-source Swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨!<\/p><p>The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.<\/p>",
-        "emojis": [],
-        "avatar_static": "https:\/\/m.iamkonstantin.eu\/proxy\/McfW1fxlNnqMDOzXKTFLkJFeVIU\/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9hdmF0YXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsL2M2YmQwYjg3M2NiMzNkZDMuanBlZw\/c6bd0b873cb33dd3.jpeg",
-        "created_at": "2022-12-17T00:40:25.000Z",
-        "url": "https:\/\/iosdev.space\/@tootsdk",
-        "statuses_count": 2,
-        "following_count": 2,
-        "fields": [{
-            "name": "GitHub",
-            "value": "<a href=\"https:\/\/github.com\/TootSDK\/TootSDK\">https:\/\/github.com\/TootSDK\/TootSDK<\/a>"
-        }, {
-            "name": "Maintainer",
-            "value": "<a href=\"https:\/\/m.iamkonstantin.eu\/Konstantin\">https:\/\/m.iamkonstantin.eu\/Konstantin<\/a>"
-        }, {
-            "name": "Maintainer",
-            "value": "<a href=\"https:\/\/social.davidgarywood.com\/@davidgarywood\">https:\/\/social.davidgarywood.com\/@davidgarywood<\/a>"
-        }],
-        "avatar": "https:\/\/m.iamkonstantin.eu\/proxy\/McfW1fxlNnqMDOzXKTFLkJFeVIU\/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9hdmF0YXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsL2M2YmQwYjg3M2NiMzNkZDMuanBlZw\/c6bd0b873cb33dd3.jpeg",
-        "header": "https:\/\/m.iamkonstantin.eu\/proxy\/1XmBkz01Wum4X7O7zS69QvFB4Ro\/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9oZWFkZXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsLzVlM2FkNmYzNWIwNzFjMDYuanBlZw\/5e3ad6f35b071c06.jpeg",
-        "display_name": "TootSDK",
-        "locked": false,
-        "username": "tootsdk",
-        "source": {
-            "fields": [],
-            "sensitive": false,
-            "note": ""
-        },
-        "bot": false,
-        "header_static": "https:\/\/m.iamkonstantin.eu\/proxy\/1XmBkz01Wum4X7O7zS69QvFB4Ro\/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9oZWFkZXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsLzVlM2FkNmYzNWIwNzFjMDYuanBlZw\/5e3ad6f35b071c06.jpeg"
-    },
-    "url": "https:\/\/iosdev.space\/@tootsdk\/109526243546860722",
-    "tags": [{
-        "name": "swift",
-        "url": "https:\/\/m.iamkonstantin.eu\/tag\/swift"
-    }],
-    "spoiler_text": "",
-    "sensitive": false,
-    "replies_count": 0,
+  "media_attachments": [],
+  "account": {
+    "id": "AQgIJ44Z2JZzCBG8Yq",
+    "followers_count": 21,
+    "acct": "tootsdk@iosdev.space",
+    "note": "<p>An open-source Swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨!</p><p>The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.</p>",
     "emojis": [],
-    "muted": false,
-    "mentions": [{
-        "username": "konstantin",
-        "id": "APEilAvuVZZU5LVFCa",
-        "url": "https:\/\/m.iamkonstantin.eu\/users\/konstantin",
-        "acct": "konstantin"
-    }, {
-        "username": "davidgarywood",
-        "id": "APEkyD6VWs1IFs2qeG",
-        "url": "https:\/\/social.davidgarywood.com\/@davidgarywood",
-        "acct": "davidgarywood@social.davidgarywood.com"
-    }],
-    "visibility": "unlisted",
-    "uri": "https:\/\/iosdev.space\/users\/tootsdk\/statuses\/109526243546860722",
-    "id": "AQgIdalRCRfsNV6KzA",
-    "reblogs_count": 5,
-    "favourited": true,
-    "reblogged": true,
-    "created_at": "2022-12-17T00:44:07.000Z",
-    "pinned": false,
-    "favourites_count": 1,
-    "bookmarked": false,
-    "content": "<p>Hey fellow <a href=\"https:\/\/iosdev.space\/tags\/Swift\" rel=\"tag\">#<span>Swift<\/span><\/a> devs 👋!<\/p><p>As some of you may know, <span class=\"h-card\"><a href=\"https:\/\/m.iamkonstantin.eu\/users\/konstantin\" class=\"u-url mention\">@<span>konstantin<\/span><\/a><\/span> and <span class=\"h-card\"><a href=\"https:\/\/social.davidgarywood.com\/@davidgarywood\" class=\"u-url mention\">@<span>davidgarywood<\/span><\/a><\/span> have been working on an open-source swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨!<\/p><p>The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.<\/p>"
+    "avatar_static": "https://m.iamkonstantin.eu/proxy/McfW1fxlNnqMDOzXKTFLkJFeVIU/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9hdmF0YXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsL2M2YmQwYjg3M2NiMzNkZDMuanBlZw/c6bd0b873cb33dd3.jpeg",
+    "created_at": "2022-12-17T00:40:25.000Z",
+    "url": "https://iosdev.space/@tootsdk",
+    "statuses_count": 2,
+    "following_count": 2,
+    "fields": [
+      {
+        "name": "GitHub",
+        "value": "<a href=\"https://github.com/TootSDK/TootSDK\">https://github.com/TootSDK/TootSDK</a>"
+      },
+      {
+        "name": "Maintainer",
+        "value": "<a href=\"https://m.iamkonstantin.eu/Konstantin\">https://m.iamkonstantin.eu/Konstantin</a>"
+      },
+      {
+        "name": "Maintainer",
+        "value": "<a href=\"https://social.davidgarywood.com/@davidgarywood\">https://social.davidgarywood.com/@davidgarywood</a>"
+      }
+    ],
+    "avatar": "https://m.iamkonstantin.eu/proxy/McfW1fxlNnqMDOzXKTFLkJFeVIU/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9hdmF0YXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsL2M2YmQwYjg3M2NiMzNkZDMuanBlZw/c6bd0b873cb33dd3.jpeg",
+    "header": "https://m.iamkonstantin.eu/proxy/1XmBkz01Wum4X7O7zS69QvFB4Ro/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9oZWFkZXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsLzVlM2FkNmYzNWIwNzFjMDYuanBlZw/5e3ad6f35b071c06.jpeg",
+    "display_name": "TootSDK",
+    "locked": false,
+    "username": "tootsdk",
+    "source": {
+      "fields": [],
+      "sensitive": false,
+      "note": ""
+    },
+    "bot": false,
+    "header_static": "https://m.iamkonstantin.eu/proxy/1XmBkz01Wum4X7O7zS69QvFB4Ro/aHR0cHM6Ly9jZG4ubWFzdG8uaG9zdC9pb3NkZXZzcGFjZS9hY2NvdW50cy9oZWFkZXJzLzEwOS81MjQvOTk5LzMwNy81OTMvMzgyL29yaWdpbmFsLzVlM2FkNmYzNWIwNzFjMDYuanBlZw/5e3ad6f35b071c06.jpeg"
+  },
+  "url": "https://iosdev.space/@tootsdk/109526243546860722",
+  "tags": [
+    {
+      "name": "swift",
+      "url": "https://m.iamkonstantin.eu/tag/swift"
+    }
+  ],
+  "spoiler_text": "",
+  "sensitive": false,
+  "replies_count": 0,
+  "emojis": [],
+  "muted": false,
+  "mentions": [
+    {
+      "username": "konstantin",
+      "id": "APEilAvuVZZU5LVFCa",
+      "url": "https://m.iamkonstantin.eu/users/konstantin",
+      "acct": "konstantin"
+    },
+    {
+      "username": "davidgarywood",
+      "id": "APEkyD6VWs1IFs2qeG",
+      "url": "https://social.davidgarywood.com/@davidgarywood",
+      "acct": "davidgarywood@social.davidgarywood.com"
+    }
+  ],
+  "visibility": "unlisted",
+  "uri": "https://iosdev.space/users/tootsdk/statuses/109526243546860722",
+  "id": "AQgIdalRCRfsNV6KzA",
+  "reblogs_count": 5,
+  "favourited": true,
+  "reblogged": true,
+  "created_at": "2022-12-17T00:44:07.000Z",
+  "pinned": false,
+  "favourites_count": 1,
+  "bookmarked": false,
+  "content": "<p>Hey fellow <a href=\"https://iosdev.space/tags/Swift\" rel=\"tag\">#<span>Swift</span></a> devs 👋!</p><p>As some of you may know, <span class=\"h-card\"><a href=\"https://m.iamkonstantin.eu/users/konstantin\" class=\"u-url mention\">@<span>konstantin</span></a></span> and <span class=\"h-card\"><a href=\"https://social.davidgarywood.com/@davidgarywood\" class=\"u-url mention\">@<span>davidgarywood</span></a></span> have been working on an open-source swift package library designed to help other devs make apps that interact with the fediverse (like Mastodon, Pleroma, Pixelfed etc). We call it TootSDK ✨!</p><p>The main purpose of TootSDK is to take care of the “boring” and complicated parts of the Mastodon API, so you can focus on crafting the actual app experience.</p>"
 }

@@ -1,35 +1,29 @@
 {
-  "acct" : "technicat",
-  "avatar_static" : "https:\/\/pxscdn.com\/cache\/avatars\/569707951076919035\/avatar_rqjn3l2.jpg",
-  "locked" : false,
-  "statuses_count" : 3,
-  "bot" : false,
-  "following_count" : 1,
-  "url" : "https:\/\/pixelfed.social\/technicat",
-  "source" : {
-    "language" : "en",
-    "fields" : [
-
-    ],
-    "privacy" : "public",
-    "sensitive" : false,
-    "note" : "Bio"
+  "acct": "technicat",
+  "avatar_static": "https://pxscdn.com/cache/avatars/569707951076919035/avatar_rqjn3l2.jpg",
+  "locked": false,
+  "statuses_count": 3,
+  "bot": false,
+  "following_count": 1,
+  "url": "https://pixelfed.social/technicat",
+  "source": {
+    "language": "en",
+    "fields": [],
+    "privacy": "public",
+    "sensitive": false,
+    "note": "Bio"
   },
-  "emojis" : [
-
-  ],
-  "discoverable" : true,
-  "last_status_at" : null,
-  "id" : "569707951076919035",
-  "header_static" : "https:\/\/pixelfed.social\/storage\/headers\/missing.png",
-  "followers_count" : 2,
-  "note" : "Bio",
-  "avatar" : "https:\/\/pxscdn.com\/cache\/avatars\/569707951076919035\/avatar_rqjn3l2.jpg",
-  "display_name" : "Technicat",
-  "header" : "https:\/\/pixelfed.social\/storage\/headers\/missing.png",
-  "created_at" : "2023-06-01T02:16:00.000000Z",
-  "fields" : [
-
-  ],
-  "username" : "technicat"
+  "emojis": [],
+  "discoverable": true,
+  "last_status_at": null,
+  "id": "569707951076919035",
+  "header_static": "https://pixelfed.social/storage/headers/missing.png",
+  "followers_count": 2,
+  "note": "Bio",
+  "avatar": "https://pxscdn.com/cache/avatars/569707951076919035/avatar_rqjn3l2.jpg",
+  "display_name": "Technicat",
+  "header": "https://pixelfed.social/storage/headers/missing.png",
+  "created_at": "2023-06-01T02:16:00.000000Z",
+  "fields": [],
+  "username": "technicat"
 }

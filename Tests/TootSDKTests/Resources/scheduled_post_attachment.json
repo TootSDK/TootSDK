@@ -1,49 +1,46 @@
 {
-    "id" : "1031",
-    "scheduled_at" : "2023-08-30T23:20:00.000Z",
-    "params" : {
-      "scheduled_at" : null,
-      "in_reply_to_id" : null,
-      "media_ids" : [
-        "110884868918054337"
-      ],
-      "application_id" : 91595,
-      "poll" : null,
-      "spoiler_text" : null,
-      "idempotency" : null,
-      "allowed_mentions" : null,
-      "text" : "Testing scheduled attachment",
-      "language" : "en",
-      "visibility" : "private",
-      "with_rate_limit" : false,
-      "sensitive" : null
-    },
-    "media_attachments" : [
-      {
-        "preview_url" : "https:\/\/media.universeodon.com\/media_attachments\/files\/110\/884\/868\/918\/054\/337\/small\/93d235b25788c9fd.jpeg",
-        "text_url" : null,
-        "id" : "110884868918054337",
-        "blurhash" : "UaFrnr00xZxu?cD%s+xaE3%1RjRkE3%1RjRk",
-        "preview_remote_url" : null,
-        "meta" : {
-          "original" : {
-            "size" : "3000x2002",
-            "aspect" : 1.4985014985014986,
-            "width" : 3000,
-            "height" : 2002
-          },
-          "small" : {
-            "size" : "587x392",
-            "aspect" : 1.4974489795918366,
-            "width" : 587,
-            "height" : 392
-          }
+  "id": "1031",
+  "scheduled_at": "2023-08-30T23:20:00.000Z",
+  "params": {
+    "scheduled_at": null,
+    "in_reply_to_id": null,
+    "media_ids": ["110884868918054337"],
+    "application_id": 91595,
+    "poll": null,
+    "spoiler_text": null,
+    "idempotency": null,
+    "allowed_mentions": null,
+    "text": "Testing scheduled attachment",
+    "language": "en",
+    "visibility": "private",
+    "with_rate_limit": false,
+    "sensitive": null
+  },
+  "media_attachments": [
+    {
+      "preview_url": "https://media.universeodon.com/media_attachments/files/110/884/868/918/054/337/small/93d235b25788c9fd.jpeg",
+      "text_url": null,
+      "id": "110884868918054337",
+      "blurhash": "UaFrnr00xZxu?cD%s+xaE3%1RjRkE3%1RjRk",
+      "preview_remote_url": null,
+      "meta": {
+        "original": {
+          "size": "3000x2002",
+          "aspect": 1.4985014985014986,
+          "width": 3000,
+          "height": 2002
         },
-        "type" : "image",
-        "remote_url" : null,
-        "description" : null,
-        "url" : "https:\/\/media.universeodon.com\/media_attachments\/files\/110\/884\/868\/918\/054\/337\/original\/93d235b25788c9fd.jpeg"
-      }
-    ]
-  }
-
+        "small": {
+          "size": "587x392",
+          "aspect": 1.4974489795918366,
+          "width": 587,
+          "height": 392
+        }
+      },
+      "type": "image",
+      "remote_url": null,
+      "description": null,
+      "url": "https://media.universeodon.com/media_attachments/files/110/884/868/918/054/337/original/93d235b25788c9fd.jpeg"
+    }
+  ]
+}

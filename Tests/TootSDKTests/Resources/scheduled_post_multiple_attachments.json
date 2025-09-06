@@ -1,72 +1,69 @@
 {
-    "id": "104394",
-    "scheduled_at" : "2024-08-30T23:20:00.000Z",
-    "params": {
-        "scheduled_at" : null,
-        "in_reply_to_id" : null,
-        "media_ids" : [
-            "111892073708535727",
-            "111892073823106369"
-        ],
-        "application_id" : 91595,
-        "poll" : null,
-        "spoiler_text" : null,
-        "idempotency" : null,
-        "allowed_mentions" : null,
-        "text" : "Testing scheduled attachments",
-        "language" : "en",
-        "visibility" : "private",
-        "with_rate_limit" : false,
-        "sensitive" : null
-    },
-    "media_attachments": [
-        {
-            "id": "111892073823106369",
-            "blurhash": "UdFPHT_4%g%M%MM{RjofM{Rjofj]xutRj[Ri",
-            "meta": {
-                "small": {
-                    "size": "392x588",
-                    "height": 588,
-                    "width": 392,
-                    "aspect": 0.6666666666666666
-                },
-                "original": {
-                    "width": 1668,
-                    "aspect": 0.6672,
-                    "size": "1668x2500",
-                    "height": 2500
-                }
-            },
-            "type": "image",
-            "description": "Second Image",
-            "remote_url" : null,
-            "preview_remote_url" : null,
-            "preview_url": "https:\/\/files.mastodon.social/media_attachments\/files\/111\/892\/073\/823\/106\/369\/small\/3e200069e30773df.jpeg",
-            "url": "https:\/\/files.mastodon.social\/media_attachments\/files\/111\/892\/073\/823\/106\/369\/original\/3e200069e30773df.jpeg"
+  "id": "104394",
+  "scheduled_at": "2024-08-30T23:20:00.000Z",
+  "params": {
+    "scheduled_at": null,
+    "in_reply_to_id": null,
+    "media_ids": ["111892073708535727", "111892073823106369"],
+    "application_id": 91595,
+    "poll": null,
+    "spoiler_text": null,
+    "idempotency": null,
+    "allowed_mentions": null,
+    "text": "Testing scheduled attachments",
+    "language": "en",
+    "visibility": "private",
+    "with_rate_limit": false,
+    "sensitive": null
+  },
+  "media_attachments": [
+    {
+      "id": "111892073823106369",
+      "blurhash": "UdFPHT_4%g%M%MM{RjofM{Rjofj]xutRj[Ri",
+      "meta": {
+        "small": {
+          "size": "392x588",
+          "height": 588,
+          "width": 392,
+          "aspect": 0.6666666666666666
         },
-        {
-            "id": "111892073708535727",
-            "blurhash": "UaFrnr00xZxu?cD%s+xaE3%1RjRkE3%1RjRk",
-            "meta": {
-                "small": {
-                    "height": 392,
-                    "size": "587x392",
-                    "width": 587,
-                    "aspect": 1.4974489795918366
-                },
-                "original": {
-                    "aspect": 1.4985014985014986,
-                    "size": "3000x2002",
-                    "width": 3000,
-                    "height": 2002
-                }
-            },
-            "type": "image",
-            "description": "First Image",
-            "remote_url" : null,
-            "preview_remote_url" : null,
-            "preview_url": "https:\/\/files.mastodon.social\/media_attachments\/files\/111\/892\/073\/708\/535\/727\/small\/9127e8fcf18dec4f.jpeg",
-            "url": "https:\/\/files.mastodon.social\/media_attachments\/files\/111\/892\/073\/708\/535\/727\/original\/9127e8fcf18dec4f.jpeg"
+        "original": {
+          "width": 1668,
+          "aspect": 0.6672,
+          "size": "1668x2500",
+          "height": 2500
         }
-    ]
+      },
+      "type": "image",
+      "description": "Second Image",
+      "remote_url": null,
+      "preview_remote_url": null,
+      "preview_url": "https://files.mastodon.social/media_attachments/files/111/892/073/823/106/369/small/3e200069e30773df.jpeg",
+      "url": "https://files.mastodon.social/media_attachments/files/111/892/073/823/106/369/original/3e200069e30773df.jpeg"
+    },
+    {
+      "id": "111892073708535727",
+      "blurhash": "UaFrnr00xZxu?cD%s+xaE3%1RjRkE3%1RjRk",
+      "meta": {
+        "small": {
+          "height": 392,
+          "size": "587x392",
+          "width": 587,
+          "aspect": 1.4974489795918366
+        },
+        "original": {
+          "aspect": 1.4985014985014986,
+          "size": "3000x2002",
+          "width": 3000,
+          "height": 2002
+        }
+      },
+      "type": "image",
+      "description": "First Image",
+      "remote_url": null,
+      "preview_remote_url": null,
+      "preview_url": "https://files.mastodon.social/media_attachments/files/111/892/073/708/535/727/small/9127e8fcf18dec4f.jpeg",
+      "url": "https://files.mastodon.social/media_attachments/files/111/892/073/708/535/727/original/9127e8fcf18dec4f.jpeg"
+    }
+  ]
 }
