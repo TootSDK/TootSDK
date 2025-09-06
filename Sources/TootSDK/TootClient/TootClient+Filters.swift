@@ -122,4 +122,9 @@ extension TootFeature {
     /// Ability to  view/edit/create filters.
     ///
     public static let filtersV2 = TootFeature(supportedFlavours: [.mastodon, .goToSocial])
+
+    /// Ability to use `blur` value on `filter_action` attribute of filters.
+    public static let filterBlurAction = TootFeature(requirements: [
+        .from(.mastodon, version: 5)
+    ])
 }
