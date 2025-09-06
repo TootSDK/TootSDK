@@ -77,7 +77,9 @@ final class WebPushMessageEncryptionTests: XCTestCase {
     }
 
     func testDecryptAES128GCM() throws {
-        let encryptedMessage = try decode("DGv6ra1nlYgDCS1FRnbzlwAAEABBBP4z9KsN6nGRTbVYI_c7VJSPQTBtkgcy27mlmlMoZIIgDll6e3vCYLocInmYWAmS6TlzAC8wEqKK6PBru3jl7A_yl95bQpu6cVPTpK4Mqgkf1CXztLVBSt2Ks3oZwbuwXPXLWyouBWLVWGNWQexSgSxsj_Qulcy4a-fN")
+        let encryptedMessage = try decode(
+            "DGv6ra1nlYgDCS1FRnbzlwAAEABBBP4z9KsN6nGRTbVYI_c7VJSPQTBtkgcy27mlmlMoZIIgDll6e3vCYLocInmYWAmS6TlzAC8wEqKK6PBru3jl7A_yl95bQpu6cVPTpK4Mqgkf1CXztLVBSt2Ks3oZwbuwXPXLWyouBWLVWGNWQexSgSxsj_Qulcy4a-fN"
+        )
         let privateKeyData = try decode("q1dXpw3UpT5VOmu_cf_v6ih07Aems3njxI-JWgLcM94")
         let privateKey = try P256.KeyAgreement.PrivateKey(rawRepresentation: privateKeyData)
         let auth = try decode("BTBZMqHH6r4Tts7J_aSIgg")
