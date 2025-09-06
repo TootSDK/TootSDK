@@ -512,36 +512,22 @@ extension TootClient {
 extension TootClient {
     /// Uses the currently available credentials to connect to an instance and detect the most compatible server flavour.
     public func connect() async throws {
-        // Try to get InstanceV2 first as it has API version information
+        let nodeInfo = await getNodeInfoIfAvailable()
         let instance = try await getInstanceInfo()
-        var detectedFlavour = instance.flavour
-        var detectedVersionString = instance.version
-        var detectedVersion = TootFeature.parseVersion(from: instance.version)
+        // Prefer to get flavour and software from node info which is more reliable (Unable to detect GoToSocial using instance version)
+        let detectedFlavour = nodeInfo?.flavour ?? instance.flavour
+        let detectedVersionString = nodeInfo?.software.version ?? instance.version
+        let detectedVersion = TootFeature.parseVersion(from: detectedVersionString)
         var detectedApiVersions: InstanceV2.APIVersions? = nil
 
-        // Store API versions if this is an InstanceV2
         if let instanceV2 = instance as? InstanceV2 {
             detectedApiVersions = instanceV2.apiVersions
-            if debugInstance {
-                print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
-                if let apiVersions = instanceV2.apiVersions {
-                    print("🎨 Detected API versions: \(apiVersions)")
-                }
-            }
-        } else {
-            // Fall back to NodeInfo if InstanceV2 is not available
-            if let nodeInfo = await getNodeInfoIfAvailable() {
-                detectedFlavour = nodeInfo.flavour
-                detectedVersionString = nodeInfo.software.version
-                detectedVersion = TootFeature.parseVersion(from: nodeInfo.software.version)
-                if debugInstance {
-                    print("🎨 Detected fediverse instance flavour: \(nodeInfo.flavour), version: \(nodeInfo.software.version)")
-                }
-            } else {
-                // Use the instance info we already have
-                if debugInstance {
-                    print("🎨 Detected fediverse instance flavour: \(instance.flavour), version: \(instance.version)")
-                }
+        }
+
+        if debugInstance {
+            print("🎨 Detected fediverse instance flavour: \(detectedFlavour), version: \(detectedVersionString)")
+            if let detectedApiVersions {
+                print("🎨 Detected API versions: \(detectedApiVersions)")
             }
         }
 
