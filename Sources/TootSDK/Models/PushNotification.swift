@@ -18,9 +18,20 @@ public struct PushNotification: Codable {
     /// Avatar URL of user who caused the notification.
     public let icon: String
     /// The notification id.
-    public let notificationId: Int
+    public let notificationId: String
     /// The type of notification.
     public let notificationType: TootNotification.NotificationType
     /// The locale in which the user prefers to see notification.
     public let preferredLocale: String
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.accessToken = try container.decode(String.self, forKey: .accessToken)
+        self.body = try container.decode(String.self, forKey: .body)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.icon = try container.decode(String.self, forKey: .icon)
+        self.notificationId = try container.decodeIntOrString(forKey: .notificationId)
+        self.notificationType = try container.decode(TootNotification.NotificationType.self, forKey: .notificationType)
+        self.preferredLocale = try container.decode(String.self, forKey: .preferredLocale)
+    }
 }
