@@ -11,15 +11,7 @@ build: ## Build the library
 	@swift build
 
 checklint: ## Checks the project for linting errors, used by the CI
-	@swift-format lint -s --configuration ./.swift-format --recursive ./Sources
+	@swift format lint --strict --configuration ./.swift-format -r .
 
 lint: ## Applies all auto-correctable lint issues and reformats all source files
-	@swift-format format -i --configuration ./.swift-format --recursive ./Sources
-	@swift-format format -i --configuration ./.swift-format --recursive ./Tests
-	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/swiftyadmin/Sources
-	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/tootsdk-release/Sources
-	@swift-format format -i --configuration ./.swift-format --recursive ./Examples/TootSDKExample
-	@swift-format lint -p --configuration ./.swift-format --recursive ./Sources
-	@swift-format lint -p --configuration ./.swift-format --recursive ./Tests
-	@swift-format lint -p --configuration ./.swift-format --recursive ./Examples/swiftyadmin/Sources
-	@swift-format lint -p --configuration ./.swift-format --recursive ./Examples/tootsdk-release/Sources
+	@swift format --configuration ./.swift-format -r -i .

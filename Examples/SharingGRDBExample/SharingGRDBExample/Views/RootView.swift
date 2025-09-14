@@ -11,10 +11,10 @@ import SwiftUI
 import TootSDK
 
 struct RootView: View {
-   
+
     @FetchOne
     private var currentCredential: ServerCredential?
-    
+
     @FetchAll
     private var posts: [DisplayPost]
 
@@ -26,7 +26,7 @@ struct RootView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let _ = currentCredential {
+                if currentCredential != nil {
                     // Authenticated view showing posts
                     authenticatedView
                 } else {
@@ -36,7 +36,7 @@ struct RootView: View {
             }
             .navigationTitle("TootSDK Example")
             .toolbar {
-                if let _ = currentCredential {
+                if currentCredential != nil {
                     ToolbarItem(placement: .primaryAction) {
                         Button("Sign Out") {
                             signOut()
@@ -143,7 +143,7 @@ struct RootView: View {
                 host: url.absoluteString,
                 accessToken: accessToken
             )
-           
+
             @Dependency(\.defaultDatabase) var database
             try await database.write { db in
                 try ServerCredential.insert {
@@ -152,7 +152,7 @@ struct RootView: View {
                 .execute(db)
             }
             await fetchPosts()
-            
+
         } catch ASWebAuthenticationSessionError.canceledLogin {
             print("User cancelled, no error message needed")
             return
@@ -204,11 +204,11 @@ struct RootView: View {
                     url: post.url ?? post.uri
                 )
             }
- 
+
             @Dependency(\.defaultDatabase) var database
             try await database.write { db in
                 try DisplayPost.delete().execute(db)
-                
+
                 try DisplayPost.upsert {
                     newPosts
                 }
@@ -220,8 +220,7 @@ struct RootView: View {
     }
 
     private func signOut() {
-        do
-        {
+        do {
             // Clear all credentials and posts
             @Dependency(\.defaultDatabase) var database
             try database.write { db in
@@ -231,9 +230,7 @@ struct RootView: View {
             // Reset state
             client = nil
             serverURL = ""
-        }
-        catch
-        {
+        } catch {
             print("Error signing out: \(error)")
         }
     }

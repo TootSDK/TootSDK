@@ -91,10 +91,11 @@ TootSDK is a Swift Package Manager library that provides a unified SDK for inter
 
 ### Swift Format Configuration
 
-- Uses swift-format with custom `.swift-format` configuration
+- Uses `swift format` with custom `.swift-format` configuration
 - 4-space indentation, 150 character line length
 - File-scoped declaration privacy preferred
 - Specific formatting rules defined in `.swift-format`
+- Use `make lint` to apply the desired format after every change
 
 ### Naming Conventions
 

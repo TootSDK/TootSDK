@@ -2,30 +2,33 @@
   "fileScopedDeclarationPrivacy": {
     "accessLevel": "private"
   },
+  "indentConditionalCompilationBlocks": true,
+  "indentSwitchCaseLabels": false,
   "indentation": {
     "spaces": 4
   },
-  "indentConditionalCompilationBlocks": true,
-  "indentSwitchCaseLabels": false,
   "lineBreakAroundMultilineExpressionChainComponents": false,
   "lineBreakBeforeControlFlowKeywords": false,
   "lineBreakBeforeEachArgument": false,
   "lineBreakBeforeEachGenericRequirement": false,
+  "lineBreakBetweenDeclarationAttributes": false,
   "lineLength": 150,
   "maximumBlankLines": 1,
   "multiElementCollectionTrailingCommas": true,
   "noAssignmentInExpressions": {
-    "allowedFunctions": [
-      "XCTAssertNoThrow"
-    ]
+    "allowedFunctions": ["XCTAssertNoThrow"]
   },
   "prioritizeKeepingFunctionOutputTogether": false,
+  "reflowMultilineStringLiterals": {
+    "never": {}
+  },
   "respectsExistingLineBreaks": true,
   "rules": {
     "AllPublicDeclarationsHaveDocumentation": false,
     "AlwaysUseLiteralForEmptyCollectionInit": false,
     "AlwaysUseLowerCamelCase": true,
     "AmbiguousTrailingClosureOverload": true,
+    "AvoidRetroactiveConformances": true,
     "BeginDocumentationCommentWithOneLineSummary": false,
     "DoNotUseSemicolons": true,
     "DontRepeatTypeInStaticProperties": true,
@@ -40,6 +43,7 @@
     "NoAssignmentInExpressions": true,
     "NoBlockComments": false,
     "NoCasesWithOnlyFallthrough": true,
+    "NoEmptyLinesOpeningClosingBraces": false,
     "NoEmptyTrailingClosureParentheses": true,
     "NoLabelsInCasePatterns": true,
     "NoLeadingUnderscores": false,
@@ -55,6 +59,7 @@
     "ReturnVoidInsteadOfEmptyTuple": true,
     "TypeNamesShouldBeCapitalized": true,
     "UseEarlyExits": false,
+    "UseExplicitNilCheckInConditions": true,
     "UseLetInEveryBoundCaseVariable": false,
     "UseShorthandTypeNames": true,
     "UseSingleLinePropertyGetter": true,
@@ -64,6 +69,7 @@
     "ValidateDocumentationComments": false
   },
   "spacesAroundRangeFormationOperators": false,
+  "spacesBeforeEndOfLineComments": 2,
   "tabWidth": 8,
   "version": 1
 }
