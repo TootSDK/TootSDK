@@ -1,6 +1,6 @@
 import Collections
 
-enum MultipartFormData: Equatable {
+enum MultipartFormData: Equatable, Sendable {
     typealias Keyed = OrderedDictionary<String, MultipartFormData>
 
     case single(MultipartPart)

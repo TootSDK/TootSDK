@@ -5,12 +5,11 @@ on:
     types: [published]
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      run: cd ./Examples/tootsdk-release && swift build -v
-    - name: Send post
-      run: ./Examples/tootsdk-release/.build/debug/tootsdk-release make-post -u ${{ secrets.TOOT_URL }} -t ${{ secrets.TOOT_TOKEN }}
+      - uses: actions/checkout@v5
+      - name: Build
+        run: cd ./Examples/tootsdk-release && swift build -v
+      - name: Send post
+        run: ./Examples/tootsdk-release/.build/debug/tootsdk-release make-post -u ${{ secrets.TOOT_URL }} -t ${{ secrets.TOOT_TOKEN }}
