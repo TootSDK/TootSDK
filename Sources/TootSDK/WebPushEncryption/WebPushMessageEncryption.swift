@@ -35,7 +35,7 @@ public enum WebPushMessageEncryption {
         serverPublicKey: P256.KeyAgreement.PublicKey?,
         auth: Data,
         salt: Data?,
-        encoding: ContentEncoding,
+        encoding: ContentEncoding
     ) throws -> PushNotification {
         let decryptedMessageData = try decrypt(
             encryptedMessage,
@@ -64,7 +64,7 @@ public enum WebPushMessageEncryption {
         serverPublicKey: P256.KeyAgreement.PublicKey?,
         auth: Data,
         salt: Data?,
-        encoding: ContentEncoding,
+        encoding: ContentEncoding
     ) throws -> Data {
         switch encoding {
         case .aesgcm:

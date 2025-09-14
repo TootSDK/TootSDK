@@ -180,7 +180,7 @@ extension InstanceV1 {
             config.urls = .init(streaming: self.urls?.streamingApi)
             v2Configuration = config
         } else if let urls {
-            v2Configuration = .init(urls: .init(streaming: self.urls?.streamingApi))
+            v2Configuration = .init(urls: .init(streaming: urls.streamingApi))
         } else {
             v2Configuration = nil
         }

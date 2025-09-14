@@ -54,8 +54,8 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "[TootSDK bug] HTTPRequestBuilder was used without setting a url."
         case .missingParameter(let parameterName):
             return "A required parameter is not provided: \(parameterName)."
-        case .invalidParameter(let parameterName):
-            return "A parameter has an illegal value: \(parameterName)."
+        case .invalidParameter(let parameterName, let reason):
+            return "Parameter \(parameterName) has an illegal value: \(reason)."
         case .unsupportedFlavour(let current, let required):
             return
                 "Operation not supported for server flavour \(current), compatible flavours are: \(required.map({"\($0)"}).joined(separator: ", "))."
