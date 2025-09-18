@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B5362E8A2E54C12F0075BBD2"
-               BuildableName = "SharingGRDBExample.app"
-               BlueprintName = "SharingGRDBExample"
-               ReferencedContainer = "container:SharingGRDBExample.xcodeproj">
+               BuildableName = "SQLiteDataExample.app"
+               BlueprintName = "SQLiteDataExample"
+               ReferencedContainer = "container:SQLiteDataExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -30,28 +30,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B5362E992E54C1300075BBD2"
-               BuildableName = "TootSDKExampleTests.xctest"
-               BlueprintName = "TootSDKExampleTests"
-               ReferencedContainer = "container:SharingGRDBExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B5362EA32E54C1300075BBD2"
-               BuildableName = "TootSDKExampleUITests.xctest"
-               BlueprintName = "TootSDKExampleUITests"
-               ReferencedContainer = "container:SharingGRDBExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -69,9 +47,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B5362E8A2E54C12F0075BBD2"
-            BuildableName = "SharingGRDBExample.app"
-            BlueprintName = "SharingGRDBExample"
-            ReferencedContainer = "container:SharingGRDBExample.xcodeproj">
+            BuildableName = "SQLiteDataExample.app"
+            BlueprintName = "SQLiteDataExample"
+            ReferencedContainer = "container:SQLiteDataExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -86,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B5362E8A2E54C12F0075BBD2"
-            BuildableName = "SharingGRDBExample.app"
-            BlueprintName = "SharingGRDBExample"
-            ReferencedContainer = "container:SharingGRDBExample.xcodeproj">
+            BuildableName = "SQLiteDataExample.app"
+            BlueprintName = "SQLiteDataExample"
+            ReferencedContainer = "container:SQLiteDataExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

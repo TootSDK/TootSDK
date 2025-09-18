@@ -5,7 +5,7 @@
 //  Created by Tim De Jong on 22/08/2025.
 //
 import Foundation
-import SharingGRDB
+import SQLiteData
 import OSLog
 
 private let logger = Logger(subsystem: "SharingGRDBExample", category: "Database")
