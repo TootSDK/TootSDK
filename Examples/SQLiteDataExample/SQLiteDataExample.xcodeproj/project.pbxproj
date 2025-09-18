@@ -7,19 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C85806B2E585D4700443C22 /* SharingGRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 1C85806A2E585D4700443C22 /* SharingGRDB */; };
-		1C85806D2E585D4700443C22 /* StructuredQueriesGRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 1C85806C2E585D4700443C22 /* StructuredQueriesGRDB */; };
+		1C3876B22E7C0CC8009F8E67 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 1C3876B12E7C0CC8009F8E67 /* Dependencies */; };
+		1C3876B42E7C0CC8009F8E67 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 1C3876B32E7C0CC8009F8E67 /* DependenciesMacros */; };
+		1C3876B92E7C0E2B009F8E67 /* SQLiteData in Frameworks */ = {isa = PBXBuildFile; productRef = 1C3876B82E7C0E2B009F8E67 /* SQLiteData */; };
 		B5362EB92E54C1790075BBD2 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B5362EB82E54C1790075BBD2 /* TootSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B5362E8B2E54C12F0075BBD2 /* SharingGRDBExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SharingGRDBExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5362E8B2E54C12F0075BBD2 /* SQLiteDataExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLiteDataExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B5362E8D2E54C12F0075BBD2 /* SharingGRDBExample */ = {
+		B5362E8D2E54C12F0075BBD2 /* SQLiteDataExample */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SharingGRDBExample;
+			path = SQLiteDataExample;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -29,19 +30,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C85806D2E585D4700443C22 /* StructuredQueriesGRDB in Frameworks */,
-				1C85806B2E585D4700443C22 /* SharingGRDB in Frameworks */,
 				B5362EB92E54C1790075BBD2 /* TootSDK in Frameworks */,
+				1C3876B22E7C0CC8009F8E67 /* Dependencies in Frameworks */,
+				1C3876B92E7C0E2B009F8E67 /* SQLiteData in Frameworks */,
+				1C3876B42E7C0CC8009F8E67 /* DependenciesMacros in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C3876B72E7C0E2B009F8E67 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B5362E822E54C12F0075BBD2 = {
 			isa = PBXGroup;
 			children = (
-				B5362E8D2E54C12F0075BBD2 /* SharingGRDBExample */,
+				B5362E8D2E54C12F0075BBD2 /* SQLiteDataExample */,
+				1C3876B72E7C0E2B009F8E67 /* Frameworks */,
 				B5362E8C2E54C12F0075BBD2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,7 +59,7 @@
 		B5362E8C2E54C12F0075BBD2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B5362E8B2E54C12F0075BBD2 /* SharingGRDBExample.app */,
+				B5362E8B2E54C12F0075BBD2 /* SQLiteDataExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,9 +67,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B5362E8A2E54C12F0075BBD2 /* SharingGRDBExample */ = {
+		B5362E8A2E54C12F0075BBD2 /* SQLiteDataExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B5362EAE2E54C1300075BBD2 /* Build configuration list for PBXNativeTarget "SharingGRDBExample" */;
+			buildConfigurationList = B5362EAE2E54C1300075BBD2 /* Build configuration list for PBXNativeTarget "SQLiteDataExample" */;
 			buildPhases = (
 				B5362E872E54C12F0075BBD2 /* Sources */,
 				B5362E882E54C12F0075BBD2 /* Frameworks */,
@@ -70,16 +80,17 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B5362E8D2E54C12F0075BBD2 /* SharingGRDBExample */,
+				B5362E8D2E54C12F0075BBD2 /* SQLiteDataExample */,
 			);
-			name = SharingGRDBExample;
+			name = SQLiteDataExample;
 			packageProductDependencies = (
 				B5362EB82E54C1790075BBD2 /* TootSDK */,
-				1C85806A2E585D4700443C22 /* SharingGRDB */,
-				1C85806C2E585D4700443C22 /* StructuredQueriesGRDB */,
+				1C3876B12E7C0CC8009F8E67 /* Dependencies */,
+				1C3876B32E7C0CC8009F8E67 /* DependenciesMacros */,
+				1C3876B82E7C0E2B009F8E67 /* SQLiteData */,
 			);
 			productName = TootSDKExample;
-			productReference = B5362E8B2E54C12F0075BBD2 /* SharingGRDBExample.app */;
+			productReference = B5362E8B2E54C12F0075BBD2 /* SQLiteDataExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -97,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B5362E862E54C12F0075BBD2 /* Build configuration list for PBXProject "SharingGRDBExample" */;
+			buildConfigurationList = B5362E862E54C12F0075BBD2 /* Build configuration list for PBXProject "SQLiteDataExample" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -108,14 +119,15 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				B5362EB72E54C1790075BBD2 /* XCRemoteSwiftPackageReference "TootSDK" */,
-				1C8580692E585D4700443C22 /* XCRemoteSwiftPackageReference "sharing-grdb" */,
+				1C4FDF7F2E7C0ADF004C95B1 /* XCRemoteSwiftPackageReference "sqlite-data" */,
+				1C3876B02E7C0CC8009F8E67 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B5362E8C2E54C12F0075BBD2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B5362E8A2E54C12F0075BBD2 /* SharingGRDBExample */,
+				B5362E8A2E54C12F0075BBD2 /* SQLiteDataExample */,
 			);
 		};
 /* End PBXProject section */
@@ -281,7 +293,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SharingGRDBExample/Info.plist;
+				INFOPLIST_FILE = SQLiteDataExample/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -297,6 +309,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.iamkonstantin.apps.TootSDKExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -339,7 +352,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SharingGRDBExample/Info.plist;
+				INFOPLIST_FILE = SQLiteDataExample/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -355,6 +368,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.iamkonstantin.apps.TootSDKExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -376,7 +390,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B5362E862E54C12F0075BBD2 /* Build configuration list for PBXProject "SharingGRDBExample" */ = {
+		B5362E862E54C12F0075BBD2 /* Build configuration list for PBXProject "SQLiteDataExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5362EAC2E54C1300075BBD2 /* Debug */,
@@ -385,7 +399,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B5362EAE2E54C1300075BBD2 /* Build configuration list for PBXNativeTarget "SharingGRDBExample" */ = {
+		B5362EAE2E54C1300075BBD2 /* Build configuration list for PBXNativeTarget "SQLiteDataExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5362EAF2E54C1300075BBD2 /* Debug */,
@@ -397,12 +411,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C8580692E585D4700443C22 /* XCRemoteSwiftPackageReference "sharing-grdb" */ = {
+		1C3876B02E7C0CC8009F8E67 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/sharing-grdb.git";
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.6.0;
+				minimumVersion = 1.9.5;
+			};
+		};
+		1C4FDF7F2E7C0ADF004C95B1 /* XCRemoteSwiftPackageReference "sqlite-data" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/sqlite-data.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		B5362EB72E54C1790075BBD2 /* XCRemoteSwiftPackageReference "TootSDK" */ = {
@@ -410,21 +432,26 @@
 			repositoryURL = "https://github.com/TootSDK/TootSDK";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 18.2.0;
+				minimumVersion = 19.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1C85806A2E585D4700443C22 /* SharingGRDB */ = {
+		1C3876B12E7C0CC8009F8E67 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C8580692E585D4700443C22 /* XCRemoteSwiftPackageReference "sharing-grdb" */;
-			productName = SharingGRDB;
+			package = 1C3876B02E7C0CC8009F8E67 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
 		};
-		1C85806C2E585D4700443C22 /* StructuredQueriesGRDB */ = {
+		1C3876B32E7C0CC8009F8E67 /* DependenciesMacros */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C8580692E585D4700443C22 /* XCRemoteSwiftPackageReference "sharing-grdb" */;
-			productName = StructuredQueriesGRDB;
+			package = 1C3876B02E7C0CC8009F8E67 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = DependenciesMacros;
+		};
+		1C3876B82E7C0E2B009F8E67 /* SQLiteData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C4FDF7F2E7C0ADF004C95B1 /* XCRemoteSwiftPackageReference "sqlite-data" */;
+			productName = SQLiteData;
 		};
 		B5362EB82E54C1790075BBD2 /* TootSDK */ = {
 			isa = XCSwiftPackageProductDependency;

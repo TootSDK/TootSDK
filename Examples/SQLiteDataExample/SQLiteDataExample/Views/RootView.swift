@@ -6,7 +6,7 @@
 //
 
 import AuthenticationServices
-import SharingGRDB
+import SQLiteData
 import SwiftUI
 import TootSDK
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Dependencies
-import SharingGRDB
+import SQLiteData
 
 @main
 struct TootSDKExampleApp: App {
