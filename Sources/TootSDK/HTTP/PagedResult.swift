@@ -12,6 +12,16 @@ public struct PagedResult<T: Decodable>: Decodable {
 
     /// Returns pagination object for the previous page of results if one is available.  A previous page contains results older than the current page.
     public let previousPage: PagedInfo?
+
+    /// Creates a new `PagedResult` with a given `result` and its `PageInfo`.
+    /// Use `nextPage` and `previousPage` as fit.
+    public init(result: T, info: PagedInfo, nextPage: PagedInfo?, previousPage: PagedInfo?) {
+        self.result = result
+        self.info = info
+        self.nextPage = nextPage
+        self.previousPage = previousPage
+		}
+
 }
 
 extension PagedResult {
