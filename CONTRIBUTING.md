@@ -23,7 +23,7 @@ Each addition to the codebase that introduces something new, or changes the way 
 - Get familiar with the [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/).
 - Spaces, not tabs.
 - Whitespace-only lines are not trimmed.
-- We use [swift-format](https://github.com/apple/swift-format) to ensure a consistent look and feel of the library code. Your changes should contain no swift-format errors or warnings. Please lint code contributions before submitting e.g. `make lint`.
+- We use [swift format](https://github.com/apple/swift-format) to ensure a consistent look and feel of the library code. Your changes should contain no swift-format errors or warnings. Please lint code contributions before submitting e.g. `make lint`.
 - Avoid bringing in new libraries or dependencies without good justification. Any PR that brings in a new library needs to make the case for why it is necessary.
 - Structs that carry API parameters, or other associated information are created as separate objects (e.g. PollTranslation instead of Translation.Poll).
 - We use the terminology of Post throughout TootSDK's code'. Mastodon calls it a Status, others might use the terminology of "Note", we decided early on as a project to standardise on "Post".
