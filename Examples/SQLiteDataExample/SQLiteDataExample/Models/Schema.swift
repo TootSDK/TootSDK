@@ -5,14 +5,14 @@
 //  Created by Tim De Jong on 22/08/2025.
 //
 import Foundation
-import SQLiteData
 import OSLog
+import SQLiteData
 
 private let logger = Logger(subsystem: "SharingGRDBExample", category: "Database")
 
 @Table
 struct DisplayPost: Identifiable {
-  
+
     let id: String
     let authorName: String
     let authorUsername: String
@@ -22,34 +22,29 @@ struct DisplayPost: Identifiable {
 }
 
 @Table
-struct ServerCredential
-{
+struct ServerCredential {
     let host: String
     let accessToken: String
 }
 
-func appDatabase() throws -> any DatabaseWriter
-{
+func appDatabase() throws -> any DatabaseWriter {
     let database: any DatabaseWriter
-    
+
     @Dependency(\.context) var context
-    
+
     var configuration = Configuration()
     configuration.prepareDatabase { db in
         #if DEBUG
-        db.trace(options: .profile) {
-            if context == .preview
-            {
-                print($0.expandedDescription)
+            db.trace(options: .profile) {
+                if context == .preview {
+                    print($0.expandedDescription)
+                } else {
+                    logger.debug("\($0.expandedDescription)")
+                }
             }
-            else
-            {
-                logger.debug("\($0.expandedDescription)")
-            }
-        }
         #endif
     }
-    
+
     switch context
     {
     case .live:
@@ -59,7 +54,7 @@ func appDatabase() throws -> any DatabaseWriter
     case .preview, .test:
         database = try DatabaseQueue(configuration: configuration)
     }
-    
+
     var migrator = DatabaseMigrator()
     migrator.registerMigration("Create tables") { db in
         try #sql(
@@ -71,14 +66,14 @@ func appDatabase() throws -> any DatabaseWriter
             """
         )
         .execute(db)
-        
+
         let id: String
         let authorName: String
         let authorUsername: String
         let content: String
         let createdAt: Date
         let url: String
-        
+
         try #sql(
             """
             CREATE TABLE "displayPosts" (
@@ -93,14 +88,12 @@ func appDatabase() throws -> any DatabaseWriter
         )
         .execute(db)
     }
-    
+
     #if DEBUG
-    migrator.eraseDatabaseOnSchemaChange = true
+        migrator.eraseDatabaseOnSchemaChange = true
     #endif
-    
+
     try migrator.migrate(database)
-    
-    
+
     return database
 }
-

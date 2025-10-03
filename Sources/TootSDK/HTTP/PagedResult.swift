@@ -20,7 +20,7 @@ public struct PagedResult<T: Decodable>: Decodable {
         self.info = info
         self.nextPage = nextPage
         self.previousPage = previousPage
-		}
+    }
 
 }
 
