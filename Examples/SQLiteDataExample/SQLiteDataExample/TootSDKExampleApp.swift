@@ -5,14 +5,15 @@
 //  Created by Konstantin Gerry on 19/08/2025.
 //
 
-import Dependencies
-import SharingGRDB
 import SwiftUI
+import Dependencies
+import SQLiteData
 
 @main
 struct TootSDKExampleApp: App {
-
-    init() {
+    
+    init()
+    {
         prepareDependencies {
             $0.defaultDatabase = try! appDatabase()
         }
@@ -21,6 +22,6 @@ struct TootSDKExampleApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-        }
+        }        
     }
 }

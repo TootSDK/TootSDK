@@ -275,6 +275,23 @@ extension TootClient {
         }
         return try await fetchRaw(NodeInfo.self, req)
     }
+
+    /// Get all custom emoji available on the server.
+    /// - Returns: Array of ``Emoji``.
+    public func getCustomEmojis() async throws -> [Emoji] {
+        let response = try await getCustomEmojisRaw()
+        return response.data
+    }
+
+    /// Get all custom emoji available on the server.
+    /// - Returns: TootResponse containing an array of ``Emoji`` and HTTP metadata.
+    public func getCustomEmojisRaw() async throws -> TootResponse<[Emoji]> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "custom_emojis"])
+            $0.method = .get
+        }
+        return try await fetchRaw([Emoji].self, req)
+    }
 }
 
 extension TootFeature {
