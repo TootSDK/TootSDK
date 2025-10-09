@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TrendingLink: Codable, Hashable {
+public struct TrendingLink: Codable, Hashable, Sendable {
     public init(
         url: String,
         title: String,
