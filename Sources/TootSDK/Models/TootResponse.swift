@@ -16,7 +16,7 @@ import Foundation
 /// let rateLimit = response.rateLimitRemaining
 /// let linkHeader = response.linkHeader
 /// ```
-public struct TootResponse<T> {
+public struct TootResponse<T>: Sendable where T: Sendable {
     /// The decoded response data (original return type)
     public let data: T
 
