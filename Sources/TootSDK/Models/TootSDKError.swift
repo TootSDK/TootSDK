@@ -87,4 +87,15 @@ public enum TootSDKError: Error, LocalizedError, Equatable {
             return "The remote instance doesn't support nodeinfo endpoint."
         }
     }
+
+    var isUnsupportedEndpoint: Bool {
+        switch self {
+        case .unsupportedFeature, .unsupportedFlavour:
+            return true
+        case .invalidStatusCode(data: _, let response):
+            return [400, 404, 501].contains(response.statusCode)
+        default:
+            return false
+        }
+    }
 }
