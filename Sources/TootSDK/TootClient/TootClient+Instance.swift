@@ -33,7 +33,9 @@ extension TootClient {
                 url: response.url,
                 rawBody: response.rawBody
             )
-        } catch TootSDKError.unsupportedFlavour(_, _) {
+            // This function might be called before flavour is known, causing feature check to work incorrectly.
+            // Attempt to fetch v1 instance info if call for v2 instance info fails with matching error.
+        } catch let error as TootSDKError where error.isUnsupportedEndpoint {
             let response = try await getInstanceInfoV1Raw()
             return TootResponse(
                 data: response.data as any Instance,
