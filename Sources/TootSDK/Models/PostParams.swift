@@ -12,6 +12,7 @@ public struct PostParams: Codable, Sendable {
     ///   - mediaIds: Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
     ///   - poll: CreatePoll struct
     ///   - inReplyToId: ID of the post being replied to, if post is a reply.
+    ///   - quotedId: ID of the quoted post, if post is a quote.
     ///   - sensitive: Boolean. Mark post and attached media as sensitive? Defaults to false.
     ///   - spoilerText: Text to be shown as a warning or subject before the actual content. Posts are generally collapsed behind this field.
     ///   - visibility: Sets the visibility of the posted post to public, unlisted, private, direct.
@@ -23,6 +24,7 @@ public struct PostParams: Codable, Sendable {
         mediaIds: [String]? = nil,
         poll: CreatePoll? = nil,
         inReplyToId: String? = nil,
+        quotedId: String? = nil,
         sensitive: Bool? = nil,
         spoilerText: String? = nil,
         visibility: Post.Visibility,
@@ -34,6 +36,7 @@ public struct PostParams: Codable, Sendable {
         self.mediaIds = mediaIds
         self.poll = poll
         self.inReplyToId = inReplyToId
+        self.quotedId = quotedId
         self.sensitive = sensitive
         self.spoilerText = spoilerText
         self.visibility = visibility
@@ -56,6 +59,8 @@ public struct PostParams: Codable, Sendable {
     public var poll: CreatePoll?
     ///  ID of the post being replied to, if post is a reply.
     public var inReplyToId: String?
+    /// ID of the quoted post, if post is a quote.
+    public var quotedId: String?
     /// Mark post and attached media as sensitive? Defaults to false.
     public var sensitive: Bool?
     /// Text to be shown as a warning or subject before the actual content. Posts are generally collapsed behind this field.
@@ -75,6 +80,7 @@ public struct PostParams: Codable, Sendable {
         case mediaIds = "media_ids"
         case poll
         case inReplyToId = "in_reply_to_id"
+        case quotedId = "quoted_status_id"
         case sensitive
         case spoilerText = "spoiler_text"
         case visibility
