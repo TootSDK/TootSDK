@@ -14,7 +14,7 @@ public struct Quote: Codable, Sendable, Hashable {
     public enum QuoteState: String, Codable, Hashable, Sendable {
         /// The quote has not been acknowledged by the quoted account yet, and requires authorization before being displayed.
         case pending
-        /// The quote has been accepted and can be displayed. This is the only case where ``Quote/quotedPost`` is non-null.
+        /// The quote has been accepted and can be displayed. This is the one of the few cases where ``Quote/quotedPost`` is non-null.
         case accepted
         /// The quote has been explicitly rejected by the quoted account, and cannot be displayed.
         case rejected
@@ -24,6 +24,12 @@ public struct Quote: Codable, Sendable, Hashable {
         case deleted
         /// The quote has been approved, but cannot be displayed because the user is not authorized to see it.
         case unauthorized
+        /// The quote has been approved, but should not be displayed because the user has blocked the account being quoted. This is the one of the few cases where ``Quote/quotedPost`` is non-null.
+        case blockedAccount = "blocked_account"
+        /// The quote has been approved, but should not be displayed because the user has blocked the domain of the account being quoted. This is the one of the few cases where ``Quote/quotedPost`` is non-null.
+        case blockedDomain = "blocked_domain"
+        /// The quote has been approved, but should not be displayed because the user has muted the the account being quoted. This is the one of the few cases where ``Quote/quotedPost`` is non-null.
+        case mutedAccount = "muted_account"
     }
 
     /// A post being quoted.
@@ -43,7 +49,7 @@ public struct Quote: Codable, Sendable, Hashable {
     /// `nil` for flavors that don't provide a quote state.
     public var state: OpenEnum<QuoteState>?
 
-    /// The status or status ID being quoted, if the quote has been accepted. On flavors that support ``state``, this is expected to be `nil`, unless the ``state`` is ``QuoteState/accepted``.
+    /// The status or status ID being quoted, if the quote has been accepted. On flavors that support ``state``, this is expected to be `nil`, unless the ``state`` is ``QuoteState/accepted``, ``QuoteState/blockedDomain``, ``QuoteState/blockedAccount``, or ``QuoteState/mutedAccount``.
     public var quotedPost: QuotedContent?
 
     enum CodingKeys: String, CodingKey {
