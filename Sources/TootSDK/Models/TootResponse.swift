@@ -54,17 +54,17 @@ public struct TootResponse<T>: Sendable where T: Sendable {
 extension TootResponse {
     /// Rate limit maximum requests per window (X-RateLimit-Limit)
     public var rateLimitLimit: Int? {
-        headers["X-RateLimit-Limit"].flatMap(Int.init)
+        header(named: "X-RateLimit-Limit").flatMap(Int.init)
     }
 
     /// Rate limit remaining requests in current window (X-RateLimit-Remaining)
     public var rateLimitRemaining: Int? {
-        headers["X-RateLimit-Remaining"].flatMap(Int.init)
+        header(named: "X-RateLimit-Remaining").flatMap(Int.init)
     }
 
     /// Rate limit window reset time as Unix timestamp (X-RateLimit-Reset)
     public var rateLimitReset: Date? {
-        headers["X-RateLimit-Reset"]
+        header(named: "X-RateLimit-Reset")
             .flatMap(TimeInterval.init)
             .map(Date.init(timeIntervalSince1970:))
     }
@@ -75,7 +75,7 @@ extension TootResponse {
 extension TootResponse {
     /// Link header for pagination navigation (Link)
     public var linkHeader: String? {
-        headers["Link"]
+        header(named: "Link")
     }
 }
 
@@ -84,17 +84,17 @@ extension TootResponse {
 extension TootResponse {
     /// Response content type (Content-Type)
     public var contentType: String? {
-        headers["Content-Type"]
+        header(named: "Content-Type")
     }
 
     /// Response content length (Content-Length)
     public var contentLength: Int? {
-        headers["Content-Length"].flatMap(Int.init)
+        header(named: "Content-Length").flatMap(Int.init)
     }
 
     /// Response content encoding (Content-Encoding)
     public var contentEncoding: String? {
-        headers["Content-Encoding"]
+        header(named: "Content-Encoding")
     }
 }
 
@@ -103,17 +103,17 @@ extension TootResponse {
 extension TootResponse {
     /// Cache control directive (Cache-Control)
     public var cacheControl: String? {
-        headers["Cache-Control"]
+        header(named: "Cache-Control")
     }
 
     /// Entity tag for caching (ETag)
     public var etag: String? {
-        headers["ETag"]
+        header(named: "ETag")
     }
 
     /// Last modified timestamp (Last-Modified)
     public var lastModified: Date? {
-        headers["Last-Modified"].flatMap { dateString in
+        header(named: "Last-Modified").flatMap { dateString in
             let formatter = DateFormatter()
             formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
             formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -127,17 +127,17 @@ extension TootResponse {
 extension TootResponse {
     /// Server software information (Server)
     public var server: String? {
-        headers["Server"]
+        header(named: "Server")
     }
 
     /// Request ID for debugging (X-Request-Id, X-Request-ID)
     public var requestId: String? {
-        headers["X-Request-Id"] ?? headers["X-Request-ID"]
+        header(named: "X-Request-Id") ?? header(named: "X-Request-ID")
     }
 
     /// Response time information (X-Response-Time)
     public var responseTime: String? {
-        headers["X-Response-Time"]
+        header(named: "X-Response-Time")
     }
 }
 
@@ -146,32 +146,32 @@ extension TootResponse {
 extension TootResponse {
     /// Mastodon version (Mastodon-Version)
     public var mastodonVersion: String? {
-        headers["Mastodon-Version"]
+        header(named: "Mastodon-Version")
     }
 
     /// Instance name (X-Instance-Name)
     public var instanceName: String? {
-        headers["X-Instance-Name"]
+        header(named: "X-Instance-Name")
     }
 
     /// Instance software type (X-Software-Name)
     public var softwareName: String? {
-        headers["X-Software-Name"]
+        header(named: "X-Software-Name")
     }
 
     /// Instance software version (X-Software-Version)
     public var softwareVersion: String? {
-        headers["X-Software-Version"]
+        header(named: "X-Software-Version")
     }
 
     /// Deprecated API endpoint warning (Deprecation)
     public var deprecationWarning: String? {
-        headers["Deprecation"]
+        header(named: "Deprecation")
     }
 
     /// Sunset warning for API endpoint (Sunset)
     public var sunsetWarning: String? {
-        headers["Sunset"]
+        header(named: "Sunset")
     }
 }
 
@@ -180,22 +180,22 @@ extension TootResponse {
 extension TootResponse {
     /// Content Security Policy (Content-Security-Policy)
     public var contentSecurityPolicy: String? {
-        headers["Content-Security-Policy"]
+        header(named: "Content-Security-Policy")
     }
 
     /// Strict Transport Security (Strict-Transport-Security)
     public var strictTransportSecurity: String? {
-        headers["Strict-Transport-Security"]
+        header(named: "Strict-Transport-Security")
     }
 
     /// X-Frame-Options header (X-Frame-Options)
     public var xFrameOptions: String? {
-        headers["X-Frame-Options"]
+        header(named: "X-Frame-Options")
     }
 
     /// X-Content-Type-Options header (X-Content-Type-Options)
     public var xContentTypeOptions: String? {
-        headers["X-Content-Type-Options"]
+        header(named: "X-Content-Type-Options")
     }
 }
 
