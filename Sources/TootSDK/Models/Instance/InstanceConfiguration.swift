@@ -21,10 +21,14 @@ public struct InstanceConfiguration: Codable, Hashable, Sendable {
     public var translation: Translation?
     /// Whether federation is limited to explicitly allowed domains.
     public var limitedFederation: Bool?
+    /// Access restrictions on timelines.
+    ///
+    /// Only populated by the v2 instance API.
+    public var timelinesAccess: TimelinesAccess?
 
     public init(
         urls: URLs? = nil, vapid: VAPID? = nil, accounts: Accounts? = nil, posts: Posts? = nil, mediaAttachments: MediaAttachments? = nil,
-        polls: Polls? = nil, translation: Translation? = nil, limitedFederation: Bool? = nil
+        polls: Polls? = nil, translation: Translation? = nil, limitedFederation: Bool? = nil, timelinesAccess: TimelinesAccess? = nil
     ) {
         self.urls = urls
         self.vapid = vapid
@@ -34,6 +38,7 @@ public struct InstanceConfiguration: Codable, Hashable, Sendable {
         self.polls = polls
         self.translation = translation
         self.limitedFederation = limitedFederation
+        self.timelinesAccess = timelinesAccess
     }
 
     enum CodingKeys: String, CodingKey {
@@ -45,6 +50,7 @@ public struct InstanceConfiguration: Codable, Hashable, Sendable {
         case polls
         case translation
         case limitedFederation
+        case timelinesAccess
     }
 
     public struct URLs: Codable, Hashable, Sendable {
@@ -172,6 +178,45 @@ public struct InstanceConfiguration: Codable, Hashable, Sendable {
         public init(publicKey: String? = nil) {
             self.publicKey = publicKey
         }
+    }
+
+    public struct TimelinesAccess: Codable, Hashable, Sendable {
+
+        /// Access restrictions for a feed.
+        public enum FeedAccess: String, Codable, Hashable, Sendable {
+            /// Access to posts in this feed is available to both visitors and logged in users.
+            case `public`
+            /// Access to posts in this feed requires authentication.
+            case authenticated
+            /// Access to posts in this feed is only possible if the current user's ``TootRole/permissions`` include the "View live and topic feeds" permission.
+            case disabled
+        }
+
+        /// Specifies the level of access available for local and remote posts in a given feed.
+        public struct FeedSet: Codable, Hashable, Sendable {
+            /// Access restrictions on local posts in this feed.
+            public var local: OpenEnum<FeedAccess>?
+            /// Access restrictions on remote posts in this feed.
+            public var remote: OpenEnum<FeedAccess>?
+
+            public init(local: FeedAccess? = nil, remote: FeedAccess? = nil) {
+                if let local {
+                    self.local = .some(local)
+                }
+                if let remote {
+                    self.remote = .some(remote)
+                }
+            }
+        }
+
+        /// Access restrictions on public "firehose" feeds (i.e. local and federated timelines).
+        public var liveFeeds: FeedSet?
+
+        /// Access restrictions on hashtag feeds.
+        public var hashtagFeeds: FeedSet?
+
+        /// Access restrictions on trending link feeds.
+        public var trendingLinkFeeds: FeedSet?
     }
 
 }
