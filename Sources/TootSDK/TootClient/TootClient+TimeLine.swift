@@ -40,6 +40,8 @@ extension TootClient {
             return ["api", "v1", "timelines", "list", listID]
         case .user(let query):
             return ["api", "v1", "accounts", query.userId, "statuses"]
+        case .link(let url):
+            return ["api", "v1", "timelines", "link"]
         }
     }
 
@@ -57,6 +59,8 @@ extension TootClient {
             return nil
         case .user(let query):
             return query
+        case .link(let linkTimelineQuery):
+            return linkTimelineQuery
         }
     }
 

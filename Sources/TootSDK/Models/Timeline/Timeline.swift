@@ -30,6 +30,10 @@ public enum Timeline: Hashable, Sendable {
     /// Timeline with posts submitted by a single user
     case user(UserTimelineQuery)
 
+    /// Timeline with posts containing a link to a currently trending news article.
+    /// - SeeAlso: ``TootClient/getTrendingLinks(limit:offset:)``
+    case link(LinkTimelineQuery)
+
     /// The user's local timeline
     public static var local: Timeline {
         return .local()
@@ -44,4 +48,11 @@ public enum Timeline: Hashable, Sendable {
     public static func user(userID: String) -> Timeline {
         return .user(UserTimelineQuery(userId: userID))
     }
+
+    /// Timeline with posts containing a link to the specified, currently trending news article.
+    /// - SeeAlso: ``TootClient/getTrendingLinks(limit:offset:)``
+    public static func link(url: String) -> Timeline {
+        return .link(LinkTimelineQuery(url: url))
+    }
+
 }
