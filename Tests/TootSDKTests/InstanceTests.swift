@@ -70,6 +70,37 @@ final class InstanceTests: XCTestCase {
         XCTAssertEqual(result.configuration?.translation?.enabled, true)
     }
 
+    func testMastodon45V2() throws {
+        // arrange
+        let json = localContent("instancev2_mastodon_4.5")
+        let decoder = TootDecoder()
+
+        // act
+        let result = try decoder.decode(InstanceV2.self, from: json)
+
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.languages, ["en"])
+        XCTAssertEqual(result.version, "4.5.0-nightly.2025-10-30")
+        XCTAssertEqual(result.domain, "mastodon.social")
+        XCTAssertEqual(result.title, "Mastodon")
+        XCTAssertEqual(result.sourceURL, "https://github.com/mastodon/mastodon")
+        XCTAssertEqual(result.registrations.enabled, true)
+        XCTAssertEqual(result.usage?.users.activeMonth, 259022)
+        XCTAssertEqual(result.configuration?.accounts?.maxFeaturedTags, 10)
+        XCTAssertEqual(result.configuration?.accounts?.maxPinnedPosts, 5)
+        XCTAssertEqual(result.icon?.count, 9)
+        XCTAssertEqual(result.thumbnail?.blurhash, "UeKUpFxuo~R%0nW;WCnhF6RjaJt757oJodS$")
+        XCTAssertEqual(result.thumbnail?.versions?.at2x, "https://files.mastodon.social/site_uploads/files/000/000/001/@2x/57c12f441d083cde.png")
+        XCTAssertEqual(result.apiVersions?.mastodon, 7)
+        XCTAssertEqual(
+            result.configuration?.vapid?.publicKey, "BCk-QqERU0q-CfYZjcuB6lnyyOYfJ2AifKqfeGIm7Z-HiTU5T9eTG5GxVA0_OH5mMlI4UkkDTpaZwozy0TzdZ2M=")
+        XCTAssertEqual(result.configuration?.translation?.enabled, true)
+        XCTAssertEqual(result.configuration?.limitedFederation, false)
+        XCTAssertEqual(result.rules?.first?.translations?.count, 7)
+        XCTAssertEqual(result.configuration?.timelinesAccess?.liveFeeds?.remote?.value, .public)
+    }
+
     func testFirefishV2() throws {
         // arrange
         let json = localContent("instancev2_firefish")
