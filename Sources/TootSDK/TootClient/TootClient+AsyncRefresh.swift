@@ -43,6 +43,7 @@ extension TootClient {
 extension TootFeature {
     /// The ability to query the v1 alpha Async Refresh API.
     public static let asyncRefreshV1Alpha = TootFeature(requirements: [
-        .from(.mastodon, displayVersion: "4.4.0")  // TODO: When or if this feature moves out of alpha, we will need to add a maxDisplayVersion to this requirement, add an additional TootFeature for the final version, and update `getAsyncRefreshRaw` to use the appropriate version depending on the server version.
+        // TODO: When or if this feature moves out of alpha, we will need to add a maxDisplayVersion to this requirement, add an additional TootFeature for the final version, and update `getAsyncRefreshRaw` to use the appropriate version depending on the server version.
+        .from(.mastodon, displayVersion: "4.4.0")
     ])
 }
