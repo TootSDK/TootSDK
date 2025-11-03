@@ -30,6 +30,7 @@ final class TootResponseTests: XCTestCase {
         "Strict-Transport-Security": "max-age=31536000",
         "X-Frame-Options": "DENY",
         "X-Content-Type-Options": "nosniff",
+        "mastodon-async-refresh": "id=\"ImNvbnRleHQ6MTE1NDU4Mzk3NzM5NDE2MzQzOnJlZnJlc2gi--75a626571007cfb13bc09ef3f57bf062547c73dc\", retry=3",
     ]
 
     private let sampleData = ["test": "data"]
@@ -124,6 +125,47 @@ final class TootResponseTests: XCTestCase {
 
         // act & assert
         XCTAssertEqual(response.requestId, "fallback-id")
+    }
+
+    // MARK: - Mastodon/Fediverse Specific Header Tests
+
+    func testFediverseHeaders() throws {
+        // arrange
+        let response = TootResponse(
+            data: sampleData,
+            headers: sampleHeaders,
+            statusCode: 200,
+            url: sampleURL,
+            rawBody: sampleRawBody
+        )
+
+        // act & assert
+        XCTAssertEqual(response.mastodonVersion, "4.0.0")
+        XCTAssertEqual(response.instanceName, "example.com")
+        XCTAssertEqual(response.softwareName, "mastodon")
+        XCTAssertEqual(response.softwareVersion, "4.0.0")
+        XCTAssertEqual(response.deprecationWarning, "true")
+        XCTAssertEqual(response.sunsetWarning, "Wed, 11 Nov 2020 23:59:59 GMT")
+        XCTAssertEqual(
+            response.asyncRefresh,
+            AsyncRefreshHint(id: "ImNvbnRleHQ6MTE1NDU4Mzk3NzM5NDE2MzQzOnJlZnJlc2gi--75a626571007cfb13bc09ef3f57bf062547c73dc", retry: 3)
+        )
+    }
+
+    // MARK: - Security Header Tests
+
+    func testSecurityHeaders() throws {
+        // arrange
+        let response = TootResponse(
+            data: sampleData,
+            headers: sampleHeaders,
+            statusCode: 200,
+            url: sampleURL,
+            rawBody: sampleRawBody
+        )
+
+        // act & assert
+        XCTAssertEqual(response.requestId, "req-12345")
     }
 
     // MARK: - Status Code Convenience Tests
