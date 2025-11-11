@@ -188,9 +188,7 @@ extension TootClient {
         }
 
         if let accessToken {
-            // This is undocumented, but the Mastodon streaming API allows passing the access token using the protocol header.
-            // This is slightly more secure than the documented method of putting the access token in plain text in the query string.
-            req.headers["Sec-WebSocket-Protocol"] = accessToken
+            req.headers["Authorization"] = "Bearer \(accessToken)"
         }
 
         return session.webSocketTask(with: try req.build())
