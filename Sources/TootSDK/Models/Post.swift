@@ -12,6 +12,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         account: Account,
         content: String? = nil,
         visibility: Post.Visibility,
+        quoteApproval: QuoteApproval? = nil,
         sensitive: Bool,
         spoilerText: String,
         mediaAttachments: [MediaAttachment],
@@ -45,6 +46,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         self.account = account
         self.content = content
         self.visibility = .some(visibility)
+        self.quoteApproval = quoteApproval
         self.sensitive = sensitive
         self.spoilerText = spoilerText
         self.mediaAttachments = mediaAttachments
@@ -85,6 +87,8 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public var content: String?
     /// Visibility of this post.
     public var visibility: OpenEnum<Visibility>
+    /// Summary of a status' quote approval policy and how it applies to the requesting user.
+    public var quoteApproval: QuoteApproval?
     /// Is this post marked as sensitive content?
     public var sensitive: Bool
     /// Subject or summary line, below which post content is collapsed until expanded.
@@ -158,6 +162,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case account
         case content
         case visibility
+        case quoteApproval
         case sensitive
         case spoilerText
         case mediaAttachments
@@ -195,6 +200,7 @@ extension Post: Hashable {
             && lhs.account == rhs.account
             && lhs.content == rhs.content
             && lhs.visibility == rhs.visibility
+            && lhs.quoteApproval == rhs.quoteApproval
             && lhs.sensitive == rhs.sensitive
             && lhs.spoilerText == rhs.spoilerText
             && lhs.mediaAttachments == rhs.mediaAttachments
@@ -230,6 +236,7 @@ extension Post: Hashable {
         hasher.combine(account)
         hasher.combine(content)
         hasher.combine(visibility)
+        hasher.combine(quoteApproval)
         hasher.combine(sensitive)
         hasher.combine(spoilerText)
         hasher.combine(mediaAttachments)
