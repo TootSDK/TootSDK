@@ -57,6 +57,10 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         case post
         /// A post you interacted with has been edited
         case update
+        /// Someone quoted one of your posts.
+        case quote
+        /// A post you have quoted has been edited.
+        case quotedUpdate
         /// Someone signed up
         case adminSignUp
         /// A new report has been filed
@@ -102,6 +106,10 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 self = .post
             case "update":
                 self = .update
+            case "quote":
+                self = .quote
+            case "quoted_update":
+                self = .quotedUpdate
             case "admin.sign_up":
                 self = .adminSignUp
             case "admin.report":
@@ -126,6 +134,8 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
             case .poll: return "poll"
             case .followRequest: return "follow_request"
             case .post: return "status"
+            case .quote: return "quote"
+            case .quotedUpdate: return "quoted_update"
             case .update: return "update"
             case .adminSignUp: return "admin.sign_up"
             case .adminReport: return "admin.report"
@@ -160,6 +170,8 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
                 .followRequest,
                 .post,
                 .update,
+                .quote,
+                .quotedUpdate,
                 .adminSignUp,
                 .adminReport,
                 .severedRelationships,
@@ -173,8 +185,8 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
             switch flavour {
             case .mastodon:
                 return [
-                    .follow, .mention, .repost, .favourite, .poll, .followRequest, .post, .update, .adminSignUp, .adminReport, .severedRelationships,
-                    .annualReport,
+                    .follow, .mention, .repost, .favourite, .poll, .followRequest, .post, .update, .quote, .quotedUpdate,
+                    .adminSignUp, .adminReport, .severedRelationships, .annualReport,
                 ]
             case .pleroma, .akkoma:
                 return [.follow, .mention, .repost, .favourite, .poll, .followRequest, .update, .emojiReaction]
@@ -199,7 +211,8 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
             switch flavour {
             case .mastodon, .goToSocial:
                 return [
-                    .follow, .mention, .repost, .favourite, .poll, .followRequest, .post, .update, .adminSignUp, .adminReport,
+                    .follow, .mention, .repost, .favourite, .poll, .followRequest, .post, .update, .quote, .quotedUpdate,
+                    .adminSignUp, .adminReport,
                 ]
             case .pleroma, .akkoma, .friendica, .sharkey:
                 return [.follow, .mention, .repost, .favourite, .poll]

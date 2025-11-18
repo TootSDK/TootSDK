@@ -12,6 +12,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         account: Account,
         content: String? = nil,
         visibility: Post.Visibility,
+        quoteApproval: QuoteApproval? = nil,
         sensitive: Bool,
         spoilerText: String,
         mediaAttachments: [MediaAttachment],
@@ -20,6 +21,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         tags: [Tag],
         emojis: [Emoji],
         repostsCount: Int,
+        quotesCount: Int? = nil,
         favouritesCount: Int,
         repliesCount: Int,
         url: String? = nil,
@@ -45,6 +47,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         self.account = account
         self.content = content
         self.visibility = .some(visibility)
+        self.quoteApproval = quoteApproval
         self.sensitive = sensitive
         self.spoilerText = spoilerText
         self.mediaAttachments = mediaAttachments
@@ -53,6 +56,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         self.tags = tags
         self.emojis = emojis
         self.repostsCount = repostsCount
+        self.quotesCount = quotesCount
         self.favouritesCount = favouritesCount
         self.repliesCount = repliesCount
         self.url = url
@@ -85,6 +89,8 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public var content: String?
     /// Visibility of this post.
     public var visibility: OpenEnum<Visibility>
+    /// Summary of a status' quote approval policy and how it applies to the requesting user.
+    public var quoteApproval: QuoteApproval?
     /// Is this post marked as sensitive content?
     public var sensitive: Bool
     /// Subject or summary line, below which post content is collapsed until expanded.
@@ -102,6 +108,8 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public var emojis: [Emoji]
     /// How many reposts this post has received.
     public var repostsCount: Int
+    /// How many quotes this post has received.
+    public var quotesCount: Int?
     /// How many favourites this post has received.
     public var favouritesCount: Int
     /// How many replies this post has received.
@@ -151,6 +159,39 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case direct
     }
 
+    /// Summary of a status' quote approval policy and how it applies to the requesting user.
+    public struct QuoteApproval: Codable, Hashable, Sendable {
+        public let automatic: [Policy]
+        public let manual: [Policy]
+        public let currentUser: CurrentUserPolicy?
+
+        public enum Policy: String, CaseIterable, Codable, Sendable {
+            case `public`
+            case followers
+            case following
+            case unsupported = "unsupported_policy"
+
+            public init(from decoder: any Decoder) throws {
+                let container = try decoder.singleValueContainer()
+                let rawValue = try container.decode(String.self)
+                self = .init(rawValue: rawValue) ?? .unsupported
+            }
+        }
+
+        public enum CurrentUserPolicy: String, CaseIterable, Codable, Sendable {
+            case automatic
+            case manual
+            case denied
+            case unknown
+
+            public init(from decoder: any Decoder) throws {
+                let container = try decoder.singleValueContainer()
+                let rawValue = try container.decode(String.self)
+                self = .init(rawValue: rawValue) ?? .unknown
+            }
+        }
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case uri
@@ -158,6 +199,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case account
         case content
         case visibility
+        case quoteApproval
         case sensitive
         case spoilerText
         case mediaAttachments
@@ -166,6 +208,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case tags
         case emojis
         case repostsCount = "reblogsCount"
+        case quotesCount
         case favouritesCount
         case repliesCount
         case url
@@ -195,6 +238,7 @@ extension Post: Hashable {
             && lhs.account == rhs.account
             && lhs.content == rhs.content
             && lhs.visibility == rhs.visibility
+            && lhs.quoteApproval == rhs.quoteApproval
             && lhs.sensitive == rhs.sensitive
             && lhs.spoilerText == rhs.spoilerText
             && lhs.mediaAttachments == rhs.mediaAttachments
@@ -202,6 +246,7 @@ extension Post: Hashable {
             && lhs.tags == rhs.tags
             && lhs.emojis == rhs.emojis
             && lhs.repostsCount == rhs.repostsCount
+            && lhs.quotesCount == rhs.quotesCount
             && lhs.favouritesCount == rhs.favouritesCount
             && lhs.repliesCount == rhs.repliesCount
             && lhs.application == rhs.application
@@ -230,6 +275,7 @@ extension Post: Hashable {
         hasher.combine(account)
         hasher.combine(content)
         hasher.combine(visibility)
+        hasher.combine(quoteApproval)
         hasher.combine(sensitive)
         hasher.combine(spoilerText)
         hasher.combine(mediaAttachments)
@@ -237,6 +283,7 @@ extension Post: Hashable {
         hasher.combine(tags)
         hasher.combine(emojis)
         hasher.combine(repostsCount)
+        hasher.combine(quotesCount)
         hasher.combine(favouritesCount)
         hasher.combine(repliesCount)
         hasher.combine(application)

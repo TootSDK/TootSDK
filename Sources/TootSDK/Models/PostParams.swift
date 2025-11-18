@@ -12,9 +12,11 @@ public struct PostParams: Codable, Sendable {
     ///   - mediaIds: Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
     ///   - poll: CreatePoll struct
     ///   - inReplyToId: ID of the post being replied to, if post is a reply.
+    ///   - quotedId: ID of the quoted post, if post is a quote.
     ///   - sensitive: Boolean. Mark post and attached media as sensitive? Defaults to false.
     ///   - spoilerText: Text to be shown as a warning or subject before the actual content. Posts are generally collapsed behind this field.
     ///   - visibility: Sets the visibility of the posted post to public, unlisted, private, direct.
+    ///   - quoteApprovalPolicy: Policy to quote this post: public, followers or nobody. If omitted, it will use the user’s default settings; If the status’ visibility is private or direct, this parameter will be ignored and the policy be set to nobody.
     ///   - language: ISO 639 language code for this post.
     ///   - contentType: (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
     ///   - inReplyToConversationId:(Pleroma) Will reply to a given conversation, addressing only the people who are part of the recipient set of that conversation. Sets the visibility to direct.
@@ -23,9 +25,11 @@ public struct PostParams: Codable, Sendable {
         mediaIds: [String]? = nil,
         poll: CreatePoll? = nil,
         inReplyToId: String? = nil,
+        quotedId: String? = nil,
         sensitive: Bool? = nil,
         spoilerText: String? = nil,
         visibility: Post.Visibility,
+        quoteApprovalPolicy: QuotePolicy? = nil,
         language: String? = nil,
         contentType: String? = nil,
         inReplyToConversationId: String? = nil
@@ -34,9 +38,11 @@ public struct PostParams: Codable, Sendable {
         self.mediaIds = mediaIds
         self.poll = poll
         self.inReplyToId = inReplyToId
+        self.quotedId = quotedId
         self.sensitive = sensitive
         self.spoilerText = spoilerText
         self.visibility = visibility
+        self.quoteApprovalPolicy = quoteApprovalPolicy
         self.language = language
         self.contentType = contentType
         self.inReplyToConversationId = inReplyToConversationId
@@ -44,8 +50,19 @@ public struct PostParams: Codable, Sendable {
 
     public init(post: String, visibility: Post.Visibility, spoilerText: String? = nil) {
         self.init(
-            post: post, mediaIds: [], poll: nil, inReplyToId: nil, sensitive: nil, spoilerText: spoilerText, visibility: visibility, language: nil,
-            contentType: nil, inReplyToConversationId: nil)
+            post: post,
+            mediaIds: [],
+            poll: nil,
+            inReplyToId: nil,
+            quotedId: nil,
+            sensitive: nil,
+            spoilerText: spoilerText,
+            visibility: visibility,
+            quoteApprovalPolicy: nil,
+            language: nil,
+            contentType: nil,
+            inReplyToConversationId: nil
+        )
     }
 
     /// The text content of the post. If media_ids is provided, this becomes optional. Attaching a poll is optional while post is provided.
@@ -56,12 +73,16 @@ public struct PostParams: Codable, Sendable {
     public var poll: CreatePoll?
     ///  ID of the post being replied to, if post is a reply.
     public var inReplyToId: String?
+    /// ID of the quoted post, if post is a quote.
+    public var quotedId: String?
     /// Mark post and attached media as sensitive? Defaults to false.
     public var sensitive: Bool?
     /// Text to be shown as a warning or subject before the actual content. Posts are generally collapsed behind this field.
     public var spoilerText: String?
     /// Sets the visibility of the posted post to public, unlisted, private, direct.
     public var visibility: Post.Visibility
+    /// Policy to quote this post: public, followers or nobody. If omitted, it will use the user’s default settings; If the status’ visibility is private or direct, this parameter will be ignored and the policy be set to nobody.
+    public var quoteApprovalPolicy: QuotePolicy?
     /// ISO 639 language code for this post.
     public var language: String?
     /// (Pleroma) The MIME type of the post, it is transformed into HTML by the backend. You can get the list of the supported MIME types with the nodeinfo endpoint.
@@ -75,9 +96,11 @@ public struct PostParams: Codable, Sendable {
         case mediaIds = "media_ids"
         case poll
         case inReplyToId = "in_reply_to_id"
+        case quotedId = "quoted_status_id"
         case sensitive
         case spoilerText = "spoiler_text"
         case visibility
+        case quoteApprovalPolicy = "quote_approval_policy"
         case language
         case contentType = "content_type"
         case inReplyToConversationId = "in_reply_to_conversation_id"

@@ -132,6 +132,101 @@ extension TootClient {
         }
         return try await fetchRaw(Context.self, req)
     }
+
+    /// Retrieves quotes of post
+    /// - Parameters:
+    ///   - id: The ID of the post
+    ///   - pageInfo: A PagedInfo object for max/since
+    ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    /// - Returns: A PagedResult containing the quotes retrieved
+    public func getQuotes(
+        of id: String,
+        pageInfo: PagedInfo? = nil,
+        limit: Int? = nil
+    ) async throws -> PagedResult<[Post]> {
+        let response = try await getQuotesRow(of: id, pageInfo: pageInfo, limit: limit)
+        return response.data
+    }
+
+    /// Retrieves quotes of post with HTTP response metadata
+    /// - Parameters:
+    ///   - id: The ID of the post
+    ///   - pageInfo: A PagedInfo object for max/since
+    ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    /// - Returns: A TootResponse containing the paginated quotes and HTTP metadata
+    public func getQuotesRow(
+        of id: String,
+        pageInfo: PagedInfo? = nil,
+        limit: Int? = nil
+    ) async throws -> TootResponse<PagedResult<[Post]>> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "statuses", id, "quotes"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+        return try await fetchPagedResultRaw(req)
+    }
+
+    /// Revoke a quote of post
+    /// - Parameters:
+    ///   - quoteId: The ID of the quote
+    ///   - postId: The ID of the post
+    /// - Returns: The  quote
+    public func revokeQuote(
+        _ quoteId: String,
+        of postId: String
+    ) async throws -> Post {
+        let response = try await revokeQuoteRaw(quoteId, of: postId)
+        return response.data
+    }
+
+    /// Revoke a quote of post with HTTP response metadata
+    /// - Parameters:
+    ///   - quoteId: The ID of the quote
+    ///   - postId: The ID of the post
+    /// - Returns: A TootResponse containing quote and HTTP metadata
+    public func revokeQuoteRaw(
+        _ quoteId: String,
+        of postId: String
+    ) async throws -> TootResponse<Post> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "statuses", postId, "quotes", quoteId, "revoke"])
+            $0.method = .post
+        }
+        return try await fetchRaw(Post.self, req)
+    }
+
+    /// Update quote policy of post
+    /// - Parameters:
+    ///   - quotePolicy: The new quote policy of the post
+    ///   - id: The ID of the post
+    /// - Returns: The  post
+    public func updateQuotePolicy(
+        _ quotePolicy: QuotePolicy,
+        of id: String
+    ) async throws -> Post {
+        let response = try await updateQuotePolicyRaw(quotePolicy, of: id)
+        return response.data
+    }
+
+    /// Update quote policy of post with HTTP response metadata
+    /// - Parameters:
+    ///   - quotePolicy: The new quote policy of the post
+    ///   - id: The ID of the post
+    /// - Returns: A TootResponse containing post and HTTP metadata
+    public func updateQuotePolicyRaw(
+        _ quotePolicy: QuotePolicy,
+        of id: String
+    ) async throws -> TootResponse<Post> {
+        let req = try HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "statuses", id, "interaction_policy"])
+            $0.method = .put
+            $0.body = try .form(
+                queryItems: [.init(name: "quote_approval_policy", value: quotePolicy.rawValue)]
+            )
+        }
+        return try await fetchRaw(Post.self, req)
+    }
 }
 
 extension TootClient {
