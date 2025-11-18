@@ -184,7 +184,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
                 case unsupported = "unsupported_policy"
             }
 
-            public init(from decoder: Decoder) throws {
+            public init(from decoder: any Decoder) throws {
                 let container = try decoder.singleValueContainer()
                 let rawValue = try container.decode(String.self)
                 self = .init(rawValue: rawValue) ?? .unsupported
@@ -197,7 +197,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
             case denied
             case unknown
 
-            public init(from decoder: Decoder) throws {
+            public init(from decoder: any Decoder) throws {
                 let container = try decoder.singleValueContainer()
                 let rawValue = try container.decode(String.self)
                 self = .init(rawValue: rawValue) ?? .unknown
