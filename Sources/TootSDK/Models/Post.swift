@@ -169,12 +169,12 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
             case `public`
             case followers
             case following
-            case unsupportedPolicy = "unsupported_policy"
+            case unsupported = "unsupported_policy"
 
             public init(from decoder: any Decoder) throws {
                 let container = try decoder.singleValueContainer()
                 let rawValue = try container.decode(String.self)
-                self = .init(rawValue: rawValue) ?? .unsupportedPolicy
+                self = .init(rawValue: rawValue) ?? .unsupported
             }
         }
 
