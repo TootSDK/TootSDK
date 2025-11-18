@@ -10,6 +10,7 @@ public struct EditPostParams: Codable, Sendable {
         post: String,
         spoilerText: String? = nil,
         sensitive: Bool? = nil,
+        quoteApprovalPolicy: QuotePolicy? = nil,
         language: String? = nil,
         mediaIds: [String]? = nil,
         mediaAttributes: [MediaAttribute]? = nil,
@@ -18,6 +19,7 @@ public struct EditPostParams: Codable, Sendable {
         self.post = post
         self.spoilerText = spoilerText
         self.sensitive = sensitive
+        self.quoteApprovalPolicy = quoteApprovalPolicy
         self.language = language
         self.mediaIds = mediaIds
         self.mediaAttributes = mediaAttributes
@@ -30,6 +32,8 @@ public struct EditPostParams: Codable, Sendable {
     public var spoilerText: String?
     /// Mark post and attached media as sensitive? Defaults to false.
     public var sensitive: Bool?
+    /// Policy to quote this post: public, followers or nobody. If omitted, it will use the user’s default settings; If the status’ visibility is private or direct, this parameter will be ignored and the policy be set to nobody.
+    public var quoteApprovalPolicy: QuotePolicy?
     /// ISO 639 language code for the post.
     public var language: String?
     /// Include Attachment IDs to be attached as media. If provided, post becomes optional, and poll cannot be used.
@@ -43,6 +47,7 @@ public struct EditPostParams: Codable, Sendable {
         case post = "status"
         case spoilerText = "spoiler_text"
         case sensitive
+        case quoteApprovalPolicy = "quote_approval_policy"
         case language
         case mediaIds = "media_ids"
         case mediaAttributes = "media_attributes"
