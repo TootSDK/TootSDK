@@ -132,6 +132,40 @@ extension TootClient {
         }
         return try await fetchRaw(Context.self, req)
     }
+
+    /// Retrieves quotes of post
+    /// - Parameters:
+    ///   - id: The ID of the Post
+    ///   - pageInfo: A PagedInfo object for max/since
+    ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    /// - Returns: A PagedResult containing the quotes retrieved
+    public func getQuotes(
+        of id: String,
+        pageInfo: PagedInfo? = nil,
+        limit: Int? = nil
+    ) async throws -> PagedResult<[Post]> {
+        let response = try await getQuotesRow(of: id, pageInfo: pageInfo, limit: limit)
+        return response.data
+    }
+
+    /// Retrieves quotes of post with HTTP response metadata
+    /// - Parameters:
+    ///   - id: The ID of the Post
+    ///   - pageInfo: A PagedInfo object for max/since
+    ///   - limit: Maximum number of results to return (defaults to 20 on Mastodon with a max of 40)
+    /// - Returns: A TootResponse containing the paginated quotes and HTTP metadata
+    public func getQuotesRow(
+        of id: String,
+        pageInfo: PagedInfo? = nil,
+        limit: Int? = nil
+    ) async throws -> TootResponse<PagedResult<[Post]>> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "statuses", id, "quotes"])
+            $0.method = .get
+            $0.query = getQueryParams(pageInfo, limit: limit)
+        }
+        return try await fetchPagedResultRaw(req)
+    }
 }
 
 extension TootClient {
