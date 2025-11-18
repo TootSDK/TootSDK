@@ -21,6 +21,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         tags: [Tag],
         emojis: [Emoji],
         repostsCount: Int,
+        quotesCount: Int? = nil,
         favouritesCount: Int,
         repliesCount: Int,
         url: String? = nil,
@@ -55,6 +56,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         self.tags = tags
         self.emojis = emojis
         self.repostsCount = repostsCount
+        self.quotesCount = quotesCount
         self.favouritesCount = favouritesCount
         self.repliesCount = repliesCount
         self.url = url
@@ -106,6 +108,8 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     public var emojis: [Emoji]
     /// How many reposts this post has received.
     public var repostsCount: Int
+    /// How many quotes this post has received.
+    public var quotesCount: Int?
     /// How many favourites this post has received.
     public var favouritesCount: Int
     /// How many replies this post has received.
@@ -171,6 +175,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case tags
         case emojis
         case repostsCount = "reblogsCount"
+        case quotesCount = "quotes_count"
         case favouritesCount
         case repliesCount
         case url
@@ -208,6 +213,7 @@ extension Post: Hashable {
             && lhs.tags == rhs.tags
             && lhs.emojis == rhs.emojis
             && lhs.repostsCount == rhs.repostsCount
+            && lhs.quotesCount == rhs.quotesCount
             && lhs.favouritesCount == rhs.favouritesCount
             && lhs.repliesCount == rhs.repliesCount
             && lhs.application == rhs.application
@@ -244,6 +250,7 @@ extension Post: Hashable {
         hasher.combine(tags)
         hasher.combine(emojis)
         hasher.combine(repostsCount)
+        hasher.combine(quotesCount)
         hasher.combine(favouritesCount)
         hasher.combine(repliesCount)
         hasher.combine(application)

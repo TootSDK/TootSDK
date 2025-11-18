@@ -9,7 +9,7 @@
 public struct QuoteApproval: Codable, Hashable, Sendable {
     public let automatic: [Policy]
     public let manual: [Policy]
-    public let currentUser: CurrentUserPolicy
+    public let currentUser: CurrentUserPolicy?
 
     enum CodingKeys: String, CodingKey {
         case automatic
