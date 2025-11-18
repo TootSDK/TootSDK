@@ -166,6 +166,35 @@ extension TootClient {
         }
         return try await fetchPagedResultRaw(req)
     }
+
+    /// Revoke a quote of post
+    /// - Parameters:
+    ///   - quoteId: The ID of the Quote
+    ///   - postId: The ID of the Post
+    /// - Returns: The  quote
+    public func revokeQuote(
+        _ quoteId: String,
+        of postId: String
+    ) async throws -> Post {
+        let response = try await revokeQuoteRaw(quoteId, of: postId)
+        return response.data
+    }
+
+    /// Revoke a quote of post with HTTP response metadata
+    /// - Parameters:
+    ///   - quoteId: The ID of the Quote
+    ///   - postId: The ID of the Post
+    /// - Returns: A TootResponse containing quote and HTTP metadata
+    public func revokeQuoteRaw(
+        _ quoteId: String,
+        of postId: String
+    ) async throws -> TootResponse<Post> {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "statuses", postId, "quotes", quoteId, "revoke"])
+            $0.method = .post
+        }
+        return try await fetchRaw(Post.self, req)
+    }
 }
 
 extension TootClient {
