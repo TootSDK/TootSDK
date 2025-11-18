@@ -7,6 +7,8 @@ import Foundation
 public struct Preferences: Codable, Hashable, Sendable {
     /// Default visibility for new posts. Equivalent to Source#privacy.
     public var postingDefaultVisibility: OpenEnum<Post.Visibility>
+    /// Default policy to quote post.
+    public var postingDefaultQuotePolicy: QuotePolicy?
     /// Default sensitivity flag for new posts. Equivalent to Source#sensitive.
     public var postingDefaultSensitive: Bool
     /// Default language for new posts. Equivalent to Source#language
@@ -20,6 +22,7 @@ public struct Preferences: Codable, Hashable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case postingDefaultVisibility = "posting:default:visibility"
+        case postingDefaultQuotePolicy = "posting:default:quote_policy"
         case postingDefaultSensitive = "posting:default:sensitive"
         case postingDefaultLanguage = "posting:default:language"
         case readingExpandMedia = "reading:expand:media"
