@@ -6,14 +6,23 @@ import Foundation
 /// Represents display or publishing preferences of user's own account. Returned as an additional entity when verifying and updated credentials, as an attribute of Account.
 public struct TootSource: Codable, Hashable, Sendable {
     public init(
-        note: String? = nil, fields: [TootField], privacy: Post.Visibility? = nil, sensitive: Bool? = nil, language: String? = nil,
-        followRequestsCount: Int? = nil, indexable: Bool? = nil, hideCollections: Bool? = nil, discoverable: Bool? = nil,
+        note: String? = nil,
+        fields: [TootField],
+        privacy: Post.Visibility? = nil,
+        sensitive: Bool? = nil,
+        quotePolicy: QuotePolicy? = nil,
+        language: String? = nil,
+        followRequestsCount: Int? = nil,
+        indexable: Bool? = nil,
+        hideCollections: Bool? = nil,
+        discoverable: Bool? = nil,
         attributionDomains: [String]? = nil
     ) {
         self.note = note
         self.fields = fields
         self.privacy = .optional(privacy)
         self.sensitive = sensitive
+        self.quotePolicy = quotePolicy
         self.language = language
         self.followRequestsCount = followRequestsCount
         self.indexable = indexable
@@ -30,6 +39,8 @@ public struct TootSource: Codable, Hashable, Sendable {
     public var privacy: OpenEnum<Post.Visibility>?
     /// Whether new posts should be marked sensitive by default.
     public var sensitive: Bool?
+    /// The default policy to quote post.
+    public var quotePolicy: QuotePolicy?
     ///  The default posting language for new posts.
     public var language: String?
     /// The number of pending follow requests.
