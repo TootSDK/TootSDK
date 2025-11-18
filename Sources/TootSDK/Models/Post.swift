@@ -165,29 +165,16 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         public let manual: [Policy]
         public let currentUser: CurrentUserPolicy?
 
-        enum CodingKeys: String, CodingKey {
-            case automatic
-            case manual
-            case currentUser = "current_user"
-        }
-
         public enum Policy: String, CaseIterable, Codable, Sendable {
             case `public`
             case followers
             case following
-            case unsupported
-
-            enum CodingKeys: String, CodingKey {
-                case `public`
-                case followers
-                case following
-                case unsupported = "unsupported_policy"
-            }
+            case unsupportedPolicy = "unsupported_policy"
 
             public init(from decoder: any Decoder) throws {
                 let container = try decoder.singleValueContainer()
                 let rawValue = try container.decode(String.self)
-                self = .init(rawValue: rawValue) ?? .unsupported
+                self = .init(rawValue: rawValue) ?? .unsupportedPolicy
             }
         }
 
@@ -221,7 +208,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
         case tags
         case emojis
         case repostsCount = "reblogsCount"
-        case quotesCount = "quotes_count"
+        case quotesCount
         case favouritesCount
         case repliesCount
         case url
