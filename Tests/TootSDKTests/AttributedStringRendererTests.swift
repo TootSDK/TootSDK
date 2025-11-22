@@ -84,5 +84,63 @@
             #expect(rendered.plainString == plainString)
             #expect(rendered.attributedString == attributedString)
         }
+
+        private let htmlWithSpecialMarkup = #"<p class="quote-inline">RE: <a href="https://example.com/post/1234" rel="nofollow noopener" translate="no" target="_blank"><span class="invisible">https://</span><span class="ellipsis">example.com/post/1</span><span class="invisible">234</span></a></p><p>Hello world</p>"#
+
+        @Test func htmlWithInlineQuoteSkipped() async throws {
+            let renderer = AttributedStringRenderer()
+            let renderedDefault = renderer.render(html: htmlWithSpecialMarkup, options: .skipInlineQuotes)
+            #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
+            #expect(renderedDefault.plainString == "Hello world")
+            #expect(renderedDefault.attributedString == AttributedString("Hello world"))
+        }
+
+        @Test func htmlWithInlineQuotePreserved() async throws {
+            let renderer = AttributedStringRenderer()
+            let renderedDefault = renderer.render(html: htmlWithSpecialMarkup)
+            #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
+            #expect(renderedDefault.plainString == "RE: https://example.com/post/1234\n\nHello world")
+            let attributedString = try AttributedString(
+                markdown: "RE: [https://example.com/post/1234](https://example.com/post/1234)\n\nHello world",
+                options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+            )
+            #expect(renderedDefault.attributedString == attributedString)
+        }
+
+        @Test func htmlWithInvisiblesSkipped() async throws {
+            let renderer = AttributedStringRenderer()
+            let renderedDefault = renderer.render(html: htmlWithSpecialMarkup, options: .skipInvisibles)
+            #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
+            #expect(renderedDefault.plainString == "RE: example.com/post/1\n\nHello world")
+            let attributedString = try AttributedString(
+                markdown: "RE: [example.com/post/1](https://example.com/post/1234)\n\nHello world",
+                options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+            )
+            #expect(renderedDefault.attributedString == attributedString)
+        }
+
+        @Test func htmlWithEllipsisRendered() async throws {
+            let renderer = AttributedStringRenderer()
+            let renderedDefault = renderer.render(html: htmlWithSpecialMarkup, options: .renderEllipsis)
+            #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
+            #expect(renderedDefault.plainString == "RE: https://example.com/post/1…234\n\nHello world")
+            let attributedString = try AttributedString(
+                markdown: "RE: [https://example.com/post/1…234](https://example.com/post/1234)\n\nHello world",
+                options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+            )
+            #expect(renderedDefault.attributedString == attributedString)
+        }
+
+        @Test func htmlWithShortenedLinks() async throws {
+            let renderer = AttributedStringRenderer()
+            let renderedDefault = renderer.render(html: htmlWithSpecialMarkup, options: .shortenLinks)
+            #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
+            #expect(renderedDefault.plainString == "RE: example.com/post/1…\n\nHello world")
+            let attributedString = try AttributedString(
+                markdown: "RE: [example.com/post/1…](https://example.com/post/1234)\n\nHello world",
+                options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+            )
+            #expect(renderedDefault.attributedString == attributedString)
+        }
     }
 #endif
