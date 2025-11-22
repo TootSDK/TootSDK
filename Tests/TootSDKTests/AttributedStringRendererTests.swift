@@ -85,7 +85,8 @@
             #expect(rendered.attributedString == attributedString)
         }
 
-        private let htmlWithSpecialMarkup = #"<p class="quote-inline">RE: <a href="https://example.com/post/1234" rel="nofollow noopener" translate="no" target="_blank"><span class="invisible">https://</span><span class="ellipsis">example.com/post/1</span><span class="invisible">234</span></a></p><p>Hello world</p>"#
+        private let htmlWithSpecialMarkup =
+            #"<p class="quote-inline">RE: <a href="https://example.com/post/1234" rel="nofollow noopener" translate="no" target="_blank"><span class="invisible">https://</span><span class="ellipsis">example.com/post/1</span><span class="invisible">234</span></a></p><p>Hello world</p>"#
 
         @Test func htmlWithInlineQuoteSkipped() async throws {
             let renderer = AttributedStringRenderer()
