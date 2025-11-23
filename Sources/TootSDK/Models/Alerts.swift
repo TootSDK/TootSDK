@@ -68,5 +68,7 @@ public struct Alerts: Codable, Hashable, Sendable {
         case update
         case adminSignUp = "admin.sign_up"
         case adminReport = "admin.report"
+        case quote
+        case quotedUpdate
     }
 }
