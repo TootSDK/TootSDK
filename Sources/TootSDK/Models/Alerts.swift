@@ -14,7 +14,9 @@ public struct Alerts: Codable, Hashable, Sendable {
         post: Bool? = nil,
         update: Bool? = nil,
         adminSignUp: Bool? = nil,
-        adminReport: Bool? = nil
+        adminReport: Bool? = nil,
+        quote: Bool? = nil,
+        quotedUpdate: Bool? = nil,
     ) {
         self.follow = follow
         self.favourite = favourite
@@ -26,6 +28,8 @@ public struct Alerts: Codable, Hashable, Sendable {
         self.update = update
         self.adminSignUp = adminSignUp
         self.adminReport = adminReport
+        self.quote = quote
+        self.quotedUpdate = quotedUpdate
     }
 
     /// Receive a push notification when someone has followed you.
@@ -48,6 +52,10 @@ public struct Alerts: Codable, Hashable, Sendable {
     public var adminSignUp: Bool?
     /// Receive a push notification about a new report.
     public var adminReport: Bool?
+    /// Receive a push notification when a post you created has been quoted by someone else.
+    public var quote: Bool?
+    /// Receive a push notification when someone edits post you quoted.
+    public var quotedUpdate: Bool?
 
     enum CodingKeys: String, CodingKey {
         case follow
