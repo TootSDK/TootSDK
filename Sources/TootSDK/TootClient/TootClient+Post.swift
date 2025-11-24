@@ -159,6 +159,7 @@ extension TootClient {
         pageInfo: PagedInfo? = nil,
         limit: Int? = nil
     ) async throws -> TootResponse<PagedResult<[Post]>> {
+        try requireFeature(.quotes)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "quotes"])
             $0.method = .get
@@ -189,6 +190,7 @@ extension TootClient {
         _ quoteId: String,
         of postId: String
     ) async throws -> TootResponse<Post> {
+        try requireFeature(.quotes)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", postId, "quotes", quoteId, "revoke"])
             $0.method = .post
@@ -218,6 +220,7 @@ extension TootClient {
         _ quotePolicy: QuotePolicy,
         of id: String
     ) async throws -> TootResponse<Post> {
+        try requireFeature(.quotes)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "interaction_policy"])
             $0.method = .put
@@ -566,4 +569,7 @@ extension TootFeature {
     public static let translatePost = TootFeature(requirements: [
         .from(.mastodon, version: 2, fallbackDisplayVersion: "4.0.0")
     ])
+
+    /// Ability to quote posts
+    public static let quotes = TootFeature(requirements: [.from(.mastodon, version: 7, fallbackDisplayVersion: "4.5.0")])
 }
