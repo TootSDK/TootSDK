@@ -27,6 +27,7 @@ let package = Package(
         .package(url: "https://github.com/karwa/swift-url.git", from: "0.4.2"),
         .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0"..<"4.0.0"),
         .package(url: "https://github.com/mxcl/Version.git", from: "2.0.0"),
+        .package(url: "https://github.com/apple/swift-http-structured-headers.git", from: "1.5.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -47,6 +48,7 @@ let package = Package(
                 .product(name: "WebURLFoundationExtras", package: "swift-url"),
                 .product(name: "Crypto", package: "swift-crypto"),
                 .product(name: "Version", package: "Version"),
+                .product(name: "StructuredFieldValues", package: "swift-http-structured-headers"),
             ],
             resources: [.copy("PrivacyInfo.xcprivacy")]
         ),
