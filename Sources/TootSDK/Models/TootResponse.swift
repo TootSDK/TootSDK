@@ -176,13 +176,13 @@ extension TootResponse {
     }
 
     /// Async refresh job associated with or triggered by a request (Mastodon-Async-Refresh)
-    public var asyncRefresh: AsyncRefreshHint? {
+    public var asyncRefresh: _AsyncRefreshHint? {
         guard let headerString = header(named: "Mastodon-Async-Refresh") else {
             return nil
         }
 
         let decoder = StructuredFieldValueDecoder()
-        return try? decoder.decode(AsyncRefreshHint.self, from: headerString.utf8Array)
+        return try? decoder.decode(_AsyncRefreshHint.self, from: headerString.utf8Array)
     }
 }
 

@@ -148,7 +148,7 @@ final class TootResponseTests: XCTestCase {
         XCTAssertEqual(response.sunsetWarning, "Wed, 11 Nov 2020 23:59:59 GMT")
         XCTAssertEqual(
             response.asyncRefresh,
-            AsyncRefreshHint(id: "ImNvbnRleHQ6MTE1NDU4Mzk3NzM5NDE2MzQzOnJlZnJlc2gi--75a626571007cfb13bc09ef3f57bf062547c73dc", retry: 3)
+            _AsyncRefreshHint(id: "ImNvbnRleHQ6MTE1NDU4Mzk3NzM5NDE2MzQzOnJlZnJlc2gi--75a626571007cfb13bc09ef3f57bf062547c73dc", retry: 3)
         )
     }
 

@@ -9,7 +9,9 @@ import Foundation
 import StructuredFieldValues
 
 /// Represents a hint that the client can or should asynchronously refresh the results of an API call.
-public struct AsyncRefreshHint: Sendable, Hashable, Codable, Identifiable {
+///
+/// - Warning: This currently follows the [Mastodon async refreshes v1 alpha](https://docs.joinmastodon.org/methods/async_refreshes/) format.
+public struct _AsyncRefreshHint: Sendable, Hashable, Codable, Identifiable {
 
     /// The ID of the async refresh.
     public var id: String
@@ -33,6 +35,6 @@ public struct AsyncRefreshHint: Sendable, Hashable, Codable, Identifiable {
     }
 }
 
-extension AsyncRefreshHint: StructuredFieldValue {
+extension _AsyncRefreshHint: StructuredFieldValue {
     public static let structuredFieldType = StructuredFieldType.dictionary
 }
