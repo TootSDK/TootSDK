@@ -2,6 +2,7 @@
 // ABOUTME: Provides access to headers, status codes, URLs, and raw response bodies for debugging
 
 import Foundation
+import StructuredFieldValues
 
 /// A wrapper type that contains both the decoded response data and HTTP response metadata
 ///
@@ -172,6 +173,16 @@ extension TootResponse {
     /// Sunset warning for API endpoint (Sunset)
     public var sunsetWarning: String? {
         header(named: "Sunset")
+    }
+
+    /// Async refresh job associated with or triggered by a request (Mastodon-Async-Refresh)
+    public var asyncRefresh: _AsyncRefreshHint? {
+        guard let headerString = header(named: "Mastodon-Async-Refresh") else {
+            return nil
+        }
+
+        let decoder = StructuredFieldValueDecoder()
+        return try? decoder.decode(_AsyncRefreshHint.self, from: headerString.utf8Array)
     }
 }
 
