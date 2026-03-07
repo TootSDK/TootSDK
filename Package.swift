@@ -54,7 +54,7 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
                 .enableUpcomingFeature("InferIsolatedConformances"),
-                .defaultIsolation(nil)
+                .defaultIsolation(nil),
             ]
         ),
         .testTarget(
@@ -63,7 +63,7 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
                 .enableUpcomingFeature("InferIsolatedConformances"),
-                .defaultIsolation(nil)
+                .defaultIsolation(nil),
             ]
         ),
     ]
