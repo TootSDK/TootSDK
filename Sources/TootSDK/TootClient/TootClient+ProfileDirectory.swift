@@ -30,7 +30,7 @@ extension TootClient {
     /// - Returns: TootResponse containing array of Accounts and HTTP metadata
     public func getProfileDirectoryRaw(params: ProfileDirectoryParams, offset: Int? = nil, limit: Int? = nil) async throws -> TootResponse<[Account]>
     {
-        try requireFeature(.profileDirectory)
+        try await requireFeature(.profileDirectory)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "directory"])
             $0.method = .get

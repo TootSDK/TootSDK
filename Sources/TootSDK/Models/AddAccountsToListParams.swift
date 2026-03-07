@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct AddAccountsToListParams: Codable {
+public struct AddAccountsToListParams: Codable, Sendable {
     public init(accountIds: [String]) {
         self.accountIds = accountIds
     }

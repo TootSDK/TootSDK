@@ -29,7 +29,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the accounts that are requesting a follow and HTTP metadata
     @available(*, deprecated, renamed: "getFollowRequestsRaw")
     public func getPendingFollowRequestsRaw(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<[Account]> {
-        try requireFeature(.followRequests)
+        try await requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follow_requests"])
             $0.method = .get
@@ -57,7 +57,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the accounts that are requesting a follow and HTTP metadata
     public func getFollowRequestsRaw(_ pageInfo: PagedInfo? = nil, limit: Int = 40) async throws -> TootResponse<PagedResult<[Account]>> {
         let requestLimit = min(limit, 80)
-        try requireFeature(.followRequests)
+        try await requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follow_requests"])
             $0.method = .get
@@ -82,7 +82,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the relationship with the account and HTTP metadata
     @discardableResult
     public func acceptFollowRequestRaw(id: String) async throws -> TootResponse<Relationship> {
-        try requireFeature(.followRequests)
+        try await requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follow_requests", id, "authorize"])
             $0.method = .post
@@ -106,7 +106,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the relationship with the account and HTTP metadata
     @discardableResult
     public func rejectFollowRequestRaw(id: String) async throws -> TootResponse<Relationship> {
-        try requireFeature(.followRequests)
+        try await requireFeature(.followRequests)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follow_requests", id, "reject"])
             $0.method = .post

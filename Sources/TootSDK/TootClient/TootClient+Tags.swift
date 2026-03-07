@@ -43,7 +43,7 @@ extension TootClient {
     /// - Note: Requires hashtag following feature to be available.
     @discardableResult
     public func followTagRaw(_ id: String) async throws -> TootResponse<Tag> {
-        try requireFeature(.hashtagFollowing)
+        try await requireFeature(.hashtagFollowing)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "tags", id, "follow"])
             $0.method = .post
@@ -69,7 +69,7 @@ extension TootClient {
     /// - Note: Requires hashtag following feature to be available.
     @discardableResult
     public func unfollowTagRaw(_ id: String) async throws -> TootResponse<Tag> {
-        try requireFeature(.hashtagFollowing)
+        try await requireFeature(.hashtagFollowing)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "tags", id, "unfollow"])
             $0.method = .post
@@ -96,7 +96,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the paginated tags and HTTP metadata
     /// - Note: Requires hashtag following feature to be available.
     public func getFollowedTagsRaw(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[Tag]>> {
-        try requireFeature(.hashtagFollowing)
+        try await requireFeature(.hashtagFollowing)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "followed_tags"])
             $0.method = .get

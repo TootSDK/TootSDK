@@ -12,15 +12,20 @@ import Foundation
 #endif
 
 /// Encapsulates a WebSocket connection to a server for streaming timeline updates.
-public class TootSocket {
+public class TootSocket: @unchecked Sendable {
     /// The underlying WebSocket task.
     private let webSocketTask: URLSessionWebSocketTask
     private let encoder = TootEncoder()
     private let decoder = TootDecoder()
-    public private(set) var isClosed = false
+    private let _closeLock = NSLock()
+    private var _isClosed = false
 
-    /// Set this to `true` to see a `print()` of socket message payloads. The value is inherited from the TootClient instance used to create the socket.
-    public var debugResponses: Bool = false
+    public var isClosed: Bool {
+        _closeLock.withLock { _isClosed }
+    }
+
+    /// When `true`, socket message payloads are printed. Inherited from the TootClient instance used to create the socket.
+    public let debugResponses: Bool
 
     /// Async throwing stream of all ``StreamingEvent``s sent by the server.
     ///
@@ -28,34 +33,7 @@ public class TootSocket {
     /// > - ``TootSDKError/decodingError(_:)`` if a received message cannot be decoded as a ``StreamingEvent``.
     /// > - An `NSError` if the web socket task encounters an error receiving a message.
     /// > - `CancellationError` if the containing task has been cancelled while waiting for a message.
-    public lazy var stream: AsyncThrowingStream<StreamingEvent, Error> = {
-        let printResponse = debugResponses
-        return AsyncThrowingStream<StreamingEvent, Error> { [webSocketTask, decoder] in
-            do {
-                let message = try await webSocketTask.receive()
-                let data =
-                    switch message {
-                    case .data(let data):
-                        data
-                    case .string(let string):
-                        string.data(using: .utf8)
-                    @unknown default:
-                        throw TootSDKError.decodingError("message")
-                    }
-                guard let data else { throw TootSDKError.decodingError("message data") }
-
-                if printResponse {
-                    print("⬅️ 🔌", data.prettyPrintedJSONString ?? String(data: data, encoding: .utf8) ?? "Undecodable")
-                }
-                return try decoder.decode(StreamingEvent.self, from: data)
-            } catch {
-                // URLSessionWebSocketTask.receive() doesn't respond to Task cancellation, so we need to check if the task has already been cancelled at the time that it throws any error.
-                try Task.checkCancellation()
-                // Only throw the underlying error if the task has not been cancelled.
-                throw error
-            }
-        }
-    }()
+    public let stream: AsyncThrowingStream<StreamingEvent, Error>
 
     /// Send a JSON-encoded request to subscribe to or unsubscribe from a streaming timeline.
     ///
@@ -93,17 +71,44 @@ public class TootSocket {
     /// - Parameters:
     ///   - closeCode: The reason for closing the connection.
     public func close(with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) {
-        guard !isClosed else {
-            return
+        _closeLock.withLock {
+            guard !_isClosed else { return }
+            if webSocketTask.closeCode == .invalid {
+                webSocketTask.cancel(with: closeCode, reason: nil)
+            }
+            _isClosed = true
         }
-        if webSocketTask.closeCode == .invalid {
-            webSocketTask.cancel(with: closeCode, reason: nil)
-        }
-        isClosed = true
     }
 
-    internal init(webSocketTask: URLSessionWebSocketTask) {
+    internal init(webSocketTask: URLSessionWebSocketTask, debugResponses: Bool = false) {
         self.webSocketTask = webSocketTask
+        self.debugResponses = debugResponses
+        let printResponse = debugResponses
+        let ws = webSocketTask
+        let dec = self.decoder
+        self.stream = AsyncThrowingStream<StreamingEvent, Error> {
+            do {
+                let message = try await ws.receive()
+                let data =
+                    switch message {
+                    case .data(let data):
+                        data
+                    case .string(let string):
+                        string.data(using: .utf8)
+                    @unknown default:
+                        throw TootSDKError.decodingError("message")
+                    }
+                guard let data else { throw TootSDKError.decodingError("message data") }
+
+                if printResponse {
+                    print("⬅️ 🔌", data.prettyPrintedJSONString ?? String(data: data, encoding: .utf8) ?? "Undecodable")
+                }
+                return try dec.decode(StreamingEvent.self, from: data)
+            } catch {
+                try Task.checkCancellation()
+                throw error
+            }
+        }
         self.webSocketTask.resume()
     }
 
@@ -133,7 +138,7 @@ extension TootClient {
     /// > - ``TootSDKError/unsupportedFlavour(current:required:)`` if TootSDK doesn't support streaming to the instance flavour.
     /// > - `CancellationError` if the task is cancelled prior to creating the socket.
     public func beginStreaming() async throws -> TootSocket {
-        try requireFeature(.streaming)
+        try await requireFeature(.streaming)
 
         // get streaming endpoint URL from instance info
         async let streamingEndpoint = getInstanceInfo().streamingURL
@@ -153,10 +158,9 @@ extension TootClient {
         }
 
         try Task.checkCancellation()
-        let task = try webSocketTask(req)
+        let task = try await webSocketTask(req)
 
-        let socket = TootSocket(webSocketTask: task)
-        socket.debugResponses = self.debugResponses
+        let socket = TootSocket(webSocketTask: task, debugResponses: self.debugResponses)
         return socket
     }
 
@@ -182,12 +186,12 @@ extension TootClient {
     /// - Returns: The result of calling the client's `session.webSocketTask(with:protocols:)` with the given query items and the access token if available.
     ///
     /// - Throws: ``TootSDKError/requiredURLNotSet`` if the request does not have a URL set.
-    internal func webSocketTask(_ req: HTTPRequestBuilder) throws -> URLSessionWebSocketTask {
+    internal func webSocketTask(_ req: HTTPRequestBuilder) async throws -> URLSessionWebSocketTask {
         if req.headers.index(forKey: "User-Agent") == nil {
             req.headers["User-Agent"] = httpUserAgent
         }
 
-        if let accessToken {
+        if let accessToken = await state.accessToken {
             req.headers["Authorization"] = "Bearer \(accessToken)"
         }
 

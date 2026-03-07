@@ -3,10 +3,6 @@
 
 import Foundation
 
-extension Timeline: TootStream {
-    public typealias ResponseType = [Post]
-}
-
 // MARK: - Post stream creation
 extension TootDataStream {
 

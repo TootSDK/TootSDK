@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -50,11 +50,21 @@ let package = Package(
                 .product(name: "Version", package: "Version"),
                 .product(name: "StructuredFieldValues", package: "swift-http-structured-headers"),
             ],
-            resources: [.copy("PrivacyInfo.xcprivacy")]
+            resources: [.copy("PrivacyInfo.xcprivacy")],
+            swiftSettings: [
+                .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+                .enableUpcomingFeature("InferIsolatedConformances"),
+                .defaultIsolation(nil)
+            ]
         ),
         .testTarget(
             name: "TootSDKTests",
-            dependencies: ["TootSDK"]
+            dependencies: ["TootSDK"],
+            swiftSettings: [
+                .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+                .enableUpcomingFeature("InferIsolatedConformances"),
+                .defaultIsolation(nil)
+            ]
         ),
     ]
 )

@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct RemoveAccountsFromListParams: Codable {
+public struct RemoveAccountsFromListParams: Codable, Sendable {
     public init(accountIds: [String]) {
         self.accountIds = accountIds
     }

@@ -4,7 +4,7 @@
 import Foundation
 
 /// Specifies the parameters for a federated timeline request
-public struct FederatedTimelineQuery: Codable, Sendable {
+public struct FederatedTimelineQuery: Codable, Sendable, TimelineQuery {
     public init(onlyMedia: Bool? = nil) {
         self.onlyMedia = onlyMedia
     }
@@ -13,7 +13,7 @@ public struct FederatedTimelineQuery: Codable, Sendable {
     public var onlyMedia: Bool?
 }
 
-extension FederatedTimelineQuery: TimelineQuery {
+extension FederatedTimelineQuery {
 
     public func getQueryItems() -> [URLQueryItem] {
         var queryItems: [URLQueryItem] = []

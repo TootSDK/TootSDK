@@ -5,7 +5,7 @@ import Foundation
 import SwiftSoup
 
 ///  Formatter for HTML content
-public struct TootHTML {
+public struct TootHTML: Sendable {
     /// Remove all HTML tags, quick and dirty.
     /// - Parameter html: a string of html content
     /// - Returns: the processed string, free of HTML tags

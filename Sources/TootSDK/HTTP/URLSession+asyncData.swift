@@ -18,25 +18,22 @@ extension URLSession {
 
 extension URLSession {
     func data(for request: URLRequest) async throws -> (Data, URLResponse) {
-        var dataTask: URLSessionDataTask?
-        let onCancel = { dataTask?.cancel() }
+        nonisolated(unsafe) var dataTask: URLSessionDataTask?
+        nonisolated(unsafe) let onCancel = { dataTask?.cancel() }
 
         try Task.checkCancellation()
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
                 dataTask = self.dataTask(with: request) { data, response, error in
-                    guard let data = data, let response = response else {
-                        let error = error ?? URLError(.badServerResponse)
-                        return continuation.resume(throwing: error)
+                    guard let data, let response else {
+                        return continuation.resume(throwing: error ?? URLError(.badServerResponse))
                     }
                     continuation.resume(returning: (data, response))
                 }
-
                 dataTask?.resume()
             }
         } onCancel: {
             onCancel()
         }
-
     }
 }

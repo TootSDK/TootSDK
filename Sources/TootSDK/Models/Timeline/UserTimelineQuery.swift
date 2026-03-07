@@ -4,7 +4,7 @@
 import Foundation
 
 /// Specifies the parameters for a user posts timeline request
-public struct UserTimelineQuery: Sendable {
+public struct UserTimelineQuery: Sendable, TimelineQuery {
 
     public init(
         userId: String, onlyMedia: Bool? = nil, excludeReplies: Bool? = nil, excludeBoosts: Bool? = nil, pinned: Bool? = nil, tagged: String? = nil
@@ -36,7 +36,7 @@ public struct UserTimelineQuery: Sendable {
     public var tagged: String?
 }
 
-extension UserTimelineQuery: TimelineQuery {
+extension UserTimelineQuery {
 
     public func getQueryItems() -> [URLQueryItem] {
         var queryItems: [URLQueryItem] = []

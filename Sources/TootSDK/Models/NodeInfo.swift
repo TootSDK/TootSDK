@@ -7,16 +7,16 @@
 
 import Foundation
 
-public struct NodeInfo: Codable {
+public struct NodeInfo: Codable, Sendable {
     public let software: Software
 
-    public struct Software: Codable {
+    public struct Software: Codable, Sendable {
         public let name: String
         public let version: String
     }
 }
 
-public struct WellKnownNodeInfo: Codable {
+public struct WellKnownNodeInfo: Codable, Sendable {
     public let links: [Link]
 
     public var nodeInfo: String? {
@@ -29,7 +29,7 @@ public struct WellKnownNodeInfo: Codable {
         return links.first { nodeInfoRelations.contains($0.rel) }?.href
     }
 
-    public struct Link: Codable {
+    public struct Link: Codable, Sendable {
         public let rel: String
         public let href: String
     }

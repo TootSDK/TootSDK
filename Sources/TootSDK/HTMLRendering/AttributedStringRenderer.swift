@@ -14,13 +14,13 @@
     /// plain text and attributed versions. Supports options to skip certain
     /// elements or apply special rendering behaviors.
     @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
-    public class AttributedStringRenderer {
+    public final class AttributedStringRenderer: Sendable {
         public static let shared = AttributedStringRenderer()
 
         /// Configuration options that control how HTML is converted into attributed strings.
         /// Use these flags to skip invisibles, skip inline quotes, render ellipses,
         /// or apply combined presets like `.shortenLinks` or `.all`.
-        public struct Options: OptionSet {
+        public struct Options: OptionSet, Sendable {
             public let rawValue: Int
 
             public init(rawValue: Int) {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct FeaturedTag: Codable, Hashable, Identifiable {
+public struct FeaturedTag: Codable, Hashable, Identifiable, Sendable {
 
     /// ID of the featured tag in database.
     public var id: String

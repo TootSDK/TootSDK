@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum TootGrantType: String {
+public enum TootGrantType: String, Sendable {
     case login = "authorization_code"
     case register = "client_credentials"
 }

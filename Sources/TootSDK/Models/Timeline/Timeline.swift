@@ -4,7 +4,8 @@
 import Foundation
 
 /// Timelines that we can get posts for, or create streams of posts from
-public enum Timeline: Hashable, Sendable {
+public enum Timeline: Hashable, Sendable, TootStream {
+    public typealias ResponseType = [Post]
 
     /// The user's home timeline
     case home

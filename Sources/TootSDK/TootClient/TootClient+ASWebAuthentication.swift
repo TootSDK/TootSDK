@@ -22,7 +22,7 @@
             presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil
         ) async throws -> String {
 
-            let presentationContextProvider = presentationContextProvider ?? self.defaultPresentationAnchor
+            let presentationContextProvider = presentationContextProvider ?? TootPresentationAnchor()
 
             guard
                 let callbackURLScheme: String = URL(string: callbackURI)?.scheme

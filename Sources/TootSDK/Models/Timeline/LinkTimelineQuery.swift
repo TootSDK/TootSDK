@@ -8,7 +8,7 @@
 import Foundation
 
 /// Specifies the parameters for a link timeline request
-public struct LinkTimelineQuery: Sendable {
+public struct LinkTimelineQuery: Sendable, TimelineQuery {
 
     public init(url: String) {
         self.url = url
@@ -18,7 +18,7 @@ public struct LinkTimelineQuery: Sendable {
     public var url: String
 }
 
-extension LinkTimelineQuery: TimelineQuery {
+extension LinkTimelineQuery {
 
     public func getQueryItems() -> [URLQueryItem] {
         return [

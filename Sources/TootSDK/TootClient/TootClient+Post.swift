@@ -21,10 +21,12 @@ extension TootClient {
     /// - Parameter PostParams:post components to be published
     /// - Returns: TootResponse containing the published post and HTTP metadata
     public func publishPostRaw(_ params: PostParams) async throws -> TootResponse<Post> {
+        let currentFlavour = await self.flavour
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses"])
             $0.method = .post
-            if flavour == .sharkey {
+            if currentFlavour == .sharkey {
                 $0.body = try .json(params, encoder: encoder)
             } else {
                 $0.body = try .multipart(params, boundary: UUID().uuidString)
@@ -55,7 +57,9 @@ extension TootClient {
     /// - Parameter params: The updated content of the post to be posted.
     /// - Returns: TootResponse containing the post after the update and HTTP metadata
     public func editPostRaw(id: String, _ params: EditPostParams) async throws -> TootResponse<Post> {
-        let updateMediaSeparately = [.pixelfed, .pleroma, .akkoma, .firefish, .catodon, .iceshrimp, .sharkey].contains(flavour)
+        let currentFlavour = await self.flavour
+        let encoder = await makeEncoder()
+        let updateMediaSeparately = [.pixelfed, .pleroma, .akkoma, .firefish, .catodon, .iceshrimp, .sharkey].contains(currentFlavour)
         if updateMediaSeparately {
             try await updateMediaAttributes(params.mediaAttributes ?? [])
         }
@@ -69,7 +73,7 @@ extension TootClient {
             }
             $0.body = try .json(params, encoder: encoder)
         }
-        if flavour == .pixelfed {
+        if currentFlavour == .pixelfed {
             _ = try await fetch(req: req)
             // Pixelfed doesn't return edited post, simulate behavior of Mastodon by manually getting post
             return try await getPostRaw(id: id)
@@ -159,7 +163,7 @@ extension TootClient {
         pageInfo: PagedInfo? = nil,
         limit: Int? = nil
     ) async throws -> TootResponse<PagedResult<[Post]>> {
-        try requireFeature(.quotes)
+        try await requireFeature(.quotes)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "quotes"])
             $0.method = .get
@@ -190,7 +194,7 @@ extension TootClient {
         _ quoteId: String,
         of postId: String
     ) async throws -> TootResponse<Post> {
-        try requireFeature(.quotes)
+        try await requireFeature(.quotes)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", postId, "quotes", quoteId, "revoke"])
             $0.method = .post
@@ -220,7 +224,7 @@ extension TootClient {
         _ quotePolicy: QuotePolicy,
         of id: String
     ) async throws -> TootResponse<Post> {
-        try requireFeature(.quotes)
+        try await requireFeature(.quotes)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "interaction_policy"])
             $0.method = .put
@@ -334,7 +338,7 @@ extension TootClient {
 
     /// Privately bookmark a post with HTTP response metadata.
     public func bookmarkPostRaw(id: String) async throws -> TootResponse<Post> {
-        try requireFeature(.bookmark)
+        try await requireFeature(.bookmark)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "bookmark"])
             $0.method = .post
@@ -350,7 +354,7 @@ extension TootClient {
 
     /// Remove a post from your private bookmarks with HTTP response metadata.
     public func unbookmarkPostRaw(id: String) async throws -> TootResponse<Post> {
-        try requireFeature(.bookmark)
+        try await requireFeature(.bookmark)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unbookmark"])
             $0.method = .post
@@ -370,7 +374,7 @@ extension TootClient {
 
     /// Do not receive notifications for the thread that this post is part of with HTTP response metadata. Must be a thread in which you are a participant.
     public func mutePostRaw(id: String) async throws -> TootResponse<Post> {
-        try requireFeature(.mutePost)
+        try await requireFeature(.mutePost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "mute"])
             $0.method = .post
@@ -386,7 +390,7 @@ extension TootClient {
 
     /// Start receiving notifications again for the thread that this post is part of with HTTP response metadata.
     public func unmutePostRaw(id: String) async throws -> TootResponse<Post> {
-        try requireFeature(.mutePost)
+        try await requireFeature(.mutePost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "unmute"])
             $0.method = .post
@@ -440,10 +444,11 @@ extension TootClient {
     public func getAccountsBoostedRaw(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<
         PagedResult<[Account]>
     > {
+        let currentFlavour = await self.flavour
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "reblogged_by"])
             $0.method = .get
-            if flavour == .mastodon {
+            if currentFlavour == .mastodon {
                 $0.query = getQueryParams(pageInfo, limit: limit)
             }
         }
@@ -460,10 +465,11 @@ extension TootClient {
     public func getAccountsFavouritedRaw(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<
         PagedResult<[Account]>
     > {
+        let currentFlavour = await self.flavour
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "favourited_by"])
             $0.method = .get
-            if flavour == .mastodon {
+            if currentFlavour == .mastodon {
                 $0.query = getQueryParams(pageInfo, limit: limit)
             }
         }
@@ -511,7 +517,7 @@ extension TootClient {
 
     /// Obtain the source properties for a post so that it can be edited with HTTP response metadata.
     public func getPostSourceRaw(id: String) async throws -> TootResponse<PostSource> {
-        try requireFlavour(otherThan: [.pixelfed])
+        try await requireFlavour(otherThan: [.pixelfed])
 
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "source"])
@@ -533,11 +539,12 @@ extension TootClient {
 
     /// Translate the post content into some language with HTTP response metadata.
     public func getPostTranslationRaw(id: String, params: PostTranslationParams? = nil) async throws -> TootResponse<Translation> {
-        try requireFeature(.translatePost)
+        try await requireFeature(.translatePost)
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "statuses", id, "translate"])
             $0.method = .post
-            $0.body = try .json(params, encoder: self.encoder)
+            $0.body = try .json(params, encoder: encoder)
         }
         return try await fetchRaw(Translation.self, req)
     }

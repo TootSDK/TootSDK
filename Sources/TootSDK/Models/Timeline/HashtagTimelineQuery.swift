@@ -4,7 +4,7 @@
 import Foundation
 
 /// Specifies the parameters for a hashtag timeline request
-public struct HashtagTimelineQuery: Codable, Sendable {
+public struct HashtagTimelineQuery: Codable, Sendable, TimelineQuery {
 
     public init(
         tag: String, anyTags: [String]? = nil, allTags: [String]? = nil, noneTags: [String]? = nil, onlyMedia: Bool? = nil, local: Bool? = nil,
@@ -41,7 +41,7 @@ public struct HashtagTimelineQuery: Codable, Sendable {
     public var remote: Bool?
 }
 
-extension HashtagTimelineQuery: TimelineQuery {
+extension HashtagTimelineQuery {
 
     public func getQueryItems() -> [URLQueryItem] {
         var queryItems: [URLQueryItem] = []

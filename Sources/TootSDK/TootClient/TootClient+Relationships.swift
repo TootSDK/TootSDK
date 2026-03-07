@@ -8,6 +8,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func followAccount(by id: String, params: FollowAccountParams? = nil) async throws -> Relationship {
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "follow"])
             $0.method = .post
@@ -22,7 +23,7 @@ extension TootClient {
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g @test@instance.test)
     /// - Returns: your relationship with that account after following
     public func followAccountURI(by uri: String) async throws -> Relationship {
-        if self.flavour == .pleroma {
+        if await self.flavour == .pleroma {
 
             // On Pleroma, we get to follow by URI, but it doesn't return a relationship, it returns an account
             // So we use that to then retrieve the relationship
@@ -44,9 +45,10 @@ extension TootClient {
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g test@instance.test)
     /// - Returns: the looked up account, or an error if unable to retrieve
     public func lookupAccount(uri: String) async throws -> Account {
-        try requireFlavour(otherThan: [.pixelfed, .friendica])
+        try await requireFlavour(otherThan: [.pixelfed, .friendica])
 
-        if flavour == .pleroma || flavour == .akkoma {
+        let currentFlavour = await self.flavour
+        if currentFlavour == .pleroma || currentFlavour == .akkoma {
             return try await getAccount(by: uri)
         }
 
@@ -63,10 +65,11 @@ extension TootClient {
     /// - Parameter uri: account name on the instance you're on or a users URI (e.g @test@instance.test)
     /// - Returns: the Account being followed
     private func pleromaFollowAccountURI(by uri: String) async throws -> Relationship {
-        try requireFlavour([.pleroma])
+        try await requireFlavour([.pleroma])
 
         let params = PleromaFollowByURIParams(uri: uri)
 
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "follows"])
             $0.method = .post
@@ -90,7 +93,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func removeAccountFromFollowers(by id: String) async throws -> Relationship {
-        try requireFeature(.removeFollower)
+        try await requireFeature(.removeFollower)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "remove_from_followers"])
             $0.method = .post
@@ -138,6 +141,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func muteAccount(by id: String, params: MuteAccountParams? = nil) async throws -> Relationship {
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "mute"])
             $0.method = .post
@@ -178,7 +182,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func pinAccount(by id: String) async throws -> Relationship {
-        try requireFeature(.endorsements)
+        try await requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "pin"])
             $0.method = .post
@@ -193,7 +197,7 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested, or an error if unable to retrieve
     public func unpinAccount(by id: String) async throws -> Relationship {
-        try requireFeature(.endorsements)
+        try await requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "unpin"])
             $0.method = .post
@@ -207,7 +211,7 @@ extension TootClient {
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getEndorsements(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
-        try requireFeature(.endorsements)
+        try await requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "endorsements"])
             $0.method = .get
@@ -226,7 +230,7 @@ extension TootClient {
     ///     - limit: Maximum number of results to return. Defaults to 40 accounts. Max 80 accounts.
     /// - Returns: the accounts requested
     public func getEndorsements(forAccount id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> PagedResult<[Account]> {
-        try requireFeature(.endorsements)
+        try await requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "endorsements"])
             $0.method = .get
@@ -241,7 +245,7 @@ extension TootClient {
     ///
     /// - Returns: the new ``Relationship``.
     public func endorseAccount(by id: String) async throws -> Relationship {
-        try requireFeature(.endorsements)
+        try await requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "endorse"])
             $0.method = .post
@@ -255,7 +259,7 @@ extension TootClient {
     ///
     /// - Returns: the new ``Relationship``.
     public func unendorseAccount(by id: String) async throws -> Relationship {
-        try requireFeature(.endorsements)
+        try await requireFeature(.endorsements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "unendorse"])
             $0.method = .post
@@ -267,7 +271,8 @@ extension TootClient {
     /// - Parameter id: the ID of the Account in the instance database.
     /// - Returns: the relationship to the account requested (including the note), or an error if unable to retrieve
     public func setNoteForAccount(by id: String, params: SetNoteForAccountParams? = nil) async throws -> Relationship {
-        try requireFeature(.privateNote)
+        try await requireFeature(.privateNote)
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", id, "note"])
             $0.method = .post
@@ -292,7 +297,7 @@ extension TootClient {
     /// - Parameter ids: Find familiar followers for the provided account IDs.
     /// - Returns: array of FamiliarFollowers
     public func getFamiliarFollowers(by ids: [String]) async throws -> [FamiliarFollowers] {
-        try requireFeature(.familiarFollowers)
+        try await requireFeature(.familiarFollowers)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "familiar_followers"])
             $0.method = .get

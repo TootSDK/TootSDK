@@ -3,7 +3,7 @@
 
 import Foundation
 
-public enum HTTPMethod: String {
+public enum HTTPMethod: String, Sendable {
     case delete = "DELETE"
     case get = "GET"
     case patch = "PATCH"

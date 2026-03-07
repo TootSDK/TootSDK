@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a subset of your follows who also follow some other user.
-public struct FamiliarFollowers: Codable, Hashable, Identifiable {
+public struct FamiliarFollowers: Codable, Hashable, Identifiable, Sendable {
     /// The ID of the Account in the database.
     public var id: String
     /// Accounts you follow that also follow this account.

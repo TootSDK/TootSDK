@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct UpdateCredentialsParams: Codable {
+public struct UpdateCredentialsParams: Codable, Sendable {
     /// The display name to use for the profile.
     public var displayName: String?
     /// The account bio.

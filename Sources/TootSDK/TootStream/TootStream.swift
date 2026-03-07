@@ -20,21 +20,22 @@ internal protocol TootStreamHolder {
     var refresh: (() async throws -> Void)? { get }
 }
 
-internal class TootEndpointStream<E: TootStream>: TootStreamHolder {
+internal class TootEndpointStream<E: TootStream>: TootStreamHolder, @unchecked Sendable {
     internal typealias ReturnType = E.ResponseType
     let endpoint: E
-
-    internal init(_ endpoint: E) {
-        self.endpoint = endpoint
-    }
-
-    lazy internal var stream: AsyncStream<ReturnType> = AsyncStream<ReturnType> { continuation in
-        self.internalContinuation = continuation
-    }
-
+    internal let stream: AsyncStream<ReturnType>
     internal var internalContinuation: AsyncStream<ReturnType>.Continuation?
     internal var pageInfo: PagedInfo?
     internal var refresh: (() async throws -> Void)?
+
+    internal init(_ endpoint: E) {
+        self.endpoint = endpoint
+        var cont: AsyncStream<ReturnType>.Continuation?
+        self.stream = AsyncStream<ReturnType> { continuation in
+            cont = continuation
+        }
+        self.internalContinuation = cont
+    }
 }
 
 // MARK: - TootDataStream

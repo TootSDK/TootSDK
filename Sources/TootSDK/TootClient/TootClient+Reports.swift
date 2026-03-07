@@ -11,7 +11,7 @@ extension TootClient {
 
     /// Report problematic users or posts to moderators.
     public func report(_ params: ReportParams) async throws {
-        if flavour == .pixelfed {
+        if await flavour == .pixelfed {
             try await pixelfedReport(params)
             return
         }
@@ -27,10 +27,12 @@ extension TootClient {
 
     /// Report categories supported by current flavour.
     public var reportCategories: Set<ReportCategory> {
-        if flavour == .pixelfed {
-            return ReportCategory.pixelfedSupported
+        get async {
+            if await flavour == .pixelfed {
+                return ReportCategory.pixelfedSupported
+            }
+            return ReportCategory.mastodonSupported
         }
-        return ReportCategory.mastodonSupported
     }
 
     private func pixelfedReport(_ params: ReportParams) async throws {
@@ -46,6 +48,7 @@ extension TootClient {
             objectId: postId ?? params.accountId,
             type: params.category
         )
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1.1", "report"])
             $0.method = .post

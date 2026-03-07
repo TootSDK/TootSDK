@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct PleromaOauthApp: Codable, Identifiable {
+public struct PleromaOauthApp: Codable, Identifiable, Sendable {
     public var id: Int
     /// Application Name
     public var name: String?

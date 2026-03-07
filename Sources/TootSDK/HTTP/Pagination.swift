@@ -4,7 +4,7 @@
 import Foundation
 import WebURL
 
-public struct Pagination {
+public struct Pagination: Sendable {
     public var prev: PagedInfo?
     public var next: PagedInfo?
 }

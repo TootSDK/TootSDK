@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct FilterStatus: Codable, Hashable, Identifiable {
+public struct FilterStatus: Codable, Hashable, Identifiable, Sendable {
     /// The ID of the FilterStatus in the database.
     public var id: String
     // swift-format-ignore: AlwaysUseLowerCamelCase

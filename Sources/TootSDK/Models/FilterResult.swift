@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FilterResult: Codable, Hashable {
+public struct FilterResult: Codable, Hashable, Sendable {
 
     public init(filter: Filter, keywordMatches: [String]? = nil, postMatches: [String]? = nil) {
         self.filter = filter

@@ -80,9 +80,3 @@ public struct Relationship: Codable, Hashable, Identifiable, Sendable {
         case note
     }
 }
-
-extension Relationship: Equatable {
-    public static func == (lhs: Relationship, rhs: Relationship) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-}

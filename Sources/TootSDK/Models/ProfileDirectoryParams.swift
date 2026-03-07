@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ProfileDirectoryParams: Codable {
+public struct ProfileDirectoryParams: Codable, Sendable {
 
     /// Use active to sort by most recently posted post (default) or new to sort by most recently created profiles.
     public var order: OpenEnum<Order>?
@@ -22,7 +22,7 @@ public struct ProfileDirectoryParams: Codable {
         self.local = local
     }
 
-    public enum Order: String, Codable, Hashable, CaseIterable {
+    public enum Order: String, Codable, Hashable, CaseIterable, Sendable {
         case active
         case new
     }

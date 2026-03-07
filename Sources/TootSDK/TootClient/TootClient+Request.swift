@@ -73,10 +73,11 @@ extension TootClient {
             scopes: scopes.joined(separator: " "),
             website: clientWebsite)
 
+        let encoder = await makeEncoder()
         let registerAppReq = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "apps"])
             $0.method = .post
-            $0.body = try .json(createAppData, encoder: self.encoder)
+            $0.body = try .json(createAppData, encoder: encoder)
         }
 
         let app = try await fetch(TootApplication.self, registerAppReq)

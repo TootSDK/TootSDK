@@ -8,7 +8,7 @@
 import Foundation
 
 /// Params to translate a post
-public struct PostTranslationParams: Codable {
+public struct PostTranslationParams: Codable, Sendable {
     /// (ISO 639 language code).
     /// The post content will be translated into this language.
     /// Defaults to the user’s current locale.

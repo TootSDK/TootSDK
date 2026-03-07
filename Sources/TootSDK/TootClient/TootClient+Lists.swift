@@ -14,7 +14,7 @@ extension TootClient {
     /// Fetch all lists that the user owns with HTTP response metadata
     /// - Returns: TootResponse containing the lists and HTTP metadata
     public func getListsRaw() async throws -> TootResponse<[List]> {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists"])
             $0.method = .get
@@ -37,7 +37,7 @@ extension TootClient {
     ///     - id: The ID of the List in the database.
     /// - Returns: TootResponse containing the list and HTTP metadata
     public func getListRaw(id: String) async throws -> TootResponse<List> {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id])
             $0.method = .get
@@ -56,11 +56,12 @@ extension TootClient {
     /// Create a new list with HTTP response metadata
     /// - Returns: TootResponse containing the created list and HTTP metadata
     public func createListRaw(params: ListParams) async throws -> TootResponse<List> {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists"])
             $0.method = .post
-            $0.body = try .json(params, encoder: self.encoder)
+            $0.body = try .json(params, encoder: encoder)
         }
 
         return try await fetchRaw(List.self, req)
@@ -76,11 +77,12 @@ extension TootClient {
     /// Change the title of a list, or which replies to show with HTTP response metadata
     /// - Returns: TootResponse containing the updated list and HTTP metadata
     public func createListRaw(id: String, params: ListParams) async throws -> TootResponse<List> {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id])
             $0.method = .put
-            $0.body = try .json(params, encoder: self.encoder)
+            $0.body = try .json(params, encoder: encoder)
         }
 
         return try await fetchRaw(List.self, req)
@@ -88,7 +90,7 @@ extension TootClient {
 
     /// Delete a list
     public func deleteList(id: String) async throws {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id])
             $0.method = .delete
@@ -107,7 +109,7 @@ extension TootClient {
     /// View accounts in a list with HTTP response metadata
     /// - Returns: TootResponse containing paginated accounts and HTTP metadata
     public func getListAccountsRaw(id: String, _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[Account]>> {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id, "accounts"])
             $0.method = .get
@@ -119,11 +121,12 @@ extension TootClient {
 
     /// Add accounts to a list
     public func addAccountsToList(id: String, params: AddAccountsToListParams) async throws {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id, "accounts"])
             $0.method = .post
-            $0.body = try .json(params, encoder: self.encoder)
+            $0.body = try .json(params, encoder: encoder)
         }
 
         _ = try await fetch(req: req)
@@ -131,11 +134,12 @@ extension TootClient {
 
     /// Remove account from a list
     public func removeAccountsFromList(id: String, params: RemoveAccountsFromListParams) async throws {
-        try requireFeature(.lists)
+        try await requireFeature(.lists)
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "lists", id, "accounts"])
             $0.method = .delete
-            $0.body = try .json(params, encoder: self.encoder)
+            $0.body = try .json(params, encoder: encoder)
         }
 
         _ = try await fetch(req: req)

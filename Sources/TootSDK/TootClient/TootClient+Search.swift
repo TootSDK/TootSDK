@@ -30,7 +30,7 @@ extension TootClient {
         Search
     > {
         if params.excludeUnreviewed != nil {
-            try requireFeature(.searchExcludeUnreviewed)
+            try await requireFeature(.searchExcludeUnreviewed)
         }
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "search"])

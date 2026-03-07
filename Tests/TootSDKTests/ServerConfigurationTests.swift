@@ -26,7 +26,7 @@ final class ServerConfigurationTests: XCTestCase {
         XCTAssertEqual(customConfig.apiVersions?.mastodon, 1)
     }
 
-    func testTootClientInitializationWithServerConfiguration() throws {
+    func testTootClientInitializationWithServerConfiguration() async throws {
         let serverConfig = ServerConfiguration(
             flavour: .akkoma,
             version: Version(3, 10, 3),
@@ -40,13 +40,17 @@ final class ServerConfigurationTests: XCTestCase {
         )
 
         // Verify the server configuration is properly set
-        XCTAssertEqual(client.flavour, .akkoma)
-        XCTAssertEqual(client.version, Version(3, 10, 3))
-        XCTAssertEqual(client.versionString, "3.10.3 (Akkoma)")
-        XCTAssertNil(client.apiVersions)
+        let flavour = await client.flavour
+        let version = await client.version
+        let versionString = await client.versionString
+        let apiVersions = await client.apiVersions
+        XCTAssertEqual(flavour, .akkoma)
+        XCTAssertEqual(version, Version(3, 10, 3))
+        XCTAssertEqual(versionString, "3.10.3 (Akkoma)")
+        XCTAssertNil(apiVersions)
 
-        // Verify the encoder is configured with the flavour
-        XCTAssertEqual(client.encoder.userInfo[.tootSDKFlavour] as? TootSDKFlavour, .akkoma)
+        let encoder = await client.makeEncoder()
+        XCTAssertEqual(encoder.userInfo[.tootSDKFlavour] as? TootSDKFlavour, .akkoma)
     }
 
     func testServerConfigurationCodable() throws {
@@ -98,14 +102,18 @@ final class ServerConfigurationTests: XCTestCase {
         XCTAssertNotEqual(config1, config3)
     }
 
-    func testBackwardCompatibility() throws {
+    func testBackwardCompatibility() async throws {
         // Test that existing code still works with the default TootClient initializer
         let client = TootClient(instanceURL: URL(string: "https://mastodon.social")!)
 
         // The default configuration should be Mastodon
-        XCTAssertEqual(client.flavour, .mastodon)
-        XCTAssertNil(client.version)
-        XCTAssertNil(client.versionString)
-        XCTAssertNil(client.apiVersions)
+        let flavour = await client.flavour
+        let version = await client.version
+        let versionString = await client.versionString
+        let apiVersions = await client.apiVersions
+        XCTAssertEqual(flavour, .mastodon)
+        XCTAssertNil(version)
+        XCTAssertNil(versionString)
+        XCTAssertNil(apiVersions)
     }
 }

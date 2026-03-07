@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct FilterKeyword: Codable, Hashable, Identifiable {
+public struct FilterKeyword: Codable, Hashable, Identifiable, Sendable {
 
     /// The ID of the FilterKeyword in the database.
     public var id: String

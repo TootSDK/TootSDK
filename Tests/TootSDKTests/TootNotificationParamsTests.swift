@@ -87,7 +87,7 @@ import Testing
         }
     }
 
-    @Test func friendicaQueryParams() throws {
+    @Test func friendicaQueryParams() async throws {
         let flavour = TootSDKFlavour.friendica
         let client = TootClient(
             instanceURL: URL(string: "https://mastodon.social")!,
@@ -95,7 +95,7 @@ import Testing
         )
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
-        let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
+        let query = await client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
         #expect(
             query == [
                 URLQueryItem(name: "exclude_types[]", value: "follow"),
@@ -105,7 +105,7 @@ import Testing
             ], "Incorrect params for \(flavour)")
     }
 
-    @Test func sharkeyQueryParams() throws {
+    @Test func sharkeyQueryParams() async throws {
         let flavour = TootSDKFlavour.sharkey
         let client = TootClient(
             instanceURL: URL(string: "https://mastodon.social")!,
@@ -113,7 +113,7 @@ import Testing
         )
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
-        let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
+        let query = await client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
         #expect(
             query == [
                 URLQueryItem(name: "exclude_types[]", value: "admin.report"),
@@ -130,7 +130,7 @@ import Testing
             ], "Incorrect params for \(flavour)")
     }
 
-    @Test func pleromaAkkomaQueryParams() throws {
+    @Test func pleromaAkkomaQueryParams() async throws {
         for flavour in [TootSDKFlavour.pleroma, .akkoma] {
             let client = TootClient(
                 instanceURL: URL(string: "https://mastodon.social")!,
@@ -138,7 +138,7 @@ import Testing
             )
 
             let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
-            let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
+            let query = await client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
             #expect(
                 query == [
                     URLQueryItem(name: "exclude_types[]", value: "mention"),
@@ -147,14 +147,14 @@ import Testing
         }
     }
 
-    @Test func mastodonQueryParams() throws {
+    @Test func mastodonQueryParams() async throws {
         let client = TootClient(
             instanceURL: URL(string: "https://mastodon.social")!,
             serverConfiguration: ServerConfiguration(flavour: .mastodon)
         )
 
         let params = TootNotificationParams(excludeTypes: [.mention], types: [.favourite])
-        let query = client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
+        let query = await client.createQuery(from: params).sorted { ($0.name, $0.value ?? "") < ($1.name, $1.value ?? "") }
         #expect(
             query == [
                 URLQueryItem(name: "exclude_types[]", value: "mention"),

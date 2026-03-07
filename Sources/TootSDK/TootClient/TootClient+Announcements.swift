@@ -18,7 +18,7 @@ extension TootClient {
     /// See all currently active announcements set by admins with HTTP response metadata
     /// - Returns: TootResponse containing announcements and HTTP metadata
     public func getAnnouncementsRaw(params: AnnouncementParams = .init()) async throws -> TootResponse<[Announcement]> {
-        try requireFeature(.announcements)
+        try await requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements"])
             $0.method = .get
@@ -30,7 +30,7 @@ extension TootClient {
 
     /// Dismiss a single notification from the server.
     public func dismissAnnouncement(id: String) async throws {
-        try requireFeature(.announcements)
+        try await requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements", id, "dismiss"])
             $0.method = .post
@@ -44,7 +44,7 @@ extension TootClient {
     ///   - id: The ID of the Announcement in the database.
     ///   - name: Unicode emoji, or the shortcode of a custom emoji.
     public func addAnnouncementReaction(id: String, name: String) async throws {
-        try requireFeature(.announcements)
+        try await requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements", id, "reactions", name])
             $0.method = .put
@@ -58,7 +58,7 @@ extension TootClient {
     ///   - id: The ID of the Announcement in the database.
     ///   - name: Unicode emoji, or the shortcode of a custom emoji.
     public func removeAnnouncementReaction(id: String, name: String) async throws {
-        try requireFeature(.announcements)
+        try await requireFeature(.announcements)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "announcements", id, "reactions", name])
             $0.method = .delete

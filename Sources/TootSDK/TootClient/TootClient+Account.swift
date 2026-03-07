@@ -54,10 +54,11 @@ extension TootClient {
     /// Update the user's display and preferences with HTTP response metadata
     /// - Returns: TootResponse containing the user's own Account with source attribute and HTTP metadata
     public func updateCredentialsRaw(params: UpdateCredentialsParams) async throws -> TootResponse<Account> {
-        try requireFeature(.updateCredentials)
+        try await requireFeature(.updateCredentials)
+        let currentFlavour = await self.flavour
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "update_credentials"])
-            if self.flavour == .pixelfed {
+            if currentFlavour == .pixelfed {
                 // https://github.com/pixelfed/pixelfed/issues/4250#issuecomment-1483798056
                 $0.method = .post
             } else {
@@ -276,10 +277,11 @@ extension TootClient {
     ///
     /// Returns TootResponse containing an account access token for the app that initiated the request and HTTP metadata. The app should save this token for later, and should wait for the user to confirm their account by clicking a link in their email inbox.
     public func registerAccountRaw(params: RegisterAccountParams) async throws -> TootResponse<AccessToken> {
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts"])
             $0.method = .post
-            $0.body = try .json(params, encoder: self.encoder)
+            $0.body = try .json(params, encoder: encoder)
         }
 
         do {

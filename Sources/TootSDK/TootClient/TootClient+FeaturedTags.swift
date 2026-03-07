@@ -24,7 +24,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the featured tags and HTTP metadata
     /// - Note: Requires featured tags feature to be available.
     public func getFeaturedTagsRaw(forUser userID: String) async throws -> TootResponse<[FeaturedTag]> {
-        try requireFeature(.featuredTags)
+        try await requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", userID, "featured_tags"])
             $0.method = .get
@@ -46,7 +46,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the featured tags and HTTP metadata
     /// - Note: Requires featured tags feature to be available.
     public func getFeaturedTagsRaw() async throws -> TootResponse<[FeaturedTag]> {
-        try requireFeature(.featuredTags)
+        try await requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .get
@@ -68,7 +68,7 @@ extension TootClient {
     /// - Returns: TootResponse containing array of Tags and HTTP metadata
     /// - Note: Requires featured tags feature to be available.
     public func getFeaturedTagsSuggestionsRaw() async throws -> TootResponse<[Tag]> {
-        try requireFeature(.featuredTags)
+        try await requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags", "suggestions"])
             $0.method = .get
@@ -92,13 +92,14 @@ extension TootClient {
     /// - Note: Requires featured tags feature to be available.
     @discardableResult
     public func featureTagRaw(name: String) async throws -> TootResponse<FeaturedTag> {
-        try requireFeature(.featuredTags)
+        try await requireFeature(.featuredTags)
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags"])
             $0.method = .post
             $0.body = try .json(
                 FeatureTagParams(name: name),
-                encoder: self.encoder)
+                encoder: encoder)
         }
 
         return try await fetchRaw(FeaturedTag.self, req)
@@ -108,7 +109,7 @@ extension TootClient {
     /// - Parameter id: The ID of the FeaturedTag in the database.
     /// - Note: Requires featured tags feature to be available.
     public func unfeatureTag(id: String) async throws {
-        try requireFeature(.featuredTags)
+        try await requireFeature(.featuredTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "featured_tags", id])
             $0.method = .delete

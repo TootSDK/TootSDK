@@ -4,7 +4,7 @@
 import Foundation
 
 /// Specifies the parameters for a local timeline request
-public struct LocalTimelineQuery: Hashable, Codable, Sendable {
+public struct LocalTimelineQuery: Hashable, Codable, Sendable, TimelineQuery {
     public init(onlyMedia: Bool? = nil) {
         self.onlyMedia = onlyMedia
     }
@@ -13,7 +13,7 @@ public struct LocalTimelineQuery: Hashable, Codable, Sendable {
     public var onlyMedia: Bool?
 }
 
-extension LocalTimelineQuery: TimelineQuery {
+extension LocalTimelineQuery {
 
     public func getQueryItems() -> [URLQueryItem] {
         var queryItems: [URLQueryItem] = []

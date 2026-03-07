@@ -4,7 +4,7 @@
 import Foundation
 
 /// Parameters to retrieve a list of oauth apps
-public struct ListOauthAppsParams: Codable {
+public struct ListOauthAppsParams: Codable, Sendable {
 
     /// App name
     public var name: String?

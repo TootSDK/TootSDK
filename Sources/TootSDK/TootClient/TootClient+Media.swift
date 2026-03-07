@@ -86,7 +86,7 @@ extension TootClient {
 
         // For Mastodon, 206 indicates media is still processing
         // We need to return a valid response but with placeholder data
-        if flavour == .mastodon && response.statusCode == 206 {
+        if await flavour == .mastodon && response.statusCode == 206 {
             return TootResponse(
                 data: nil,
                 headers: headers,
@@ -124,7 +124,7 @@ extension TootClient {
     /// - Parameter id: The ID of the ``MediaAttachment`` in the database.
     /// - Returns: TootResponse containing HTTP metadata (the data field will be Void)
     public func deleteMediaRaw(id: String) async throws -> TootResponse<Void> {
-        try requireFeature(.deleteMedia)
+        try await requireFeature(.deleteMedia)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .delete
@@ -167,11 +167,13 @@ extension TootClient {
     /// - Returns: TootResponse containing the updated media attachment and HTTP metadata
     @discardableResult
     public func updateMediaRaw(id: String, _ params: UpdateMediaAttachmentParams) async throws -> TootResponse<MediaAttachment> {
+        let currentFlavour = await self.flavour
+        let encoder = await makeEncoder()
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "media", id])
             $0.method = .put
 
-            if flavour == .pixelfed {
+            if currentFlavour == .pixelfed {
                 $0.body = try .json(params, encoder: encoder)
             } else {
                 let parts = mediaParts(
