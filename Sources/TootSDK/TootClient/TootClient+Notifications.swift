@@ -9,6 +9,30 @@ import Foundation
 
 extension TootClient {
 
+    /// Get notifications unread count
+    /// - Parameters:
+    ///   - limit: Maximum number of results to return. Defaults to 100 notifications. Max 1000 notifications.
+    public func getNotificationsUnreadCount(
+        params: TootNotificationParams = .init(),
+        limit: Int? = nil
+    ) async throws -> Int {
+        let req = HTTPRequestBuilder {
+            $0.url = getURL(["api", "v1", "notifications", "unread_count"])
+            $0.method = .get
+            $0.query = {
+                let list = createQuery(from: params) + getQueryParams(limit: limit)
+                return list.isEmpty ? nil : list
+            }()
+        }
+
+        struct Data: Decodable {
+            let count: Int
+        }
+
+        let response = try await fetchRaw(Data.self, req)
+        return response.data.count
+    }
+
     /// Get all notifications concerning the user
     ///  - Parameters:
     ///     -  limit: Maximum number of results to return. Defaults to 15 notifications. Max 30 notifications.
