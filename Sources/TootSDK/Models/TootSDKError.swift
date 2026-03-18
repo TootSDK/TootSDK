@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-public enum TootSDKError: Error, LocalizedError, Equatable {
+public enum TootSDKError: Error, LocalizedError, Equatable, Sendable {
     case decodingError(_ description: String)
     case missingCodeOrClientSecrets
     case nonHTTPURLResponse(data: Data, response: URLResponse)

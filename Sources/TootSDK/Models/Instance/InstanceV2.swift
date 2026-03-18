@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct InstanceV2: Codable, Hashable, Sendable {
+public struct InstanceV2: Codable, Hashable, Sendable, Instance {
     /// The domain name of the instance.
     public var domain: String?
     /// The title of the website.
@@ -228,7 +228,7 @@ public struct InstanceV2: Codable, Hashable, Sendable {
     }
 }
 
-extension InstanceV2: Instance {
+extension InstanceV2 {
     public var thumbnailURL: String? { thumbnail?.url }
     public var streamingURL: String? { configuration?.urls?.streaming }
     public var registrationsEnabled: Bool? { registrations.enabled }

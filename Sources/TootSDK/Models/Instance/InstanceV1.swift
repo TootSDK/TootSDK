@@ -4,7 +4,7 @@
 import Foundation
 
 /// General information about an instance
-public struct InstanceV1: Codable, Hashable {
+public struct InstanceV1: Codable, Hashable, Instance, Sendable {
     public init(
         uri: String? = nil,
         title: String? = nil,
@@ -150,7 +150,7 @@ public struct InstanceV1: Codable, Hashable {
     }
 }
 
-extension InstanceV1: Instance {
+extension InstanceV1 {
     public var domain: String? { uri }
     public var thumbnailURL: String? { thumbnail }
     public var registrationsEnabled: Bool? { registrations }

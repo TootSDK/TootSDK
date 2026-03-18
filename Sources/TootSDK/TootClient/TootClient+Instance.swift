@@ -24,7 +24,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the instance info and HTTP metadata
     public func getInstanceInfoRaw() async throws -> TootResponse<any Instance> {
         do {
-            try requireFeature(.instanceV2)
+            try await requireFeature(.instanceV2)
             let response = try await getInstanceInfoV2Raw()
             return TootResponse(
                 data: response.data as any Instance,
@@ -111,7 +111,7 @@ extension TootClient {
     /// Obtain an extended description of this server with HTTP response metadata
     /// - Returns: TootResponse containing the extended description and HTTP metadata
     public func getExtendedDescriptionRaw() async throws -> TootResponse<ExtendedDescription> {
-        try requireFeature(.extendedDescription)
+        try await requireFeature(.extendedDescription)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "instance", "extended_description"])
             $0.method = .get
@@ -189,7 +189,7 @@ extension TootClient {
     /// Translation language pairs supported by the translation engine used by the server with HTTP response metadata
     /// - Returns: TootResponse containing the translation languages and HTTP metadata
     public func getTranslationLanguagesRaw() async throws -> TootResponse<[String: [String]]> {
-        try requireFeature(.translatePost)
+        try await requireFeature(.translatePost)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "instance", "translation_languages"])
             $0.method = .get

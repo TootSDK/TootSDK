@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct IdentityProof: Codable, Hashable {
+public struct IdentityProof: Codable, Hashable, Sendable {
     public init(provider: String, providerUsername: String, profileUrl: String, proofUrl: String, updatedAt: Date) {
         self.provider = provider
         self.providerUsername = providerUsername

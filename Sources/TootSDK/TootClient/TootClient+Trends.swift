@@ -27,7 +27,7 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: TootResponse containing array of Tags and HTTP metadata
     public func getTrendingTagsRaw(limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<[Tag]> {
-        try requireFeature(.trendingTags)
+        try await requireFeature(.trendingTags)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "tags"])
             $0.method = .get
@@ -55,7 +55,7 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: TootResponse containing array of Posts and HTTP metadata
     public func getTrendingPostsRaw(limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<[Post]> {
-        try requireFeature(.trendingPosts)
+        try await requireFeature(.trendingPosts)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "statuses"])
             $0.method = .get
@@ -83,7 +83,7 @@ extension TootClient {
     ///   - offset: Skip the first n results.
     /// - Returns: TootResponse containing array of TrendingLinks and HTTP metadata
     public func getTrendingLinksRaw(limit: Int? = nil, offset: Int? = nil) async throws -> TootResponse<[TrendingLink]> {
-        try requireFeature(.trendingLinks)
+        try await requireFeature(.trendingLinks)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "trends", "links"])
             $0.method = .get

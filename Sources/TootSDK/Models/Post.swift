@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a post posted by an account.
-public class Post: Codable, Identifiable, @unchecked Sendable {
+public final class Post: Codable, Hashable, Identifiable, Sendable {
     public init(
         id: String,
         uri: String,
@@ -78,75 +78,75 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     }
 
     /// ID of the post in the database.
-    public var id: String
+    public let id: String
     /// URI of the post used for federation.
-    public var uri: String
+    public let uri: String
     /// The date when this post was created.
-    public var createdAt: Date
+    public let createdAt: Date
     /// The account that authored this post.
-    public var account: Account
+    public let account: Account
     /// HTML-encoded post content.
-    public var content: String?
+    public let content: String?
     /// Visibility of this post.
-    public var visibility: OpenEnum<Visibility>
+    public let visibility: OpenEnum<Visibility>
     /// Summary of a status' quote approval policy and how it applies to the requesting user.
-    public var quoteApproval: QuoteApproval?
+    public let quoteApproval: QuoteApproval?
     /// Is this post marked as sensitive content?
-    public var sensitive: Bool
+    public let sensitive: Bool
     /// Subject or summary line, below which post content is collapsed until expanded.
-    public var spoilerText: String
+    public let spoilerText: String
     /// Media that is attached to this post.
-    public var mediaAttachments: [MediaAttachment]
+    public let mediaAttachments: [MediaAttachment]
     /// The application used to post this post.
-    public var application: TootApplication?
+    public let application: TootApplication?
 
     /// Mentions of users within the post content.
-    public var mentions: [Mention]
+    public let mentions: [Mention]
     /// Hashtags used within the post content.
-    public var tags: [Tag]
+    public let tags: [Tag]
     /// Custom emoji to be used when rendering post content.
-    public var emojis: [Emoji]
+    public let emojis: [Emoji]
     /// How many reposts this post has received.
-    public var repostsCount: Int
+    public let repostsCount: Int
     /// How many quotes this post has received.
-    public var quotesCount: Int?
+    public let quotesCount: Int?
     /// How many favourites this post has received.
-    public var favouritesCount: Int
+    public let favouritesCount: Int
     /// How many replies this post has received.
-    public var repliesCount: Int
+    public let repliesCount: Int
     /// A link to the post's HTML representation.
-    public var url: String?
+    public let url: String?
     /// ID of the post being replied.
-    public var inReplyToId: String?
+    public let inReplyToId: String?
     /// ID of the account being replied to.
-    public var inReplyToAccountId: String?
+    public let inReplyToAccountId: String?
     /// The post being reposted.
-    public var repost: Post?
+    public let repost: Post?
     /// The poll attached to the post.
-    public var poll: Poll?
+    public let poll: Poll?
     /// Preview card for links included within post content.
-    public var card: Card?
+    public let card: Card?
     /// Primary language of this post.
-    public var language: String?
+    public let language: String?
     /// Plain-text source of a post. Returned instead of content when post is deleted so the user
     /// may redraft from the source text without the client having to reverse-engineer the original text from the HTML content.
-    public var text: String?
+    public let text: String?
     /// The date when the post was last edited.
-    public var editedAt: Date?
+    public let editedAt: Date?
     /// Have you favourited this post?
-    public var favourited: Bool?
+    public let favourited: Bool?
     /// Have you reposted this post?
-    public var reposted: Bool?
+    public let reposted: Bool?
     /// Have you muted notifications for this post's conversation?
-    public var muted: Bool?
+    public let muted: Bool?
     /// Have you bookmarked this post?
-    public var bookmarked: Bool?
+    public let bookmarked: Bool?
     /// Have you pinned this post? Only appears if the post is pinnable.
-    public var pinned: Bool?
+    public let pinned: Bool?
     /// If the current token has an authorized user: The filter and keywords that matched this post.
-    public var filtered: [FilterResult]?
+    public let filtered: [FilterResult]?
     /// Information about the post being quoted, if any.
-    public var quote: Quote?
+    public let quote: Quote?
 
     public enum Visibility: String, Codable, CaseIterable, Sendable {
         /// Visible to everyone, shown in public timelines.
@@ -230,7 +230,7 @@ public class Post: Codable, Identifiable, @unchecked Sendable {
     }
 }
 
-extension Post: Hashable {
+extension Post {
     public static func == (lhs: Post, rhs: Post) -> Bool {
         lhs.id == rhs.id
             && lhs.uri == rhs.uri

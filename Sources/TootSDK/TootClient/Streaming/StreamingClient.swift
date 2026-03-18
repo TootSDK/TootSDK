@@ -40,7 +40,7 @@ public actor StreamingClient {
 
     public typealias Stream = AsyncThrowingStream<Event, Error>
 
-    internal class Subscriber: Hashable, Identifiable {
+    internal class Subscriber: Hashable, Identifiable, @unchecked Sendable {
         static func == (lhs: StreamingClient.Subscriber, rhs: StreamingClient.Subscriber) -> Bool {
             return lhs.timeline == rhs.timeline && lhs.id == rhs.id
         }

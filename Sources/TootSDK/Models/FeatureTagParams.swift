@@ -8,7 +8,7 @@
 import Foundation
 
 /// Params to feature a hashtag
-public struct FeatureTagParams: Codable {
+public struct FeatureTagParams: Codable, Sendable {
     /// The hashtag to be featured, without the hash sign.
     public var name: String
 

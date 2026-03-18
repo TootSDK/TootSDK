@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct PagedResult<T: Decodable>: Decodable {
+public struct PagedResult<T: Decodable & Sendable>: Decodable, Sendable {
     public let result: T
     public let info: PagedInfo
 

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Parameters to report a post.
-public struct ReportParams {
+public struct ReportParams: Sendable {
     /// ID of the account to report.
     public var accountId: String
 

@@ -7,7 +7,7 @@ import WebURL
 import WebURLFoundationExtras
 
 /// A simple renderer to adapt HTML content including custom emojis or render them as plain text
-public class UniversalRenderer {
+public final class UniversalRenderer: Sendable {
 
     public init() {}
 

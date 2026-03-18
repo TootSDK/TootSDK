@@ -17,7 +17,7 @@ public final class TootEncoder: JSONEncoder, @unchecked Sendable {
 }
 
 extension TootEncoder {
-    static let dateFormatter: ISO8601DateFormatter = {
+    nonisolated(unsafe) static let dateFormatter: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
 
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
@@ -25,7 +25,7 @@ extension TootEncoder {
         return dateFormatter
     }()
 
-    static let dateFormatterWithoutFractionalSeconds: ISO8601DateFormatter = {
+    nonisolated(unsafe) static let dateFormatterWithoutFractionalSeconds: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
 
         dateFormatter.formatOptions = [.withInternetDateTime]
@@ -33,7 +33,7 @@ extension TootEncoder {
         return dateFormatter
     }()
 
-    static let dateFormatterWithFullDate: ISO8601DateFormatter = {
+    nonisolated(unsafe) static let dateFormatterWithFullDate: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withFullDate]
         return dateFormatter

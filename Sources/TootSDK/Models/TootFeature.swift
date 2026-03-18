@@ -2,10 +2,10 @@ import Foundation
 import Version
 
 /// Represents a feature that is not supported by all flavours.
-public struct TootFeature: Equatable {
+public struct TootFeature: Equatable, Sendable {
 
     /// Represents a flavour requirement with optional version constraints
-    public struct FlavourRequirement: Equatable {
+    public struct FlavourRequirement: Equatable, Sendable {
         let flavour: TootSDKFlavour
         let minDisplayVersion: Version?
         let maxDisplayVersion: Version?

@@ -34,19 +34,19 @@ public final class TootDecoder: JSONDecoder, @unchecked Sendable {
 }
 
 extension TootDecoder {
-    static let dateFormatter: ISO8601DateFormatter = {
+    nonisolated(unsafe) static let dateFormatter: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return dateFormatter
     }()
 
-    static let dateFormatterWithoutFractionalSeconds: ISO8601DateFormatter = {
+    nonisolated(unsafe) static let dateFormatterWithoutFractionalSeconds: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withInternetDateTime]
         return dateFormatter
     }()
 
-    static let dateFormatterWithFullDate: ISO8601DateFormatter = {
+    nonisolated(unsafe) static let dateFormatterWithFullDate: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withFullDate]
         return dateFormatter

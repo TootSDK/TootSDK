@@ -4,12 +4,12 @@
 import Foundation
 
 /// A list of stream types which return `Account`
-public enum AccountTootStreams: Hashable, Sendable {
+public enum AccountTootStreams: Hashable, Sendable, TootStream {
     case verifyCredentials
     case account(id: String)
 }
 
-extension AccountTootStreams: TootStream {
+extension AccountTootStreams {
     public typealias ResponseType = Account
 }
 

@@ -9,47 +9,59 @@ import Version
 #endif
 
 // MARK: - Initialization
-public class TootClient: @unchecked Sendable {
+public final class TootClient: @unchecked Sendable {
 
     // MARK: - Public properties
     /// The URL of the instance we're connected to
-    public var instanceURL: URL
-    /// The application info retrieved from the instance
-    public var currentApplicationInfo: TootApplication?
+    public let instanceURL: URL
     /// Set this to `true` to see a `print()` of outgoing requests.
     public var debugRequests: Bool = false
     /// Set this to `true` to see a `print()` of request response.
     public var debugResponses: Bool = false
     /// Set this to `true` to see a `print()` for instance information.
     public var debugInstance: Bool = false
-    /// The server configuration containing flavour, version, and API information
-    public private(set) var serverConfiguration: ServerConfiguration = ServerConfiguration()
 
     /// The preferred fediverse server flavour to use for API calls
     public var flavour: TootSDKFlavour {
-        serverConfiguration.flavour
+        get async { await state.flavour }
     }
 
     /// The parsed version of the instance we're connected to (used for feature detection)
     public var version: Version? {
-        serverConfiguration.version
+        get async { await state.version }
     }
 
     /// The raw version string from the instance (for debugging/display purposes)
     public var versionString: String? {
-        serverConfiguration.versionString
+        get async { await state.versionString }
     }
 
     /// The API versions supported by the instance (from InstanceV2 response)
     public var apiVersions: InstanceV2.APIVersions? {
-        serverConfiguration.apiVersions
+        get async { await state.apiVersions }
     }
+
+    /// The server configuration containing flavour, version, and API information
+    public var serverConfiguration: ServerConfiguration {
+        get async { await state.serverConfiguration }
+    }
+
+    /// The application info retrieved from the instance
+    public var currentApplicationInfo: TootApplication? {
+        get async { await state.currentApplicationInfo }
+    }
+
+    /// Returns `true` if this instance of `TootClient` has no `accessToken`.
+    public var isAnonymous: Bool {
+        get async { await state.isAnonymous }
+    }
+
     /// The authorization scopes the client was initialized with
     public let scopes: [String]
     /// Data streams that the client can subscribe to
-    public lazy var data = TootDataStream(client: self)
+    public private(set) var data: TootDataStream!
     /// WebSocket streaming API.
-    public lazy var streaming = StreamingClient(client: self)
+    public private(set) var streaming: StreamingClient!
 
     /// The clientName the client was initialized with
     ///
@@ -71,16 +83,10 @@ public class TootClient: @unchecked Sendable {
     public let httpUserAgent: String
 
     // MARK: - Internal properties
-    internal var decoder: JSONDecoder = TootDecoder()
-    internal var encoder: JSONEncoder = TootEncoder()
-    internal var session: URLSession
+    internal let decoder: TootDecoder = TootDecoder()
+    internal let session: URLSession
     internal let validStatusCodes = 200..<300
-    /// The current accessToken in use
-    internal var accessToken: String?
-
-    #if canImport(AuthenticationServices) && !os(tvOS) && !os(watchOS)
-        internal lazy var defaultPresentationAnchor: TootPresentationAnchor = TootPresentationAnchor()
-    #endif
+    internal let state: ClientState
 
     /// Initialize a new instance of `TootClient` by optionally providing an access token for authentication.
     ///
@@ -103,11 +109,13 @@ public class TootClient: @unchecked Sendable {
     ) {
         self.session = session
         self.instanceURL = instanceURL
-        self.accessToken = accessToken
+        self.state = ClientState(accessToken: accessToken)
         self.scopes = scopes
         self.clientName = clientName
         self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
+        self.data = TootDataStream(client: self)
+        self.streaming = StreamingClient(client: self)
     }
 
     /// Initialize a new instance of `TootClient` with a pre-configured server configuration.
@@ -134,15 +142,13 @@ public class TootClient: @unchecked Sendable {
     ) {
         self.session = session
         self.instanceURL = instanceURL
-        self.accessToken = accessToken
+        self.state = ClientState(accessToken: accessToken, serverConfiguration: serverConfiguration)
         self.scopes = scopes
         self.clientName = clientName
         self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
-        self.serverConfiguration = serverConfiguration
-
-        // Set the encoder userInfo with the configured flavour
-        self.encoder.userInfo[.tootSDKFlavour] = serverConfiguration.flavour
+        self.data = TootDataStream(client: self)
+        self.streaming = StreamingClient(client: self)
     }
 
     /// Initialize and connect a new instance of `TootClient`.
@@ -166,11 +172,13 @@ public class TootClient: @unchecked Sendable {
     ) async throws {
         self.session = session
         self.instanceURL = instanceURL
-        self.accessToken = accessToken
+        self.state = ClientState(accessToken: accessToken)
         self.scopes = scopes
         self.clientName = clientName
         self.clientWebsite = clientWebsite
         self.httpUserAgent = httpUserAgent ?? clientName
+        self.data = TootDataStream(client: self)
+        self.streaming = StreamingClient(client: self)
         try await connect()
     }
 
@@ -279,11 +287,13 @@ extension TootClient {
 
     /// Fetch data asynchronously and return the raw response.
     internal func fetch(req: HTTPRequestBuilder) async throws -> (Data, HTTPURLResponse) {
+        let ctx = await state.requestContext()
+
         if req.headers.index(forKey: "Content-Type") == nil {
             req.headers["Content-Type"] = "application/json"
         }
 
-        if flavour == .sharkey && req.body == nil {
+        if ctx.flavour == .sharkey && req.body == nil {
             req.headers["Content-Type"] = nil
             if req.method == .post || req.method == .put || req.method == .patch || req.method == .delete {
                 req.headers["Content-Length"] = "0"
@@ -298,17 +308,17 @@ extension TootClient {
             req.headers["User-Agent"] = httpUserAgent
         }
 
-        if let accessToken = accessToken {
+        if let accessToken = ctx.accessToken {
             req.headers["Authorization"] = "Bearer \(accessToken)"
         }
 
         let request = try req.build()
-        return try await dataTask(request)
+        return try await dataTask(request, flavour: ctx.flavour)
     }
 
-    internal func dataTask(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+    internal func dataTask(_ request: URLRequest, flavour: TootSDKFlavour) async throws -> (Data, HTTPURLResponse) {
         if debugRequests {
-            print("➡️ flavour: \(self.flavour)")
+            print("➡️ flavour: \(flavour)")
             print("➡️ 🌏 \(request.httpMethod ?? "-") \(request.url?.absoluteString ?? "-")")
             for (k, v) in request.allHTTPHeaderFields ?? [:] {
                 print("➡️ 🏷️ '\(k)': '\(v)'")
@@ -339,18 +349,24 @@ extension TootClient {
         return (data, httpResponse)
     }
 
-    internal func requireFlavour(_ supportedFlavours: Set<TootSDKFlavour>) throws {
-        if !supportedFlavours.contains(flavour) {
-            throw TootSDKError.unsupportedFlavour(current: flavour, required: supportedFlavours)
+    internal func makeEncoder() async -> TootEncoder {
+        await state.makeEncoder()
+    }
+
+    internal func requireFlavour(_ supportedFlavours: Set<TootSDKFlavour>) async throws {
+        let currentFlavour = await state.flavour
+        if !supportedFlavours.contains(currentFlavour) {
+            throw TootSDKError.unsupportedFlavour(current: currentFlavour, required: supportedFlavours)
         }
     }
 
-    internal func requireFlavour(otherThan unsupportedFalvours: Set<TootSDKFlavour>) throws {
+    internal func requireFlavour(otherThan unsupportedFalvours: Set<TootSDKFlavour>) async throws {
         let supportedFlavours = Set(TootSDKFlavour.allCases).subtracting(unsupportedFalvours)
-        try requireFlavour(supportedFlavours)
+        try await requireFlavour(supportedFlavours)
     }
 
-    internal func requireFeature(_ feature: TootFeature) throws {
+    internal func requireFeature(_ feature: TootFeature) async throws {
+        let (flavour, version, apiVersions) = await state.featureContext()
         if !feature.isSupported(flavour: flavour, version: version, apiVersions: apiVersions) {
             throw TootSDKError.unsupportedFeature(feature: feature)
         }
@@ -416,16 +432,6 @@ extension TootClient {
 
 }
 
-extension TootClient: Equatable {
-    public static func == (lhs: TootClient, rhs: TootClient) -> Bool {
-        if lhs.instanceURL == rhs.instanceURL {
-            return lhs.accessToken == rhs.accessToken
-        } else {
-            return false
-        }
-    }
-}
-
 extension TootClient {
 
     /// Provides the URL for authorizing with the current instanceURL
@@ -438,7 +444,7 @@ extension TootClient {
     /// - Returns: A URL which can be browsed to continue authorization
     public func createAuthorizeURL(server: URL, callbackURI: String) async throws -> URL {
         let authInfo = try await self.getAuthorizationInfo(callbackURI: callbackURI, scopes: self.scopes)
-        currentApplicationInfo = authInfo.application
+        await state.setCurrentApplicationInfo(authInfo.application)
         return authInfo.url
     }
 
@@ -448,11 +454,12 @@ extension TootClient {
     ///   - returnUrl: The full url including query parameters received by the service following the redirect after successfull authorizaiton
     ///   - callbackURI: The callback URI  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
     public func collectToken(returnUrl: URL, callbackURI: String) async throws -> String {
+        let appInfo = await state.currentApplicationInfo
 
         guard
             let code = getCodeFrom(returnUrl: returnUrl),
-            let clientId = currentApplicationInfo?.clientId,
-            let clientSecret = currentApplicationInfo?.clientSecret
+            let clientId = appInfo?.clientId,
+            let clientSecret = appInfo?.clientSecret
         else {
             throw TootSDKError.missingCodeOrClientSecrets
         }
@@ -485,7 +492,7 @@ extension TootClient {
             throw TootSDKError.clientAuthorizationFailed
         }
 
-        self.accessToken = accessToken
+        await state.setAccessToken(accessToken)
 
         return accessToken
     }
@@ -503,7 +510,7 @@ extension TootClient {
             throw TootSDKError.clientAuthorizationFailed
         }
 
-        self.accessToken = accessToken
+        await state.setAccessToken(accessToken)
 
         return accessToken
     }
@@ -531,16 +538,14 @@ extension TootClient {
             }
         }
 
-        // Create the new server configuration
-        self.serverConfiguration = ServerConfiguration(
+        let newConfig = ServerConfiguration(
             flavour: detectedFlavour,
             version: detectedVersion,
             versionString: detectedVersionString,
             apiVersions: detectedApiVersions
         )
 
-        // Set the encoder userInfo after flavour has been determined
-        encoder.userInfo[.tootSDKFlavour] = serverConfiguration.flavour
+        await state.setServerConfiguration(newConfig)
     }
 
     private func getNodeInfoIfAvailable() async -> NodeInfo? {
@@ -565,16 +570,12 @@ extension TootClient {
         return instance.flavour
     }
 
-    /// Returns `true` if this instance of `TootClient` has no `accessToken`.
-    public var isAnonymous: Bool {
-        accessToken == nil
-    }
-
     /// Returns `true` if this instance of `TootClient` can perform methods that are related to given `feature`.
     ///
     /// - Parameter feature: The feature to check if is supported.
     /// - Returns: `true` if the feature is supported.
-    public func supportsFeature(_ feature: TootFeature) -> Bool {
+    public func supportsFeature(_ feature: TootFeature) async -> Bool {
+        let (flavour, version, apiVersions) = await state.featureContext()
         return feature.isSupported(flavour: flavour, version: version, apiVersions: apiVersions)
     }
 }

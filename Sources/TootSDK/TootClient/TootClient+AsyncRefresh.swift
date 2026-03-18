@@ -29,7 +29,7 @@ extension TootClient {
     ///
     /// - Warning: TootSDK currently only supports the alpha version of this endpoint as documented at [https://docs.joinmastodon.org/methods/async_refreshes/](https://docs.joinmastodon.org/methods/async_refreshes/).
     public func _getAsyncRefreshRaw(id: String) async throws -> TootResponse<_AsyncRefreshResponse> {
-        try requireFeature(.asyncRefreshV1Alpha)
+        try await requireFeature(.asyncRefreshV1Alpha)
 
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1_alpha", "async_refreshes", id])

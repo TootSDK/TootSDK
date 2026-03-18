@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Translation: Codable {
+public struct Translation: Codable, Sendable {
 
     /// HTML-encoded translated content of the status.
     public var content: String

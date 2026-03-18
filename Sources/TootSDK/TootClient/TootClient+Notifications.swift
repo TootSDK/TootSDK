@@ -50,10 +50,11 @@ extension TootClient {
     public func getNotificationsRaw(params: TootNotificationParams = .init(), _ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws
         -> TootResponse<PagedResult<[TootNotification]>>
     {
+        let notificationQuery = await createQuery(from: params)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications"])
             $0.method = .get
-            $0.query = createQuery(from: params) + getQueryParams(pageInfo, limit: limit)
+            $0.query = notificationQuery + getQueryParams(pageInfo, limit: limit)
         }
 
         return try await fetchPagedResultRaw(req)
@@ -88,7 +89,7 @@ extension TootClient {
 
     /// Dismiss a single notification from the server.
     public func dismissNotification(id: String) async throws {
-        try requireFeature(.dismissNotification)
+        try await requireFeature(.dismissNotification)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "notifications", id, "dismiss"])
             $0.method = .post
@@ -112,7 +113,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the push subscription and HTTP metadata
     @discardableResult
     public func createPushSubscriptionRaw(params: PushSubscriptionParams) async throws -> TootResponse<PushSubscription> {
-        try requireFeature(.pushSubscriptions)
+        try await requireFeature(.pushSubscriptions)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .post
@@ -131,7 +132,7 @@ extension TootClient {
     /// View the PushSubscription currently associated with this access token with HTTP response metadata
     /// - Returns: TootResponse containing the push subscription and HTTP metadata
     public func getPushSubscriptionRaw() async throws -> TootResponse<PushSubscription> {
-        try requireFeature(.pushSubscriptions)
+        try await requireFeature(.pushSubscriptions)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .get
@@ -153,7 +154,7 @@ extension TootClient {
     /// To change fundamentals, a new subscription must be created instead.
     /// - Returns: TootResponse containing the updated push subscription and HTTP metadata
     public func changePushSubscriptionRaw(params: PushSubscriptionUpdateParams) async throws -> TootResponse<PushSubscription> {
-        try requireFeature(.pushSubscriptions)
+        try await requireFeature(.pushSubscriptions)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .put
@@ -165,7 +166,7 @@ extension TootClient {
 
     /// Removes the current Web Push API subscription.
     public func deletePushSubscription() async throws {
-        try requireFeature(.pushSubscriptions)
+        try await requireFeature(.pushSubscriptions)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "push", "subscription"])
             $0.method = .delete
@@ -186,22 +187,23 @@ extension TootFeature {
 }
 
 extension TootClient {
-    internal func createQuery(from params: TootNotificationParams) -> [URLQueryItem] {
+    internal func createQuery(from params: TootNotificationParams) async -> [URLQueryItem] {
         var queryParameters = [URLQueryItem]()
+        let currentFlavour = await self.flavour
 
-        let params = params.corrected(for: flavour)
+        let params = params.corrected(for: currentFlavour)
 
         if let types = params.types, !types.isEmpty {
             let name: String
-            switch flavour {
+            switch currentFlavour {
             case .pleroma, .akkoma: name = "include_types[]"
             default: name = "types[]"
             }
-            queryParameters.append(contentsOf: types.map({ .init(name: name, value: $0.rawValue(flavour: flavour)) }))
+            queryParameters.append(contentsOf: types.map({ .init(name: name, value: $0.rawValue(flavour: currentFlavour)) }))
         }
 
         if let types = params.excludeTypes, !types.isEmpty {
-            queryParameters.append(contentsOf: types.map({ .init(name: "exclude_types[]", value: $0.rawValue(flavour: flavour)) }))
+            queryParameters.append(contentsOf: types.map({ .init(name: "exclude_types[]", value: $0.rawValue(flavour: currentFlavour)) }))
         }
 
         return queryParameters

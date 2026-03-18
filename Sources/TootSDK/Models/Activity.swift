@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a weekly bucket of instance activity.
-public struct Activity: Codable, Hashable {
+public struct Activity: Codable, Hashable, Sendable {
     public init(week: Date, posts: Int, logins: Int, registrations: Int) {
         self.week = week
         self.posts = posts

@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct PleromaOauthAppsResponse: Codable {
+public struct PleromaOauthAppsResponse: Codable, Sendable {
     var apps: [PleromaOauthApp]
     var count: Int?
     var pageSize: Int?

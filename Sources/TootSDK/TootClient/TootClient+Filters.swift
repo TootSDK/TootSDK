@@ -21,7 +21,7 @@ extension TootClient {
     ///
     /// - Returns: TootResponse containing the filters and HTTP metadata
     public func getFiltersRaw() async throws -> TootResponse<[Filter]> {
-        try requireFeature(.filtersV2)
+        try await requireFeature(.filtersV2)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters"])
             $0.method = .get
@@ -45,7 +45,7 @@ extension TootClient {
     ///   - id: The ID of the Filter in the database.
     /// - Returns: TootResponse containing the Filter and HTTP metadata
     public func getFilterRaw(id: String) async throws -> TootResponse<Filter> {
-        try requireFeature(.filtersV2)
+        try await requireFeature(.filtersV2)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters", id])
             $0.method = .get
@@ -58,7 +58,7 @@ extension TootClient {
     /// - Parameters:
     ///   - id: The ID of the Filter in the database.
     public func deleteFilter(id: String) async throws {
-        try requireFeature(.filtersV2)
+        try await requireFeature(.filtersV2)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters", id])
             $0.method = .delete
@@ -82,7 +82,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the created filter and HTTP metadata
     @discardableResult
     public func createFilterRaw(_ params: CreateFilterParams) async throws -> TootResponse<Filter> {
-        try requireFeature(.filtersV2)
+        try await requireFeature(.filtersV2)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters"])
             $0.method = .post
@@ -107,7 +107,7 @@ extension TootClient {
     /// - Returns: TootResponse containing the updated filter and HTTP metadata
     @discardableResult
     public func updateFilterRaw(_ params: UpdateFilterParams) async throws -> TootResponse<Filter> {
-        try requireFeature(.filtersV2)
+        try await requireFeature(.filtersV2)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "filters", params.id])
             $0.method = .put

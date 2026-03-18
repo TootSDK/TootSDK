@@ -22,7 +22,7 @@ extension TootClient {
     /// Direct conversations with other participants. (Currently, just threads containing a post with "direct" visibility.)
     /// - Returns: TootResponse containing paginated conversations and HTTP metadata
     public func getConversationsRaw(_ pageInfo: PagedInfo? = nil, limit: Int? = nil) async throws -> TootResponse<PagedResult<[Conversation]>> {
-        try requireFeature(.conversations)
+        try await requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations"])
             $0.method = .get
@@ -34,7 +34,7 @@ extension TootClient {
 
     /// Removes a conversation from your list of conversations.
     public func deleteConversation(id: String) async throws {
-        try requireFeature(.conversations)
+        try await requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations", id])
             $0.method = .delete
@@ -52,7 +52,7 @@ extension TootClient {
     /// Mark a conversation as read with HTTP response metadata
     /// - Returns: TootResponse containing the updated conversation and HTTP metadata
     public func setConversationAsReadRaw(id: String) async throws -> TootResponse<Conversation> {
-        try requireFeature(.conversations)
+        try await requireFeature(.conversations)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "conversations", id, "read"])
             $0.method = .post

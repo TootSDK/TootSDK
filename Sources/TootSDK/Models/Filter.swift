@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Filter: Codable, Hashable, Identifiable {
+public struct Filter: Codable, Hashable, Identifiable, Sendable {
     public enum Context: String, Codable, Sendable, Hashable {
         /// home timeline and lists
         case home

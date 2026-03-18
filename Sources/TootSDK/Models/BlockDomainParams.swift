@@ -4,7 +4,7 @@
 import Foundation
 
 /// Parameters to block a domain
-public struct BlockDomainParams: Codable {
+public struct BlockDomainParams: Codable, Sendable {
 
     /// Domain to block.
     public var domain: String

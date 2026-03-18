@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct CallbackInfo: Hashable, Codable {
+public struct CallbackInfo: Hashable, Codable, Sendable {
     public let url: URL
     public let application: TootApplication
 }

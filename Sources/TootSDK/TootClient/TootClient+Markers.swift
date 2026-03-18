@@ -21,7 +21,7 @@ extension TootClient {
     /// - Parameter timelines: The timeline(s) for which markers should be fetched.
     /// - Returns: TootResponse containing the markers and HTTP metadata
     public func getMarkersRaw(for timelines: Set<Marker.Timeline>) async throws -> TootResponse<[OpenEnum<Marker.Timeline>: Marker]> {
-        try requireFeature(.markers)
+        try await requireFeature(.markers)
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "markers"])
             $0.method = .get
@@ -55,7 +55,7 @@ extension TootClient {
         homeLastReadId: String? = nil,
         notificationsLastReadId: String? = nil
     ) async throws -> TootResponse<[OpenEnum<Marker.Timeline>: Marker]> {
-        try requireFeature(.markers)
+        try await requireFeature(.markers)
         var queryItems: [URLQueryItem] = []
         if let homeLastReadId {
             queryItems.append(URLQueryItem(name: "home[last_read_id]", value: homeLastReadId))

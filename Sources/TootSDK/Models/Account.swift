@@ -4,7 +4,7 @@
 import Foundation
 
 /// Represents a user  and their associated profile.
-public class Account: Codable, Identifiable, @unchecked Sendable {
+public final class Account: Codable, CustomDebugStringConvertible, Hashable, Identifiable, Sendable {
     public init(
         id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String,
         avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil,
@@ -178,7 +178,7 @@ extension Account {
     }
 }
 
-extension Account: Hashable {
+extension Account {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -213,12 +213,37 @@ extension Account: Hashable {
     }
 
     public static func == (lhs: Account, rhs: Account) -> Bool {
-        return lhs.hashValue == rhs.hashValue
+        lhs.id == rhs.id
+            && lhs.username == rhs.username
+            && lhs.acct == rhs.acct
+            && lhs.url == rhs.url
+            && lhs.displayName == rhs.displayName
+            && lhs.note == rhs.note
+            && lhs.avatar == rhs.avatar
+            && lhs.avatarStatic == rhs.avatarStatic
+            && lhs.header == rhs.header
+            && lhs.headerStatic == rhs.headerStatic
+            && lhs.locked == rhs.locked
+            && lhs.emojis == rhs.emojis
+            && lhs.discoverable == rhs.discoverable
+            && lhs.hideCollections == rhs.hideCollections
+            && lhs.indexable == rhs.indexable
+            && lhs.createdAt == rhs.createdAt
+            && lhs.lastPostAt == rhs.lastPostAt
+            && lhs.postsCount == rhs.postsCount
+            && lhs.followersCount == rhs.followersCount
+            && lhs.followingCount == rhs.followingCount
+            && lhs.noindex == rhs.noindex
+            && lhs.moved == rhs.moved
+            && lhs.suspended == rhs.suspended
+            && lhs.limited == rhs.limited
+            && lhs.fields == rhs.fields
+            && lhs.bot == rhs.bot
+            && lhs.group == rhs.group
+            && lhs.source == rhs.source
+            && lhs.role == rhs.role
     }
 
-}
-
-extension Account: CustomDebugStringConvertible {
     public var debugDescription: String {
         return "Account with id: \(id)"
     }

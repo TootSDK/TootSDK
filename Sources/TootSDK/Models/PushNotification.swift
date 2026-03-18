@@ -8,7 +8,7 @@
 import Foundation
 
 /// Notification received via Web Push API.
-public struct PushNotification: Codable {
+public struct PushNotification: Codable, Sendable {
     /// Access token used when subscribing to notifications.
     public let accessToken: String
     /// The notification body.

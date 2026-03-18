@@ -8,7 +8,7 @@
 import Foundation
 
 @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
-public struct ParsedContent {
+public struct ParsedContent: Sendable {
 
     /// The unprocessed value received from the server.
     public var rawString: String
