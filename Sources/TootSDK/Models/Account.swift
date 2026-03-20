@@ -3,15 +3,39 @@
 
 import Foundation
 
-/// Represents a user  and their associated profile.
+/// Represents a user and their associated profile.
 public class Account: Codable, Identifiable, @unchecked Sendable {
     public init(
-        id: String, username: String? = nil, acct: String, url: String, displayName: String? = nil, note: String, avatar: String,
-        avatarStatic: String? = nil, header: String, headerStatic: String, locked: Bool, emojis: [Emoji], discoverable: Bool? = nil,
-        indexable: Bool? = nil, hideCollections: Bool? = nil, createdAt: Date,
-        lastPostAt: Date? = nil, postsCount: Int, followersCount: Int, followingCount: Int, noindex: Bool? = nil, moved: Account? = nil,
+        id: String,
+        username: String? = nil,
+        acct: String,
+        url: String,
+        displayName: String? = nil,
+        note: String,
+        avatar: String,
+        avatarStatic: String? = nil,
+        header: String,
+        headerStatic: String,
+        locked: Bool,
+        emojis: [Emoji],
+        discoverable: Bool? = nil,
+        indexable: Bool? = nil,
+        hideCollections: Bool? = nil,
+        createdAt: Date,
+        lastPostAt: Date? = nil,
+        postsCount: Int,
+        followersCount: Int,
+        followingCount: Int,
+        noindex: Bool? = nil,
+        moved: Account? = nil,
         suspended: Bool? = nil,
-        limited: Bool? = nil, fields: [TootField], bot: Bool? = nil, group: Bool? = nil, source: TootSource? = nil, role: TootRole? = nil
+        limited: Bool? = nil,
+        fields: [TootField],
+        bot: Bool? = nil,
+        group: Bool? = nil,
+        source: TootSource? = nil,
+        role: TootRole? = nil,
+        muteExpiresAt: Date? = nil,
     ) {
         self.id = id
         self.username = username
@@ -42,6 +66,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.group = group
         self.source = source
         self.role = role
+        self.muteExpiresAt = muteExpiresAt
     }
 
     required public init(from decoder: Decoder) throws {
@@ -79,6 +104,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.group = try? container.decodeIfPresent(Bool.self, forKey: .group)
         self.source = try? container.decodeIfPresent(TootSource.self, forKey: .source)
         self.role = try? container.decodeIfPresent(TootRole.self, forKey: .role)
+        self.muteExpiresAt = try? container.decodeIfPresent(Date.self, forKey: .muteExpiresAt)
     }
 
     /// The account id.
@@ -142,6 +168,8 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let source: TootSource?
     /// The role assigned to the currently authorized user.
     public let role: TootRole?
+    /// When a timed mute will expire, if applicable. `nil` if the mute is indefinite.
+    public let muteExpiresAt: Date?
 }
 
 extension Account {
@@ -175,6 +203,7 @@ extension Account {
         case group
         case source
         case role
+        case muteExpiresAt
     }
 }
 
