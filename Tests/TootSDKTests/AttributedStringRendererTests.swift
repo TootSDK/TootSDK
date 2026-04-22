@@ -102,11 +102,12 @@
             let renderer = AttributedStringRenderer()
             let renderedDefault = renderer.render(html: htmlWithSpecialMarkup)
             #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
-            #expect(renderedDefault.plainString == """
-                RE: https://example.com/post/1234
+            #expect(
+                renderedDefault.plainString == """
+                    RE: https://example.com/post/1234
 
-                Hello world
-                """)
+                    Hello world
+                    """)
             let attributedString = try AttributedString(
                 markdown: "RE: [https://example.com/post/1234](https://example.com/post/1234)\n\nHello world",
                 options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
@@ -119,11 +120,12 @@
             let renderer = AttributedStringRenderer()
             let renderedDefault = renderer.render(html: htmlWithSpecialMarkup, options: .skipInvisibles)
             #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
-            #expect(renderedDefault.plainString == """
-                RE: example.com/post/1
+            #expect(
+                renderedDefault.plainString == """
+                    RE: example.com/post/1
 
-                Hello world
-                """)
+                    Hello world
+                    """)
             let attributedString = try AttributedString(
                 markdown: "RE: [example.com/post/1](https://example.com/post/1234)\n\nHello world",
                 options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
@@ -136,11 +138,12 @@
             let renderer = AttributedStringRenderer()
             let renderedDefault = renderer.render(html: htmlWithSpecialMarkup, options: .renderEllipsis)
             #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
-            #expect(renderedDefault.plainString == """
-                RE: https://example.com/post/1…234
+            #expect(
+                renderedDefault.plainString == """
+                    RE: https://example.com/post/1…234
 
-                Hello world
-                """)
+                    Hello world
+                    """)
             let attributedString = try AttributedString(
                 markdown: "RE: [https://example.com/post/1…234](https://example.com/post/1234)\n\nHello world",
                 options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
@@ -153,11 +156,12 @@
             let renderer = AttributedStringRenderer()
             let renderedDefault = renderer.render(html: htmlWithSpecialMarkup, options: .shortenLinks)
             #expect(renderedDefault.rawString == htmlWithSpecialMarkup)
-            #expect(renderedDefault.plainString == """
-                RE: example.com/post/1…
+            #expect(
+                renderedDefault.plainString == """
+                    RE: example.com/post/1…
 
-                Hello world
-                """)
+                    Hello world
+                    """)
             let attributedString = try AttributedString(
                 markdown: "RE: [example.com/post/1…](https://example.com/post/1234)\n\nHello world",
                 options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
@@ -177,11 +181,12 @@
                 """
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	Single level
-                ┃	Second paragraph
-                Regular text
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	Single level
+                    ┃	Second paragraph
+                    Regular text
+                    """)
         }
 
         @Test func htmlWithBlockQuoteBasicRendering() async throws {
@@ -204,11 +209,12 @@
             let html = "<blockquote><p>First</p><p>Second</p><p>Third</p></blockquote>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	First
-                ┃	Second
-                ┃	Third
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	First
+                    ┃	Second
+                    ┃	Third
+                    """)
         }
 
         @Test func htmlWithNestedBlockQuote() async throws {
@@ -218,11 +224,12 @@
                 "<blockquote><p>Level one</p><blockquote><p>Level two</p></blockquote></blockquote><p>Regular text</p>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	Level one
-                ┃	┃	Level two
-                Regular text
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	Level one
+                    ┃	┃	Level two
+                    Regular text
+                    """)
         }
 
         @Test func htmlWithTriplyNestedBlockQuote() async throws {
@@ -232,11 +239,12 @@
                 "<blockquote><p>Level one</p><blockquote><p>Level two</p><blockquote><p>Level three</p></blockquote></blockquote></blockquote>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	Level one
-                ┃	┃	Level two
-                ┃	┃	┃	Level three
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	Level one
+                    ┃	┃	Level two
+                    ┃	┃	┃	Level three
+                    """)
         }
 
         @Test func htmlWithBlockQuoteContainingEmphasis() async throws {
@@ -245,10 +253,11 @@
             let html = "<blockquote><p><em>Emphasized text</em></p></blockquote><p>Regular</p>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	Emphasized text
-                Regular
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	Emphasized text
+                    Regular
+                    """)
             let emphasizedRun = rendered.attributedString.runs.first(where: {
                 String(rendered.attributedString[$0.range].characters).contains("Emphasized text")
             })
@@ -261,10 +270,11 @@
             let html = "<blockquote><p><strong>Bold text</strong></p></blockquote><p>Regular</p>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	Bold text
-                Regular
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	Bold text
+                    Regular
+                    """)
             let boldRun = rendered.attributedString.runs.first(where: {
                 String(rendered.attributedString[$0.range].characters).contains("Bold text")
             })
@@ -280,10 +290,11 @@
                 "<blockquote><ul><li>Item one</li><li>Item two</li></ul></blockquote>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	 •	Item one
-                ┃	 •	Item two
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	 •	Item one
+                    ┃	 •	Item two
+                    """)
         }
 
         @Test func htmlWithBrOutsideBlockQuote() async throws {
@@ -292,10 +303,11 @@
             let html = "<p>Line one<br>Line two</p>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                Line one
-                Line two
-                """)
+            #expect(
+                rendered.plainString == """
+                    Line one
+                    Line two
+                    """)
         }
 
         @Test func htmlWithBrInBlockQuote() async throws {
@@ -304,10 +316,11 @@
             let html = "<blockquote><p>Line one<br>Line two</p></blockquote>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	Line one
-                ┃	Line two
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	Line one
+                    ┃	Line two
+                    """)
         }
 
         @Test func htmlWithMultipleBrInBlockQuote() async throws {
@@ -316,11 +329,12 @@
             let html = "<blockquote><p>First<br>Second<br>Third</p></blockquote>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	First
-                ┃	Second
-                ┃	Third
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	First
+                    ┃	Second
+                    ┃	Third
+                    """)
         }
 
         @Test func htmlWithBrInNestedBlockQuote() async throws {
@@ -329,10 +343,11 @@
             let html = "<blockquote><blockquote><p>Line one<br>Line two</p></blockquote></blockquote>"
             let rendered = renderer.render(html: html)
             #expect(rendered.rawString == html)
-            #expect(rendered.plainString == """
-                ┃	┃	Line one
-                ┃	┃	Line two
-                """)
+            #expect(
+                rendered.plainString == """
+                    ┃	┃	Line one
+                    ┃	┃	Line two
+                    """)
         }
 
         @Test func htmlWithBlockQuoteContainingPartialEmphasis() async throws {

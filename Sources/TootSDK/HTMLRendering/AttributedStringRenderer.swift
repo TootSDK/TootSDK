@@ -218,7 +218,7 @@
         /// no semantic content, so they can safely be skipped during rendering.
         var isInsignificantWhitespace: Bool {
             guard let textNode = self as? TextNode,
-                  textNode.getWholeText().allSatisfy({ $0.isWhitespace || $0.isNewline })
+                textNode.getWholeText().allSatisfy({ $0.isWhitespace || $0.isNewline })
             else { return false }
             return previousSibling()?.isBlockElement == true
                 || nextSibling()?.isBlockElement == true
