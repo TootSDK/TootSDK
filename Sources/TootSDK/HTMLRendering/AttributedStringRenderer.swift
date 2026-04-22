@@ -45,6 +45,16 @@
             ]
         }
 
+        private struct Context {
+            var blockQuoteLevel: Int = 0
+
+            var isInBlockQuote: Bool { blockQuoteLevel > 0 }
+
+            var blockQuotePrefix: AttributedString {
+                AttributedString(String(repeating: "┃\t", count: blockQuoteLevel))
+            }
+        }
+
         public init() {}
 
         /// Converts an HTML fragment into a `ParsedContent` structure.
@@ -63,7 +73,7 @@
                 return ParsedContent(rawString: html, plainString: plainText, attributedString: .init(plainText))
             }
 
-            var attributedString = renderHTMLNode(body, options: options)
+            var attributedString = renderHTMLNode(body, options: options, context: Context())
             attributedString.trimWhitespaceAndNewlines()
             return ParsedContent(
                 rawString: html,
@@ -72,18 +82,18 @@
             )
         }
 
-        private func renderHTMLNode(_ node: Node, options: Options) -> AttributedString {
+        private func renderHTMLNode(_ node: Node, options: Options, context: Context) -> AttributedString {
             switch node {
             case let node as TextNode:
                 return AttributedString(node.getWholeText())
             case let node as Element:
-                return renderHTMLElement(node, options: options)
+                return renderHTMLElement(node, options: options, context: context)
             default:
                 return ""
             }
         }
 
-        private func renderHTMLElement(_ element: Element, options: Options) -> AttributedString {
+        private func renderHTMLElement(_ element: Element, options: Options, context: Context) -> AttributedString {
             var attributedString = AttributedString()
 
             if element.hasClass("quote-inline") && options.contains(.skipInlineQuotes) {
@@ -94,11 +104,18 @@
             }
 
             for child in element.getChildNodes() {
+                if child.isInsignificantWhitespace {
+                    continue
+                }
                 if child.isBlockElement && child.previousSibling() != nil && !attributedString.endsWithNewline {
                     // Each block element (including ones following inline elements) should start on new line
                     attributedString += "\n"
                 }
-                attributedString += renderHTMLNode(child, options: options)
+                var childContext = context
+                if element.tagName() == "blockquote" {
+                    childContext.blockQuoteLevel += 1
+                }
+                attributedString += renderHTMLNode(child, options: options, context: childContext)
             }
 
             if element.hasClass("ellipsis") && options.contains(.renderEllipsis) {
@@ -106,8 +123,18 @@
             }
 
             switch element.tagName() {
-            case "br", "p", "pre":
+            case "br":
                 attributedString += "\n"
+                if context.isInBlockQuote {
+                    attributedString += context.blockQuotePrefix
+                }
+            case "p", "pre":
+                if context.isInBlockQuote {
+                    attributedString.insertInlinePresentationIntent(.emphasized)
+                    attributedString = context.blockQuotePrefix + attributedString
+                } else {
+                    attributedString += "\n"
+                }
             case "a":
                 applyLink(from: element, to: &attributedString)
             case "em", "i":
@@ -118,6 +145,10 @@
                 attributedString.insertInlinePresentationIntent(.strikethrough)
             case "li":
                 applyList(from: element, to: &attributedString)
+                if context.isInBlockQuote {
+                    attributedString.insertInlinePresentationIntent(.emphasized)
+                    attributedString = context.blockQuotePrefix + attributedString
+                }
             case "code":
                 attributedString.insertInlinePresentationIntent(.code)
 
@@ -134,8 +165,8 @@
                 break
             }
 
-            if element.isBlockElement && !attributedString.endsWithDoubleNewline {
-                // Insert up to 2 new lines after block elements
+            if element.isBlockElement && !attributedString.endsWithDoubleNewline && !context.isInBlockQuote {
+                // Insert up to 2 new lines after block elements other than blockquotes
                 attributedString += "\n"
             }
 
@@ -164,7 +195,7 @@
                 let index = (try? element.elementSiblingIndex()) ?? 0
                 bullet = AttributedString("\(index + 1).\t")
             case "ul":
-                bullet = AttributedString("\u{2022}\t")
+                bullet = AttributedString(" \u{2022}\t")
             default:
                 bullet = AttributedString()
             }
@@ -180,6 +211,17 @@
                 return false
             }
             return element.isBlock() && element.tagName() != "del"
+        }
+
+        /// Returns `true` when this node is a whitespace-only text node whose only purpose is
+        /// to pretty-print the HTML source. Such nodes sit between block-level siblings and carry
+        /// no semantic content, so they can safely be skipped during rendering.
+        var isInsignificantWhitespace: Bool {
+            guard let textNode = self as? TextNode,
+                  textNode.getWholeText().allSatisfy({ $0.isWhitespace || $0.isNewline })
+            else { return false }
+            return previousSibling()?.isBlockElement == true
+                || nextSibling()?.isBlockElement == true
         }
     }
 #endif
