@@ -20,6 +20,21 @@ struct MentionsTimelineView: View {
 
     let client: TootClient
 
+    private static let blockQuoteStyle: BlockQuoteStyle = {
+        var marks = AttributeContainer()
+        marks.swiftUI.font = .system(size: 32, weight: .bold)
+        marks.swiftUI.foregroundColor = .green
+
+        var body = AttributeContainer()
+        body.swiftUI.font = .body
+
+        return BlockQuoteStyle(
+            locale: Locale(identifier: "en_US"),
+            markAttributes: marks,
+            contentAttributes: body
+        )
+    }()
+
     var body: some View {
         Group {
             if posts.isEmpty {
@@ -30,7 +45,7 @@ struct MentionsTimelineView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List(posts) { post in
-                    PostRow(post: post)
+                    MentionRow(post: post, blockQuoteStyle: Self.blockQuoteStyle)
                 }
             }
         }
@@ -43,31 +58,17 @@ struct MentionsTimelineView: View {
     }
 
     private func fetchMentions() async {
-        var marks = AttributeContainer()
-        marks.swiftUI.font = .system(size: 32, weight: .bold)
-        marks.swiftUI.foregroundColor = .pink
-        
-        var body = AttributeContainer()
-        body.swiftUI.font = .body
-        
-        let style = BlockQuoteStyle(
-            locale: Locale(identifier: "en_US"),
-            markAttributes: marks,
-            contentAttributes: body
-        )
-        
         do {
             let params = TootNotificationParams(types: [.mention])
             let page = try await client.getNotifications(params: params)
             let newPosts = page.result.compactMap { notif -> DisplayPost? in
                 guard let post = notif.post else { return nil }
-                let rendered = AttributedStringRenderer().render(html: post.content ?? "", blockQuoteStyle: style).plainString
                 return DisplayPost(
                     kind: .mention,
                     id: post.id,
                     authorName: post.account.displayName ?? post.account.username ?? "",
                     authorUsername: post.account.acct,
-                    content: rendered,
+                    content: post.content ?? "",
                     createdAt: post.createdAt,
                     url: post.url ?? post.uri
                 )
@@ -82,5 +83,22 @@ struct MentionsTimelineView: View {
         } catch {
             print("Failed to fetch mentions: \(error)")
         }
+    }
+}
+
+private struct MentionRow: View {
+    let post: DisplayPost
+    let blockQuoteStyle: BlockQuoteStyle
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(post.authorName)
+                .font(.headline)
+            Text(AttributedStringRenderer.shared.render(html: post.content, blockQuoteStyle: blockQuoteStyle).attributedString)
+                .lineLimit(5)
+            Text(post.createdAt, style: .relative)
+                .font(.caption)
+        }
+        .padding(.vertical, 4)
     }
 }
