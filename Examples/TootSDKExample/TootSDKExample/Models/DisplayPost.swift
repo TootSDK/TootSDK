@@ -9,18 +9,26 @@ import Foundation
 import SwiftData
 
 @Model
-// A model of a post as used in the UI of the app
 final class DisplayPost {
+    enum Kind: String, Codable {
+        case home
+        case mention
+    }
+
     @Attribute(.unique)
+    var storageID: String
     var id: String
+    var kind: String
     var authorName: String
     var authorUsername: String
     var content: String
     var createdAt: Date
     var url: String
 
-    init(id: String, authorName: String, authorUsername: String, content: String, createdAt: Date, url: String) {
+    init(kind: Kind, id: String, authorName: String, authorUsername: String, content: String, createdAt: Date, url: String) {
+        self.storageID = "\(kind.rawValue):\(id)"
         self.id = id
+        self.kind = kind.rawValue
         self.authorName = authorName
         self.authorUsername = authorUsername
         self.content = content

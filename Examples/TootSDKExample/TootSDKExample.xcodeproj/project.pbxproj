@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B5362EB92E54C1790075BBD2 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B5362EB82E54C1790075BBD2 /* TootSDK */; };
+		B51DCC1C2F9A761D00AFB55B /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B51DCC1B2F9A761D00AFB55B /* TootSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5362EB92E54C1790075BBD2 /* TootSDK in Frameworks */,
+				B51DCC1C2F9A761D00AFB55B /* TootSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +130,7 @@
 			);
 			name = TootSDKExample;
 			packageProductDependencies = (
-				B5362EB82E54C1790075BBD2 /* TootSDK */,
+				B51DCC1B2F9A761D00AFB55B /* TootSDK */,
 			);
 			productName = TootSDKExample;
 			productReference = B5362E8B2E54C12F0075BBD2 /* TootSDKExample.app */;
@@ -215,7 +215,7 @@
 			mainGroup = B5362E822E54C12F0075BBD2;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B5362EB72E54C1790075BBD2 /* XCRemoteSwiftPackageReference "TootSDK" */,
+				B51DCC1A2F9A761D00AFB55B /* XCLocalSwiftPackageReference "../../../TootSDK" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B5362E8C2E54C12F0075BBD2 /* Products */;
@@ -666,21 +666,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		B5362EB72E54C1790075BBD2 /* XCRemoteSwiftPackageReference "TootSDK" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/TootSDK/TootSDK";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 18.2.0;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		B51DCC1A2F9A761D00AFB55B /* XCLocalSwiftPackageReference "../../../TootSDK" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../TootSDK;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B5362EB82E54C1790075BBD2 /* TootSDK */ = {
+		B51DCC1B2F9A761D00AFB55B /* TootSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B5362EB72E54C1790075BBD2 /* XCRemoteSwiftPackageReference "TootSDK" */;
 			productName = TootSDK;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -56,6 +56,20 @@
             self = AttributedString(self[startIndex..<endIndex])
         }
 
+        mutating func trimNewlines() {
+            var startIndex = startIndex
+            while startIndex < endIndex && characters[startIndex].isNewline {
+                startIndex = index(afterCharacter: startIndex)
+            }
+
+            var endIndex = endIndex
+            while endIndex > startIndex && characters[index(beforeCharacter: endIndex)].isNewline {
+                endIndex = index(beforeCharacter: endIndex)
+            }
+
+            self = AttributedString(self[startIndex..<endIndex])
+        }
+
         var endsWithNewline: Bool {
             characters.last?.isNewline == true
         }

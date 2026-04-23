@@ -1,13 +1,13 @@
 {
-  "originHash" : "32950d79a4cf067a2070db1e8fea477d9c783330a61845f5c868a25232c29394",
+  "originHash" : "afb16287533c48638048ef415a918ca37714a59f5fef6dee04e938f856ed7ba5",
   "pins" : [
     {
       "identity" : "swift-asn1",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-asn1.git",
       "state" : {
-        "revision" : "f70225981241859eb4aa1a18a75531d26637c8cc",
-        "version" : "1.4.0"
+        "revision" : "eb50cbd14606a9161cbc5d452f18797c90ef0bab",
+        "version" : "1.7.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "8c0c0a8b49e080e54e5e328cc552821ff07cd341",
-        "version" : "1.2.1"
+        "revision" : "6675bc0ff86e61436e615df6fc5174e043e57924",
+        "version" : "1.4.1"
       }
     },
     {
@@ -33,8 +33,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "334e682869394ee239a57dbe9262bff3cd9495bd",
-        "version" : "3.14.0"
+        "revision" : "95ba0316a9b733e92bb6b071255ff46263bbe7dc",
+        "version" : "3.15.1"
+      }
+    },
+    {
+      "identity" : "swift-http-structured-headers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-http-structured-headers.git",
+      "state" : {
+        "revision" : "933538faa42c432d385f02e07df0ace7c5ecfc47",
+        "version" : "1.7.0"
       }
     },
     {
@@ -42,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "1c30f0f2053b654e3d1302492124aa6d242cdba7",
-        "version" : "2.86.0"
+        "revision" : "f71c8d2a5e74a2c6d11a0fbe324774b5d6084237",
+        "version" : "2.99.0"
       }
     },
     {
@@ -51,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-system.git",
       "state" : {
-        "revision" : "890830fff1a577dc83134890c7984020c5f6b43b",
-        "version" : "1.6.2"
+        "revision" : "7c6ad0fc39d0763e0b699210e4124afd5041c5df",
+        "version" : "1.6.4"
       }
     },
     {
@@ -69,17 +78,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/scinfu/SwiftSoup.git",
       "state" : {
-        "revision" : "3a439f9eccc391b264d54516ce640251552eb0c4",
-        "version" : "2.10.3"
+        "revision" : "6c7915e16f729857aec3e99068c361e58a00ed68",
+        "version" : "2.13.4"
       }
     },
     {
-      "identity" : "tootsdk",
+      "identity" : "version",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/TootSDK/TootSDK",
+      "location" : "https://github.com/mxcl/Version.git",
       "state" : {
-        "revision" : "3e090a30f3cb3ae4e0a863135842a01bd2e38c91",
-        "version" : "18.2.0"
+        "revision" : "67ce582bb9de70e1eb2ee41fd71aad3b5f86d97b",
+        "version" : "2.2.0"
       }
     }
   ],

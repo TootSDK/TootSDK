@@ -16,8 +16,7 @@ struct TootSDKExampleApp: App {
             ServerCredential.self,
         ])
 
-        // in-memory store because this is a demo and we don't need anything saved, the app will reset when restarted
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
