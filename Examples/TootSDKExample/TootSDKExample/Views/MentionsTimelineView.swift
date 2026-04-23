@@ -43,12 +43,25 @@ struct MentionsTimelineView: View {
     }
 
     private func fetchMentions() async {
+        var marks = AttributeContainer()
+        marks.swiftUI.font = .system(size: 32, weight: .bold)
+        marks.swiftUI.foregroundColor = .pink
+        
+        var body = AttributeContainer()
+        body.swiftUI.font = .body
+        
+        let style = BlockQuoteStyle(
+            locale: Locale(identifier: "en_US"),
+            markAttributes: marks,
+            contentAttributes: body
+        )
+        
         do {
             let params = TootNotificationParams(types: [.mention])
             let page = try await client.getNotifications(params: params)
             let newPosts = page.result.compactMap { notif -> DisplayPost? in
                 guard let post = notif.post else { return nil }
-                let rendered = AttributedStringRenderer().render(html: post.content ?? "").plainString
+                let rendered = AttributedStringRenderer().render(html: post.content ?? "", blockQuoteStyle: style).plainString
                 return DisplayPost(
                     kind: .mention,
                     id: post.id,

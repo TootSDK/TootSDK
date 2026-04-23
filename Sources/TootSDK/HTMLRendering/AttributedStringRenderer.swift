@@ -47,12 +47,7 @@
 
         private struct Context {
             var blockQuoteLevel: Int = 0
-
-            var isInBlockQuote: Bool { blockQuoteLevel > 0 }
-
-            var blockQuotePrefix: AttributedString {
-                AttributedString(String(repeating: "┃\t", count: blockQuoteLevel))
-            }
+            var blockQuoteStyle: BlockQuoteStyle = .default
         }
 
         public init() {}
@@ -62,9 +57,14 @@
         /// - Parameters:
         ///   - html: A raw HTML string to render.
         ///   - options: Rendering options affecting output behavior.
+        ///   - blockQuoteStyle: Style configuration for blockquote rendering.
         /// - Returns: A parsed result containing the original HTML, plain text,
         ///   and attributed string representation.
-        public func render(html: String, options: Options = []) -> ParsedContent {
+        public func render(
+            html: String,
+            options: Options = [],
+            blockQuoteStyle: BlockQuoteStyle = .default
+        ) -> ParsedContent {
             guard
                 let document = try? SwiftSoup.parseBodyFragment(html),
                 let body = document.body()
@@ -73,7 +73,9 @@
                 return ParsedContent(rawString: html, plainString: plainText, attributedString: .init(plainText))
             }
 
-            var attributedString = renderHTMLNode(body, options: options, context: Context())
+            var context = Context()
+            context.blockQuoteStyle = blockQuoteStyle
+            var attributedString = renderHTMLNode(body, options: options, context: context)
             attributedString.trimWhitespaceAndNewlines()
             return ParsedContent(
                 rawString: html,
@@ -103,6 +105,11 @@
                 return attributedString
             }
 
+            var childContext = context
+            if element.tagName() == "blockquote" {
+                childContext.blockQuoteLevel += 1
+            }
+
             for child in element.getChildNodes() {
                 if child.isInsignificantWhitespace {
                     continue
@@ -110,10 +117,6 @@
                 if child.isBlockElement && child.previousSibling() != nil && !attributedString.endsWithNewline {
                     // Each block element (including ones following inline elements) should start on new line
                     attributedString += "\n"
-                }
-                var childContext = context
-                if element.tagName() == "blockquote" {
-                    childContext.blockQuoteLevel += 1
                 }
                 attributedString += renderHTMLNode(child, options: options, context: childContext)
             }
@@ -125,16 +128,8 @@
             switch element.tagName() {
             case "br":
                 attributedString += "\n"
-                if context.isInBlockQuote {
-                    attributedString += context.blockQuotePrefix
-                }
             case "p", "pre":
-                if context.isInBlockQuote {
-                    attributedString.insertInlinePresentationIntent(.emphasized)
-                    attributedString = context.blockQuotePrefix + attributedString
-                } else {
-                    attributedString += "\n"
-                }
+                attributedString += "\n"
             case "a":
                 applyLink(from: element, to: &attributedString)
             case "em", "i":
@@ -145,12 +140,14 @@
                 attributedString.insertInlinePresentationIntent(.strikethrough)
             case "li":
                 applyList(from: element, to: &attributedString)
-                if context.isInBlockQuote {
-                    attributedString.insertInlinePresentationIntent(.emphasized)
-                    attributedString = context.blockQuotePrefix + attributedString
-                }
             case "code":
                 attributedString.insertInlinePresentationIntent(.code)
+            case "blockquote":
+                attributedString = renderBlockQuote(
+                    body: attributedString,
+                    level: context.blockQuoteLevel,
+                    style: context.blockQuoteStyle
+                )
 
             #if canImport(UIKit) || canImport(AppKit)
                 case "h1":
@@ -165,12 +162,57 @@
                 break
             }
 
-            if element.isBlockElement && !attributedString.endsWithDoubleNewline && !context.isInBlockQuote {
-                // Insert up to 2 new lines after block elements other than blockquotes
+            if element.isBlockElement && element.tagName() != "blockquote" && !attributedString.endsWithDoubleNewline {
                 attributedString += "\n"
             }
 
             return attributedString
+        }
+
+        private func renderBlockQuote(body: AttributedString, level: Int, style: BlockQuoteStyle) -> AttributedString {
+            guard !body.characters.isEmpty else { return body }
+
+            var trimmed = body
+            trimmed.trimNewlines()
+            guard !trimmed.characters.isEmpty else { return AttributedString() }
+
+            // Collapse consecutive newlines (paragraph spacing) to a single newline per boundary.
+            var normalized = AttributedString()
+            var lastWasNewline = false
+            for run in trimmed.runs {
+                let runAttributes = run.attributes
+                let text = String(trimmed[run.range].characters)
+                var segment = ""
+                for ch in text {
+                    if ch == "\n" {
+                        if !lastWasNewline {
+                            segment.append(ch)
+                        }
+                        lastWasNewline = true
+                    } else {
+                        lastWasNewline = false
+                        segment.append(ch)
+                    }
+                }
+                if !segment.isEmpty {
+                    var segmentAS = AttributedString(segment)
+                    segmentAS.setAttributes(runAttributes)
+                    normalized += segmentAS
+                }
+            }
+
+            for run in normalized.runs {
+                normalized[run.range].mergeAttributes(style.contentAttributes, mergePolicy: .keepCurrent)
+            }
+
+            let (openStr, closeStr) = quotationDelimiters(level: level, locale: style.locale)
+
+            var openAS = AttributedString(openStr)
+            openAS.mergeAttributes(style.markAttributes)
+            var closeAS = AttributedString(closeStr)
+            closeAS.mergeAttributes(style.markAttributes)
+
+            return openAS + normalized + closeAS + AttributedString("\n")
         }
 
         private func applyLink(from element: Element, to attributedString: inout AttributedString) {
