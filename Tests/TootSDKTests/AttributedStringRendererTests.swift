@@ -395,9 +395,9 @@
             let html = "<blockquote><p>Body text</p></blockquote>"
             var markAttrs = AttributeContainer()
             #if canImport(UIKit)
-            markAttrs.uiKit.foregroundColor = _TestColor.red
+                markAttrs.uiKit.foregroundColor = _TestColor.red
             #elseif canImport(AppKit)
-            markAttrs.appKit.foregroundColor = _TestColor.red
+                markAttrs.appKit.foregroundColor = _TestColor.red
             #endif
             let style = BlockQuoteStyle(
                 locale: Locale(identifier: "en_US"),
@@ -416,13 +416,13 @@
             })
 
             #if canImport(UIKit)
-            #expect(openRun?.uiKit.foregroundColor == _TestColor.red)
-            #expect(closeRun?.uiKit.foregroundColor == _TestColor.red)
-            #expect(bodyRun?.uiKit.foregroundColor != _TestColor.red)
+                #expect(openRun?.uiKit.foregroundColor == _TestColor.red)
+                #expect(closeRun?.uiKit.foregroundColor == _TestColor.red)
+                #expect(bodyRun?.uiKit.foregroundColor != _TestColor.red)
             #elseif canImport(AppKit)
-            #expect(openRun?.appKit.foregroundColor == _TestColor.red)
-            #expect(closeRun?.appKit.foregroundColor == _TestColor.red)
-            #expect(bodyRun?.appKit.foregroundColor != _TestColor.red)
+                #expect(openRun?.appKit.foregroundColor == _TestColor.red)
+                #expect(closeRun?.appKit.foregroundColor == _TestColor.red)
+                #expect(bodyRun?.appKit.foregroundColor != _TestColor.red)
             #endif
         }
 
@@ -433,9 +433,9 @@
             let bodyFont = _TestFont.systemFont(ofSize: 14)
             var contentAttrs = AttributeContainer()
             #if canImport(UIKit)
-            contentAttrs.uiKit.font = bodyFont
+                contentAttrs.uiKit.font = bodyFont
             #elseif canImport(AppKit)
-            contentAttrs.appKit.font = bodyFont
+                contentAttrs.appKit.font = bodyFont
             #endif
             let style = BlockQuoteStyle(
                 locale: Locale(identifier: "en_US"),
@@ -451,9 +451,9 @@
             })
 
             #if canImport(UIKit)
-            #expect(normalRun?.uiKit.font == bodyFont)
+                #expect(normalRun?.uiKit.font == bodyFont)
             #elseif canImport(AppKit)
-            #expect(normalRun?.appKit.font == bodyFont)
+                #expect(normalRun?.appKit.font == bodyFont)
             #endif
             #expect(boldRun?.inlinePresentationIntent?.contains(.stronglyEmphasized) == true)
         }
