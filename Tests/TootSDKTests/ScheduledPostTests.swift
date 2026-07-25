@@ -6,6 +6,30 @@ import XCTest
 @testable import TootSDK
 
 final class ScheduledPostTests: XCTestCase {
+    func testReschedulePostCreatesScheduledAtQueryItem() throws {
+        // arrange
+        let date = Date().addingTimeInterval(TimeInterval(60.0 * 60.0))
+        let params = ReschedulePostParams(scheduledAt: date)
+
+        // act
+        let queryItems = try params.queryItems()
+
+        // assert
+        XCTAssertEqual(queryItems, [URLQueryItem(name: "scheduled_at", value: TootEncoder.dateFormatter.string(from: date))])
+    }
+
+    func testReschedulePostValidatesScheduledAtTooSoon() throws {
+        // arrange
+        let params = ReschedulePostParams(scheduledAt: Date().addingTimeInterval(TimeInterval(4.5 * 60.0)))
+
+        // act
+        XCTAssertThrowsError(try params.queryItems()) { error in
+            XCTAssertEqual(
+                error as? TootSDKError,
+                TootSDKError.invalidParameter(parameterName: "scheduledAt", reason: "The scheduled date must be at least 5 minutes into the future."))
+        }
+    }
+
     func testScheduledPostValidatesScheduledAtRequired() throws {
         // arrange
         let params = ScheduledPostParams(mediaIds: [], visibility: .public)

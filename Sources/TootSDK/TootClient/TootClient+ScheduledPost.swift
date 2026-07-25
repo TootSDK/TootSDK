@@ -82,20 +82,44 @@ extension TootClient {
         return try await fetch(ScheduledPost.self, req)
     }
 
-    /// Edit a given post to change its text, sensitivity, media attachments, or poll. Note that editing a poll’s options will reset the votes.
-    /// - Parameter id: the ID of the post to be changed
-    /// - Parameter params: the updated content of the post to be posted
-    /// - Returns: the post after the update
-    public func updateScheduledPostDate(id: String, _ params: ScheduledPostParams) async throws -> ScheduledPost? {
+    /// Update a scheduled post's publication date.
+    /// - Parameters:
+    ///   - id: The ID of the scheduled post to update.
+    ///   - params: Parameters containing the new publication date.
+    /// - Returns: The scheduled post after the update.
+    public func updateScheduledPostDate(id: String, _ params: ReschedulePostParams) async throws -> ScheduledPost? {
+        let response = try await updateScheduledPostDateRaw(id: id, params)
+        return response.data
+    }
+
+    /// Update a scheduled post's publication date with HTTP response metadata.
+    /// - Parameters:
+    ///   - id: The ID of the scheduled post to update.
+    ///   - params: Parameters containing the new publication date.
+    /// - Returns: TootResponse containing the scheduled post after the update and HTTP metadata.
+    public func updateScheduledPostDateRaw(id: String, _ params: ReschedulePostParams) async throws -> TootResponse<ScheduledPost?> {
         try requireFeature(.scheduledPost)
-        let requestParams = try ScheduledPostRequest(from: params)
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "scheduled_statuses", id])
             $0.method = .put
-            $0.body = try .multipart(requestParams, boundary: UUID().uuidString)
+            $0.body = try .form(queryItems: params.queryItems())
         }
 
-        return try await fetch(ScheduledPost.self, req)
+        return try await fetchRaw(ScheduledPost?.self, req)
+    }
+
+    /// Update a scheduled post's publication date.
+    /// - Parameters:
+    ///   - id: The ID of the scheduled post to update.
+    ///   - params: The scheduled post parameters containing the new publication date.
+    /// - Returns: The scheduled post after the update.
+    @available(*, deprecated, message: "Use updateScheduledPostDate(id:_:) with ReschedulePostParams instead.")
+    public func updateScheduledPostDate(id: String, _ params: ScheduledPostParams) async throws -> ScheduledPost? {
+        guard let scheduledAt = params.scheduledAt else {
+            throw TootSDKError.missingParameter(parameterName: "scheduledAt")
+        }
+
+        return try await updateScheduledPostDate(id: id, ReschedulePostParams(scheduledAt: scheduledAt))
     }
 
     /// Deletes a single scheduled post
