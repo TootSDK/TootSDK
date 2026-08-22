@@ -233,7 +233,7 @@ extension TootClient {
     internal func fetchRaw<T: Decodable>(
         _ decode: T.Type,
         _ req: HTTPRequestBuilder,
-        uploadDelegate: MediaUploadProgressDelegate
+        uploadDelegate: UploadProgressDelegate
     ) async throws -> TootResponse<T> {
         let request = try prepare(req: req)
         let (data, response) = try await uploadTask(request, delegate: uploadDelegate)
@@ -333,7 +333,7 @@ extension TootClient {
     @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
     internal func uploadTask(
         _ request: URLRequest,
-        delegate: MediaUploadProgressDelegate
+        delegate: UploadProgressDelegate
     ) async throws -> (Data, HTTPURLResponse) {
         logRequest(request)
         guard let bodyData = request.httpBody else {

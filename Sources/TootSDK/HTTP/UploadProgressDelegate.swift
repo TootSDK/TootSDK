@@ -5,16 +5,14 @@ import Foundation
 #endif
 
 @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
-internal final class MediaUploadProgressDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
-    internal typealias Continuation = AsyncThrowingStream<MediaUploadEvent, Error>.Continuation
-
-    private let continuation: Continuation
+internal final class UploadProgressDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
+    private let reportProgress: @Sendable (Double) -> Void
     private let lock = NSLock()
     private var lastProgress = 0.0
     private var transmissionFinished = false
 
-    internal init(continuation: Continuation) {
-        self.continuation = continuation
+    internal init(reportProgress: @escaping @Sendable (Double) -> Void) {
+        self.reportProgress = reportProgress
     }
 
     internal func urlSession(
@@ -39,7 +37,7 @@ internal final class MediaUploadProgressDelegate: NSObject, URLSessionTaskDelega
             }
 
             if lastProgress < 1 {
-                continuation.yield(.progress(1))
+                reportProgress(1)
                 lastProgress = 1
             }
             transmissionFinished = true
@@ -52,7 +50,7 @@ internal final class MediaUploadProgressDelegate: NSObject, URLSessionTaskDelega
                 return
             }
 
-            continuation.yield(.progress(progress))
+            reportProgress(progress)
             lastProgress = progress
         }
     }

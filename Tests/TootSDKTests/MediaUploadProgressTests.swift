@@ -9,8 +9,10 @@ import Testing
 
 @Suite(.serialized) struct MediaUploadProgressTests {
     @Test func progressIsMonotonicAndClamped() async throws {
-        let (stream, continuation) = AsyncThrowingStream<MediaUploadEvent, Error>.makeStream()
-        let delegate = MediaUploadProgressDelegate(continuation: continuation)
+        let (stream, continuation) = AsyncStream<Double>.makeStream()
+        let delegate = UploadProgressDelegate { progress in
+            continuation.yield(progress)
+        }
         let task = URLSession.shared.dataTask(with: URL(string: "https://example.com")!)
 
         delegate.urlSession(
@@ -44,8 +46,11 @@ import Testing
         delegate.finishTransmission()
         continuation.finish()
 
-        let events = try await collect(stream)
-        #expect(events.progressValues == [0.25, 1])
+        var progress = [Double]()
+        for await value in stream {
+            progress.append(value)
+        }
+        #expect(progress == [0.25, 1])
     }
 
     @Test func uploadWithProgressEmitsProgressAndCompletion() async throws {
@@ -133,8 +138,10 @@ import Testing
         )
     }
 
-    private func collect(_ stream: AsyncThrowingStream<MediaUploadEvent, Error>) async throws -> [MediaUploadEvent] {
-        var events = [MediaUploadEvent]()
+    private func collect(
+        _ stream: AsyncThrowingStream<UploadEvent<UploadedMediaAttachment>, Error>
+    ) async throws -> [UploadEvent<UploadedMediaAttachment>] {
+        var events = [UploadEvent<UploadedMediaAttachment>]()
         for try await event in stream {
             events.append(event)
         }
@@ -142,7 +149,7 @@ import Testing
     }
 }
 
-extension Array where Element == MediaUploadEvent {
+extension Array where Element == UploadEvent<UploadedMediaAttachment> {
     fileprivate var progressValues: [Double] {
         compactMap { event in
             guard case .progress(let progress) = event else {

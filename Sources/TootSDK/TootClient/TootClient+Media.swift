@@ -20,7 +20,7 @@ extension TootClient {
     public func uploadMediaWithProgress(
         _ params: UploadMediaAttachmentParams,
         mimeType: String
-    ) -> AsyncThrowingStream<MediaUploadEvent, Error> {
+    ) -> AsyncThrowingStream<UploadEvent<UploadedMediaAttachment>, Error> {
         // Use a copy so changes to this client cannot affect the upload after its task starts.
         let uploadClient = copy()
 
@@ -31,7 +31,9 @@ extension TootClient {
                 do {
                     try Task.checkCancellation()
                     let req = try uploadClient.mediaUploadRequest(params, mimeType: mimeType)
-                    let delegate = MediaUploadProgressDelegate(continuation: continuation)
+                    let delegate = UploadProgressDelegate { progress in
+                        continuation.yield(.progress(progress))
+                    }
                     let response = try await uploadClient.fetchRaw(
                         UploadMediaAttachmentResponse.self,
                         req,
