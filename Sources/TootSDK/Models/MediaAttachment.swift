@@ -129,6 +129,14 @@ public struct UploadedMediaAttachment: Identifiable, Sendable {
     }
 }
 
+/// An update from a media upload.
+public enum MediaUploadEvent: Sendable {
+    /// Upload progress from `0` to `1`.
+    case progress(Double)
+    /// The uploaded attachment.
+    case completed(UploadedMediaAttachment)
+}
+
 internal struct UploadMediaAttachmentResponse: Codable {
     public let id: String
     public let url: String?
