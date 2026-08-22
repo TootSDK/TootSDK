@@ -53,16 +53,18 @@ import Testing
         #expect(progress == [0.25, 1])
     }
 
-    @Test func uploadWithProgressEmitsProgressAndCompletion() async throws {
+    @Test func uploadWithProgressReportsProgressAndReturnsAttachment() async throws {
         let client = makeClient(protocolClass: SuccessfulUploadURLProtocol.self)
         let params = UploadMediaAttachmentParams(file: Data("media".utf8), description: "Description")
+        let reportedProgress = ProgressStorage()
 
-        let events = try await collect(client.uploadMediaWithProgress(params, mimeType: "image/jpeg"))
-        #expect(events.progressValues.first == 0)
-        #expect(events.progressValues.last == 1)
-        #expect(events.progressValues == events.progressValues.sorted())
-        #expect(events.completedAttachments.count == 1)
-        #expect(events.isCompletionAfterProgressFinished)
+        let completed = try await client.uploadMedia(params, mimeType: "image/jpeg") { progress in
+            reportedProgress.append(progress)
+        }
+        let progress = reportedProgress.values
+        #expect(progress.first == 0)
+        #expect(progress.last == 1)
+        #expect(progress == progress.sorted())
 
         let progressRequest = try #require(SuccessfulUploadURLProtocol.lastRequest)
         #expect(progressRequest.httpBody == nil)
@@ -70,7 +72,6 @@ import Testing
         #expect(progressRequest.url?.path == "/api/v2/media")
         #expect(progressRequest.value(forHTTPHeaderField: "Content-Type")?.hasPrefix("multipart/form-data") == true)
 
-        let completed = try #require(events.completedAttachment)
         #expect(completed.id == "media-id")
         guard case .uploaded = completed.state else {
             Issue.record("Expected an uploaded attachment")
@@ -91,11 +92,14 @@ import Testing
 
     @Test func invalidHTTPResponseFinishesByThrowing() async throws {
         let client = makeClient(protocolClass: FailedUploadURLProtocol.self)
-        let stream = client.uploadMediaWithProgress(.init(file: Data("media".utf8)), mimeType: "image/jpeg")
 
         do {
-            _ = try await collect(stream)
-            Issue.record("Expected the upload stream to throw")
+            _ = try await client.uploadMedia(
+                .init(file: Data("media".utf8)),
+                mimeType: "image/jpeg",
+                progress: { _ in }
+            )
+            Issue.record("Expected the upload to throw")
         } catch let error as TootSDKError {
             guard case .invalidStatusCode = error else {
                 Issue.record("Expected an invalid status code error")
@@ -107,25 +111,31 @@ import Testing
     @Test(arguments: [TransportFailureURLProtocol.self, InvalidJSONURLProtocol.self])
     func transportAndDecodingFailuresFinishByThrowing(protocolClass: URLProtocol.Type) async {
         let client = makeClient(protocolClass: protocolClass)
-        let stream = client.uploadMediaWithProgress(.init(file: Data("media".utf8)), mimeType: "image/jpeg")
 
         await #expect(throws: Error.self) {
-            _ = try await collect(stream)
+            _ = try await client.uploadMedia(
+                .init(file: Data("media".utf8)),
+                mimeType: "image/jpeg",
+                progress: { _ in }
+            )
         }
     }
 
-    @Test func cancellingConsumerCancelsUploadTask() async {
+    @Test func cancellingUploadCancelsURLSessionTask() async {
         await SuspendedUploadURLProtocol.reset()
 
         let client = makeClient(protocolClass: SuspendedUploadURLProtocol.self)
-        let stream = client.uploadMediaWithProgress(.init(file: Data("media".utf8)), mimeType: "image/jpeg")
-        let consumer = Task {
-            for try await _ in stream {}
+        let upload = Task {
+            try await client.uploadMedia(
+                .init(file: Data("media".utf8)),
+                mimeType: "image/jpeg",
+                progress: { _ in }
+            )
         }
 
         await SuspendedUploadURLProtocol.started.wait()
-        consumer.cancel()
-        _ = await consumer.result
+        upload.cancel()
+        _ = await upload.result
         await SuspendedUploadURLProtocol.cancellation.wait()
     }
 
@@ -137,48 +147,19 @@ import Testing
             instanceURL: URL(string: "https://example.com")!
         )
     }
-
-    private func collect(
-        _ stream: AsyncThrowingStream<UploadEvent<UploadedMediaAttachment>, Error>
-    ) async throws -> [UploadEvent<UploadedMediaAttachment>] {
-        var events = [UploadEvent<UploadedMediaAttachment>]()
-        for try await event in stream {
-            events.append(event)
-        }
-        return events
-    }
 }
 
-extension Array where Element == UploadEvent<UploadedMediaAttachment> {
-    fileprivate var progressValues: [Double] {
-        compactMap { event in
-            guard case .progress(let progress) = event else {
-                return nil
-            }
-            return progress
-        }
+private final class ProgressStorage: @unchecked Sendable {
+    private let lock = NSLock()
+    private var storage = [Double]()
+
+    var values: [Double] {
+        lock.withLock { storage }
     }
 
-    fileprivate var completedAttachment: UploadedMediaAttachment? {
-        completedAttachments.first
-    }
-
-    fileprivate var completedAttachments: [UploadedMediaAttachment] {
-        compactMap { event in
-            guard case .completed(let attachment) = event else {
-                return nil
-            }
-            return attachment
+    func append(_ progress: Double) {
+        lock.withLock {
+            storage.append(progress)
         }
-    }
-
-    fileprivate var isCompletionAfterProgressFinished: Bool {
-        guard count >= 2,
-            case .progress(1) = self[count - 2],
-            case .completed = last
-        else {
-            return false
-        }
-        return true
     }
 }

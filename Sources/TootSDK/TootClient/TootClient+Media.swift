@@ -13,45 +13,24 @@ extension TootClient {
 
     /// Uploads media and reports its progress.
     ///
-    /// The stream reports progress from `0` to `1`, then emits the uploaded attachment.
-    ///
-    /// Cancel the task consuming the stream to cancel the upload.
+    /// - Parameter progress: Called with upload progress from `0` to `1`.
+    /// - Returns: The uploaded media attachment.
     @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
-    public func uploadMediaWithProgress(
+    public func uploadMedia(
         _ params: UploadMediaAttachmentParams,
-        mimeType: String
-    ) -> AsyncThrowingStream<UploadEvent<UploadedMediaAttachment>, Error> {
-        // Use a copy so changes to this client cannot affect the upload after its task starts.
-        let uploadClient = copy()
-
-        return AsyncThrowingStream { continuation in
-            let task = Task {
-                continuation.yield(.progress(0))
-
-                do {
-                    try Task.checkCancellation()
-                    let req = try uploadClient.mediaUploadRequest(params, mimeType: mimeType)
-                    let delegate = UploadProgressDelegate { progress in
-                        continuation.yield(.progress(progress))
-                    }
-                    let response = try await uploadClient.fetchRaw(
-                        UploadMediaAttachmentResponse.self,
-                        req,
-                        uploadDelegate: delegate
-                    )
-                    continuation.yield(.completed(Self.uploadedMedia(from: response.data)))
-                    continuation.finish()
-                } catch {
-                    continuation.finish(throwing: error)
-                }
-            }
-
-            continuation.onTermination = { termination in
-                if case .cancelled = termination {
-                    task.cancel()
-                }
-            }
-        }
+        mimeType: String,
+        progress: @escaping @Sendable (Double) -> Void
+    ) async throws -> UploadedMediaAttachment {
+        progress(0)
+        try Task.checkCancellation()
+        let req = try mediaUploadRequest(params, mimeType: mimeType)
+        let delegate = UploadProgressDelegate(reportProgress: progress)
+        let response = try await fetchRaw(
+            UploadMediaAttachmentResponse.self,
+            req,
+            uploadDelegate: delegate
+        )
+        return Self.uploadedMedia(from: response.data)
     }
 
     /// Uploads a media to the server with HTTP response metadata
@@ -92,22 +71,6 @@ extension TootClient {
                 ))
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
-    }
-
-    private func copy() -> TootClient {
-        let client = TootClient(
-            clientName: clientName,
-            clientWebsite: clientWebsite,
-            session: session,
-            instanceURL: instanceURL,
-            accessToken: accessToken,
-            scopes: scopes,
-            httpUserAgent: httpUserAgent,
-            serverConfiguration: serverConfiguration
-        )
-        client.debugRequests = debugRequests
-        client.debugResponses = debugResponses
-        return client
     }
 
     private static func uploadedMedia(from response: UploadMediaAttachmentResponse) -> UploadedMediaAttachment {
