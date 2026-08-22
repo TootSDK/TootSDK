@@ -88,6 +88,11 @@ final class SuspendedUploadURLProtocol: URLProtocol, @unchecked Sendable {
     static let started = CancellationSignal()
     static let cancellation = CancellationSignal()
 
+    static func reset() async {
+        await started.reset()
+        await cancellation.reset()
+    }
+
     override class func canInit(with request: URLRequest) -> Bool {
         true
     }
@@ -140,5 +145,10 @@ actor CancellationSignal {
         wasSignalled = true
         continuation?.resume()
         continuation = nil
+    }
+
+    func reset() {
+        continuation = nil
+        wasSignalled = false
     }
 }

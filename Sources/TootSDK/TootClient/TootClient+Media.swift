@@ -21,16 +21,23 @@ extension TootClient {
         _ params: UploadMediaAttachmentParams,
         mimeType: String
     ) -> AsyncThrowingStream<MediaUploadEvent, Error> {
-        AsyncThrowingStream { continuation in
+        // Use a copy so changes to this client cannot affect the upload after its task starts.
+        let uploadClient = copy()
+
+        return AsyncThrowingStream { continuation in
             let task = Task {
                 continuation.yield(.progress(0))
 
                 do {
                     try Task.checkCancellation()
-                    let req = try mediaUploadRequest(params, mimeType: mimeType)
+                    let req = try uploadClient.mediaUploadRequest(params, mimeType: mimeType)
                     let delegate = MediaUploadProgressDelegate(continuation: continuation)
-                    let response = try await fetchRaw(UploadMediaAttachmentResponse.self, req, uploadDelegate: delegate)
-                    continuation.yield(.completed(uploadedMedia(from: response.data)))
+                    let response = try await uploadClient.fetchRaw(
+                        UploadMediaAttachmentResponse.self,
+                        req,
+                        uploadDelegate: delegate
+                    )
+                    continuation.yield(.completed(Self.uploadedMedia(from: response.data)))
                     continuation.finish()
                 } catch {
                     continuation.finish(throwing: error)
@@ -52,7 +59,7 @@ extension TootClient {
         let uploadResponse = try await fetchRaw(UploadMediaAttachmentResponse.self, req)
 
         return TootResponse(
-            data: uploadedMedia(from: uploadResponse.data),
+            data: Self.uploadedMedia(from: uploadResponse.data),
             headers: uploadResponse.headers,
             statusCode: uploadResponse.statusCode,
             url: uploadResponse.url,
@@ -85,7 +92,23 @@ extension TootClient {
         }
     }
 
-    private func uploadedMedia(from response: UploadMediaAttachmentResponse) -> UploadedMediaAttachment {
+    private func copy() -> TootClient {
+        let client = TootClient(
+            clientName: clientName,
+            clientWebsite: clientWebsite,
+            session: session,
+            instanceURL: instanceURL,
+            accessToken: accessToken,
+            scopes: scopes,
+            httpUserAgent: httpUserAgent,
+            serverConfiguration: serverConfiguration
+        )
+        client.debugRequests = debugRequests
+        client.debugResponses = debugResponses
+        return client
+    }
+
+    private static func uploadedMedia(from response: UploadMediaAttachmentResponse) -> UploadedMediaAttachment {
         response.url != nil
             ? UploadedMediaAttachment(id: response.id, state: .uploaded)
             : UploadedMediaAttachment(id: response.id, state: .serverProcessing)

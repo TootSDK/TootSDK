@@ -7,7 +7,7 @@ import Testing
     import FoundationNetworking
 #endif
 
-@Suite struct MediaUploadProgressTests {
+@Suite(.serialized) struct MediaUploadProgressTests {
     @Test func progressIsMonotonicAndClamped() async throws {
         let (stream, continuation) = AsyncThrowingStream<MediaUploadEvent, Error>.makeStream()
         let delegate = MediaUploadProgressDelegate(continuation: continuation)
@@ -48,7 +48,7 @@ import Testing
         #expect(events.progressValues == [0.25, 1])
     }
 
-    @Test func successfulUploadEmitsProgressAndCompletionWithoutChangingExistingUpload() async throws {
+    @Test func uploadWithProgressEmitsProgressAndCompletion() async throws {
         let client = makeClient(protocolClass: SuccessfulUploadURLProtocol.self)
         let params = UploadMediaAttachmentParams(file: Data("media".utf8), description: "Description")
 
@@ -58,7 +58,12 @@ import Testing
         #expect(events.progressValues == events.progressValues.sorted())
         #expect(events.completedAttachments.count == 1)
         #expect(events.isCompletionAfterProgressFinished)
-        #expect(SuccessfulUploadURLProtocol.lastRequest?.httpBody == nil)
+
+        let progressRequest = try #require(SuccessfulUploadURLProtocol.lastRequest)
+        #expect(progressRequest.httpBody == nil)
+        #expect(progressRequest.httpMethod == "POST")
+        #expect(progressRequest.url?.path == "/api/v2/media")
+        #expect(progressRequest.value(forHTTPHeaderField: "Content-Type")?.hasPrefix("multipart/form-data") == true)
 
         let completed = try #require(events.completedAttachment)
         #expect(completed.id == "media-id")
@@ -66,9 +71,14 @@ import Testing
             Issue.record("Expected an uploaded attachment")
             return
         }
+    }
 
-        let existingResult = try await client.uploadMedia(params, mimeType: "image/jpeg")
-        #expect(existingResult.id == "media-id")
+    @Test func uploadUsesMultipartRequest() async throws {
+        let client = makeClient(protocolClass: SuccessfulUploadURLProtocol.self)
+        let params = UploadMediaAttachmentParams(file: Data("media".utf8), description: "Description")
+
+        let result = try await client.uploadMedia(params, mimeType: "image/jpeg")
+        #expect(result.id == "media-id")
         #expect(SuccessfulUploadURLProtocol.lastRequest?.httpMethod == "POST")
         #expect(SuccessfulUploadURLProtocol.lastRequest?.url?.path == "/api/v2/media")
         #expect(SuccessfulUploadURLProtocol.lastRequest?.value(forHTTPHeaderField: "Content-Type")?.hasPrefix("multipart/form-data") == true)
@@ -100,6 +110,8 @@ import Testing
     }
 
     @Test func cancellingConsumerCancelsUploadTask() async {
+        await SuspendedUploadURLProtocol.reset()
+
         let client = makeClient(protocolClass: SuspendedUploadURLProtocol.self)
         let stream = client.uploadMediaWithProgress(.init(file: Data("media".utf8)), mimeType: "image/jpeg")
         let consumer = Task {
