@@ -226,7 +226,21 @@ extension TootClient {
     /// Fetch data asynchronously and return both the decoded object and HTTP response metadata.
     internal func fetchRaw<T: Decodable>(_ decode: T.Type, _ req: HTTPRequestBuilder) async throws -> TootResponse<T> {
         let (data, response) = try await fetch(req: req)
+        return try makeResponse(decode, data: data, response: response)
+    }
 
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
+    internal func fetchRaw<T: Decodable>(
+        _ decode: T.Type,
+        _ req: HTTPRequestBuilder,
+        uploadDelegate: UploadProgressDelegate
+    ) async throws -> TootResponse<T> {
+        let request = try prepare(req: req)
+        let (data, response) = try await uploadTask(request, delegate: uploadDelegate)
+        return try makeResponse(decode, data: data, response: response)
+    }
+
+    private func makeResponse<T: Decodable>(_ decode: T.Type, data: Data, response: HTTPURLResponse) throws -> TootResponse<T> {
         let decodedData: T
         do {
             decodedData = try decoder.decode(decode, from: data)
@@ -279,6 +293,11 @@ extension TootClient {
 
     /// Fetch data asynchronously and return the raw response.
     internal func fetch(req: HTTPRequestBuilder) async throws -> (Data, HTTPURLResponse) {
+        let request = try prepare(req: req)
+        return try await dataTask(request)
+    }
+
+    private func prepare(req: HTTPRequestBuilder) throws -> URLRequest {
         if req.headers.index(forKey: "Content-Type") == nil {
             req.headers["Content-Type"] = "application/json"
         }
@@ -302,11 +321,34 @@ extension TootClient {
             req.headers["Authorization"] = "Bearer \(accessToken)"
         }
 
-        let request = try req.build()
-        return try await dataTask(request)
+        return try req.build()
     }
 
     internal func dataTask(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+        logRequest(request)
+        let (data, response) = try await session.data(for: request)
+        return try validate(data: data, response: response)
+    }
+
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
+    internal func uploadTask(
+        _ request: URLRequest,
+        delegate: UploadProgressDelegate
+    ) async throws -> (Data, HTTPURLResponse) {
+        logRequest(request)
+        guard let bodyData = request.httpBody else {
+            throw URLError(.requestBodyStreamExhausted)
+        }
+
+        var uploadRequest = request
+        uploadRequest.httpBody = nil
+        uploadRequest.httpBodyStream = nil
+        let (data, response) = try await session.upload(for: uploadRequest, from: bodyData, delegate: delegate)
+        delegate.finishTransmission()
+        return try validate(data: data, response: response)
+    }
+
+    private func logRequest(_ request: URLRequest) {
         if debugRequests {
             print("➡️ flavour: \(self.flavour)")
             print("➡️ 🌏 \(request.httpMethod ?? "-") \(request.url?.absoluteString ?? "-")")
@@ -317,8 +359,9 @@ extension TootClient {
                 print("➡️ 💿", httpBody.prettyPrintedJSONString ?? String(data: httpBody, encoding: .utf8) ?? "Undecodable")
             }
         }
-        let (data, response) = try await session.data(for: request)
+    }
 
+    private func validate(data: Data, response: URLResponse) throws -> (Data, HTTPURLResponse) {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw TootSDKError.nonHTTPURLResponse(data: data, response: response)
         }

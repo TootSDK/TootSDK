@@ -11,10 +11,45 @@ extension TootClient {
         return response.data
     }
 
+    /// Uploads media and reports its progress.
+    ///
+    /// - Parameter progress: Called with upload progress from `0` to `1`.
+    /// - Returns: The uploaded media attachment.
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
+    public func uploadMedia(
+        _ params: UploadMediaAttachmentParams,
+        mimeType: String,
+        progress: @escaping @Sendable (Double) -> Void
+    ) async throws -> UploadedMediaAttachment {
+        progress(0)
+        try Task.checkCancellation()
+        let req = try mediaUploadRequest(params, mimeType: mimeType)
+        let delegate = UploadProgressDelegate(reportProgress: progress)
+        let response = try await fetchRaw(
+            UploadMediaAttachmentResponse.self,
+            req,
+            uploadDelegate: delegate
+        )
+        return Self.uploadedMedia(from: response.data)
+    }
+
     /// Uploads a media to the server with HTTP response metadata
     /// - Returns: TootResponse containing the uploaded media attachment and HTTP metadata
     public func uploadMediaRaw(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> TootResponse<UploadedMediaAttachment> {
-        let req = try HTTPRequestBuilder {
+        let req = try mediaUploadRequest(params, mimeType: mimeType)
+        let uploadResponse = try await fetchRaw(UploadMediaAttachmentResponse.self, req)
+
+        return TootResponse(
+            data: Self.uploadedMedia(from: uploadResponse.data),
+            headers: uploadResponse.headers,
+            statusCode: uploadResponse.statusCode,
+            url: uploadResponse.url,
+            rawBody: uploadResponse.rawBody
+        )
+    }
+
+    private func mediaUploadRequest(_ params: UploadMediaAttachmentParams, mimeType: String) throws -> HTTPRequestBuilder {
+        try HTTPRequestBuilder {
             $0.url = getURL(["api", "v2", "media"])
             $0.method = .post
 
@@ -36,20 +71,12 @@ extension TootClient {
                 ))
             $0.body = try .multipart(parts, boundary: UUID().uuidString)
         }
-        let uploadResponse = try await fetchRaw(UploadMediaAttachmentResponse.self, req)
+    }
 
-        let uploadedMedia =
-            uploadResponse.data.url != nil
-            ? UploadedMediaAttachment(id: uploadResponse.data.id, state: .uploaded)
-            : UploadedMediaAttachment(id: uploadResponse.data.id, state: .serverProcessing)
-
-        return TootResponse(
-            data: uploadedMedia,
-            headers: uploadResponse.headers,
-            statusCode: uploadResponse.statusCode,
-            url: uploadResponse.url,
-            rawBody: uploadResponse.rawBody
-        )
+    private static func uploadedMedia(from response: UploadMediaAttachmentResponse) -> UploadedMediaAttachment {
+        response.url != nil
+            ? UploadedMediaAttachment(id: response.id, state: .uploaded)
+            : UploadedMediaAttachment(id: response.id, state: .serverProcessing)
     }
 
     /// Retrieve the details of a media attachment that corresponds to the given identifier.
