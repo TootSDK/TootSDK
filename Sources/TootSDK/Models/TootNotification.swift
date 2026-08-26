@@ -259,7 +259,7 @@ public struct TootNotification: Codable, Hashable, Identifiable, Sendable {
         case createdAt
         case post = "status"
         case report
-        case relationshipSeveranceEvent = "relationship_severance_event"
+        case relationshipSeveranceEvent = "event"
         case collection
         case fallback
         case emoji

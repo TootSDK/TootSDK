@@ -12,7 +12,8 @@ public struct RelationshipSeveranceEvent: Codable, Sendable, Hashable, Identifia
     public let type: OpenEnum<EventType>
     public let purged: Bool
     public let targetName: String
-    public let relationshipsCount: Int?
+    public let followersCount: Int
+    public let followingCount: Int
     public let createdAt: Date
 
     public enum EventType: String, Codable, Sendable {
