@@ -12,7 +12,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         url: String,
         displayName: String? = nil,
         note: String,
-        avatar: String,
+        avatar: String? = nil,
         avatarStatic: String? = nil,
         avatarDescription: String? = nil,
         header: String,
@@ -87,7 +87,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.url = try container.decode(String.self, forKey: .url)
         self.displayName = try? container.decodeIfPresent(String.self, forKey: .displayName)
         self.note = try container.decode(String.self, forKey: .note)
-        self.avatar = try container.decode(String.self, forKey: .avatar)
+        self.avatar = try? container.decodeIfPresent(String.self, forKey: .avatar)
         self.avatarStatic = try? container.decodeIfPresent(String.self, forKey: .avatarStatic)
         self.avatarDescription = try? container.decodeIfPresent(String.self, forKey: .avatarDescription)
         // pixelfed doesn't include headers in block/mute lists
@@ -134,9 +134,9 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let displayName: String?
     /// The profile's bio / description
     public let note: String
-    /// An image icon that is shown next to posts and in the profile
-    public let avatar: String
-    /// A static version of the avatar.
+    /// An image icon that is shown next to posts and in the profile, if provided by the server.
+    public let avatar: String?
+    /// A static version of the avatar, if provided by the server.
     public let avatarStatic: String?
     /// A textual description of the avatar image.
     public let avatarDescription: String?
