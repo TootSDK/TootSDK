@@ -8,6 +8,7 @@ import Testing
 #endif
 
 @Suite(.serialized) struct MediaUploadProgressTests {
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
     @Test func progressIsMonotonicAndClamped() async throws {
         let (stream, continuation) = AsyncStream<Double>.makeStream()
         let delegate = UploadProgressDelegate { progress in
@@ -53,6 +54,7 @@ import Testing
         #expect(progress == [0.25, 1])
     }
 
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
     @Test func uploadWithProgressReportsProgressAndReturnsAttachment() async throws {
         let client = makeClient(protocolClass: SuccessfulUploadURLProtocol.self)
         let params = UploadMediaAttachmentParams(file: Data("media".utf8), description: "Description")
@@ -90,6 +92,7 @@ import Testing
         #expect(SuccessfulUploadURLProtocol.lastRequest?.value(forHTTPHeaderField: "Content-Type")?.hasPrefix("multipart/form-data") == true)
     }
 
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
     @Test func invalidHTTPResponseFinishesByThrowing() async throws {
         let client = makeClient(protocolClass: FailedUploadURLProtocol.self)
 
@@ -108,6 +111,7 @@ import Testing
         }
     }
 
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
     @Test(arguments: [TransportFailureURLProtocol.self, InvalidJSONURLProtocol.self])
     func transportAndDecodingFailuresFinishByThrowing(protocolClass: URLProtocol.Type) async {
         let client = makeClient(protocolClass: protocolClass)
@@ -121,6 +125,7 @@ import Testing
         }
     }
 
+    @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
     @Test func cancellingUploadCancelsURLSessionTask() async {
         await SuspendedUploadURLProtocol.reset()
 
