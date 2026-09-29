@@ -146,9 +146,7 @@ private final class RequestStorage: @unchecked Sendable {
     private var requestBody: Data?
 
     var value: URLRequest? {
-        get {
-            lock.withLock { request }
-        }
+        lock.withLock { request }
     }
 
     var body: Data? {
