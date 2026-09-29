@@ -73,6 +73,8 @@ import Testing
         #expect(progressRequest.httpMethod == "POST")
         #expect(progressRequest.url?.path == "/api/v2/media")
         #expect(progressRequest.value(forHTTPHeaderField: "Content-Type")?.hasPrefix("multipart/form-data") == true)
+        let body = try multipartBody()
+        #expect(body.contains(#"name="file"; filename="file.jpeg""#))
 
         #expect(completed.id == "media-id")
         guard case .uploaded = completed.state else {
@@ -90,6 +92,47 @@ import Testing
         #expect(SuccessfulUploadURLProtocol.lastRequest?.httpMethod == "POST")
         #expect(SuccessfulUploadURLProtocol.lastRequest?.url?.path == "/api/v2/media")
         #expect(SuccessfulUploadURLProtocol.lastRequest?.value(forHTTPHeaderField: "Content-Type")?.hasPrefix("multipart/form-data") == true)
+        let body = try multipartBody()
+        #expect(body.contains(#"Content-Disposition: form-data; name="file"; filename="file.jpeg""#))
+        #expect(body.contains("Content-Type: image/jpeg"))
+    }
+
+    @Test(arguments: [
+        (mimeType: "image/png", filename: "file.png"),
+        (mimeType: "video/quicktime", filename: "file.mov"),
+        (mimeType: "video/ogg", filename: "file.ogm"),
+        (mimeType: "audio/mpeg", filename: "file.mp3"),
+        (mimeType: "audio/m4a", filename: "file.m4a"),
+        (mimeType: "image/apng", filename: "file.apng"),
+        (mimeType: "video/x-matroska", filename: "file.mkv"),
+        (mimeType: "application/x-unknown", filename: "file"),
+    ])
+    func multipartFilenameUsesMimeTypeExtension(mimeType: String, filename: String) async throws {
+        let client = makeClient(protocolClass: SuccessfulUploadURLProtocol.self)
+
+        _ = try await client.uploadMedia(
+            .init(file: Data("media".utf8)),
+            mimeType: mimeType
+        )
+
+        let body = try multipartBody()
+        #expect(body.contains("filename=\"\(filename)\""))
+        #expect(body.contains("Content-Type: \(mimeType)"))
+    }
+
+    @Test func thumbnailUsesMediaMimeTypeAndFilenameExtension() async throws {
+        let client = makeClient(protocolClass: SuccessfulUploadURLProtocol.self)
+        let params = UploadMediaAttachmentParams(
+            file: Data("image".utf8),
+            thumbnail: Data("thumbnail".utf8)
+        )
+
+        _ = try await client.uploadMedia(params, mimeType: "image/jpeg")
+
+        let body = try multipartBody()
+        #expect(body.contains(#"name="file"; filename="file.jpeg""#))
+        #expect(body.contains(#"name="thumbnail"; filename="thumbnail.jpeg""#))
+        #expect(body.components(separatedBy: "Content-Type: image/jpeg").count == 3)
     }
 
     @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
@@ -151,6 +194,11 @@ import Testing
             session: URLSession(configuration: configuration),
             instanceURL: URL(string: "https://example.com")!
         )
+    }
+
+    private func multipartBody() throws -> String {
+        let data = try #require(SuccessfulUploadURLProtocol.lastRequestBody)
+        return try #require(String(data: data, encoding: .utf8))
     }
 }
 
