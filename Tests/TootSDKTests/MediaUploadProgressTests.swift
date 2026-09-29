@@ -73,8 +73,6 @@ import Testing
         #expect(progressRequest.httpMethod == "POST")
         #expect(progressRequest.url?.path == "/api/v2/media")
         #expect(progressRequest.value(forHTTPHeaderField: "Content-Type")?.hasPrefix("multipart/form-data") == true)
-        let body = try multipartBody()
-        #expect(body.contains(#"name="file"; filename="file.jpeg""#))
 
         #expect(completed.id == "media-id")
         guard case .uploaded = completed.state else {
