@@ -4,6 +4,10 @@
 import Foundation
 import MultipartKitTootSDK
 
+#if canImport(UniformTypeIdentifiers)
+    import UniformTypeIdentifiers
+#endif
+
 extension TootClient {
     /// Uploads a media to the server so it can be used when publishing posts
     public func uploadMedia(_ params: UploadMediaAttachmentParams, mimeType: String) async throws -> UploadedMediaAttachment {
@@ -57,7 +61,7 @@ extension TootClient {
             parts.append(
                 MultipartPart(
                     headers: [
-                        "Content-Disposition": "form-data; name=\"file\"; filename=\"file\"",
+                        "Content-Disposition": "form-data; name=\"file\"; filename=\"\(mediaFilename(for: "file", mimeType: mimeType))\"",
                         "Content-Type": mimeType,
                     ],
                     body: params.file
@@ -242,7 +246,7 @@ extension TootClient {
             parts.append(
                 MultipartPart(
                     headers: [
-                        "Content-Disposition": "form-data; name=\"thumbnail\"; filename=\"thumbnail\"",
+                        "Content-Disposition": "form-data; name=\"thumbnail\"; filename=\"\(mediaFilename(for: "thumbnail", mimeType: mimeType))\"",
                         "Content-Type": mimeType,
                     ],
                     body: thumbnail
@@ -251,6 +255,93 @@ extension TootClient {
         }
         return parts
     }
+
+    private func mediaFilename(for name: String, mimeType: String) -> String {
+        let mimeType = Self.normalizedMimeType(mimeType)
+        guard let fileExtension = Self.preferredFilenameExtension(for: mimeType) else {
+            return name
+        }
+        return "\(name).\(fileExtension)"
+    }
+
+    private static func preferredFilenameExtension(for mimeType: String) -> String? {
+        #if canImport(UniformTypeIdentifiers)
+            if let fileExtension = UTType(mimeType: mimeType)?.preferredFilenameExtension {
+                return fileExtension
+            }
+        #endif
+        return mediaFileExtensions[mimeType]
+    }
+
+    private static func normalizedMimeType(_ mimeType: String) -> String {
+        mimeType
+            .split(separator: ";", maxSplits: 1)
+            .first?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased() ?? ""
+    }
+
+    // MIME types advertised by the supported Fediverse flavour fixtures.
+    private static let mediaFileExtensions = [
+        "application/octet-stream": "bin",
+        "application/ogg": "ogg",
+        "audio/3gp2": "3g2",
+        "audio/3gpp": "3gp",
+        "audio/3gpp2": "3g2",
+        "audio/aac": "aac",
+        "audio/flac": "flac",
+        "audio/it": "it",
+        "audio/m4a": "m4a",
+        "audio/mod": "mod",
+        "audio/mp2": "mp2",
+        "audio/mp3": "mp3",
+        "audio/mp4": "mp4",
+        "audio/mpeg": "mp3",
+        "audio/ogg": "ogg",
+        "audio/opus": "opus",
+        "audio/s3m": "s3m",
+        "audio/vnd.wave": "wav",
+        "audio/vorbis": "ogg",
+        "audio/wav": "wav",
+        "audio/wave": "wav",
+        "audio/webm": "webm",
+        "audio/x-flac": "flac",
+        "audio/x-it": "it",
+        "audio/x-m4a": "m4a",
+        "audio/x-matroska": "mka",
+        "audio/x-mod": "mod",
+        "audio/x-ms-wma": "wma",
+        "audio/x-pn-wave": "wav",
+        "audio/x-s3m": "s3m",
+        "audio/x-wav": "wav",
+        "audio/x-xm": "xm",
+        "audio/xm": "xm",
+        "image/apng": "apng",
+        "image/avif": "avif",
+        "image/bmp": "bmp",
+        "image/gif": "gif",
+        "image/heic": "heic",
+        "image/heif": "heif",
+        "image/jpeg": "jpeg",
+        "image/png": "png",
+        "image/tiff": "tiff",
+        "image/webp": "webp",
+        "image/x-icon": "ico",
+        "video/3gp2": "3g2",
+        "video/3gpp": "3gp",
+        "video/3gpp2": "3g2",
+        "video/mp4": "mp4",
+        "video/mpeg": "mpg",
+        "video/ogg": "ogm",
+        "video/quicktime": "mov",
+        "video/vnd.avi": "avi",
+        "video/webm": "webm",
+        "video/x-m4v": "m4v",
+        "video/x-matroska": "mkv",
+        "video/x-ms-asf": "asf",
+        "video/x-ms-wmv": "wmv",
+        "video/x-msvideo": "avi",
+    ]
 }
 
 extension TootFeature {
