@@ -28,17 +28,22 @@ extension TootClient {
     }
 
     /// A test to make sure that the user token works, and retrieves the account information
+    /// - Parameter allowNonfunctional: Whether to get account information even if the account is non-functional (such as not being approved or confirmed).
     /// - Returns: Returns the current authenticated user's account, or throws an error if unable to retrieve
-    public func verifyCredentials() async throws -> Account {
-        let response = try await verifyCredentialsRaw()
+    public func verifyCredentials(allowNonfunctional: Bool? = nil) async throws -> Account {
+        let response = try await verifyCredentialsRaw(allowNonfunctional: allowNonfunctional)
         return response.data
     }
 
     /// A test to make sure that the user token works, and retrieves the account information with HTTP response metadata
+    /// - Parameter allowNonfunctional: Whether to get account information even if the account is non-functional (such as not being approved or confirmed).
     /// - Returns: TootResponse containing the current authenticated user's account and HTTP metadata
-    public func verifyCredentialsRaw() async throws -> TootResponse<Account> {
+    public func verifyCredentialsRaw(allowNonfunctional: Bool? = nil) async throws -> TootResponse<Account> {
         let req = HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts", "verify_credentials"])
+            if let allowNonfunctional {
+                $0.addQueryParameter(name: "allow_nonfunctional", value: "\(allowNonfunctional)")
+            }
             $0.method = .get
         }
         return try await fetchRaw(Account.self, req)
