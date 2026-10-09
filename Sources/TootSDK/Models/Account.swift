@@ -271,6 +271,7 @@ extension Account: Hashable {
         hasher.combine(group)
         hasher.combine(source)
         hasher.combine(role)
+        hasher.combine(muteExpiresAt)
         hasher.combine(showMedia)
         hasher.combine(showMediaReplies)
         hasher.combine(showFeatured)
