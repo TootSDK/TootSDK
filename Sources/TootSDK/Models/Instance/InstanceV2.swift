@@ -195,13 +195,16 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         public var minAge: Int?
         /// Whether registrations require the user to provide a reason for joining. Only applicable when ``approvalRequired`` is `true`.
         public var reasonRequired: Bool?
+        /// Whether the OAuth registration flow (`prompt=create`) is supported.
+        public var oauth: Bool?
 
-        public init(enabled: Bool? = nil, approvalRequired: Bool? = nil, message: String? = nil, minAge: Int? = nil, reasonRequired: Bool? = nil) {
+        public init(enabled: Bool? = nil, approvalRequired: Bool? = nil, message: String? = nil, minAge: Int? = nil, reasonRequired: Bool? = nil, oauth: Bool? = nil) {
             self.enabled = enabled
             self.approvalRequired = approvalRequired
             self.message = message
             self.minAge = minAge
             self.reasonRequired = reasonRequired
+            self.oauth = oauth
         }
     }
 
