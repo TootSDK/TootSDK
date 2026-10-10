@@ -16,8 +16,18 @@ struct RootView: View {
 
     @AppStorage("lastEnteredServerURL") private var serverURL: String = "https://mastodon.social"
     @State private var isLoading = false
+    @State private var isRefreshingAccountState = false
     @State private var client: TootClient?
     @State private var showCannotRegisterAlert = false
+    @State private var signedInAccount: Account? = nil
+    
+    private var signedInAccountIsFunctional: Bool {
+        if let signedInAccount {
+            signedInAccount.state?.functional ?? true // if the server did not return a `state`, we have to assume the account is functional
+        } else {
+            false
+        }
+    }
 
     private var hasCredentials: Bool {
         !credentials.isEmpty
@@ -31,11 +41,15 @@ struct RootView: View {
         NavigationStack {
             VStack {
                 if let client, hasCredentials {
-                    TabView {
-                        HomeTimelineView(client: client)
-                            .tabItem { Label("Home", systemImage: "house") }
-                        MentionsTimelineView(client: client)
-                            .tabItem { Label("Mentions", systemImage: "at") }
+                    if !signedInAccountIsFunctional {
+                        accountStateView
+                    } else {
+                        TabView {
+                            HomeTimelineView(client: client)
+                                .tabItem { Label("Home", systemImage: "house") }
+                            MentionsTimelineView(client: client)
+                                .tabItem { Label("Mentions", systemImage: "at") }
+                        }
                     }
                 } else {
                     loginView
@@ -52,10 +66,38 @@ struct RootView: View {
                 }
             }
         }
-        .task {
+        .task(id: currentCredential) {
+            isRefreshingAccountState = true
+            defer { isRefreshingAccountState = false }
             if let credential = currentCredential {
                 await connectWithCredential(credential)
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var accountStateView: some View {
+        if let signedInAccount {
+            List {
+                if let error = signedInAccount.state?.error {
+                    Text(error)
+                }
+                
+                Button("Refresh") {
+                    isRefreshingAccountState = true
+                    Task {
+                        defer {
+                            isRefreshingAccountState = false
+                        }
+                        if let credential = currentCredential {
+                            await connectWithCredential(credential)
+                        }
+                    }
+                }
+                .disabled(isRefreshingAccountState)
+            }
+        } else {
+            ProgressView()
         }
     }
 
@@ -185,7 +227,7 @@ struct RootView: View {
                 accessToken: credential.accessToken
             )
             self.client = newClient
-            _ = try await newClient.verifyCredentials()
+            signedInAccount = try await newClient.verifyCredentials(allowNonfunctional: true)
         } catch {
             print(error.localizedDescription)
             signOut()
