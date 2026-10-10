@@ -75,14 +75,58 @@ struct RootView: View {
         }
     }
     
+    private struct BooleanView: View {
+        var value: Bool
+        
+        var body: some View {
+            if value {
+                Label("Yes", systemImage: "checkmark")
+                    .foregroundStyle(.green)
+            } else {
+                Label("No", systemImage: "xmark")
+                    .foregroundStyle(.red)
+            }
+        }
+    }
+    
     @ViewBuilder
     private var accountStateView: some View {
         if let signedInAccount {
             List {
+                Section("Your \(client!.instanceURL, format: .url.host(.always).path(.never).query(.never).scheme(.never).fragment(.never)) account status") {
+                    if let state = signedInAccount.state {
+                        if let confirmed = state.confirmed {
+                            LabeledContent {
+                                BooleanView(value: confirmed)
+                            } label: {
+                                Text("Confirmed email address")
+                            }
+                        }
+                        
+                        if let approved = state.approved {
+                            LabeledContent {
+                                BooleanView(value: approved)
+                            } label: {
+                                Text("Approved by a moderator")
+                            }
+                        }
+                        
+                        if let functional = state.functional {
+                            LabeledContent {
+                                BooleanView(value: functional)
+                            } label: {
+                                Text("Account is ready to use")
+                            }
+                        }
+                    }
+                }
+                .labelStyle(.iconOnly)
+                
                 if let error = signedInAccount.state?.error {
                     Text(error)
+                        .foregroundStyle(.red)
                 }
-                
+                    
                 Button("Refresh") {
                     isRefreshingAccountState = true
                     Task {
