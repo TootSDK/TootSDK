@@ -64,7 +64,11 @@ extension TootClient {
     internal func getAuthorizationInfo(
         callbackURI: String,
         scopes: [String],
-        responseType: String = "code"
+        responseType: String = "code",
+        forceLogin: Bool?,
+        languageCode: String?,
+        prompt: String?,
+        inviteCode: String?
     ) async throws -> CallbackInfo {
 
         let createAppData = CreateAppRequest(
@@ -91,6 +95,18 @@ extension TootClient {
             $0.addQueryParameter(name: "redirect_uri", value: callbackURI)
             $0.addQueryParameter(name: "scope", value: scopes.joined(separator: " "))
             $0.addQueryParameter(name: "response_type", value: responseType)
+            if let forceLogin {
+                $0.addQueryParameter(name: "force_login", value: "\(forceLogin)")
+            }
+            if let languageCode {
+                $0.addQueryParameter(name: "lang", value: languageCode)
+            }
+            if let prompt {
+                $0.addQueryParameter(name: "prompt", value: prompt)
+            }
+            if let inviteCode {
+                $0.addQueryParameter(name: "invite_code", value: inviteCode)
+            }
         }
 
         guard let url = signUrlReq.url else {
