@@ -26,23 +26,14 @@ public struct AuthorizeURLParams: Codable, Hashable, Sendable {
     /// Servers may specify whether they support this using ``InstanceV2/Registrations/oauth``, which you can obtain by calling ``TootClient/getInstanceInfo()``.
 	///
 	/// If ``InstanceV2/Registrations/oauth`` is `true`, the server supports at least ``OpenIDConnectPrompt/login`` and ``OpenIDConnectPrompt/create``.
-    public var prompt: OpenEnum<OpenIDConnectPrompt>?
+    public var prompt: OpenIDConnectPrompt?
     /// Invitation code, to be used with `prompt: .create` when following an invitation to sign up.
     public var inviteCode: String?
     
-    public init(forceLogin: Bool? = nil, languageCode: String? = nil, prompt: OpenEnum<OpenIDConnectPrompt>?, inviteCode: String? = nil) {
+    public init(forceLogin: Bool? = nil, languageCode: String? = nil, prompt: OpenIDConnectPrompt? = nil, inviteCode: String? = nil) {
         self.forceLogin = forceLogin
         self.languageCode = languageCode
         self.prompt = prompt
         self.inviteCode = inviteCode
-    }
-    
-    public init(forceLogin: Bool? = nil, languageCode: String? = nil, prompt: OpenIDConnectPrompt? = nil, inviteCode: String? = nil) {
-        self.init(
-            forceLogin: forceLogin,
-            languageCode: languageCode,
-            prompt: prompt != nil ? OpenEnum.some(prompt!) : nil,
-            inviteCode: inviteCode
-        )
     }
 }
