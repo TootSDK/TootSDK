@@ -17,6 +17,7 @@ struct RootView: View {
     @AppStorage("lastEnteredServerURL") private var serverURL: String = "https://mastodon.social"
     @State private var isLoading = false
     @State private var client: TootClient?
+    @State private var showCannotRegisterAlert = false
 
     private var hasCredentials: Bool {
         !credentials.isEmpty
@@ -75,26 +76,57 @@ struct RootView: View {
             .padding(.horizontal)
 
             Button(action: {
+                isLoading = true
                 Task {
                     await startAuthentication()
                 }
             }) {
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                } else {
-                    Text("Sign In")
-                }
+                Text("Sign In")
             }
             .buttonStyle(.borderedProminent)
             .disabled(serverURL.isEmpty || isLoading)
+			
+            Button {
+                isLoading = true
+                Task {
+                    await startAuthentication(createNewAccount: true)
+                }
+            } label: {
+                Text("Create Account")
+            }
+            .buttonStyle(.borderedProminent)
+            .disabled(serverURL.isEmpty || isLoading)
+            .alert("Cannot create account", isPresented: $showCannotRegisterAlert) {
+                EmptyView()
+            } message:  {
+                Text("The server may not support OAuth account creation or may have registrations closed.")
+            }
+            
+            if isLoading {
+                ProgressView()
+            }
 
             Spacer()
         }
         .padding()
     }
+    
+    /// Checks whether the server:
+    /// - supports OAuth account creation
+    /// - allows registrations
+    private func checkRegistrationPossible(_ client: TootClient) async -> Bool {
+        guard let instanceInfo = try? await client.getInstanceInfo().v2Representation() else {
+            return false
+        }
+        
+        return instanceInfo.registrations.enabled == true && instanceInfo.registrations.oauth == true
+    }
 
-    private func startAuthentication() async {
+    private func startAuthentication(createNewAccount: Bool = false) async {
+        defer {
+            isLoading = false
+        }
+        
         guard let url = URL(string: self.serverURL) else {
             print("Invalid server URL")
             return
@@ -108,10 +140,24 @@ struct RootView: View {
             )
 
             self.client = newClient
+            
+            let authorizationParams: AuthorizeURLParams
+            if createNewAccount {
+                guard await checkRegistrationPossible(newClient) else {
+                    print("Server does not support account creation.")
+                    showCannotRegisterAlert = true
+                    return
+                }
+                
+                authorizationParams = AuthorizeURLParams(prompt: .create)
+            } else {
+                authorizationParams = AuthorizeURLParams()
+            }
 
             let accessToken = try await newClient.presentSignIn(
                 callbackURI: "tootsdk-example://oauth",
-                prefersEphemeralWebBrowserSession: false
+                prefersEphemeralWebBrowserSession: false,
+                authorizationParams
             )
 
             let credential = ServerCredential(
