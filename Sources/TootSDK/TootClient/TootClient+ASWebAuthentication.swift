@@ -15,11 +15,13 @@
         ///   - callbackURI: The callback URI  (`redirect_uri`) which was used to initiate the authorization flow. Must match one of the redirect_uris declared during app registration.
         ///   - prefersEphemeralWebBrowserSession: A Boolean value that indicates whether the session should ask the browser for a private authentication session.
         ///   - presentationContextProvider: A delegate that provides a display context in which the system can present an authentication session to the user.
+        ///   - params: Parameters to pass to the authorization form.
         /// - Returns: The auth token for the user if authentication succeeds.
         @MainActor public func presentSignIn(
             callbackURI: String,
             prefersEphemeralWebBrowserSession: Bool = true,
-            presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil
+            presentationContextProvider: ASWebAuthenticationPresentationContextProviding? = nil,
+            _ params: AuthorizeURLParams = .init()
         ) async throws -> String {
 
             let presentationContextProvider = presentationContextProvider ?? self.defaultPresentationAnchor
@@ -30,7 +32,7 @@
                 throw TootSDKError.unexpectedError("Unable to retrieve scheme from callbackURI")
             }
 
-            let authUrl = try await createAuthorizeURL(callbackURI: callbackURI)
+            let authUrl = try await createAuthorizeURL(callbackURI: callbackURI, params)
 
             let returnedUrl: URL = try await withCheckedThrowingContinuation { continuation in
                 let authSession = ASWebAuthenticationSession(url: authUrl, callbackURLScheme: callbackURLScheme) { (url, error) in
