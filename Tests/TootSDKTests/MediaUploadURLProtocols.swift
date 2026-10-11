@@ -11,6 +11,10 @@ final class SuccessfulUploadURLProtocol: URLProtocol, @unchecked Sendable {
         requestStorage.value
     }
 
+    static var lastRequestBody: Data? {
+        requestStorage.body
+    }
+
     override class func canInit(with request: URLRequest) -> Bool {
         true
     }
@@ -20,7 +24,7 @@ final class SuccessfulUploadURLProtocol: URLProtocol, @unchecked Sendable {
     }
 
     override func startLoading() {
-        Self.requestStorage.value = request
+        Self.requestStorage.store(request, body: requestBody())
         let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: Data(#"{"id":"media-id","url":"https://example.com/media"}"#.utf8))
@@ -28,6 +32,28 @@ final class SuccessfulUploadURLProtocol: URLProtocol, @unchecked Sendable {
     }
 
     override func stopLoading() {}
+
+    private func requestBody() -> Data? {
+        if let body = request.httpBody {
+            return body
+        }
+        guard let stream = request.httpBodyStream else {
+            return nil
+        }
+
+        stream.open()
+        defer { stream.close() }
+
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 1_024)
+        while true {
+            let count = stream.read(&buffer, maxLength: buffer.count)
+            guard count > 0 else {
+                return count == 0 ? data : nil
+            }
+            data.append(buffer, count: count)
+        }
+    }
 }
 
 final class FailedUploadURLProtocol: URLProtocol, @unchecked Sendable {
@@ -117,13 +143,20 @@ final class SuspendedUploadURLProtocol: URLProtocol, @unchecked Sendable {
 private final class RequestStorage: @unchecked Sendable {
     private let lock = NSLock()
     private var request: URLRequest?
+    private var requestBody: Data?
 
     var value: URLRequest? {
-        get {
-            lock.withLock { request }
-        }
-        set {
-            lock.withLock { request = newValue }
+        lock.withLock { request }
+    }
+
+    var body: Data? {
+        lock.withLock { requestBody }
+    }
+
+    func store(_ request: URLRequest, body: Data?) {
+        lock.withLock {
+            self.request = request
+            self.requestBody = body
         }
     }
 }
