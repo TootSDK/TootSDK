@@ -272,6 +272,8 @@ extension TootClient {
     /// Attempts to register a user.
     ///
     /// Returns an account access token for the app that initiated the request. The app should save this token for later, and should wait for the user to confirm their account by clicking a link in their email inbox.
+    ///
+    /// - Warning: Deprecated in Mastodon 5.0 and later in favor of the OAuth signup flow. See ``AuthorizeURLParams/prompt`` for use with ``createAuthorizeURL(callbackURI:_:)`` or ``presentSignIn(callbackURI:prefersEphemeralWebBrowserSession:presentationContextProvider:_:)``.
     public func registerAccount(params: RegisterAccountParams) async throws -> AccessToken {
         let response = try await registerAccountRaw(params: params)
         return response.data
@@ -280,6 +282,8 @@ extension TootClient {
     /// Attempts to register a user with HTTP response metadata
     ///
     /// Returns TootResponse containing an account access token for the app that initiated the request and HTTP metadata. The app should save this token for later, and should wait for the user to confirm their account by clicking a link in their email inbox.
+    ///
+    /// - Warning: Deprecated in Mastodon 5.0 and later in favor of the OAuth signup flow. See ``AuthorizeURLParams/prompt`` for use with ``createAuthorizeURL(callbackURI:_:)`` or ``presentSignIn(callbackURI:prefersEphemeralWebBrowserSession:presentationContextProvider:_:)``.
     public func registerAccountRaw(params: RegisterAccountParams) async throws -> TootResponse<AccessToken> {
         let req = try HTTPRequestBuilder {
             $0.url = getURL(["api", "v1", "accounts"])
