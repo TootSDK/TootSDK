@@ -126,6 +126,19 @@ struct RootView: View {
                     Text(error)
                         .foregroundStyle(.red)
                 }
+                
+                if let errorCode = signedInAccount.state?.errorCode,
+                   case .some(.pendingConfirmation) = errorCode {
+                    Button("Resend confirmation email") {
+                        Task {
+                            do {
+                                try await client?.resendConfirmationEmail()
+                            } catch {
+                                print("Could not resend confirmation email, \(error.localizedDescription)")
+                            }
+                        }
+                    }
+                }
                     
                 Button("Refresh") {
                     isRefreshingAccountState = true
@@ -138,8 +151,8 @@ struct RootView: View {
                         }
                     }
                 }
-                .disabled(isRefreshingAccountState)
             }
+            .disabled(isRefreshingAccountState)
         } else {
             ProgressView()
         }
@@ -222,7 +235,7 @@ struct RootView: View {
             let newClient = try await TootClient(
                 connect: url,
                 clientName: "TootSDK Example",
-                scopes: ["read"]
+                scopes: ["read", "write:accounts"]
             )
 
             self.client = newClient
