@@ -246,6 +246,7 @@ struct RootView: View {
                 authorizationParams
             )
 
+            // Note: this only stores the access token in SwiftData for demo purposes. In a real app you would want to save credentials to the keychain for security.
             let credential = ServerCredential(
                 host: url.absoluteString,
                 accessToken: accessToken
