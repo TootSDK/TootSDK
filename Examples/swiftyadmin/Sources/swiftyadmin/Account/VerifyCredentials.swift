@@ -16,7 +16,7 @@ struct VerifyCredentials: AsyncParsableCommand {
 
     @Option(name: .short, help: "Access token for an account with sufficient permissions.")
     var token: String
-    
+
     @Option(name: .shortAndLong, help: "Whether to return information even if the account is non-functional.")
     var allowNonfunctional: Bool = false
 

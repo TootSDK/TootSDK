@@ -198,7 +198,10 @@ public struct InstanceV2: Codable, Hashable, Sendable {
         /// Whether the OAuth registration flow (`prompt=create`) is supported.
         public var oauth: Bool?
 
-        public init(enabled: Bool? = nil, approvalRequired: Bool? = nil, message: String? = nil, minAge: Int? = nil, reasonRequired: Bool? = nil, oauth: Bool? = nil) {
+        public init(
+            enabled: Bool? = nil, approvalRequired: Bool? = nil, message: String? = nil, minAge: Int? = nil, reasonRequired: Bool? = nil,
+            oauth: Bool? = nil
+        ) {
             self.enabled = enabled
             self.approvalRequired = approvalRequired
             self.message = message

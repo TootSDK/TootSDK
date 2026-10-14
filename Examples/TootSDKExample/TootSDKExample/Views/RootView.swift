@@ -22,10 +22,10 @@ struct RootView: View {
     @State private var signedInAccount: Account? = nil
     @State private var showResendPrompt = false
     @State private var enteredEmailAddress = ""
-    
+
     private var signedInAccountIsFunctional: Bool {
         if let signedInAccount {
-            signedInAccount.state?.functional ?? true // if the server did not return a `state`, we have to assume the account is functional
+            signedInAccount.state?.functional ?? true  // if the server did not return a `state`, we have to assume the account is functional
         } else {
             false
         }
@@ -76,10 +76,10 @@ struct RootView: View {
             }
         }
     }
-    
+
     private struct BooleanView: View {
         var value: Bool
-        
+
         var body: some View {
             if value {
                 Label("Yes", systemImage: "checkmark")
@@ -90,12 +90,14 @@ struct RootView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private var accountStateView: some View {
         if let signedInAccount {
             List {
-                Section("Your \(client!.instanceURL, format: .url.host(.always).path(.never).query(.never).scheme(.never).fragment(.never)) account status") {
+                Section(
+                    "Your \(client!.instanceURL, format: .url.host(.always).path(.never).query(.never).scheme(.never).fragment(.never)) account status"
+                ) {
                     if let state = signedInAccount.state {
                         if let confirmed = state.confirmed {
                             LabeledContent {
@@ -104,7 +106,7 @@ struct RootView: View {
                                 Text("Confirmed email address")
                             }
                         }
-                        
+
                         if let approved = state.approved {
                             LabeledContent {
                                 BooleanView(value: approved)
@@ -112,7 +114,7 @@ struct RootView: View {
                                 Text("Approved by a moderator")
                             }
                         }
-                        
+
                         if let functional = state.functional {
                             LabeledContent {
                                 BooleanView(value: functional)
@@ -123,21 +125,22 @@ struct RootView: View {
                     }
                 }
                 .labelStyle(.iconOnly)
-                
+
                 if let error = signedInAccount.state?.error {
                     Text(error)
                         .foregroundStyle(.red)
                 }
-                
+
                 if let errorCode = signedInAccount.state?.errorCode,
-                   case .some(.pendingConfirmation) = errorCode {
+                    case .some(.pendingConfirmation) = errorCode
+                {
                     Button("Resend confirmation email") {
                         showResendPrompt = true
                     }
                     .alert("Change your email address?", isPresented: $showResendPrompt) {
                         TextField("Email address", text: $enteredEmailAddress)
                             .textContentType(.emailAddress)
-                        
+
                         Button("Resend") {
                             let newEmailAddress = enteredEmailAddress
                             Task {
@@ -152,7 +155,7 @@ struct RootView: View {
                                 }
                             }
                         }
-                        
+
                         Button("Cancel", role: .cancel) {
                             showResendPrompt = false
                             enteredEmailAddress = ""
@@ -162,7 +165,7 @@ struct RootView: View {
                     }
 
                 }
-                    
+
                 Button("Refresh") {
                     isRefreshingAccountState = true
                     Task {
@@ -207,7 +210,7 @@ struct RootView: View {
             }
             .buttonStyle(.borderedProminent)
             .disabled(serverURL.isEmpty || isLoading)
-			
+
             Button {
                 isLoading = true
                 Task {
@@ -220,10 +223,10 @@ struct RootView: View {
             .disabled(serverURL.isEmpty || isLoading)
             .alert("Cannot create account", isPresented: $showCannotRegisterAlert) {
                 EmptyView()
-            } message:  {
+            } message: {
                 Text("The server may not support OAuth account creation or may have registrations closed.")
             }
-            
+
             if isLoading {
                 ProgressView()
             }
@@ -232,7 +235,7 @@ struct RootView: View {
         }
         .padding()
     }
-    
+
     /// Checks whether the server:
     /// - supports OAuth account creation
     /// - allows registrations
@@ -240,7 +243,7 @@ struct RootView: View {
         guard let instanceInfo = try? await client.getInstanceInfo().v2Representation() else {
             return false
         }
-        
+
         return instanceInfo.registrations.enabled == true && instanceInfo.registrations.oauth == true
     }
 
@@ -248,7 +251,7 @@ struct RootView: View {
         defer {
             isLoading = false
         }
-        
+
         guard let url = URL(string: self.serverURL) else {
             print("Invalid server URL")
             return
@@ -262,7 +265,7 @@ struct RootView: View {
             )
 
             self.client = newClient
-            
+
             let authorizationParams: AuthorizeURLParams
             if createNewAccount {
                 guard await checkRegistrationPossible(newClient) else {
@@ -270,7 +273,7 @@ struct RootView: View {
                     showCannotRegisterAlert = true
                     return
                 }
-                
+
                 authorizationParams = AuthorizeURLParams(prompt: .create)
             } else {
                 authorizationParams = AuthorizeURLParams()

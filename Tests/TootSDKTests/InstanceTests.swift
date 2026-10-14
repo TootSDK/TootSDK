@@ -277,15 +277,15 @@ final class InstanceTests: XCTestCase {
         XCTAssertEqual(result.configuration?.accounts?.profileFieldNameLimit, 255)
         XCTAssertEqual(result.configuration?.accounts?.profileFieldValueLimit, 255)
     }
-    
+
     func testMastodon48V2() throws {
         // arrange
         let json = localContent("instancev2_mastodon_4.8a3")
         let decoder = TootDecoder()
-        
+
         // act
         let result = try decoder.decode(InstanceV2.self, from: json)
-        
+
         // assert
         XCTAssertNotNil(result)
         XCTAssertEqual(result.apiVersions?.mastodon, 12)

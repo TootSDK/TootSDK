@@ -5,7 +5,7 @@ import Foundation
 
 /// The state of an account.
 public struct AccountState: Codable, Hashable, Sendable {
-    
+
     /// Reason why an account may not be functional.
     public enum ErrorCode: String, Codable, Hashable, Sendable {
         case pendingConfirmation = "pending_confirmation"
@@ -16,7 +16,7 @@ public struct AccountState: Codable, Hashable, Sendable {
         case loginDisabled = "login_disabled"
         case `2faRequired` = "2fa_required"
     }
-    
+
     /// Whether the current account is fully usable.
     public var functional: Bool?
     /// Whether the current account has confirmed their email address.
@@ -27,7 +27,7 @@ public struct AccountState: Codable, Hashable, Sendable {
     public var error: String?
     /// Reason why the account is not functional, if applicable. Additional reasons can be added in the future.
     public var errorCode: OpenEnum<ErrorCode>?
-    
+
     public init(functional: Bool? = nil, confirmed: Bool? = nil, approved: Bool? = nil, error: String? = nil, errorCode: OpenEnum<ErrorCode>? = nil) {
         self.functional = functional
         self.confirmed = confirmed
