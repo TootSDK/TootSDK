@@ -20,6 +20,8 @@ struct RootView: View {
     @State private var client: TootClient?
     @State private var showCannotRegisterAlert = false
     @State private var signedInAccount: Account? = nil
+    @State private var showResendPrompt = false
+    @State private var enteredEmailAddress = ""
     
     private var signedInAccountIsFunctional: Bool {
         if let signedInAccount {
@@ -130,14 +132,35 @@ struct RootView: View {
                 if let errorCode = signedInAccount.state?.errorCode,
                    case .some(.pendingConfirmation) = errorCode {
                     Button("Resend confirmation email") {
-                        Task {
-                            do {
-                                try await client?.resendConfirmationEmail()
-                            } catch {
-                                print("Could not resend confirmation email, \(error.localizedDescription)")
+                        showResendPrompt = true
+                    }
+                    .alert("Change your email address?", isPresented: $showResendPrompt) {
+                        TextField("Email address", text: $enteredEmailAddress)
+                            .textContentType(.emailAddress)
+                        
+                        Button("Resend") {
+                            let newEmailAddress = enteredEmailAddress
+                            Task {
+                                do {
+                                    if !newEmailAddress.isEmpty {
+                                        try await client?.resendConfirmationEmail(emailAddress: newEmailAddress)
+                                    } else {
+                                        try await client?.resendConfirmationEmail()
+                                    }
+                                } catch {
+                                    print("Could not resend confirmation email, \(error.localizedDescription)")
+                                }
                             }
                         }
+                        
+                        Button("Cancel", role: .cancel) {
+                            showResendPrompt = false
+                            enteredEmailAddress = ""
+                        }
+                    } message: {
+                        Text("If you leave this blank, the confirmation email will be re-sent to the email address you signed up with.")
                     }
+
                 }
                     
                 Button("Refresh") {
