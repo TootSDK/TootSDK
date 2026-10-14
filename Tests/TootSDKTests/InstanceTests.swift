@@ -289,7 +289,7 @@ final class InstanceTests: XCTestCase {
         // assert
         XCTAssertNotNil(result)
         XCTAssertEqual(result.apiVersions?.mastodon, 12)
-        XCTAssertEqual(result.registrations?.minAge, 21)
-        XCTAssertEqual(result.registrations?.oauth, true)
+        XCTAssertEqual(result.registrations.minAge, 21)
+        XCTAssertEqual(result.registrations.oauth, true)
     }
 }
