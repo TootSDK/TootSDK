@@ -28,6 +28,8 @@ public struct AuthorizeURLParams: Codable, Hashable, Sendable {
     /// If ``InstanceV2/Registrations/oauth`` is `true`, the server supports at least ``OpenIDConnectPrompt/login`` and ``OpenIDConnectPrompt/create``.
     public var prompt: OpenIDConnectPrompt?
     /// Invitation code, to be used with `prompt: .create` when following an invitation to sign up.
+    ///
+    /// The invite code is the last path segment of Mastodon invite URLs of the form `https://example.com/invite/:invite_code`.
     public var inviteCode: String?
 
     public init(forceLogin: Bool? = nil, languageCode: String? = nil, prompt: OpenIDConnectPrompt? = nil, inviteCode: String? = nil) {

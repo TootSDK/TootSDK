@@ -23,7 +23,7 @@ public struct AccountState: Codable, Hashable, Sendable {
     public var confirmed: Bool?
     /// Whether the current account has been approved by a moderator.
     public var approved: Bool?
-    /// Reason why the account is not functional, if applicable. Expressed in natural language with a translatable string.
+    /// Localized string explaining why the account is not functional, if applicable.
     public var error: String?
     /// Reason why the account is not functional, if applicable. Additional reasons can be added in the future.
     public var errorCode: OpenEnum<ErrorCode>?
