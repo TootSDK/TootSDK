@@ -1,0 +1,162 @@
+{
+    "domain": "localhost:3000",
+    "title": "Mastodon",
+    "version": "4.8.0-alpha.3",
+    "source_url": "https://github.com/mastodon/mastodon",
+    "description": "",
+    "usage": {
+        "users": {
+            "active_month": 1
+        }
+    },
+    "thumbnail": {
+        "url": "http://localhost:3000/packs-dev/images/preview.png",
+        "description": "Two smiling cartoon mastodons (who look like elephants) toss a paper plane between them. They're surrounded by a bright blue sky and floating planets with trees and more mastodons on them."
+    },
+    "icon": [
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-36x36.png",
+            "size": "36x36"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-48x48.png",
+            "size": "48x48"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-72x72.png",
+            "size": "72x72"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-96x96.png",
+            "size": "96x96"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-144x144.png",
+            "size": "144x144"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-192x192.png",
+            "size": "192x192"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-256x256.png",
+            "size": "256x256"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-384x384.png",
+            "size": "384x384"
+        },
+        {
+            "src": "http://localhost:3000/packs-dev/icons/android-chrome-512x512.png",
+            "size": "512x512"
+        }
+    ],
+    "languages": [
+        "en"
+    ],
+    "configuration": {
+        "urls": {
+            "streaming": "ws://localhost:4000",
+            "status": null,
+            "about": "http://localhost:3000/about",
+            "privacy_policy": "http://localhost:3000/privacy-policy",
+            "terms_of_service": null
+        },
+        "vapid": {
+            "public_key": "BNdGUR-FVgy8-bEV1ZvFuZZ-v6uciS4ZC3RW1nn4f3dz7qP9uw-PJ-Sgk0CD9flbON75DbDasRKWtL96BB1iiiA="
+        },
+        "accounts": {
+            "max_display_name_length": 40,
+            "max_note_length": 500,
+            "max_avatar_description_length": 150,
+            "max_header_description_length": 150,
+            "max_featured_tags": 10,
+            "max_pinned_statuses": 5,
+            "max_profile_fields": 4,
+            "profile_field_name_limit": 255,
+            "profile_field_value_limit": 255
+        },
+        "statuses": {
+            "max_characters": 500,
+            "max_media_attachments": 4,
+            "characters_reserved_per_url": 23
+        },
+        "media_attachments": {
+            "description_limit": 10000,
+            "image_matrix_limit": 33177600,
+            "image_size_limit": 16777216,
+            "supported_mime_types": [
+                "image/jpeg",
+                "image/png",
+                "image/gif",
+                "image/webp",
+                "video/webm",
+                "video/mp4",
+                "video/quicktime",
+                "video/ogg",
+                "audio/wave",
+                "audio/wav",
+                "audio/x-wav",
+                "audio/x-pn-wave",
+                "audio/vnd.wave",
+                "audio/ogg",
+                "audio/vorbis",
+                "audio/mpeg",
+                "audio/mp3",
+                "audio/webm",
+                "audio/flac",
+                "audio/aac",
+                "audio/m4a",
+                "audio/x-m4a",
+                "audio/mp4",
+                "audio/3gpp",
+                "video/x-ms-asf"
+            ],
+            "video_frame_rate_limit": 120,
+            "video_matrix_limit": 8294400,
+            "video_size_limit": 103809024
+        },
+        "polls": {
+            "max_options": 4,
+            "max_characters_per_option": 50,
+            "min_expiration": 300,
+            "max_expiration": 2629746
+        },
+        "translation": {
+            "enabled": false
+        },
+        "timelines_access": {
+            "live_feeds": {
+                "local": "public",
+                "remote": "public"
+            },
+            "hashtag_feeds": {
+                "local": "public",
+                "remote": "public"
+            },
+            "trending_link_feeds": {
+                "local": "public",
+                "remote": "public"
+            }
+        },
+        "limited_federation": false
+    },
+    "registrations": {
+        "enabled": true,
+        "approval_required": true,
+        "reason_required": true,
+        "message": null,
+        "min_age": 21,
+        "url": null,
+        "oauth": true
+    },
+    "api_versions": {
+        "mastodon": 12
+    },
+    "wrapstodon": null,
+    "contact": {
+        "email": "",
+        "account": null
+    },
+    "rules": []
+}
