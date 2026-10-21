@@ -16,7 +16,20 @@ struct RootView: View {
 
     @AppStorage("lastEnteredServerURL") private var serverURL: String = "https://mastodon.social"
     @State private var isLoading = false
+    @State private var isRefreshingAccountState = false
     @State private var client: TootClient?
+    @State private var showCannotRegisterAlert = false
+    @State private var signedInAccount: Account? = nil
+    @State private var showResendPrompt = false
+    @State private var enteredEmailAddress = ""
+
+    private var signedInAccountIsFunctional: Bool {
+        if let signedInAccount {
+            signedInAccount.state?.functional ?? true  // if the server did not return a `state`, we have to assume the account is functional
+        } else {
+            false
+        }
+    }
 
     private var hasCredentials: Bool {
         !credentials.isEmpty
@@ -30,11 +43,15 @@ struct RootView: View {
         NavigationStack {
             VStack {
                 if let client, hasCredentials {
-                    TabView {
-                        HomeTimelineView(client: client)
-                            .tabItem { Label("Home", systemImage: "house") }
-                        MentionsTimelineView(client: client)
-                            .tabItem { Label("Mentions", systemImage: "at") }
+                    if !signedInAccountIsFunctional {
+                        accountStateView
+                    } else {
+                        TabView {
+                            HomeTimelineView(client: client)
+                                .tabItem { Label("Home", systemImage: "house") }
+                            MentionsTimelineView(client: client)
+                                .tabItem { Label("Mentions", systemImage: "at") }
+                        }
                     }
                 } else {
                     loginView
@@ -51,10 +68,119 @@ struct RootView: View {
                 }
             }
         }
-        .task {
+        .task(id: currentCredential) {
+            isRefreshingAccountState = true
+            defer { isRefreshingAccountState = false }
             if let credential = currentCredential {
                 await connectWithCredential(credential)
             }
+        }
+    }
+
+    private struct BooleanView: View {
+        var value: Bool
+
+        var body: some View {
+            if value {
+                Label("Yes", systemImage: "checkmark")
+                    .foregroundStyle(.green)
+            } else {
+                Label("No", systemImage: "xmark")
+                    .foregroundStyle(.red)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var accountStateView: some View {
+        if let signedInAccount {
+            List {
+                Section(
+                    "Your \(client!.instanceURL, format: .url.host(.always).path(.never).query(.never).scheme(.never).fragment(.never)) account status"
+                ) {
+                    if let state = signedInAccount.state {
+                        if let confirmed = state.confirmed {
+                            LabeledContent {
+                                BooleanView(value: confirmed)
+                            } label: {
+                                Text("Confirmed email address")
+                            }
+                        }
+
+                        if let approved = state.approved {
+                            LabeledContent {
+                                BooleanView(value: approved)
+                            } label: {
+                                Text("Approved by a moderator")
+                            }
+                        }
+
+                        if let functional = state.functional {
+                            LabeledContent {
+                                BooleanView(value: functional)
+                            } label: {
+                                Text("Account is ready to use")
+                            }
+                        }
+                    }
+                }
+                .labelStyle(.iconOnly)
+
+                if let error = signedInAccount.state?.error {
+                    Text(error)
+                        .foregroundStyle(.red)
+                }
+
+                if let errorCode = signedInAccount.state?.errorCode,
+                    case .some(.pendingConfirmation) = errorCode
+                {
+                    Button("Resend confirmation email") {
+                        showResendPrompt = true
+                    }
+                    .alert("Change your email address?", isPresented: $showResendPrompt) {
+                        TextField("Email address", text: $enteredEmailAddress)
+                            .textContentType(.emailAddress)
+
+                        Button("Resend") {
+                            let newEmailAddress = enteredEmailAddress
+                            Task {
+                                do {
+                                    if !newEmailAddress.isEmpty {
+                                        try await client?.resendConfirmationEmail(emailAddress: newEmailAddress)
+                                    } else {
+                                        try await client?.resendConfirmationEmail()
+                                    }
+                                } catch {
+                                    print("Could not resend confirmation email, \(error.localizedDescription)")
+                                }
+                            }
+                        }
+
+                        Button("Cancel", role: .cancel) {
+                            showResendPrompt = false
+                            enteredEmailAddress = ""
+                        }
+                    } message: {
+                        Text("If you leave this blank, the confirmation email will be re-sent to the email address you signed up with.")
+                    }
+
+                }
+
+                Button("Refresh") {
+                    isRefreshingAccountState = true
+                    Task {
+                        defer {
+                            isRefreshingAccountState = false
+                        }
+                        if let credential = currentCredential {
+                            await connectWithCredential(credential)
+                        }
+                    }
+                }
+            }
+            .disabled(isRefreshingAccountState)
+        } else {
+            ProgressView()
         }
     }
 
@@ -75,26 +201,57 @@ struct RootView: View {
             .padding(.horizontal)
 
             Button(action: {
+                isLoading = true
                 Task {
                     await startAuthentication()
                 }
             }) {
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                } else {
-                    Text("Sign In")
-                }
+                Text("Sign In")
             }
             .buttonStyle(.borderedProminent)
             .disabled(serverURL.isEmpty || isLoading)
+
+            Button {
+                isLoading = true
+                Task {
+                    await startAuthentication(createNewAccount: true)
+                }
+            } label: {
+                Text("Create Account")
+            }
+            .buttonStyle(.borderedProminent)
+            .disabled(serverURL.isEmpty || isLoading)
+            .alert("Cannot create account", isPresented: $showCannotRegisterAlert) {
+                EmptyView()
+            } message: {
+                Text("The server may not support OAuth account creation or may have registrations closed.")
+            }
+
+            if isLoading {
+                ProgressView()
+            }
 
             Spacer()
         }
         .padding()
     }
 
-    private func startAuthentication() async {
+    /// Checks whether the server:
+    /// - supports OAuth account creation
+    /// - allows registrations
+    private func checkRegistrationPossible(_ client: TootClient) async -> Bool {
+        guard let instanceInfo = try? await client.getInstanceInfo().v2Representation() else {
+            return false
+        }
+
+        return instanceInfo.registrations.enabled == true && instanceInfo.registrations.oauth == true
+    }
+
+    private func startAuthentication(createNewAccount: Bool = false) async {
+        defer {
+            isLoading = false
+        }
+
         guard let url = URL(string: self.serverURL) else {
             print("Invalid server URL")
             return
@@ -104,16 +261,31 @@ struct RootView: View {
             let newClient = try await TootClient(
                 connect: url,
                 clientName: "TootSDK Example",
-                scopes: ["read"]
+                scopes: ["read", "write:accounts"]
             )
 
             self.client = newClient
 
+            let authorizationParams: AuthorizeURLParams
+            if createNewAccount {
+                guard await checkRegistrationPossible(newClient) else {
+                    print("Server does not support account creation.")
+                    showCannotRegisterAlert = true
+                    return
+                }
+
+                authorizationParams = AuthorizeURLParams(prompt: .create)
+            } else {
+                authorizationParams = AuthorizeURLParams()
+            }
+
             let accessToken = try await newClient.presentSignIn(
                 callbackURI: "tootsdk-example://oauth",
-                prefersEphemeralWebBrowserSession: false
+                prefersEphemeralWebBrowserSession: false,
+                authorizationParams
             )
 
+            // Note: this only stores the access token in SwiftData for demo purposes. In a real app you would want to save credentials to the keychain for security.
             let credential = ServerCredential(
                 host: url.absoluteString,
                 accessToken: accessToken
@@ -139,7 +311,7 @@ struct RootView: View {
                 accessToken: credential.accessToken
             )
             self.client = newClient
-            _ = try await newClient.verifyCredentials()
+            signedInAccount = try await newClient.verifyCredentials(allowNonfunctional: true)
         } catch {
             print(error.localizedDescription)
             signOut()

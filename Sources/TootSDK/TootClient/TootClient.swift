@@ -484,14 +484,21 @@ extension TootClient {
 
     /// Provides the URL for authorizing with the current instanceURL
     /// - Returns: A URL which can be browsed to continue authorization
-    public func createAuthorizeURL(callbackURI: String) async throws -> URL {
-        return try await self.createAuthorizeURL(server: instanceURL, callbackURI: callbackURI)
+    public func createAuthorizeURL(callbackURI: String, _ params: AuthorizeURLParams = .init()) async throws -> URL {
+        return try await self.createAuthorizeURL(server: instanceURL, callbackURI: callbackURI, params)
     }
 
     /// Provides the URL for authorizing, with a custom server URL.
     /// - Returns: A URL which can be browsed to continue authorization
-    public func createAuthorizeURL(server: URL, callbackURI: String) async throws -> URL {
-        let authInfo = try await self.getAuthorizationInfo(callbackURI: callbackURI, scopes: self.scopes)
+    public func createAuthorizeURL(server: URL, callbackURI: String, _ params: AuthorizeURLParams = .init()) async throws -> URL {
+        let authInfo = try await self.getAuthorizationInfo(
+            callbackURI: callbackURI,
+            scopes: self.scopes,
+            forceLogin: params.forceLogin,
+            languageCode: params.languageCode,
+            prompt: params.prompt?.rawValue,
+            inviteCode: params.inviteCode
+        )
         currentApplicationInfo = authInfo.application
         return authInfo.url
     }

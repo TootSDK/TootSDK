@@ -249,7 +249,7 @@ You can learn more about Pleroma's implementation of streaming [here](https://ap
 <details>
 <summary>Creating an account</summary>
 
-- Register the app with the following scopes `["read", "write:accounts"]`.
+- Register the app with at least the following scopes `["read", "write:accounts"]`.
 
 - Get instance information and determine the sign up requirements. Some instances may not be open for registration while others may require additional verification.
 
@@ -259,10 +259,28 @@ if instance.registrations == false {
   // instance not open for registration
   return
 }
+// Check whether the server supports account creation via OAuth:
+if instance.registrations.oauth != true {
+  // instance does not support account creation via OAuth, fall back to legacy registration API
+  return
+}
 // ...
 ```
 
-- Use the `registerAccount` method to create a user account:
+- If the server supports OAuth account creation, use the `create` prompt in the OAuth flow:
+
+```swift
+let authURL = try await client.createAuthorizeURL(callbackURI: "myapp://someurl", .init(prompt: .create))
+// Present the authorization URL as a web page using SwiftUI WebAuthenticationSession or ASWebAuthenticationSession.
+// When the callback is called, give it back to the client to collect the token:
+let accessToken = client.collectToken(returnURL: url, callbackURI: callbackURI)
+// Store the access token somewhere secure like the keychain.
+// Use the authenticated client to get information about the newly created, nonfunctional account:
+let account = try await client.verifyCredentials(allowNonfunctional: true)
+// Then look at the properties of account.state to present information to the user about what the next step is (e.g. check their email for a confirmation or wait for moderator approval).
+```
+
+- If the server doesn't support OAuth account creation, use the legacy `registerAccount` method to create a user account:
 
 ```swift
 let params = RegisterAccountParams(

@@ -3,6 +3,40 @@
 
 import Foundation
 
+/// The state of an account.
+public struct AccountState: Codable, Hashable, Sendable {
+
+    /// Reason why an account may not be functional.
+    public enum ErrorCode: String, Codable, Hashable, Sendable {
+        case pendingConfirmation = "pending_confirmation"
+        case pendingApproval = "pending_approval"
+        case accountDeleted = "account_deleted"
+        case accountSuspended = "account_suspended"
+        case memorial
+        case loginDisabled = "login_disabled"
+        case `2faRequired` = "2fa_required"
+    }
+
+    /// Whether the current account is fully usable.
+    public var functional: Bool?
+    /// Whether the current account has confirmed their email address.
+    public var confirmed: Bool?
+    /// Whether the current account has been approved by a moderator.
+    public var approved: Bool?
+    /// Localized string explaining why the account is not functional, if applicable.
+    public var error: String?
+    /// Reason why the account is not functional, if applicable. Additional reasons can be added in the future.
+    public var errorCode: OpenEnum<ErrorCode>?
+
+    public init(functional: Bool? = nil, confirmed: Bool? = nil, approved: Bool? = nil, error: String? = nil, errorCode: OpenEnum<ErrorCode>? = nil) {
+        self.functional = functional
+        self.confirmed = confirmed
+        self.approved = approved
+        self.error = error
+        self.errorCode = errorCode
+    }
+}
+
 /// Represents a user and their associated profile.
 public class Account: Codable, Identifiable, @unchecked Sendable {
     public init(
@@ -41,6 +75,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         showMedia: Bool? = nil,
         showMediaReplies: Bool? = nil,
         showFeatured: Bool? = nil,
+        state: AccountState? = nil,
     ) {
         self.id = id
         self.username = username
@@ -77,6 +112,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.showMedia = showMedia
         self.showMediaReplies = showMediaReplies
         self.showFeatured = showFeatured
+        self.state = state
     }
 
     required public init(from decoder: Decoder) throws {
@@ -120,6 +156,7 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
         self.showMedia = try? container.decodeIfPresent(Bool.self, forKey: .showMedia)
         self.showMediaReplies = try? container.decodeIfPresent(Bool.self, forKey: .showMediaReplies)
         self.showFeatured = try? container.decodeIfPresent(Bool.self, forKey: .showFeatured)
+        self.state = try? container.decodeIfPresent(AccountState.self, forKey: .state)
     }
 
     /// The account id.
@@ -195,6 +232,10 @@ public class Account: Codable, Identifiable, @unchecked Sendable {
     public let showMediaReplies: Bool?
     /// Whether featured posts are shown on this account's profile.
     public let showFeatured: Bool?
+    /// State of the current account.
+    ///
+    /// Returned by ``TootClient/verifyCredentials(allowNonfunctional:)``.
+    public let state: AccountState?
 }
 
 extension Account {
@@ -234,6 +275,7 @@ extension Account {
         case showMedia
         case showMediaReplies
         case showFeatured
+        case state
     }
 }
 
@@ -271,9 +313,11 @@ extension Account: Hashable {
         hasher.combine(group)
         hasher.combine(source)
         hasher.combine(role)
+        hasher.combine(muteExpiresAt)
         hasher.combine(showMedia)
         hasher.combine(showMediaReplies)
         hasher.combine(showFeatured)
+        hasher.combine(state)
     }
 
     public static func == (lhs: Account, rhs: Account) -> Bool {

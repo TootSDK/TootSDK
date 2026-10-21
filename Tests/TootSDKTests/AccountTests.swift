@@ -146,4 +146,22 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(result.role?.name, "")
         XCTAssertEqual(result.role?.color, "")
     }
+
+    func testDecodingVerifyCredentialsNonfunctional() throws {
+        // arrange
+        let json = localContent("account_mastodon_verifyCredentials_nonfunctional")
+        let decoder = TootDecoder()
+
+        // act
+        let result = try decoder.decode(Account.self, from: json)
+
+        // assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.acct, "Demoaccount")
+        XCTAssertNotNil(result.state)
+        XCTAssertEqual(result.state?.confirmed, true)
+        XCTAssertEqual(result.state?.functional, false)
+        XCTAssertEqual(result.state?.approved, false)
+        XCTAssertEqual(result.state?.errorCode, .some(.pendingApproval))
+    }
 }
